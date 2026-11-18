@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "class_linh_cung_skill_05_s",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "class_linh_cung_skill_05_s",
+      "Kind": "sprite",
+      "Name": "class_linh_cung_skill_05_s",
+      "Visible": true,
+      "Z": 0,
+      "Texture": "textures/23c3048c1deefb5b5f0cb0e224e5386818941c9f5ea8dfba022d27050d928f6b.png",
+      "Regions": [
+        [
+          0,
+          0,
+          300,
+          328
+        ],
+        [
+          300,
+          0,
+          300,
+          328
+        ],
+        [
+          600,
+          0,
+          299,
+          328
+        ],
+        [
+          899,
+          0,
+          300,
+          328
+        ],
+        [
+          0,
+          328,
+          300,
+          328
+        ],
+        [
+          300,
+          328,
+          300,
+          328
+        ],
+        [
+          600,
+          328,
+          299,
+          328
+        ],
+        [
+          899,
+          328,
+          300,
+          328
+        ],
+        [
+          0,
+          656,
+          300,
+          328
+        ],
+        [
+          300,
+          656,
+          300,
+          328
+        ],
+        [
+          600,
+          656,
+          299,
+          328
+        ],
+        [
+          899,
+          656,
+          300,
+          328
+        ],
+        [
+          0,
+          984,
+          300,
+          328
+        ],
+        [
+          300,
+          984,
+          300,
+          328
+        ],
+        [
+          600,
+          984,
+          299,
+          328
+        ],
+        [
+          899,
+          984,
+          300,
+          328
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 170.5,
+        "PivotY": 303,
+        "ScaleX": 0.5054151624548736,
+        "ScaleY": 0.5054151624548736,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "class_linh_cung_skill_05_s",
+      "Direction": "S",
+      "Loop": false,
+      "DurationsMs": [
+        55,
+        55,
+        45,
+        45,
+        30,
+        30,
+        30,
+        30,
+        32,
+        36,
+        42,
+        50,
+        55,
+        55,
+        60,
+        65
+      ],
+      "Tracks": [
+        {
+          "LayerId": "class_linh_cung_skill_05_s",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 170.5,
+                "PivotY": 303,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 157.0,
+                "PivotY": 303,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 144.0,
+                "PivotY": 304,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 141.0,
+                "PivotY": 303,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 170.5,
+                "PivotY": 301,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 150.0,
+                "PivotY": 308,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 139.0,
+                "PivotY": 307,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 128.5,
+                "PivotY": 309,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 170.5,
+                "PivotY": 301,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 161.5,
+                "PivotY": 299,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 151.0,
+                "PivotY": 299,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 144.0,
+                "PivotY": 299,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 175.0,
+                "PivotY": 298,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 159.0,
+                "PivotY": 299,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 149.5,
+                "PivotY": 296,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 137.5,
+                "PivotY": 300,
+                "ScaleX": 0.5054151624548736,
+                "ScaleY": 0.5054151624548736,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": [],
+      "SourceNote": "Phi Diệp · Bước lùi, hai dấu lá và một tên phản kích."
+    }
+  ]
+}

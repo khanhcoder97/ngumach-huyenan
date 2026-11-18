@@ -1,0 +1,634 @@
+{
+  "batch": "20261118e",
+  "catalogueUnchanged": true,
+  "productionApproved": false,
+  "sourceViews": [
+    {
+      "id": "class_linh_cung_skill_05_e",
+      "sourceSha256": "82fa6ca4d8b3cb1c9b625e9b26c7791b4796837e61a0caecf3386c8713b4828c",
+      "projectSha256": "6062c2311c9433d8609eb81079a766f990208ed5029b7a11ab687fc14230a274",
+      "movieSha256": "948c6d0a5bb52b3d07ff26118a93b8940f549429a743199d5e78331aa81d34ab",
+      "montageSha256": "9c9e608c78a5c8a5bd838f259e292c1a4590d23009fcd92bf25eac628ebc991b",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_s",
+      "sourceSha256": "23c3048c1deefb5b5f0cb0e224e5386818941c9f5ea8dfba022d27050d928f6b",
+      "projectSha256": "7a5e247a85174f89291f08124e219c7373f9b8bc2e1665c15c430d88a709ccae",
+      "movieSha256": "58ea0f1c0426a08d5e5b3f7b23889bfae612371c51abfddf6a704eac4b6d2c4e",
+      "montageSha256": "b44b1d0b842abfffcba40888f20774ef6b88d3d7e0bbdd164f1b8e55b589aacd",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_w",
+      "sourceSha256": "e0319bd3d52812b734cc628d926f09d401e992543cc9ecd4df10139e482b7af4",
+      "projectSha256": "1eb83058b16a0353ed6d6bfd0cf378a05783d791a919e7e52daa60ff1a75766e",
+      "movieSha256": "fd0f702f5eb36fff2c4872e848b61cd1d7af09fc2944ecbb91b8ed05d840b978",
+      "montageSha256": "036ff8f3e422a5eb5b5c72bf673c9250b2c284e7e1142705adb9f5198bafcebb",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_n",
+      "sourceSha256": "69a055c0c089f257545d5c988e00d306723b642efa8d702bcc3c6c12efa47b9b",
+      "projectSha256": "dc03fdb2a51a122e45e27ccd09e5c37b9fe26221d239678c98674218ada5b15c",
+      "movieSha256": "d32dcf0fb4f58c583d40e3ec9e74abf888c50d03993d736d5fe2ef93d9ab7506",
+      "montageSha256": "ae55f0a5f0f4067e1f57617c2d71c66bdaad6f7a3a7429fa112dc65d3e153e27",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_se",
+      "sourceSha256": "e38a2f34e1d96197ff1d455526edd58ff4c672e0bf2a586f35bb25890d286883",
+      "projectSha256": "5756e3c328933c14b72eb3568a73ea47c4a095b53f2618495c0f6016831cbb25",
+      "movieSha256": "2d40ab9eb9118b6442c43e7875142574400949d2bc6228abd50fe65969e244c2",
+      "montageSha256": "363a9e52ea7c751e157c8eabb158b489fd682fe45d26b081bbfee0a39f49d8d0",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_sw",
+      "sourceSha256": "66894bfc6a8c8636d763b4b4c837b0615a46dd07e83b6410409c251617d24f79",
+      "projectSha256": "40d594466cccb90a2c1279f14f2f75e384dc656d6b43aeaf8432a8121be73619",
+      "movieSha256": "f9115f9dffc4afc1c7ebf061f9b8b9788cd6cce6a4b019c9c2d26ed58e0f5a57",
+      "montageSha256": "4510ea2fc7d51197eb16d9a944e4ece01ce7cbe7d42c318e16b2decbffa5d407",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_05_retreat_arrow_component",
+      "sourceSha256": "8ecf897b94df41fe67b18bc340ff277a6e45615a0e91fcbd51cb4ccf5728174d",
+      "projectSha256": "10316b3ce53fc612a8f3786889bc80905483e580ce110b51c3cd62438898c605",
+      "movieSha256": "caac881df36c23fda92de60c3d36f1349839e1c496b56ca981b1928639977576",
+      "montageSha256": "4fa74d768e0b482eed386f7130e3de04cebe31879747a0caa64e63d569262735",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_05_retreat_heel_component",
+      "sourceSha256": "d43c3fd8549409daa0e6e7dbdf89cf02794d9b217b000b2bba65a074381fe2f8",
+      "projectSha256": "92c817a60784802e7d4a2245052994e0df91a1bc755ace2299f480ea25df2b6d",
+      "movieSha256": "f8104af8238ac11731e6a5aeaa3ef0270684ccc23c013a7b4f63f145ffc82d0e",
+      "montageSha256": "b1f766a50f864bb948f641e45815e9f658a9b589af5710036bf8b0caa9d81049",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_ne",
+      "sourceSha256": "96f2ecbb3ddd194934983efc687f0e2d828ee9e757a75fba91575794d9f274fd",
+      "projectSha256": "34f552e291e3a15903e2fe0b789b51fb73068303b1ee3bd16c5c7f82d14a89f1",
+      "movieSha256": "bffe0c0fc586884008539d6dc32c26769f26c381857c1b4fc5f15ec08468a7fa",
+      "montageSha256": "53fb478cb676a7b8bc499c25ac7ba6bb2c6e5a5f566f8bc9b2e10d1868705f25",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_05_nw",
+      "sourceSha256": "0b9c71fbef2395ea4ca585de68667191529e044edbddee14f6fbe9406ada65b3",
+      "projectSha256": "17481eb4811cd4f90c86d8470c85f63c0695e4fdb4623ba484cb3398d89c97ea",
+      "movieSha256": "b0e0a4848a7c84d57b0e09ae0804d5350314865e05e3163a9198e00d02558e6c",
+      "montageSha256": "7f5bb196158a069b4eabd9172beb56b23d73e88482612eff47eb2c290b4f282e",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    }
+  ],
+  "nativeSourcePoses": 160,
+  "sourceFramesDecoded": 1800,
+  "projects": [
+    {
+      "facing": "N",
+      "projectSha256": "4b972292e0d6910ddd8e83105d4adc81f51a73a539a7a2ff56bcfcb47eb83f7f",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            1.592040838891559e-15,
+            0.0
+          ],
+          "finish": [
+            -7.225416114969385e-15,
+            144.0
+          ],
+          "releaseOrigin": [
+            -37.47727272727273,
+            -8.209978796713493
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            1.592040838891559e-15,
+            0.0
+          ],
+          "finish": [
+            -3.523425771708658e-16,
+            31.75419096209912
+          ],
+          "releaseOrigin": [
+            -37.47727272727273,
+            -33.13217267426451
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "NE",
+      "projectSha256": "d4447c4c859733efe2dcc4a530d5a23191c0019b2bca70cb23ab2c054b084c89",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            18.38477631085024,
+            7.6152236891497616
+          ],
+          "finish": [
+            -83.43860018001261,
+            109.43860018001261
+          ],
+          "releaseOrigin": [
+            25.390208009681768,
+            -17.82866954814331
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            18.38477631085024,
+            7.6152236891497616
+          ],
+          "finish": [
+            -4.068827449542631,
+            30.06882744954263
+          ],
+          "releaseOrigin": [
+            43.01286030254395,
+            -35.45132184100549
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "E",
+      "projectSha256": "a56ae776f98338791b6d58765063ba820ef046819e210ac97654e9c22f0726a7",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            26.0,
+            26.0
+          ],
+          "finish": [
+            -118.0,
+            26.0
+          ],
+          "releaseOrigin": [
+            17.683939046989536,
+            -20.251012145748987
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            26.0,
+            26.0
+          ],
+          "finish": [
+            -5.75419096209912,
+            26.0
+          ],
+          "releaseOrigin": [
+            42.60613292454056,
+            -20.251012145748987
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "SE",
+      "projectSha256": "25467fbd3dabd549b4ff27653f1bf1db2bfdd7f5cd61184534cd569b07c1b3bf",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            18.38477631085024,
+            44.38477631085024
+          ],
+          "finish": [
+            -83.43860018001261,
+            -57.438600180012614
+          ],
+          "releaseOrigin": [
+            21.51072083019459,
+            -26.96546964599588
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            18.38477631085024,
+            44.38477631085024
+          ],
+          "finish": [
+            -4.068827449542631,
+            21.931172550457372
+          ],
+          "releaseOrigin": [
+            39.13337312305677,
+            -9.3428173531337
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "S",
+      "projectSha256": "8ef09211eb10673a11aea03e8e7ec0b8e7e735eac30995fa26f384f5c14d2e9d",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            1.592040838891559e-15,
+            52.0
+          ],
+          "finish": [
+            -7.225416114969385e-15,
+            -92.0
+          ],
+          "releaseOrigin": [
+            23.75090252707581,
+            -35.76302743892812
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            1.592040838891559e-15,
+            52.0
+          ],
+          "finish": [
+            -3.523425771708658e-16,
+            20.24580903790088
+          ],
+          "releaseOrigin": [
+            23.750902527075812,
+            -10.8408335613771
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "SW",
+      "projectSha256": "44543afc4489d6fd22a19e48333ed9213a4bd46ffc18bd184f6108a1e8b20d91",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            -18.384776310850235,
+            44.38477631085024
+          ],
+          "finish": [
+            83.4386001800126,
+            -57.438600180012614
+          ],
+          "releaseOrigin": [
+            -10.218599618073377,
+            -19.23230947283571
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            -18.384776310850235,
+            44.38477631085024
+          ],
+          "finish": [
+            4.068827449542631,
+            21.931172550457372
+          ],
+          "releaseOrigin": [
+            -27.84125191093556,
+            -1.609657179973528
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "W",
+      "projectSha256": "1ed98dd65a480d81df32ee59f330fc2d0d79af1bbb306142d1e00ea3fec376a9",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            -26.0,
+            26.000000000000004
+          ],
+          "finish": [
+            118.0,
+            25.999999999999986
+          ],
+          "releaseOrigin": [
+            -17.18742838992184,
+            -18.05447470817121
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            -26.0,
+            26.000000000000004
+          ],
+          "finish": [
+            5.75419096209912,
+            26.0
+          ],
+          "releaseOrigin": [
+            -42.10962226747286,
+            -18.054474708171206
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    },
+    {
+      "facing": "NW",
+      "projectSha256": "8d875e7d0a77a01753552aedfd3203be6eea847caa57329b4ae3d58a1f11dc8c",
+      "modes": [
+        {
+          "name": "Lùi đủ",
+          "stopMs": 480,
+          "start": [
+            -18.38477631085024,
+            7.615223689149765
+          ],
+          "finish": [
+            83.43860018001263,
+            109.4386001800126
+          ],
+          "releaseOrigin": [
+            -18.00389022910169,
+            -18.130939409429566
+          ],
+          "retreatDistance": 144
+        },
+        {
+          "name": "Lùi ngắn",
+          "stopMs": 285,
+          "start": [
+            -18.38477631085024,
+            7.615223689149765
+          ],
+          "finish": [
+            4.068827449542635,
+            30.06882744954263
+          ],
+          "releaseOrigin": [
+            -35.62654252196387,
+            -35.75359170229175
+          ],
+          "retreatDistance": 31.75
+        }
+      ]
+    }
+  ],
+  "assemblyFramesDecoded": 960,
+  "nativeAssemblies": [
+    {
+      "facing": "N",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "775e50997677eb191b4f26bd2fe0d984d1ad59c98b4104bffa6f1902818c5ae3",
+      "logSha256": "50dfaa1a8c0137fdfd4ed859230e33c3ef5257df4ed38f9c5f903a6cc98502e4",
+      "montageSha256": "13fc2cb563a36893076ebf801867eed7188e25aff61fa2cc449a0e5c886d06c3",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "NE",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "01e3f3e5e9c7170aaa367678ac9ae9fbd9849f356498de8716337ad23a8d60ac",
+      "logSha256": "e136af0cf63c90265fde088fe2f290476c77c07cd524a09bef25c49af17d5c5f",
+      "montageSha256": "78dfd96342213cefdd62768921d709374d2a4e0da1d5b7e6bcca036e95b4cbff",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "E",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "09a0164ce9ada4096a43821249f47b02387bb2626128762ee3506d57ec795d0a",
+      "logSha256": "72a397fa2e9c5f7ee112738783b7c8d65ad185d8a47e4578572cc55c24d08b58",
+      "montageSha256": "d41e89316f06dd5222404379be403336dd34364e64f9e53036559db1f771a68a",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "SE",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "6778ad436058ac9a62f63c3247cd917aff8146f032016f3a9a30269441b14426",
+      "logSha256": "8094351af0de35a66ba48bd482d4ad1826e73ecd2e21b4e4fbeac666a487c103",
+      "montageSha256": "7591bb00bef1fc33f2d8f2bfacb24dbcbec3179562549a2b83c581e10f9d9f92",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "S",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "e975f916eb7a7daff4837dba46a1916fb389654db3c2144a69f4bc024b53a9f8",
+      "logSha256": "dfb57ffd3bacfe71194ad0dd8df1a4fc8bce552fcefc2eaa8787a640a245f498",
+      "montageSha256": "44b05a17e45ca357108155a32c70da79ffb568f508f2798614561cc8e60bbe11",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "SW",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "74f3c64a899d05eb040c910b18ad03e64e072b70d7faf2b44207423a6e526a1d",
+      "logSha256": "fcfbe29f01398848300f791eaff080a84ee621f296f9d7951a47d5275e8d9c01",
+      "montageSha256": "48609d0c9c264bb4b7c740beeceb54aac7990b881a7db78ad67148aaac22f871",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "W",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "5c3ccff1560c8209dad21aa7112fe375c4591a72cfd6ca3b62b58b1b1e0d0d85",
+      "logSha256": "40af5516dd0a8826cc45c46237f94c9fa18145dd6ab852ca371b7ae170ac8bf4",
+      "montageSha256": "9612c7d0af6771a9106d31ac296c7eae80c2f7d8acba90016414c400f79da73e",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "NW",
+      "mode": 0,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "961aff6d00cbbc52baeaa40e5ecc7ebb5f1bfe251bae6a29050f4422d7a800e7",
+      "logSha256": "1802b1b1084d0d658e4ebdd947a2c25da8374211f55f537504b14e823a54ebc6",
+      "montageSha256": "8752b268b258b645413293db31526ed1f46817537158ce5575a39c6796aefb29",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "E",
+      "mode": 1,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "ff13f9bdb773958c76f660175fad0104fb00af735866db24bc7b3969797732dd",
+      "logSha256": "9833901c84664a43395dbfc9793170d78798402f10b07b75d094f5a8964896ab",
+      "montageSha256": "2125decc5aad2a75aaad4f9de0053e650f1cb3add516ab6af74cae37a1472485",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    },
+    {
+      "facing": "NW",
+      "mode": 1,
+      "framesDecoded": 96,
+      "releaseFrame": 20,
+      "moveStartFrame": 13,
+      "sourcePhasesRendered": 64,
+      "movieSha256": "eee55d66d9a9c5cca24f9c0c6deae815a579f496f688e5813924596a94e83963",
+      "logSha256": "8f93851bd26c214418604e51da2fa77bff79856d090c2731d24cad70e798da83",
+      "montageSha256": "44d32803cabcf54c5a6d4fab2ba58a65a76b83bc4c55f2705f2acfc01b1d8880",
+      "sampleFrames": [
+        1,
+        13,
+        18,
+        20,
+        24,
+        32,
+        43,
+        47
+      ]
+    }
+  ]
+}
