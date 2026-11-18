@@ -1,0 +1,28 @@
+{
+  "batch": "20261118d",
+  "scope": "STUDIO_NATIVE_ART_REVIEW",
+  "productionApproved": false,
+  "nativeAuditSha256": "7b3502e96a3daff78af081ceeb2214f62590cd15853f86c5b4c8fc8e678a1a0f",
+  "sourcePosesViewed": 160,
+  "nativeAssemblyFacingsReviewed": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "visibleMainPetals": 5,
+  "atlasGridOverrides": [
+    "E",
+    "SW"
+  ],
+  "notes": [
+    "The active fan uses five separate bright petal silhouettes at its widest opening.",
+    "The east and southwest grids use measured clear gutters with intact original PNG bytes.",
+    "All facings keep the same bow hand and open the release hand once.",
+    "The native montage target is useful for aligning the effect. It does not emit a hit event in Studio."
+  ]
+}

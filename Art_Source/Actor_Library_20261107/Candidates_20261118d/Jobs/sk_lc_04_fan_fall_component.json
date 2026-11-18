@@ -1,0 +1,35 @@
+{
+  "batch": "20261118d",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_TAN_HOA_EIGHT_AUTHORED_FACINGS_AND_TWO_FAN_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_04_fan_fall_component",
+  "seconds": 0.4,
+  "timing": [
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118c/sk_lc_03_volley_arrow_component_v1_20261118c.png"
+  ],
+  "prompt": "Original transparent sprite atlas of the small falling remains of Tán Hoa, a wood-petal archery VFX. The attached approved source is only a palette and pixel-edge reference. Design three loose clusters of two slivers each: chunky tiny tapered leaf fragments, sage moss green, warm yellow cream and one darker olive accent. Up to six distinct fragments, airy sparse spacing. Fixed camera directly overhead. Facing right, source pivot around X=28%, Y=50% of each cell. Main silhouette is sparse, with no ring, fog, aura, flash, projectile shaft or arrowhead. Turn the petals end over end and drop diagonally down a few pixels while they separate into the three mini-clusters; stay inside the same cell. Row-major phases 0–3 six short slivers; 4–7 tumble and spread subtly; 8–11 thinner lower-contrast slivers; 12–15 each fragment retreats to a very small soft-olive pixel accent, retaining at least one distinct opaque group. Brightest shape in the first row, not a bloom. Exactly 16 unique frames in evenly spaced 4x4 atlas; plenty of transparent margins and no guidance lines in final. Transparent PNG with real alpha, no checkerboard, text, character, fog, backdrop or ground. Crisp handcrafted-jade pixel clusters for use as a game sprite.",
+  "authoringUse": {
+    "role": "FAN_FALL",
+    "facing": "E",
+    "clusters": 3
+  }
+}
