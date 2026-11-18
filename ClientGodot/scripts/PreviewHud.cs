@@ -31,7 +31,7 @@ public partial class PreviewHud : Node2D
     private readonly Dictionary<(string,int),TextLine> _textCache=new();
     private Texture2D _skills=null!;
     private TextureRect _avatar=null!;
-    private (Texture2D Texture,Rect2 Region)? _practiceSkill;
+    private (Texture2D Texture,Rect2 Region)[]? _practiceSkills;
     private readonly Rect2[] _icons=new Rect2[6];
     private MoonMapView _map=null!;
     private int _hover=-1,_questTab;
@@ -81,16 +81,21 @@ public partial class PreviewHud : Node2D
         AddButton(new Rect2(22,608,40,32),"Chat","Nhật ký hệ thống",()=>_chat=!_chat);
         InvalidateRender();
     }
-    public void ConfigurePractice(Texture2D icon,Rect2 iconRegion,Texture2D body,Rect2 portrait)
+    public void ConfigurePractice((Texture2D,Rect2) arrow,(Texture2D,Rect2) trap,Texture2D body,Rect2 portrait)
     {
-        _practiceSkill=(icon,iconRegion);
+        _practiceSkills=new[]{arrow,trap};
         _avatar.Material=null;
         _avatar.Texture=new AtlasTexture{Atlas=body,Region=portrait,FilterClip=true};
         _avatar.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
-        StatusText="Luyện Linh Cung · 1 bắn · F2 đổi tầm nhìn";
+        StatusText="Luyện Linh Cung · 1 bắn · 2 đặt bẫy";
         InvalidateRender();
     }
-    private bool SkillUnavailable(int slot)=>_practiceSkill.HasValue?slot!=0:Online&&slot>=3;
+    private bool SkillUnavailable(int slot)=>_practiceSkills!=null?slot>=_practiceSkills.Length:Online&&slot>=3;
+    private string SkillName(int slot)
+    {
+        if(_practiceSkills==null)return SkillVfxPlayer.Names[slot];
+        return slot switch{0=>LinhCungPractice.SkillName,1=>LinhCungTrapPractice.SkillName,_=>"Ô kỹ năng khóa"};
+    }
     private void AddButton(Rect2 rect,string icon,string tip,Action action)=>_buttons.Add((rect,icon,tip,action));
     public void ApplyOnline(NativeOnlineFrame frame)
     {
@@ -210,7 +215,7 @@ public partial class PreviewHud : Node2D
         Panel(new Rect2(22,22,348,100),.79f);
         _drawer.DrawCircle(new Vector2(68,70),42,new Color(.3f,.33f,.55f,.8f));_drawer.DrawArc(new Vector2(68,70),43,0,Mathf.Tau,64,MoonGlassTheme.Gold,1.3f,true);
         _drawer.DrawArc(new Vector2(68,70),40,-Mathf.Pi*.7f,Mathf.Pi*.65f,48,MoonGlassTheme.Silver,1.2f,true);
-        bool practice=_practiceSkill.HasValue;
+        bool practice=_practiceSkills!=null;
         Text(new Vector2(120,43),practice?"LINH CUNG":"MINH KIẾM",17);
         Text(new Vector2(235,42),practice?"LUYỆN TẬP":Online?"KIẾM KHÁCH":"THỬ GIAO DIỆN",10,MoonGlassTheme.Gold);
         var self=_frame?.World?.self;int hp=self?.hp??120,maxHp=self?.maxHp??120,mp=self?.mp??100,maxMp=self?.maxMp??100;
@@ -245,9 +250,9 @@ public partial class PreviewHud : Node2D
         if(_questTab==0)
         {
             Text(new Vector2(36,247),practice?"Khu tập bắn Bến Mưa":q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
-            var summary=practice?"1 · Giương cung và bắn Khóa Mạch":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
+            var summary=practice?"1 bắn · 2 đặt bẫy · Chọn điểm đất":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
             Text(new Vector2(36,272),summary.Length>35?summary[..32]+"…":summary,12);
-            Text(new Vector2(36,296),practice?"Chuột trái chọn bia · Chuột phải bỏ":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
+            Text(new Vector2(36,296),practice?"Chuột trái xác nhận · Chuột phải bỏ":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
             Text(new Vector2(36,329),practice?"WASD di chuyển · F2 đổi tầm nhìn":"J  Mở nhật ký",11,MoonGlassTheme.Silver);
         }
         else{Text(new Vector2(36,254),_questTab==1?"Nhiệm vụ hằng ngày":"Sự kiện đang diễn ra",14,MoonGlassTheme.Gold);Text(new Vector2(36,281),"Chưa có dữ liệu trong phiên này.",12,MoonGlassTheme.Muted);}
@@ -272,9 +277,9 @@ public partial class PreviewHud : Node2D
             var p=positions[i];bool disabled=SkillUnavailable(i);
             _drawer.DrawCircle(p,27,new Color(.03f,.05f,.15f,.35f));_drawer.DrawCircle(p,25,_slotPress[i]>0?new Color(.72f,.67f,1,.88f):new Color(.21f,.24f,.42f,.78f));
             _drawer.DrawArc(p,25,0,Mathf.Tau,48,disabled?new Color(.5f,.55f,.7f,.5f):_hover==i?MoonGlassTheme.Gold:MoonGlassTheme.Silver,_hover==i?2.3f:1,true);
-            if(!practice||i==0)
+            if(!practice||!disabled)
             {
-                var (texture,source)=_practiceSkill??(_skills,_icons[i]);
+                var (texture,source)=_practiceSkills==null?(_skills,_icons[i]):_practiceSkills[i];
                 var size=source.Size*(34/Math.Max(source.Size.X,source.Size.Y));
                 _drawer.DrawTextureRectRegion(texture,new Rect2(p-size/2,size),source,disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);
             }
@@ -287,7 +292,7 @@ public partial class PreviewHud : Node2D
         Text(new Vector2(34,670),$"{Coordinates.X:0.0}, {Coordinates.Y:0.0}    ·    "+(StaticArtReview?"Ảnh tĩnh · không đo FPS":$"{Engine.GetFramesPerSecond()} FPS"),11,MoonGlassTheme.Muted);
         string status=Friendly(StatusText);Text(new Vector2(34,691),status.Length>43?status[..40]+"…":status,11);
         if(_chat){Panel(new Rect2(22,465,327,135),.86f);Text(new Vector2(35,486),"Nhật ký hệ thống",13,MoonGlassTheme.Gold);int y=509;foreach(var message in _messages.TakeLast(4)){Text(new Vector2(35,y),message.Length>42?message[..39]+"…":message,11,MoonGlassTheme.Muted);y+=21;}}
-        string? tip=_hover>=0?(practice?(_hover==0?LinhCungPractice.SkillName:"Ô kỹ năng khóa"):SkillVfxPlayer.Names[_hover]):_buttons.Where(b=>b.Rect.HasPoint(GetLocalMousePosition())).Select(b=>b.Tip).FirstOrDefault();
+        string? tip=_hover>=0?SkillName(_hover):_buttons.Where(b=>b.Rect.HasPoint(GetLocalMousePosition())).Select(b=>b.Tip).FirstOrDefault();
         if(tip!=null)
         {
             var at=GetLocalMousePosition()+new Vector2(-95,-65);at.X=Mathf.Clamp(at.X,16,1020);at.Y=Mathf.Clamp(at.Y,20,640);

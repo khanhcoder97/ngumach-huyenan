@@ -5757,7 +5757,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           -0.23540856031128404,
           -0.9066147859922179
         ]
@@ -5992,7 +5992,7 @@
           }
         ],
         "release": 0.54,
-        "muzzle": [
+        "releaseOffset": [
           0.4716981132075472,
           -0.8415094339622642
         ]
@@ -6227,7 +6227,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           0.5088105726872246,
           -0.45594713656387664
         ]
@@ -6462,7 +6462,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           0.42115384615384616,
           0.0038461538461538464
         ]
@@ -6697,7 +6697,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           -0.017241379310344827,
           -0.1111111111111111
         ]
@@ -6932,7 +6932,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           -0.4945652173913043,
           -0.13405797101449277
         ]
@@ -7167,7 +7167,7 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           -0.5236051502145923,
           -0.463519313304721
         ]
@@ -7402,9 +7402,1891 @@
           }
         ],
         "release": 0.48,
-        "muzzle": [
+        "releaseOffset": [
           -0.49615384615384617,
           -0.8153846153846154
+        ]
+      }
+    ],
+    "trap": [
+      {
+        "duration": 1.12,
+        "sourceHeight": 252,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              0,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              163.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              317,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              161.5,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              634,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              160.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              951,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              158.5,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              0,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              160.5,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              317,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              159.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              634,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              156.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              951,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              153.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              0,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              152.5,
+              275
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              317,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              153.5,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              634,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              154.0,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              951,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              155.5,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              0,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              160.0,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              317,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              160.5,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              634,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              158.5,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_n.png",
+            "rect": [
+              951,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              157.0,
+              279
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          0.35912698412698413,
+          -0.5396825396825397
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 274,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              0,
+              0,
+              316,
+              311
+            ],
+            "pivot": [
+              138.0,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              316,
+              0,
+              316,
+              311
+            ],
+            "pivot": [
+              136.5,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              632,
+              0,
+              317,
+              311
+            ],
+            "pivot": [
+              137.0,
+              291
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              949,
+              0,
+              316,
+              311
+            ],
+            "pivot": [
+              134.0,
+              292
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              0,
+              311,
+              316,
+              311
+            ],
+            "pivot": [
+              136.0,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              316,
+              311,
+              316,
+              311
+            ],
+            "pivot": [
+              136.0,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              632,
+              311,
+              317,
+              311
+            ],
+            "pivot": [
+              135.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              949,
+              311,
+              316,
+              311
+            ],
+            "pivot": [
+              135.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              0,
+              622,
+              316,
+              310
+            ],
+            "pivot": [
+              136.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              316,
+              622,
+              316,
+              310
+            ],
+            "pivot": [
+              137.5,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              632,
+              622,
+              317,
+              310
+            ],
+            "pivot": [
+              137.5,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              949,
+              622,
+              316,
+              310
+            ],
+            "pivot": [
+              137.0,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              0,
+              932,
+              316,
+              311
+            ],
+            "pivot": [
+              137.5,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              316,
+              932,
+              316,
+              311
+            ],
+            "pivot": [
+              138.5,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              632,
+              932,
+              317,
+              311
+            ],
+            "pivot": [
+              138.0,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_ne.png",
+            "rect": [
+              949,
+              932,
+              316,
+              311
+            ],
+            "pivot": [
+              138.5,
+              290
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.49000000000000005,
+        "releaseOffset": [
+          0.38503649635036497,
+          -0.11313868613138686
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 238,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              0,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              143.0,
+              281
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              317,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              139.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              634,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              135.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              951,
+              0,
+              317,
+              310
+            ],
+            "pivot": [
+              130.0,
+              281
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              0,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              136.5,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              317,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              135.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              634,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              130.0,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              951,
+              310,
+              317,
+              310
+            ],
+            "pivot": [
+              127.5,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              0,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              135.0,
+              274
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              317,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              134.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              634,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              133.0,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              951,
+              620,
+              317,
+              310
+            ],
+            "pivot": [
+              131.5,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              0,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              139.5,
+              275
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              317,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              138.5,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              634,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              137.5,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_e.png",
+            "rect": [
+              951,
+              930,
+              317,
+              310
+            ],
+            "pivot": [
+              138.0,
+              276
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          0.20168067226890757,
+          -0.004201680672268907
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 260,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              0,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              129.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              315,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              128.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              630,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              129.0,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              946,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              129.0,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              0,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              129.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              315,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              129.5,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              630,
+              312,
+              316,
+              312
+            ],
+            "pivot": [
+              130.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              946,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              129.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              0,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              130.0,
+              286
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              315,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              130.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              630,
+              624,
+              316,
+              311
+            ],
+            "pivot": [
+              130.5,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              946,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              131.0,
+              287
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              0,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              132.0,
+              286
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              315,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              128.0,
+              286
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              630,
+              935,
+              316,
+              312
+            ],
+            "pivot": [
+              129.0,
+              286
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_se.png",
+            "rect": [
+              946,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              127.0,
+              286
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          0.13076923076923078,
+          -0.011538461538461539
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 268,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              0,
+              0,
+              312,
+              315
+            ],
+            "pivot": [
+              178.0,
+              300
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              312,
+              0,
+              312,
+              315
+            ],
+            "pivot": [
+              159.5,
+              300
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              624,
+              0,
+              311,
+              315
+            ],
+            "pivot": [
+              151.0,
+              300
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              935,
+              0,
+              312,
+              315
+            ],
+            "pivot": [
+              145.0,
+              301
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              0,
+              315,
+              312,
+              315
+            ],
+            "pivot": [
+              180.5,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              312,
+              315,
+              312,
+              315
+            ],
+            "pivot": [
+              159.5,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              624,
+              315,
+              311,
+              315
+            ],
+            "pivot": [
+              152.0,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              935,
+              315,
+              312,
+              315
+            ],
+            "pivot": [
+              145.5,
+              289
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              0,
+              630,
+              312,
+              316
+            ],
+            "pivot": [
+              170.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              312,
+              630,
+              312,
+              316
+            ],
+            "pivot": [
+              164.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              624,
+              630,
+              311,
+              316
+            ],
+            "pivot": [
+              152.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              935,
+              630,
+              312,
+              316
+            ],
+            "pivot": [
+              146.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              0,
+              946,
+              312,
+              315
+            ],
+            "pivot": [
+              179.5,
+              269
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              312,
+              946,
+              312,
+              315
+            ],
+            "pivot": [
+              163.0,
+              270
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              624,
+              946,
+              311,
+              315
+            ],
+            "pivot": [
+              152.0,
+              271
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_s.png",
+            "rect": [
+              935,
+              946,
+              312,
+              315
+            ],
+            "pivot": [
+              145.0,
+              272
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          -0.09328358208955224,
+          -0.018656716417910446
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 271,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              0,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              161.0,
+              293
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              316,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              160.5,
+              293
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              632,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              161.0,
+              292
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              947,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              161.5,
+              292
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              0,
+              312,
+              316,
+              311
+            ],
+            "pivot": [
+              165.5,
+              284
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              316,
+              312,
+              316,
+              311
+            ],
+            "pivot": [
+              165.5,
+              284
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              632,
+              312,
+              315,
+              311
+            ],
+            "pivot": [
+              165.0,
+              284
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              947,
+              312,
+              316,
+              311
+            ],
+            "pivot": [
+              159.0,
+              284
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              0,
+              623,
+              316,
+              311
+            ],
+            "pivot": [
+              165.5,
+              278
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              316,
+              623,
+              316,
+              311
+            ],
+            "pivot": [
+              164.5,
+              278
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              632,
+              623,
+              315,
+              311
+            ],
+            "pivot": [
+              164.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              947,
+              623,
+              316,
+              311
+            ],
+            "pivot": [
+              165.0,
+              280
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              0,
+              934,
+              316,
+              312
+            ],
+            "pivot": [
+              165.5,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              316,
+              934,
+              316,
+              312
+            ],
+            "pivot": [
+              163.0,
+              285
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              632,
+              934,
+              315,
+              312
+            ],
+            "pivot": [
+              161.5,
+              286
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_sw.png",
+            "rect": [
+              947,
+              934,
+              316,
+              312
+            ],
+            "pivot": [
+              160.0,
+              286
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          -0.2933579335793358,
+          -0.0036900369003690036
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 243,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              0,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              163.0,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              316,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              170.5,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              631,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              170.0,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              946,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              165.0,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              0,
+              312,
+              316,
+              311
+            ],
+            "pivot": [
+              179.5,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              316,
+              312,
+              315,
+              311
+            ],
+            "pivot": [
+              177.0,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              631,
+              312,
+              315,
+              311
+            ],
+            "pivot": [
+              175.0,
+              278
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              946,
+              312,
+              316,
+              311
+            ],
+            "pivot": [
+              172.0,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              0,
+              623,
+              316,
+              311
+            ],
+            "pivot": [
+              180.5,
+              256
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              316,
+              623,
+              315,
+              311
+            ],
+            "pivot": [
+              177.5,
+              257
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              631,
+              623,
+              315,
+              311
+            ],
+            "pivot": [
+              173.5,
+              258
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              946,
+              623,
+              316,
+              311
+            ],
+            "pivot": [
+              166.0,
+              259
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              0,
+              934,
+              316,
+              312
+            ],
+            "pivot": [
+              172.0,
+              265
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              316,
+              934,
+              315,
+              312
+            ],
+            "pivot": [
+              163.5,
+              263
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              631,
+              934,
+              315,
+              312
+            ],
+            "pivot": [
+              157.5,
+              265
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_w.png",
+            "rect": [
+              946,
+              934,
+              316,
+              312
+            ],
+            "pivot": [
+              154.5,
+              265
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.56,
+        "releaseOffset": [
+          -0.3477366255144033,
+          -0.03292181069958848
+        ]
+      },
+      {
+        "duration": 1.12,
+        "sourceHeight": 267,
+        "frames": [
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              0,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              174.0,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              315,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              171.5,
+              290
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              630,
+              0,
+              316,
+              312
+            ],
+            "pivot": [
+              171.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              946,
+              0,
+              315,
+              312
+            ],
+            "pivot": [
+              168.5,
+              288
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              0,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              197.5,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              315,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              181.5,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              630,
+              312,
+              316,
+              312
+            ],
+            "pivot": [
+              178.0,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              946,
+              312,
+              315,
+              312
+            ],
+            "pivot": [
+              179.5,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              0,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              189.0,
+              273
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              315,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              183.0,
+              275
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              630,
+              624,
+              316,
+              311
+            ],
+            "pivot": [
+              183.0,
+              275
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              946,
+              624,
+              315,
+              311
+            ],
+            "pivot": [
+              170.0,
+              276
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              0,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              198.0,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              315,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              183.0,
+              279
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              630,
+              935,
+              316,
+              312
+            ],
+            "pivot": [
+              176.5,
+              278
+            ],
+            "flip": false
+          },
+          {
+            "file": "class_linh_cung_skill_02_nw.png",
+            "rect": [
+              946,
+              935,
+              315,
+              312
+            ],
+            "pivot": [
+              170.5,
+              279
+            ],
+            "flip": false
+          }
+        ],
+        "release": 0.49000000000000005,
+        "releaseOffset": [
+          -0.32771535580524347,
+          -0.2883895131086142
         ]
       }
     ]
@@ -7876,6 +9758,936 @@
         }
       ]
     },
+    "trap_seed": {
+      "duration": 0.48,
+      "sourceHeight": 59,
+      "frames": [
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            0,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            185,
+            254
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            316,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            161,
+            254
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            632,
+            0,
+            315,
+            312
+          ],
+          "pivot": [
+            137,
+            254
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            947,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            113,
+            254
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            0,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            185,
+            226
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            316,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            161,
+            226
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            632,
+            312,
+            315,
+            311
+          ],
+          "pivot": [
+            137,
+            226
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            947,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            113,
+            224
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            0,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            185,
+            198
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            316,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            161,
+            198
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            632,
+            623,
+            315,
+            311
+          ],
+          "pivot": [
+            137,
+            196
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            947,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            113,
+            195
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            0,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            185,
+            170
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            316,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            161,
+            170
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            632,
+            934,
+            315,
+            312
+          ],
+          "pivot": [
+            137,
+            170
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_seed_component.png",
+          "rect": [
+            947,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            113,
+            170
+          ],
+          "flip": false
+        }
+      ],
+      "releaseOffset": [
+        -0.5,
+        -116
+      ]
+    },
+    "trap_grow": {
+      "duration": 0.64,
+      "sourceHeight": 226,
+      "frames": [
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            0,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            170.0,
+            203.68
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            316,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            136.5,
+            195.94
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            632,
+            0,
+            315,
+            312
+          ],
+          "pivot": [
+            129.0,
+            188.6
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            947,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            126.5,
+            189.98
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            0,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            163.0,
+            175.84
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            316,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            152.5,
+            179.7
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            632,
+            312,
+            315,
+            311
+          ],
+          "pivot": [
+            141.5,
+            178.18
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            947,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            140.5,
+            181.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            0,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            165.5,
+            158.02
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            316,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            156.0,
+            158.88
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            632,
+            623,
+            315,
+            311
+          ],
+          "pivot": [
+            144.5,
+            159.9
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            947,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            139.5,
+            159.78
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            0,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            161.0,
+            138.6
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            316,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            154.0,
+            137.92
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            632,
+            934,
+            315,
+            312
+          ],
+          "pivot": [
+            142.5,
+            137.06
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_grow_component.png",
+          "rect": [
+            947,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            140.0,
+            136.36
+          ],
+          "flip": false
+        }
+      ]
+    },
+    "trap_armed": {
+      "duration": 1.12,
+      "sourceHeight": 218,
+      "frames": [
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            0,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            159.0,
+            199.48
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            316,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            158.5,
+            199.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            632,
+            0,
+            315,
+            312
+          ],
+          "pivot": [
+            158.5,
+            199.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            947,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            159.0,
+            199.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            0,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            158.5,
+            178.9
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            316,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            157.5,
+            179.9
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            632,
+            312,
+            315,
+            311
+          ],
+          "pivot": [
+            157.5,
+            179.9
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            947,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            158.5,
+            178.9
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            0,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            159.0,
+            159.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            316,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            158.5,
+            159.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            632,
+            623,
+            315,
+            311
+          ],
+          "pivot": [
+            158.5,
+            159.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            947,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            159.0,
+            159.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            0,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            158.5,
+            140.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            316,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            158.0,
+            140.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            632,
+            934,
+            315,
+            312
+          ],
+          "pivot": [
+            158.0,
+            140.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_armed_component.png",
+          "rect": [
+            947,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            159.5,
+            140.62
+          ],
+          "flip": false
+        }
+      ],
+      "iconRect": [
+        50,
+        125,
+        218,
+        105
+      ]
+    },
+    "trap_retract": {
+      "duration": 0.64,
+      "sourceHeight": 218,
+      "frames": [
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            0,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            159.0,
+            200.48
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            316,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            156.0,
+            199.48
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            632,
+            0,
+            315,
+            312
+          ],
+          "pivot": [
+            155.5,
+            197.62
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            947,
+            0,
+            316,
+            312
+          ],
+          "pivot": [
+            155.0,
+            195.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            0,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            159.0,
+            171.32
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            316,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            156.5,
+            171.02
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            632,
+            312,
+            315,
+            311
+          ],
+          "pivot": [
+            156.0,
+            170.12
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            947,
+            312,
+            316,
+            311
+          ],
+          "pivot": [
+            152.5,
+            174.34
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            0,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            159.5,
+            155.02
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            316,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            158.0,
+            154.24
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            632,
+            623,
+            315,
+            311
+          ],
+          "pivot": [
+            152.0,
+            151.76
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            947,
+            623,
+            316,
+            311
+          ],
+          "pivot": [
+            152.5,
+            151.3
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            0,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            158.0,
+            127.96
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            316,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            157.5,
+            129.78
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            632,
+            934,
+            315,
+            312
+          ],
+          "pivot": [
+            154.0,
+            131.88
+          ],
+          "flip": false
+        },
+        {
+          "file": "sk_lc_02_trap_retract_component.png",
+          "rect": [
+            947,
+            934,
+            316,
+            312
+          ],
+          "pivot": [
+            155.0,
+            135.8
+          ],
+          "flip": false
+        }
+      ]
+    },
     "mark": {
       "duration": 0.96,
       "sourceHeight": 136,
@@ -8335,6 +11147,236 @@
           "flip": false
         }
       ]
+    },
+    "patrol": {
+      "duration": 0.8,
+      "sourceHeight": 168,
+      "frames": [
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            0,
+            0,
+            353,
+            341
+          ],
+          "pivot": [
+            201.0,
+            288
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            353,
+            0,
+            281,
+            341
+          ],
+          "pivot": [
+            140.0,
+            290
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            634,
+            0,
+            276,
+            341
+          ],
+          "pivot": [
+            137.5,
+            291
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            910,
+            0,
+            351,
+            341
+          ],
+          "pivot": [
+            147.5,
+            291
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            0,
+            341,
+            353,
+            277
+          ],
+          "pivot": [
+            201.5,
+            226
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            353,
+            341,
+            281,
+            277
+          ],
+          "pivot": [
+            140.0,
+            220
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            634,
+            341,
+            276,
+            277
+          ],
+          "pivot": [
+            138.0,
+            224
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            910,
+            341,
+            351,
+            277
+          ],
+          "pivot": [
+            160.0,
+            219
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            0,
+            618,
+            353,
+            282
+          ],
+          "pivot": [
+            203.0,
+            222
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            353,
+            618,
+            281,
+            282
+          ],
+          "pivot": [
+            141.5,
+            225
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            634,
+            618,
+            276,
+            282
+          ],
+          "pivot": [
+            139.0,
+            224
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            910,
+            618,
+            351,
+            282
+          ],
+          "pivot": [
+            151.5,
+            224
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            0,
+            900,
+            353,
+            347
+          ],
+          "pivot": [
+            211.5,
+            225
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            353,
+            900,
+            281,
+            347
+          ],
+          "pivot": [
+            138.5,
+            224
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            634,
+            900,
+            276,
+            347
+          ],
+          "pivot": [
+            141.5,
+            219
+          ],
+          "flip": false
+        },
+        {
+          "file": "res://assets/actor_library_v1/sheets/mob_waterroot_walk_e_v1_20261113a.png",
+          "rect": [
+            910,
+            900,
+            351,
+            347
+          ],
+          "pivot": [
+            153.5,
+            221
+          ],
+          "flip": false
+        }
+      ]
     }
   },
   "sources": {
@@ -8377,6 +11419,54 @@
     "sk_lc_01_leaf_dissipate_component.png": {
       "source": "Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.png",
       "sha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b"
+    },
+    "class_linh_cung_skill_02_n.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_n_v2_20261118b.png",
+      "sha256": "030a931963f9bcbb8d68ad79cadd14b2cc08ac81061ab63eef9b4d6dee6ab656"
+    },
+    "class_linh_cung_skill_02_ne.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_ne_v2_20261118b.png",
+      "sha256": "4cd70ddc48a5ceae00dce585518af39646d6797235e147cf82244900b6f0e3ff"
+    },
+    "class_linh_cung_skill_02_e.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_e_v1_20261118b.png",
+      "sha256": "66a1ce44a1a2dad78dc7dc879ca31c7634435a392584989ef327370953485ebb"
+    },
+    "class_linh_cung_skill_02_se.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_se_v1_20261118b.png",
+      "sha256": "516fd35d7ce1c3064bf5119c1a4596e7cd473aa1a9d9c6f98c7a09c3f926c5b2"
+    },
+    "class_linh_cung_skill_02_s.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_s_v1_20261118b.png",
+      "sha256": "b3fd8e8c55b15f48b0b3ec711694ef04af502f97f27c09518b5249e033d8b230"
+    },
+    "class_linh_cung_skill_02_sw.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_sw_v1_20261118b.png",
+      "sha256": "dbb922a0e7ea922ffec73b69d1a73d149817af1d958e0cdfcd3fddd8c99c728b"
+    },
+    "class_linh_cung_skill_02_w.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_w_v1_20261118b.png",
+      "sha256": "ef39b80d6147ae6a3254a348fed96a46b86304f43e3bdcbded09130047efcd67"
+    },
+    "class_linh_cung_skill_02_nw.png": {
+      "source": "Candidates_20261118b/class_linh_cung_skill_02_nw_v2_20261118b.png",
+      "sha256": "661dafbfb81ed2c1e511a31ff6b98bb5e115fd0847fd131b39fc014b91f92cc1"
+    },
+    "sk_lc_02_trap_seed_component.png": {
+      "source": "Candidates_20261118b/sk_lc_02_trap_seed_component_v1_20261118b.png",
+      "sha256": "80540f749da1493678c55f815f2f7330c2389c8133f6c3d0abc3e46664779001"
+    },
+    "sk_lc_02_trap_grow_component.png": {
+      "source": "Candidates_20261118b/sk_lc_02_trap_grow_component_v2_20261118b.png",
+      "sha256": "94581b4e1703b5ef50837b4b050b52d45ed87ec72e077c35c4e070f85221d080"
+    },
+    "sk_lc_02_trap_armed_component.png": {
+      "source": "Candidates_20261118b/sk_lc_02_trap_armed_component_v1_20261118b.png",
+      "sha256": "caa6f6d2d95170be7b7f1c47d9de6bafde97ae0814e373d8e0010a2dbb0ca90d"
+    },
+    "sk_lc_02_trap_retract_component.png": {
+      "source": "Candidates_20261118b/sk_lc_02_trap_retract_component_v1_20261118b.png",
+      "sha256": "0cb9b0e57c669d3d35e63d8a43978971e70263933a2f197a59c3bd59b1d25790"
     }
   }
 }

@@ -1,10 +1,11 @@
-"""Package reviewed Khóa Mạch sources for the local Bến Mưa practice encounter."""
+"""Package reviewed Linh Cung skill sources for local Bến Mưa practice."""
 import argparse
 import json
 import shutil
 
 from build_linh_cung_khoa_mach_preview import ARROW, MARK, TAIL, TARGET, FACING_LAYOUTS
 from prepare_linh_cung_khoa_mach_review import OUTPUT
+from prepare_linh_cung_day_gai import BODY as TRAP_BODY, EFFECTS as TRAP_EFFECTS, OUTPUT as TRAP_OUTPUT
 from prepare_thach_chuy_candidates_20261116c import ART, ROOT, inspect, read, sha
 
 CLIENT = ROOT / 'ClientGodot/assets'
@@ -16,7 +17,11 @@ def export(check):
     review = read(OUTPUT / 'manual_facing_review.json')
     assert review['nativeAuditSha256'] == sha(OUTPUT / 'native_audit.current.json')
     audit = read(OUTPUT / 'native_audit.current.json')
-    reviewed = {item['id']: item['sourceSha256'] for item in audit['sourceViews']}
+    trap_review = read(TRAP_OUTPUT / 'manual_review.json')
+    trap_audit_path = TRAP_OUTPUT / 'native_audit.json'
+    assert trap_review['nativeAuditSha256'] == sha(trap_audit_path)
+    trap_audit = read(trap_audit_path)
+    reviewed = {item['id']: item['sourceSha256'] for item in audit['sourceViews'] + trap_audit['sourceViews']}
     manifest = dict(clips={}, effects={}, sources={})
 
     def package(identifier, record):
@@ -35,6 +40,11 @@ def export(check):
                     frames=[dict(file=frame.get('file', file), rect=frame['rect'], pivot=frame['pivot'],
                                  flip=direction['flip']) for frame in direction['frames']])
 
+    def icon_rect(frame):
+        x, y, _, _ = frame['rect']
+        left, top, right, bottom = frame['bounds']
+        return [x + left, y + top, right - left, bottom - top]
+
     atlas = read(CLIENT / 'actor_library_v1/pages.json')
     pages = {page['id']: page for page in atlas['pages']}
     if not check:
@@ -51,8 +61,8 @@ def export(check):
             format_clip(directions[facing], file, duration) for facing in FACINGS
         ]
 
-    def candidate(identifier):
-        data = read(OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+    def candidate(identifier, source_batch=OUTPUT):
+        data = read(source_batch / 'Candidate_Studio' / identifier / 'source_registration.json')
         record, page = data['record'], data['page']
         assert reviewed[identifier] == page['sha256'] == sha(ART / record['source'])
         direction, = page['directions']
@@ -69,19 +79,44 @@ def export(check):
         tip = FACING_LAYOUTS[facing][1] if facing != 'E' else (draw['bounds'][2] - 1, 176.5)
         muzzle = [(tip[axis] - draw['pivot'][axis]) / direction['referenceHeight'] for axis in (0, 1)]
         cast.append(dict(format_clip(direction, package(identifier, record), .96),
-                         release=release_frame * .06, muzzle=muzzle))
+                         release=release_frame * .06, releaseOffset=muzzle))
     manifest['clips']['cast'] = cast
     for label, identifier, duration in (('arrow', ARROW, .32), ('tail', TAIL, .4)):
         record, direction = candidate(identifier)
         manifest['effects'][label] = format_clip(direction, package(identifier, record), duration)
         if label == 'arrow':
+            manifest['effects'][label]['iconRect'] = icon_rect(direction['frames'][0])
+
+    trap_cast = []
+    for facing in FACINGS:
+        identifier = 'class_linh_cung_skill_02_' + facing.lower()
+        record, direction = candidate(identifier, TRAP_OUTPUT)
+        assert direction['direction'] == facing and record['sourceFrameDurationsMs'] == [70] * 16
+        _, _, _, hand, release_index, _ = TRAP_BODY[facing]
+        pivot = direction['frames'][release_index]['pivot']
+        offset = [(point - root) / direction['referenceHeight'] for point, root in zip(hand, pivot)]
+        trap_cast.append(dict(format_clip(direction, package(identifier, record), 1.12),
+                              release=release_index * .07, releaseOffset=offset))
+    manifest['clips']['trap'] = trap_cast
+    for role, identifier, width_frame in zip(('seed', 'grow', 'armed', 'retract'), TRAP_EFFECTS, (15, 15, 0, 0)):
+        record, direction = candidate(identifier, TRAP_OUTPUT)
+        timing = record['sourceFrameDurationsMs']
+        assert len(set(timing)) == 1
+        effect = format_clip(direction, package(identifier, record), sum(timing) / 1000)
+        left, _, right, _ = direction['frames'][width_frame]['bounds']
+        effect['sourceHeight'] = right - left  # Reference width for ground effects.
+        if role == 'seed':
             first = direction['frames'][0]
-            x, y, _, _ = first['rect']
-            left, top, right, bottom = first['bounds']
-            manifest['effects'][label]['iconRect'] = [x + left, y + top, right - left, bottom - top]
+            left, top, right, _ = first['bounds']
+            x, y = first['pivot']
+            effect['releaseOffset'] = [(left + right) / 2 - x, top + 22 - y]
+        if role == 'armed':
+            effect['iconRect'] = icon_rect(direction['frames'][0])
+        manifest['effects']['trap_' + role] = effect
     records = {record['id']: record for record in read(ART / 'generation_records.json')}
     approvals = {record['id']: record['sourceSha256'] for record in read(ART / 'visual_review.json')['sourceApprovals']}
-    for label, identifier, duration in (('mark', MARK, .96), ('dummy', TARGET, 1.6)):
+    for label, identifier, duration in (('mark', MARK, .96), ('dummy', TARGET, 1.6),
+                                        ('patrol', 'mob_waterroot_walk_e', .8)):
         record = records[identifier]
         file = 'res://assets/actor_library_v1/' + pages[identifier]['file']
         assert sha(ART / record['source']) == approvals[identifier] == sha(CLIENT / 'actor_library_v1' / pages[identifier]['file'])
@@ -98,7 +133,7 @@ def export(check):
         assert output.read_text(encoding='utf-8') == document, 'Practice pack is out of date'
     else:
         output.write_text(document, encoding='utf-8', newline='\n')
-    print('Linh Cung practice: eight body directions, two new VFX and two reused effects.')
+    print('Linh Cung practice: two skills, eight authored facings each, six skill effects and two reused effects.')
 
 
 if __name__ == '__main__':

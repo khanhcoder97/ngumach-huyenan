@@ -109,10 +109,10 @@ public partial class VisualPreview : Node2D
         if(practice)
         {
             _practice=new LinhCungPractice();AddChild(_practice);
-            _practice.Configure(_hero,animator,actors,_environment.Spawn+new Vector2(96,0));
-            var icon=_practice.Icon;
-            _hud.ConfigurePractice(icon.Texture,icon.Region,animator.Texture,animator.RegionRect);
+            _practice.Configure(_hero,animator,actors,_environment.Spawn+new Vector2(96,0),_environment,FaceDirection);
+            _hud.ConfigurePractice(_practice.Icon,_practice.Trap.Icon,animator.Texture,animator.RegionRect);
             _practice.Feedback+=(message,ok)=>_hud.ShowAction(0,message,ok);
+            _practice.Trap.Feedback+=(message,ok)=>_hud.ShowAction(1,message,ok);
             FaceDirection(_practice.Aim(_facing));
         }
         if(!args.Any(a=>a.Contains("test",StringComparison.Ordinal))&&_capture==null&&!args.Contains("--performance-profile"))_dialog.ApplySavedPreferences();
@@ -171,6 +171,7 @@ public partial class VisualPreview : Node2D
         if(key.Keycode==Key.Escape)
         {
             if(_dialog?.IsOpen==true){_dialog.HidePanel();return;}
+            if(_practice?.Trap.CancelAim()==true){_hud.ShowAction(1,"Đã hủy chọn điểm đặt.",true);return;}
             GetTree().Quit();return;
         }
         if(key.Keycode==Key.I){OpenInventory();return;}
@@ -200,9 +201,18 @@ public partial class VisualPreview : Node2D
         if(input is not InputEventMouseButton mouse||!mouse.Pressed||_dialog?.IsOpen==true||_hud.BlocksWorldPointer(mouse.Position))return;
         if(_practice!=null)
         {
-            if(mouse.ButtonIndex==MouseButton.Right){_practice.ClearTarget();GetViewport().SetInputAsHandled();}
-            if(mouse.ButtonIndex==MouseButton.Left&&_practice.SelectAt(GetViewport().GetCanvasTransform().AffineInverse()*mouse.Position))
+            var point=GetViewport().GetCanvasTransform().AffineInverse()*mouse.Position;
+            if(mouse.ButtonIndex==MouseButton.Right)
+            {
+                if(_practice.Trap.CancelAim())_hud.ShowAction(1,"Đã hủy chọn điểm đặt.",true);
+                else _practice.ClearTarget();
                 GetViewport().SetInputAsHandled();
+            }
+            if(mouse.ButtonIndex==MouseButton.Left)
+            {
+                if(_practice.Trap.IsAiming){_practice.Trap.RequestPlacement(point);GetViewport().SetInputAsHandled();}
+                else if(_practice.SelectAt(point))GetViewport().SetInputAsHandled();
+            }
             return;
         }
         if(_liveActors==null)return;
@@ -273,6 +283,11 @@ public partial class VisualPreview : Node2D
     public override void _Process(double delta)
     {
         _frames++;
+        if(_practice?.Trap.IsAiming==true)
+        {
+            if(_dialog?.IsOpen==true)_practice.Trap.CancelAim();
+            else _practice.Trap.SetPreview(_hud.BlocksWorldPointer(GetViewport().GetMousePosition())?null:GetGlobalMousePosition());
+        }
         _hud.Visible=!_cleanCapture&&!_hudHidden&&_dialog?.IsOpen!=true;
         if((_vfxReview||_questArtReview)&&!_reviewStarted&&_frames>3)
         {_reviewStarted=true;if(_questArtReview)ShowQuestArtReview();else ShowVfxReview();}
@@ -508,7 +523,8 @@ public partial class VisualPreview : Node2D
     private void Attack()
     {
         if(!BeginCombat(-1))return;
-        if(_practice?.IsCasting==true){_hud.ShowAction(-1,"Đang giương cung.");return;}
+        if(_practice?.IsCasting==true){_hud.ShowAction(-1,"Đang thi triển kỹ năng.");return;}
+        _practice?.Trap.CancelAim();
         if(_online!=null)
         {
             if(_onlineFrame?.World==null)return;
@@ -524,8 +540,10 @@ public partial class VisualPreview : Node2D
         if(!BeginCombat(index))return;
         if(_practice!=null)
         {
+            if(index==1){_hud.LastSkill=LinhCungTrapPractice.SkillName;_practice.Trap.ToggleAim();return;}
             if(index!=0){_hud.ShowAction(index,"Ô kỹ năng đang khóa.");return;}
-            if(_practice.IsCasting){_hud.ShowAction(0,"Đang thi triển Khóa Mạch.");return;}
+            _practice.Trap.CancelAim();
+            if(_practice.IsCasting){_hud.ShowAction(0,"Đang thi triển kỹ năng.");return;}
             var aim=_practice.Aim(_facing);
             FaceDirection(aim);
             if(!_practice.TryCast(aim)){_hud.ShowAction(0,"Chờ động tác hiện tại kết thúc.");return;}

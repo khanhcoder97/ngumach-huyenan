@@ -11,12 +11,12 @@ public partial class LinhCungPractice : Node2D
 {
     public const string AssetRoot = "res://assets/linh_cung_practice/";
     public const string SkillName = "Khóa Mạch";
-    private const uint TerrainLayer = 1;
-    private const uint DummyLayer = 2;
+    internal const uint TerrainLayer = 1;
+    internal const uint DummyLayer = 2;
     private const float Range = 150;
-    private static readonly Vector2 TargetOffset = new(0, -16);
+    internal static readonly Vector2 TargetOffset = new(0, -16);
 
-    private sealed class Effect
+    internal sealed class Effect
     {
         public Sprite2D Sprite { get; }
         public double Duration { get; }
@@ -48,13 +48,16 @@ public partial class LinhCungPractice : Node2D
             Seek(0);
         }
 
-        public void Seek(double seconds)
+        public void Seek(double seconds, bool flip=false)
         {
             int phase = Math.Clamp((int)(seconds / Duration * _frames.Length), 0, _frames.Length - 1);
-            if (phase == _shown) return;
+            if (phase == _shown && Sprite.FlipH == flip) return;
             _shown = phase;
+            Sprite.FlipH = flip;
             Sprite.RegionRect = _frames[phase].Region;
-            Sprite.Offset = -_frames[phase].Pivot;
+            var pivot = _frames[phase].Pivot;
+            if (flip) pivot.X = Sprite.RegionRect.Size.X - pivot.X;
+            Sprite.Offset = -pivot;
         }
     }
 
@@ -62,13 +65,15 @@ public partial class LinhCungPractice : Node2D
     private HeroAnimator _animator = null!;
     private Effect _dummyArt = null!, _arrow = null!, _tail = null!, _mark = null!;
     private StaticBody2D _dummy = null!;
+    private Node2D? _selectedTarget, _markedTarget;
     private Line2D _ring = null!;
     private Vector2 _aim, _velocity, _cursor;
     private Rect2 _icon;
     private Vector2? _castTarget;
     private double _flightTime, _dummyTime, _tailTime, _markTime;
-    public bool Selected => _ring.Visible;
-    public bool IsCasting => _animator.CurrentAction == "cast";
+    public bool Selected => _selectedTarget != null;
+    public bool IsCasting => _animator.CurrentAction is "cast" or "trap";
+    public LinhCungTrapPractice Trap { get; private set; } = null!;
     public bool LowFx { get; set; }
     public event Action<string, bool>? Feedback;
     internal bool ArrowVisible => _arrow.Sprite.Visible;
@@ -78,7 +83,8 @@ public partial class LinhCungPractice : Node2D
     internal int Misses { get; private set; }
     internal Vector2 TargetPoint => _dummy.GlobalPosition + TargetOffset;
 
-    public void Configure(CharacterBody2D hero, HeroAnimator animator, Node2D actors, Vector2 target)
+    public void Configure(CharacterBody2D hero, HeroAnimator animator, Node2D actors, Vector2 target,
+                          BenMuaEnvironment environment, Action<Vector2> face)
     {
         _hero = hero;
         _animator = animator;
@@ -95,7 +101,9 @@ public partial class LinhCungPractice : Node2D
             Width = 1.4f, DefaultColor = Color.FromHtml("#e7c783"), Closed = true, Visible = true,
             Points = Enumerable.Range(0, 24).Select(i => Vector2.FromAngle(i * Mathf.Tau / 24) * new Vector2(21, 9)).ToArray()
         };
-        _dummy.AddChild(_ring);
+        AddChild(_ring);
+        _selectedTarget = _dummy;
+        _ring.GlobalPosition = _dummy.GlobalPosition;
         _dummyArt = new Effect(_dummy, effects.GetProperty("dummy"), 42, 0);
         _dummyArt.Sprite.Visible = true;
         var arrow = effects.GetProperty("arrow");
@@ -104,37 +112,47 @@ public partial class LinhCungPractice : Node2D
         _arrow = new Effect(this, arrow, 22, 2);
         _tail = new Effect(this, effects.GetProperty("tail"), 24, 3);
         _mark = new Effect(this, effects.GetProperty("mark"), 34, 2);
-        _animator.ProjectileReleased += Release;
+        Trap = new LinhCungTrapPractice();
+        AddChild(Trap);
+        Trap.Configure(hero, animator, actors, environment, effects, face);
+        _animator.ActionReleased += Release;
     }
 
     public (Texture2D Texture, Rect2 Region) Icon => (_arrow.Sprite.Texture, _icon);
 
     public Vector2 Aim(Vector2 fallback)
     {
-        var direction = TargetPoint - (_hero.GlobalPosition + TargetOffset);
-        return Selected && direction.LengthSquared() > 1 ? direction.Normalized() : fallback;
+        if (_selectedTarget == null) return fallback;
+        var direction = _selectedTarget.GlobalPosition - _hero.GlobalPosition;
+        return direction.LengthSquared() > 1 ? direction.Normalized() : fallback;
     }
 
     public bool SelectAt(Vector2 world)
     {
-        if (TargetPoint.DistanceSquaredTo(world) > 24 * 24) return false;
+        var patrol = Trap.Target;
+        Node2D target = TargetPoint.DistanceSquaredTo(world) <=
+            (patrol.GlobalPosition + TargetOffset).DistanceSquaredTo(world) ? _dummy : patrol;
+        if ((target.GlobalPosition + TargetOffset).DistanceSquaredTo(world) > 24 * 24) return false;
+        _selectedTarget = target;
+        _ring.GlobalPosition = target.GlobalPosition;
         _ring.Visible = true;
-        Feedback?.Invoke("Đã chọn Rễ Nước tập luyện", true);
+        Feedback?.Invoke(target == _dummy ? "Đã chọn bia Khóa Mạch" : "Đã chọn Rễ Nước tuần tra", true);
         return true;
     }
 
-    public void ClearTarget() => _ring.Visible = false;
+    public void ClearTarget() { _selectedTarget = null; _ring.Visible = false; }
 
     public bool TryCast(Vector2 aim)
     {
         if (_arrow.Sprite.Visible || !_animator.TryCast()) return false;
         _aim = aim.Normalized();
-        _castTarget = Selected ? TargetPoint : null;
+        _castTarget = _selectedTarget?.GlobalPosition + TargetOffset;
         return true;
     }
 
-    private void Release(Vector2 muzzle)
+    private void Release(string action, Vector2 muzzle)
     {
+        if (action != "cast") return;
         _cursor = _hero.GlobalPosition + muzzle;
         Vector2 direction = _aim;
         if (_castTarget is {} target && target.DistanceSquaredTo(_cursor) > 1)
@@ -161,8 +179,9 @@ public partial class LinhCungPractice : Node2D
         if (hit.Count != 0)
         {
             _arrow.Sprite.Visible = false;
-            if (hit["collider"].AsGodotObject() == _dummy)
-                OnContact(hit["position"].AsVector2());
+            var collider = hit["collider"].AsGodotObject();
+            if (collider == _dummy || collider == Trap.Target)
+                OnContact(hit["position"].AsVector2(), (Node2D)collider!);
             else
                 OnMiss("Địa hình đã chặn mũi tên");
             return;
@@ -174,7 +193,7 @@ public partial class LinhCungPractice : Node2D
         if (_flightTime >= _arrow.Duration) OnMiss("Mũi tên không chạm mục tiêu");
     }
 
-    private void OnContact(Vector2 contact)
+    private void OnContact(Vector2 contact, Node2D target)
     {
         Hits++;
         _tail.Sprite.GlobalPosition = contact;
@@ -183,7 +202,8 @@ public partial class LinhCungPractice : Node2D
         _tail.Sprite.Visible = !LowFx;
         _tail.Seek(0);
         _tailTime = 0;
-        _mark.Sprite.GlobalPosition = TargetPoint;
+        _markedTarget = target;
+        _mark.Sprite.GlobalPosition = target.GlobalPosition + TargetOffset;
         _mark.Sprite.ResetPhysicsInterpolation();
         _mark.Sprite.Visible = true;
         _mark.Seek(0);
@@ -202,6 +222,9 @@ public partial class LinhCungPractice : Node2D
     {
         _dummyTime = (_dummyTime + delta) % _dummyArt.Duration;
         _dummyArt.Seek(_dummyTime);
+        if (_selectedTarget != null) _ring.GlobalPosition = _selectedTarget.GlobalPosition;
+        if (_mark.Sprite.Visible && _markedTarget != null)
+            _mark.Sprite.GlobalPosition = _markedTarget.GlobalPosition + TargetOffset;
         Advance(_tail, ref _tailTime, delta);
         Advance(_mark, ref _markTime, delta);
     }
@@ -214,5 +237,5 @@ public partial class LinhCungPractice : Node2D
         if (effect.Sprite.Visible) effect.Seek(time);
     }
 
-    public override void _ExitTree() => _animator.ProjectileReleased -= Release;
+    public override void _ExitTree() => _animator.ActionReleased -= Release;
 }

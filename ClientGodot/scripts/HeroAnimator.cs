@@ -8,7 +8,7 @@ namespace Ngumach.VisualReboot;
 public partial class HeroAnimator : Sprite2D
 {
     private sealed record PoseFrame(Texture2D Texture,Rect2 Rect,Vector2 Pivot,bool Flip);
-    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames,double Release,Vector2 Muzzle);
+    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames,double Release,Vector2 ReleaseOffset);
     private readonly Dictionary<string,Clip[]> _clips=new();
     private readonly Dictionary<string,Texture2D> _textures=new();
     private int _direction=4,_actionDirection=4;
@@ -22,7 +22,7 @@ public partial class HeroAnimator : Sprite2D
     public int AnimationFrameCount=>16;
     public const float BodyHeight=36f;
     public string AssetRoot{get;init;}="res://assets/motion16/";
-    public event Action<Vector2>? ProjectileReleased;
+    public event Action<string,Vector2>? ActionReleased;
     public bool IsAttacking=>_action.Length>0;
     public string CurrentAction=>_review?.Action??(_action.Length>0?_action:_moving?"walk":"idle");
     public override void _Ready()
@@ -50,9 +50,9 @@ public partial class HeroAnimator : Sprite2D
                 if(frames.Count!=16)throw new InvalidOperationException("Motion clip must contain16 authored poses");
                 double duration=clip.GetProperty("duration").GetDouble();
                 double release=clip.TryGetProperty("release",out var at)?at.GetDouble():-1;
-                var muzzle=clip.TryGetProperty("muzzle",out var m)?new Vector2(m[0].GetSingle(),m[1].GetSingle()):Vector2.Zero;
+                var offset=clip.TryGetProperty("releaseOffset",out var m)?new Vector2(m[0].GetSingle(),m[1].GetSingle()):Vector2.Zero;
                 if(release>=duration)throw new InvalidOperationException("Release time must be inside the motion clip.");
-                directions.Add(new Clip(duration,clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray(),release,muzzle));
+                directions.Add(new Clip(duration,clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray(),release,offset));
             }
             if(directions.Count!=8)throw new InvalidOperationException("Motion clip must cover8directions");
             _clips[action.Name]=directions.ToArray();
@@ -68,10 +68,10 @@ public partial class HeroAnimator : Sprite2D
     }
     public void Attack()=>StartAction("attack");
     public void Cast()=>StartAction("cast");
-    public bool TryCast()
+    public bool TryCast(string action="cast")
     {
-        if(IsAttacking)return false;
-        Cast();
+        if(IsAttacking||!_clips.ContainsKey(action))return false;
+        StartAction(action);
         return true;
     }
     public void ReviewPose(string action,int direction,int frame){_review=(action,direction,frame);RenderFrame();}
@@ -86,7 +86,7 @@ public partial class HeroAnimator : Sprite2D
             var previous=_actionClock;
             _actionClock+=delta;
             if(previous<clip.Release&&_actionClock>=clip.Release)
-                ProjectileReleased?.Invoke(clip.Muzzle*BodyHeight);
+                ActionReleased?.Invoke(_action,clip.ReleaseOffset*BodyHeight);
             if(_actionClock>=clip.Duration){_action="";if(clip.Release>=0)_clock=0;}
         }
         RenderFrame();

@@ -18,7 +18,23 @@ Hạt bắt đầu tại điểm đo trên tay và đáp xuống tâm chung củ
 
 Mở `Implementation/Reports/Evidence/Actor_Batch_20261118b/DayGai/<hướng>/project.json`. Mỗi project có năm lớp chỉnh độc lập và hai clip. Clip đầu, `trigger`, chuyển sang thu khi bẫy được kích hoạt sớm. Clip thứ hai, `expire`, phát đủ hai vòng chờ rồi thu. Có thể kéo mốc timeline tới `seed_release`, `trap_growth`, `trap_armed` hoặc mốc kết thúc.
 
-Các mốc chờ của clip kiểm hình là 0,98 giây và 2,24 giây. Khi tích hợp gameplay, tín hiệu `TRAP_STATE` sẽ quyết định lúc đổi trạng thái. Hiện gói dùng trong Studio, còn gameplay cần nối đặt bẫy, kích hoạt và hết hạn với hợp đồng chiến đấu.
+Các mốc chờ của clip kiểm hình là 0,98 giây và 2,24 giây. Trong khu luyện tập, bẫy đổi trạng thái theo va chạm và thời gian của cảnh. Khi triển khai online, tín hiệu `TRAP_STATE` từ máy chủ sẽ quyết định lúc đổi trạng thái.
+
+## Thử tại Bến Mưa
+
+Mở PowerShell tại thư mục dự án và chạy.
+
+```powershell
+& .\ClientGodot\Run_Preview.ps1 -LinhCungPractice
+```
+
+Nhấn **2** hoặc bấm ô **Dây Gai**, rồi bấm chuột trái vào mặt đất. Vòng xanh cho biết có thể đặt. Vòng đỏ báo ngoài tầm, có địa hình chắn hoặc nằm trên nước. Nhấn **Esc** hoặc chuột phải để hủy chọn điểm. Phím **1** tiếp tục bắn Khóa Mạch.
+
+Rễ Nước đi tuần dọc đường phía tây chỗ xuất phát. Đặt bẫy trên đường đi để thử kích hoạt hoặc đặt ở khoảng đất trống để thử hết hạn. Mỗi lần đặt phát hoạt ảnh thả hạt theo hướng đã chọn. Vòng báo mọc sáng trong 0,45 giây, rồi bẫy chờ tối đa 4 giây trong phạm vi 2 m. Bẫy thu lại sau lần kích hoạt đầu tiên và làm chậm bia 40% trong 2,5 giây. Nếu hết hạn, dây tự thu. Khu tập dùng tầm đặt 6 m và cho phép thử lại sau khi bẫy thu xong.
+
+Phần sát thương, linh lực, hồi chiêu và trạng thái online cần nối với máy chủ. Khu tập hiện xác nhận thao tác đặt đất, pha chạm và chuyển động chậm của bia.
+
+Chạy `Run_Preview.ps1 -LinhCungPractice -Test` để làm lại bài kiểm. Godot đã kiểm đủ 128 khung nhân vật khi đặt bẫy, chặn điểm đặt trong công trình và trên nước, xác nhận bia bước từ ngoài vào trong vòng bẫy, và xác nhận bẫy trên đất trống tự thu sau 4 giây. Ảnh gameplay và số liệu nằm trong `Implementation/Reports/Evidence/Day_Gai_Practice_20261118b/`. Đo khi di chuyển ở camera rộng trên GeForce 820M đạt 59,89 FPS trung bình trên 720 frame, p95 16,88 ms.
 
 ## Kết quả kiểm hình
 

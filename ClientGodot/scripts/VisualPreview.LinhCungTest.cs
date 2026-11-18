@@ -16,9 +16,9 @@ public partial class VisualPreview
             if (!condition) throw new InvalidOperationException(message);
             assertions++;
         }
-        async Task Until(Func<bool> condition, string message)
+        async Task Until(Func<bool> condition, string message, int frameLimit = 150)
         {
-            for (int frame = 0; frame < 150 && !condition(); frame++)
+            for (int frame = 0; frame < frameLimit && !condition(); frame++)
                 await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             Check(condition(), message);
         }
@@ -49,7 +49,7 @@ public partial class VisualPreview
                 for (int i = 0; i < 12; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             }
             await Capture("ready");
-            KeyPress(Key.Key2);
+            KeyPress(Key.Key3);
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             Check(!practice.IsCasting && practice.Releases == 0, "Unavailable skill does not start the animation.");
             Click(PreviewHud.SkillCenters()[0]);
@@ -100,6 +100,106 @@ public partial class VisualPreview
                 Check(practice.Releases == before + 1, $"Facing {facing} fires only once.");
             }
             GD.Print($"LINH_CUNG_PRACTICE PASS assertions={assertions} facings=8 authoringFrames=128");
+            int beforeTrap = assertions;
+            var trap = practice.Trap;
+            void PlaceAt(Vector2 world) => Click(GetViewport().GetCanvasTransform() * world);
+            var start = _hero.GlobalPosition;
+            Click(PreviewHud.SkillCenters()[1]);
+            await Until(() => trap.IsAiming, "The second HUD button selects a trap position.");
+            Click(PreviewHud.SkillCenters()[2]);
+            Check(trap.IsAiming && trap.Placed == 0, "Clicking another HUD slot never plants under the HUD.");
+            KeyPress(Key.Escape);
+            await Until(() => !trap.IsAiming, "Escape cancels ground selection.");
+            Check(trap.Placed == 0, "No seed is released after cancelling.");
+
+            KeyPress(Key.Key2);
+            await Until(() => trap.IsAiming, "Key 2 can select a trap location.");
+            PlaceAt(start + new Vector2(196,0));
+            await Until(() => _hud.CombatHint.Contains("Điểm đặt"), "Out-of-range placement is rejected.");
+            Check(trap.IsAiming && !practice.IsCasting, "Invalid placement keeps the cursor without starting cast.");
+            var inside = _environment.SolidFootprints.Find(rect => rect.GetCenter().DistanceTo(start) < 100);
+            Check(inside.Size != Vector2.Zero, "There is a terrain obstacle near the practice spawn.");
+            PlaceAt(inside.GetCenter());
+            for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Check(trap.IsAiming && trap.Placed == 0, "Terrain footprint cannot receive a seed.");
+
+            var shore = start + new Vector2(-88,100);
+            var water = start + new Vector2(-88,190);
+            Check(_environment.IsWalkable(shore) && Geometry2D.IsPointInPolygon(water, _environment.WaterPolygon) &&
+                  !_environment.Piers.Exists(pier => pier.HasPoint(water)), "Water rejection uses a real river cell beside dry ground.");
+            _hero.GlobalPosition = shore;
+            _hero.ResetPhysicsInterpolation();
+            for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            PlaceAt(water);
+            for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Check(trap.IsAiming && trap.Placed == 0, "Water inside placement range rejects the ground click.");
+            _hero.GlobalPosition = start;
+            _hero.ResetPhysicsInterpolation();
+            for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            await Until(() => trap.Target.Velocity.X > 20 && trap.Target.GlobalPosition.X < start.X - 100,
+                        "Patrol approaches the area where it will step outside the trap before arming.", 380);
+            var patrolPath = start + new Vector2(-106,8);
+            PlaceAt(patrolPath);
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Windup, "Valid ground click begins the authored placement pose.");
+            Check(animator.ActionDirection == 6 && trap.Placed == 0, "The cast faces its ground target and waits for the hand cue.");
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Seed, "The release cue starts the seed effect.");
+            Check(trap.GroundPoint.DistanceTo(patrolPath) < .2f && trap.Placed == 1, "Seed begins at the confirmed ground point.");
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Growing, "The seed's contact starts growth.");
+            if (_capture != null)
+            {
+                for (int frame = 0; frame < 18; frame++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                await Capture("trap_growth");
+            }
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Armed, "The trap becomes armed after growing.");
+            Check(trap.Triggered == 0 && trap.Expired == 0, "Growth and arming have no trigger side effect.");
+            Check(trap.Target.GlobalPosition.DistanceTo(trap.GroundPoint) > 40,
+                  "The patrol is outside the two-metre boundary at arming.");
+            await Capture("trap_armed");
+            KeyPress(Key.Key2);
+            Check(!trap.IsAiming, "An active trap prevents a duplicate placement.");
+            await Until(() => trap.Triggered == 1, "The patrol enters the armed trap.", 270);
+            Check(trap.CurrentStage == LinhCungTrapPractice.Stage.Retracting && trap.SlowSeconds > 2.4,
+                  "The trap retracts once and applies the patrol slow.");
+            for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Check(Mathf.IsEqualApprox(trap.Target.Velocity.Length(), 32 * .6f), "Patrol steps slow by forty percent after contact.");
+            if (_capture != null)
+            {
+                for (int frame = 0; frame < 8; frame++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                await Capture("trap_trigger");
+            }
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Idle, "Triggered trap completes retraction.");
+            Check(trap.Triggered == 1 && trap.Expired == 0, "A resolved trap cannot expire or hit again.");
+
+            KeyPress(Key.Key2);
+            await Until(() => trap.IsAiming, "A new placement is available after recovery.");
+            var emptyGround = start + new Vector2(76,22);
+            PlaceAt(emptyGround);
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Armed, "An empty-ground trap also arms.", 165);
+            for (int frame = 0; frame < 236; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Check(trap.CurrentStage == LinhCungTrapPractice.Stage.Armed, "The empty trap remains active for its four-second window.");
+            await Until(() => trap.Expired == 1, "The empty trap expires without a new hit.");
+            Check(trap.Triggered == 1 && trap.Placed == 2 && trap.SlowSeconds == 0, "Expiry never applies crowd control.");
+            if (_capture != null)
+            {
+                for (int frame = 0; frame < 8; frame++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                await Capture("trap_expire");
+            }
+            await Until(() => trap.CurrentStage == LinhCungTrapPractice.Stage.Idle, "Expired trap retracts.");
+            for (int facing = 0; facing < 8; facing++)
+            {
+                FaceDirection(Vector2.Up.Rotated(facing * Mathf.Pi / 4));
+                Check(animator.TryCast("trap") && animator.ActionDirection == facing, $"Trap selects authored facing {facing}.");
+                var frames = new HashSet<int>();
+                for (int tick = 0; tick < 100 && practice.IsCasting; tick++)
+                {
+                    frames.Add(animator.DisplayedFrame);
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                Check(frames.Count == 16 && !practice.IsCasting, $"Trap facing {facing} plays all sixteen poses and recovers.");
+            }
+            Check(trap.Placed == 2, "An animation alone cannot add a trap.");
+            GD.Print($"LINH_CUNG_TRAP PASS assertions={assertions - beforeTrap} facings=8 authoringFrames=128");
             GetTree().Quit();
         }
         catch (Exception error)
