@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "class_linh_cung_skill_06_ne",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "class_linh_cung_skill_06_ne",
+      "Kind": "sprite",
+      "Name": "class_linh_cung_skill_06_ne",
+      "Visible": true,
+      "Z": 0,
+      "Texture": "textures/9d872116337f4d2c4caf7b6e4cd59ddb6bdd62afab94fd516666f2178986d51c.png",
+      "Regions": [
+        [
+          0,
+          0,
+          312,
+          316
+        ],
+        [
+          312,
+          0,
+          311,
+          316
+        ],
+        [
+          623,
+          0,
+          311,
+          316
+        ],
+        [
+          934,
+          0,
+          312,
+          316
+        ],
+        [
+          0,
+          316,
+          312,
+          316
+        ],
+        [
+          312,
+          316,
+          311,
+          316
+        ],
+        [
+          623,
+          316,
+          311,
+          316
+        ],
+        [
+          934,
+          316,
+          312,
+          316
+        ],
+        [
+          0,
+          632,
+          312,
+          315
+        ],
+        [
+          312,
+          632,
+          311,
+          315
+        ],
+        [
+          623,
+          632,
+          311,
+          315
+        ],
+        [
+          934,
+          632,
+          312,
+          315
+        ],
+        [
+          0,
+          947,
+          312,
+          316
+        ],
+        [
+          312,
+          947,
+          311,
+          316
+        ],
+        [
+          623,
+          947,
+          311,
+          316
+        ],
+        [
+          934,
+          947,
+          312,
+          316
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 152.0,
+        "PivotY": 287,
+        "ScaleX": 0.5384615384615384,
+        "ScaleY": 0.5384615384615384,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "class_linh_cung_skill_06_ne",
+      "Direction": "NE",
+      "Loop": false,
+      "DurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "Tracks": [
+        {
+          "LayerId": "class_linh_cung_skill_06_ne",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 152.0,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 143.0,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 140.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 136.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 154.0,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 148.0,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 144.0,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 142.5,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 155.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 145.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 144.0,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 138.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 155.0,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 145.5,
+                "PivotY": 287,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 141.0,
+                "PivotY": 288,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 137.5,
+                "PivotY": 288,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": [],
+      "SourceNote": "Bách Tiễn Quy Tông · Vòng rêu và bốn đợt mưa tên."
+    }
+  ]
+}

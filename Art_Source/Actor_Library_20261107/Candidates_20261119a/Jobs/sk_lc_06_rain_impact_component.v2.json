@@ -1,0 +1,33 @@
+{
+  "batch": "20261119a",
+  "expectedSourcePages": 11,
+  "scope": "LINH_CUNG_BACH_TIEN_EIGHT_AUTHORED_FACINGS_AND_THREE_ZONE_EFFECTS",
+  "version": 2,
+  "id": "sk_lc_06_rain_impact_component",
+  "prompt": "Draw sixteen small original three-leaf ground contact graphics for a 2D top-down game, in a four-by-four sprite atlas. The attached muted leaf fragments provide palette and the leaf silhouette only. Each cell contains ONLY three detached tiny leaves very close around one common point and nothing taller than the combined width. There is no intact arrow in any cell, no shaft, no fletching, and no long vertical line. Use small pale ochre and olive pixel accents with a dark moss outline, no glow. The three leaves splay out by a few pixels and grow gradually smaller and less opaque through all 16 distinct phases, maintaining the central origin. Sparse, earthy effect. Real RGBA transparency, empty uniform transparent gutters, no bodies, checkerboard, text, captions, dividers or surface. Every phase isolated, all 16 cells visible. This sprite layers separately from the arrow sprite so it must consist exclusively of low detached leafy debris.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_fall_component_v1_20261118d.png"
+  ],
+  "timing": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20
+  ],
+  "seconds": 0.32,
+  "authoringUse": {
+    "role": "GROUND_CONTACT_FLECKS"
+  }
+}

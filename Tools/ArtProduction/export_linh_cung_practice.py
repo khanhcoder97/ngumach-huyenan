@@ -4,6 +4,9 @@ from itertools import accumulate
 import json
 import shutil
 
+from prepare_linh_cung_bach_tien import (ARROW as RAIN_ARROW, CONTACT_POSE, FLECKS as RAIN_FLECKS,
+                                        OUTPUT as RAIN_OUTPUT, RELEASE_POSE as RAIN_RELEASE_POSE, RING as RAIN_RING)
+
 from build_linh_cung_khoa_mach_preview import ARROW, MARK, TAIL, TARGET, FACING_LAYOUTS
 from prepare_linh_cung_khoa_mach_review import OUTPUT
 from prepare_linh_cung_day_gai import BODY as TRAP_BODY, EFFECTS as TRAP_EFFECTS, OUTPUT as TRAP_OUTPUT
@@ -43,7 +46,12 @@ def export(check):
     assert retreat_review['nativeAuditSha256'] == sha(retreat_audit_path)
     retreat_audit = read(retreat_audit_path)
     assert set(retreat_review['nativeFullFacingsReviewed']) == set(FACINGS)
-    reports = (audit, trap_audit, volley_audit, fan_audit, retreat_audit)
+    rain_review = read(RAIN_OUTPUT / 'manual_review.json')
+    rain_audit_path = RAIN_OUTPUT / 'native_audit.json'
+    assert rain_review['nativeAuditSha256'] == sha(rain_audit_path)
+    rain_audit = read(rain_audit_path)
+    assert set(rain_review['nativeAssemblyFacingsReviewed']) == set(FACINGS)
+    reports = (audit, trap_audit, volley_audit, fan_audit, retreat_audit, rain_audit)
     reviewed = {item['id']: item['sourceSha256'] for report in reports
                 for item in report['sourceViews']}
     manifest = dict(clips={}, effects={}, sources={})
@@ -208,6 +216,28 @@ def export(check):
                           iconRect=icon_rect(direction['frames'][FULL_POSE]), fullAt=sum(timing[:FULL_POSE]) / 1000,
                           fallAt=FALL_DELAY_MS / 1000)
         manifest['effects'][label] = effect
+    rain_cast = []
+    for facing in FACINGS:
+        identifier = 'class_linh_cung_skill_06_' + facing.lower()
+        record, direction = candidate(identifier, RAIN_OUTPUT)
+        timing = record['sourceFrameDurationsMs']
+        assert direction['direction'] == facing
+        rain_cast.append(dict(format_clip(direction, package(identifier, record), sum(timing) / 1000),
+                              frameEnds=[end / 1000 for end in accumulate(timing)],
+                              release=sum(timing[:RAIN_RELEASE_POSE]) / 1000))
+    manifest['clips']['rain'] = rain_cast
+    for label, identifier in (('rain_ring', RAIN_RING), ('rain_arrow', RAIN_ARROW), ('rain_impact', RAIN_FLECKS)):
+        record, direction = candidate(identifier, RAIN_OUTPUT)
+        timing = record['sourceFrameDurationsMs']
+        effect = format_clip(direction, package(identifier, record), sum(timing) / 1000)
+        if identifier == RAIN_RING:
+            geometry = read(RAIN_OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+            effect.update(sourceHeight=geometry['sourceWidth'], ratioY=geometry['ratioY'],
+                          iconRect=icon_rect(direction['frames'][0]))
+        if identifier == RAIN_ARROW:
+            effect['contactAt'] = sum(timing[:CONTACT_POSE]) / 1000
+        manifest['effects'][label] = effect
+
     records = {record['id']: record for record in read(ART / 'generation_records.json')}
     approvals = {record['id']: record['sourceSha256'] for record in read(ART / 'visual_review.json')['sourceApprovals']}
     for label, identifier, duration in (('mark', MARK, .96), ('dummy', TARGET, 1.6),
@@ -228,7 +258,7 @@ def export(check):
         assert output.read_text(encoding='utf-8') == document, 'Practice pack is out of date'
     else:
         output.write_text(document, encoding='utf-8', newline='\n')
-    print('Linh Cung practice: five skills with eight authored facings each.')
+    print('Linh Cung practice: six skills with eight authored facings each.')
 
 
 if __name__ == '__main__':

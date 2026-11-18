@@ -6,9 +6,10 @@ using System.Text.Json;
 namespace Ngumach.VisualReboot;
 
 /// <summary>Ground targeting, single-use trap state and a patrol for local practice.</summary>
-public partial class LinhCungTrapPractice : Node2D
+public partial class LinhCungTrapPractice : Node2D, IPracticeGroundAim
 {
     public const string SkillName = "Dây Gai";
+    public int Slot => 1;
     private const float Radius = 2 * TopDownCamera.PixelsPerWorldUnit;
     private const float Range = 6 * TopDownCamera.PixelsPerWorldUnit;
     private const float PatrolSpeed = 32;
@@ -129,16 +130,7 @@ public partial class LinhCungTrapPractice : Node2D
         if (IsAiming && _requestedPoint == null) _requestedPoint = point;
     }
 
-    private bool CanPlace(Vector2 point)
-    {
-        var from = _hero.GlobalPosition;
-        float distance = from.DistanceSquaredTo(point);
-        if (distance > Range * Range || !_terrain.IsWalkable(point)) return false;
-        if (distance < 1) return true;
-        var ray = PhysicsRayQueryParameters2D.Create(from, point, LinhCungPractice.TerrainLayer);
-        ray.Exclude = new Godot.Collections.Array<Rid> { _hero.GetRid() };
-        return GetWorld2D().DirectSpaceState.IntersectRay(ray).Count == 0;
-    }
+    private bool CanPlace(Vector2 point) => LinhCungPractice.CanAimAtGround(_hero, _terrain, point, Range);
 
     private void UpdateAim()
     {

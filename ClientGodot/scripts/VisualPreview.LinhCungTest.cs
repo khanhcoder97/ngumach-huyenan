@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ngumach.VisualReboot;
@@ -50,8 +51,10 @@ public partial class VisualPreview
             }
             await Capture("ready");
             KeyPress(Key.Key6);
-            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-            Check(!practice.IsCasting && practice.Releases == 0, "Unavailable skill does not start the animation.");
+            await Until(() => practice.Rain.IsAiming, "The ultimate opens ground aiming without a cast.");
+            Check(!practice.IsCasting && practice.Releases == 0 && !practice.Rain.Active, "Aiming has no hit or release.");
+            KeyPress(Key.Escape);
+            await Until(() => !practice.Rain.IsAiming, "Escape closes the ultimate cursor.");
             Click(PreviewHud.SkillCenters()[0]);
             await Until(() => practice.IsCasting, "The first HUD button starts Khóa Mạch.");
             Check(animator.ActionDirection == 2 && !practice.ArrowVisible && !practice.MarkVisible, "The release and mark wait for the draw.");
@@ -107,9 +110,11 @@ public partial class VisualPreview
             Click(PreviewHud.SkillCenters()[1]);
             await Until(() => trap.IsAiming, "The second HUD button selects a trap position.");
             Click(PreviewHud.SkillCenters()[5]);
-            Check(trap.IsAiming && trap.Placed == 0, "Clicking another HUD slot never plants under the HUD.");
+            await Until(() => practice.Rain.IsAiming, "The sixth HUD button switches ground selection.");
+            Check(!trap.IsAiming && trap.Placed == 0 && practice.Rain.IsAiming && !practice.Rain.Active,
+                  "Switching ground skills changes the cursor without casting underneath the HUD.");
             KeyPress(Key.Escape);
-            await Until(() => !trap.IsAiming, "Escape cancels ground selection.");
+            await Until(() => !practice.Rain.IsAiming, "Escape cancels the replacement cursor.");
             Check(trap.Placed == 0, "No seed is released after cancelling.");
 
             KeyPress(Key.Key2);
@@ -438,6 +443,101 @@ public partial class VisualPreview
                       $"Retreat facing {facing} has one shot and two marks.");
             }
             GD.Print($"LINH_CUNG_RETREAT PASS assertions={assertions - beforeRetreat} facings=8 authoringFrames=128");
+
+            int beforeRain = assertions;
+            var rain = practice.Rain;
+            await StandAt(start);
+            Click(PreviewHud.SkillCenters()[5]);
+            await Until(() => rain.IsAiming, "The sixth HUD button opens the ultimate cursor.");
+            PlaceAt(start + new Vector2(244, 0));
+            await Until(() => _hud.CombatHint.Contains("ngoài tầm"), "The ultimate rejects a center beyond twelve metres.");
+            Check(rain.IsAiming && !rain.Active, "Invalid range keeps the cursor open.");
+            await StandAt(shore);
+            PlaceAt(water);
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            Check(rain.IsAiming && !rain.Active, "A real water point inside the cast range is rejected.");
+            await StandAt(start);
+            PlaceAt(closePosition);
+            await Until(() => rain.Active && rain.WarningVisible, "Valid dry ground starts a fixed warning circle.");
+            ulong chargeStarted = Engine.GetPhysicsFrames();
+            Check(animator.CurrentAction == "rain" && rain.Center.DistanceTo(closePosition) < .2f &&
+                  rain.VisibleArrows == 0 && rain.WavesApplied == 0,
+                  "The bow raises while the warning remains centered and has no early contacts.");
+            await Capture("rain_charge");
+            await Until(() => !rain.WarningVisible && rain.VisibleArrows > 0, "The first arrows follow the complete warning.");
+            ulong warningTicks = Engine.GetPhysicsFrames() - chargeStarted;
+            Check(warningTicks is 72 or 73, $"The visible warning spans 1.2 seconds at 60 Hz ({warningTicks} ticks).");
+            Check(rain.WavesApplied == 0 && rain.VisibleArrows == 6, "Six full-VFX shafts descend before their first contact.");
+            await Capture("rain_drop");
+            ulong previousWave = 0;
+            for (int wave = 1; wave <= 4; wave++)
+            {
+                int index = wave;
+                await Until(() => rain.WavesApplied == index, $"Rain wave {wave} contacts as its own event.");
+                ulong tick = Engine.GetPhysicsFrames();
+                if (previousWave > 0) Check(tick - previousWave == 12, "Rain contacts are 200 milliseconds apart.");
+                Check(rain.Hits == wave && rain.FactorPerWave == 75, "One in-zone dummy receives seventy-five percent in each wave.");
+                previousWave = tick;
+            }
+            await Capture("rain_wave4");
+            await Until(() => !rain.Active, "The ultimate clears its remaining visual layers.");
+            Check(rain.WavesApplied == 4 && rain.Hits == 4 && rain.VisibleArrows == 0, "There is no extra hit or visible projectile after cleanup.");
+
+            // Inject the server-style resource for the boosted training case.
+            // The practice does not replace the normal-attack earn rules.
+            rain.WoodMarks = 3;
+            practice.LowFx = true;
+            KeyPress(Key.Key6);
+            await Until(() => rain.IsAiming, "The ultimate can aim again after recovery.");
+            KeyPress(Key.Escape);
+            await Until(() => !rain.IsAiming, "Escape cancels the empowered aim.");
+            Check(rain.WoodMarks == 3, "Canceling ground selection preserves the resource.");
+            KeyPress(Key.Key6);
+            await Until(() => rain.IsAiming, "The empowered cast reacquires the cursor.");
+            PlaceAt(closePosition);
+            await Until(() => rain.Active && rain.WarningVisible, "Three marks empower an accepted cast.");
+            ulong boostedStart = Engine.GetPhysicsFrames();
+            Check(rain.Empowered && rain.WoodMarks == 0 && rain.Center.DistanceTo(closePosition) < .2f &&
+                  rain.BoostVisible && rain.FactorPerWave == 90, "Boost consumes three marks and adds visible center glints.");
+            await Capture("rain_boost");
+            await Until(() => !rain.WarningVisible && rain.VisibleArrows > 0, "Low VFX keeps the first falling wave.");
+            Check(Engine.GetPhysicsFrames() - boostedStart == warningTicks && rain.VisibleArrows == 3 && !rain.BoostVisible,
+                  "Boost and Low VFX preserve the warning window and keep three core arrows.");
+            await Until(() => !rain.Active, "All boosted waves finish.");
+            Check(rain.WavesApplied == 4 && rain.Hits == 4 && rain.FactorPerWave * rain.WavesApplied == 360,
+                  "Low VFX does not remove hits and the boost is twenty percent overall.");
+            practice.LowFx = false;
+
+            var candidates = new List<Node2D>();
+            for (int i = 0; i < 11; i++)
+            {
+                var target = new Node2D { Position = closePosition + new Vector2(i * 11, 0) };
+                AddChild(target);
+                candidates.Add(target);
+            }
+            var distant = new Node2D { Position = closePosition + new Vector2(LinhCungRainPractice.Radius + 1, 0) };
+            AddChild(distant);
+            Check(LinhCungRainPractice.TargetsInZone(new[] { distant }, closePosition).Count() == 0,
+                  "A target outside the six-metre radius does not take a hit.");
+            var selected = LinhCungRainPractice.TargetsInZone(candidates.AsEnumerable().Reverse(), closePosition).ToArray();
+            Check(selected.Length == 8 && selected.SequenceEqual(candidates.Take(8)), "The nearest eight ordinary targets are selected.");
+            foreach (var target in candidates) target.QueueFree();
+            distant.QueueFree();
+
+            for (int facing = 0; facing < 8; facing++)
+            {
+                FaceDirection(Vector2.Up.Rotated(facing * Mathf.Pi / 4));
+                Check(animator.TryCast("rain") && animator.ActionDirection == facing, $"Rain uses its dedicated facing {facing}.");
+                var poses = new HashSet<int>();
+                for (int tick = 0; tick < 100 && practice.IsCasting; tick++)
+                {
+                    poses.Add(animator.DisplayedFrame);
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                Check(poses.Count == 16 && !practice.IsCasting, $"Rain facing {facing} renders all sixteen poses.");
+            }
+            Check(!rain.Active && rain.WavesApplied == 4, "Playing body art cannot start a new damage area.");
+            GD.Print($"LINH_CUNG_RAIN PASS assertions={assertions - beforeRain} facings=8 authoringFrames=128");
             GetTree().Quit();
         }
         catch (Exception error)

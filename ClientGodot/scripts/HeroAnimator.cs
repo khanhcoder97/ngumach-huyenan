@@ -152,7 +152,15 @@ public partial class HeroAnimator : Sprite2D
         if(ReferenceEquals(_shown,frame))return;_shown=frame;
         Texture=frame.Texture;RegionRect=frame.Rect;FlipH=frame.Flip;
         var pivot=frame.Pivot;if(frame.Flip)pivot.X=frame.Rect.Size.X-pivot.X;
-        Offset=-pivot;Scale=Vector2.One*(BodyHeight/clip.Height);
+        Offset = -pivot;
+        var desiredScale = Vector2.One * (BodyHeight / clip.Height);
+        if (!Scale.IsEqualApprox(desiredScale))
+        {
+            // This scale compensates for the source atlas size. Blending it
+            // across a texture swap draws that texture at the wrong size.
+            Scale = desiredScale;
+            ResetPhysicsInterpolation();
+        }
     }
     private int CurrentPose(Clip clip)
     {

@@ -1,0 +1,359 @@
+{
+  "batch": "20261119a",
+  "catalogueUnchanged": true,
+  "productionApproved": false,
+  "sourceViews": [
+    {
+      "id": "class_linh_cung_skill_06_e",
+      "sourceSha256": "e828117a05a1a9f8f8f8285b4c2f865400a627d9f4bc50ca58f990505be78d1f",
+      "projectSha256": "2f35092e0c420a25d8f70cd3137bf04b0852ebbc719936c4ef804a0780557425",
+      "movieSha256": "da9d4913a8cc8cc60fbf0e5756b3913265cc94cfbd4b12b7e81acd11a87e8cc7",
+      "montageSha256": "fe98d594dc2df93017ab6ce9f81070794100be4cc816f80b6231e49d7f993780",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_s",
+      "sourceSha256": "9df0693bd1dabfb79c11c350f8b53014fe0244c107e86e79cbbbbc430dfefc18",
+      "projectSha256": "5f235ab6eb13d662a2c9c247207b04eb923682dac7ca5480df4f51d2503957f0",
+      "movieSha256": "263742d2796d29afbec1058a04c1631647a65efc93e7ea502d8e9735d8e1be1c",
+      "montageSha256": "244b942ca904796104928945491673f8f18a48ce73c1518b7f13e1a5f8160bc6",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_n",
+      "sourceSha256": "bfbacbcbab623e9f6a451c315ddcef4ffe008efc3d77e304c57c0a944d876bb4",
+      "projectSha256": "f0322dd6a6df4d30a9632cf6c047829bcc1f2d135bd167cf14ad0e34cd56fa5e",
+      "movieSha256": "ca8f8862efdaa7875dbbedce9887c71c61a4c9b4ac7668faea5ab2c2789b1e38",
+      "montageSha256": "e11e04f6168f025d44e87540b773583bcfc1dd049ba9576c94ef7e9b3162f59d",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_w",
+      "sourceSha256": "946711638d0ede2f0ed5f3098f64b7e977dc4f9a428e9d820066fb7fed049fd5",
+      "projectSha256": "695f75a7d2531fa88e716332b9d5b299910952968415cab4f9e4de1992018b31",
+      "movieSha256": "53dd4e2971f614efe46ae6ee33ca5f9f392dd96fb85b9314f1c1a6c4fb44cb42",
+      "montageSha256": "7f61693564947883ba5e632b87de0026b527f30a8a20cdc1508ad43c54c227b3",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_ne",
+      "sourceSha256": "9d872116337f4d2c4caf7b6e4cd59ddb6bdd62afab94fd516666f2178986d51c",
+      "projectSha256": "f4a6a84aec7ce21f9f131bcdc1d0ffc728e0392d4c2365a859f3521164667cbc",
+      "movieSha256": "31aed19086cec63028d9163b3049d01ccb77cd0004535f46022bbf663707d92b",
+      "montageSha256": "c13804e36731a03bc635f9d46efab007b1244a48cad38acf002f28f101a311b7",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_sw",
+      "sourceSha256": "63f02af1c0dc5bd63eca4d04e6f9e80c0b999598712a3930e14d479efac343af",
+      "projectSha256": "cf775020f99527b2082897e2355d06f6afc1816b5590f2f78614c9a9da97cc5f",
+      "movieSha256": "44c591f5c06c384eccfaa7c9f5badcfee9ebd234eb2a23ec64df9b102cb29020",
+      "montageSha256": "ea1545bbfb2d3df50d166a9f2fa4870d5c75241d9dcc2a2c2eabc22e15591bae",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_nw",
+      "sourceSha256": "69b420f2284afe07bd540a321a539ddd4e1529831495b0793294175825093e1e",
+      "projectSha256": "f59a4afea620e2c1719dc23d10f259d88e743102939ffd2cf88511096644cdf5",
+      "movieSha256": "1c137ca3fe49b3d062d85035c02aea7d74b20256c27279e0767cd71d55c70817",
+      "montageSha256": "4fa96107ff4809dcbeb1b99b50f02527e3fb61c13e3945ea65c7023e40e27638",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_06_rain_telegraph_component",
+      "sourceSha256": "ddd1f6204bd1c34bfaafae11f700081095716b6f93b46d27c871a388fafb1eb4",
+      "projectSha256": "9bb8080375b558f1d425a45a3c670ed4dac44f816ba637a898428d83cd1a0fc4",
+      "movieSha256": "6fb93f95dda92f337860d03ac044ddeacecff96fbb8009962181093f9bc53913",
+      "montageSha256": "45b80b39d1b49e3d5dc86713c9743b4db317b650a8341bde6bd9b60b5bcb5c38",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_06_rain_arrow_component",
+      "sourceSha256": "269fd998a2eec0fbae0f06e58b5990871211cf17cb20f0ac90cce626bb9a9409",
+      "projectSha256": "1c55cda51fd77c8d7d113b95042ee2b1b54fbdbeb41b603025c1da3d61b3eb24",
+      "movieSha256": "5ba86fa860b80dbe7d5ba32d8ef820f46bf1b1afcb4e33750a49a493596b6f00",
+      "montageSha256": "dd7902224af7ed9550902c893eabf121212fe0f133ba7bbae1801c5ccf5f627f",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_06_rain_impact_component",
+      "sourceSha256": "fa906abad2074b033222a2f1eb5b289ddf83354ec9ed9569e0d6a94183327b97",
+      "projectSha256": "b916c1952b65850ba80d1cc6d7e3e04de08079c4da74c68416ceda0b114d83ea",
+      "movieSha256": "29b77532d240a66f2ac394912a0e8f8e98b2cc51408860f28607cecea3f08efc",
+      "montageSha256": "1e4162366b5defbbea116281cab317f31b960b6933018cc0c68a57711a12348b",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_06_se",
+      "sourceSha256": "69aca958a1a0a48e58fa0af9e4807d4ce7469b2f0b95aacb3621172f4ef101f3",
+      "projectSha256": "6d3d2a7ad5176037335918b05bb8e8b019faa3edfa85fa866976db99e91d9777",
+      "movieSha256": "333e005b263653dfdc9964113935bf7cb687acaf07d96568b7f50a608a1a47f2",
+      "montageSha256": "51df3f26c02a2950dafe210a756c9ce67f7807b6fb4b59b57161bec7a432b569",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    }
+  ],
+  "nativeSourcePoses": 176,
+  "sourceFramesDecoded": 1980,
+  "assemblyFramesDecoded": 1248,
+  "nativeAssemblies": [
+    {
+      "facing": "N",
+      "projectSha256": "0d02f9ecf4877be4e6e513953b32d37c96165cd85956f8c6311d5ccb7bc74aab",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "b362fde50367f28294c6c3e5f656634a37d851d0708aea7aa005f13d89bf57f3",
+      "logSha256": "87b7beaaaf6dda36a57f3d1f07db1656b0aca70348e2df319c1175fa5e532203",
+      "montageSha256": "ee374551c820d75a042e14537efe9fa6f83cb3aea9f00bb7b34094cb8f8e50e8",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "NE",
+      "projectSha256": "6605a426c497f4436199af730947bbba80888913092c565604a828c5a38cc875",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "aa35d5726ca2274fba9b475069fa18c929405c2ce780673804aa561bc80bbb19",
+      "logSha256": "475f5cecbe8180f02db56dcedf31aac2573a04688b3436b571a97bd02516e5a5",
+      "montageSha256": "eec90cb2cb9b3a6ecbd4156f800253f61e6cb722e363fd7dcb5f4f92b55f01a4",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "E",
+      "projectSha256": "51e14aa7c53a72c1d75ff4d01ea3c92950b7fbf985158eacf77f853f1f254b0b",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "482d0b014b58a1251ea0b6c3cbbd2819663812ec26404dec3d1ab9bfd07133ee",
+      "logSha256": "418576a330cc7d7729cb798ba25270a46bf56fd6baee6c5b5c89475588dd536a",
+      "montageSha256": "3ce87802a54d64a90a4cc3c08d29ab106657ae8a945b0a741305dc01f01858b9",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "SE",
+      "projectSha256": "2109a0126fed3e20b5b25faa45481ba1c64cc847f18b68ee2cf7ef815af52339",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "073fb1cb64d32b7fcfa29b2c084e3fca2a0175f4767b8110ee1d1898e8c3b268",
+      "logSha256": "138fd826cd4cf560a85b02e3c7ae32a11f0c997b89e652ad6c5d43cb44442932",
+      "montageSha256": "11112c5095590928a604fc586547f95eb06a1cacb54708de291010be6473222c",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "S",
+      "projectSha256": "f1f362c509ebcbd2df0a2e4c6c51532928493d9dd495a9df0b24239846896589",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "c004146385c4cdbe8e5109a07df3e9ef0f0b5e6ad2744d9c18d8c4d16cf46a72",
+      "logSha256": "71bf4a42805f85e84470a8718072ee6b3f9bda8835a17e664290748a78cadd98",
+      "montageSha256": "f078ce13c0d5559cadfd7ea42cf221684a454e527c08da5dbf7f17b8ccf77905",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "SW",
+      "projectSha256": "3c76bffa0fcf2fb3f4297db438be5430c3260945c4595d69903a12a3f4f7b0b0",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "687617247234625e5810d90006281a61d49ee35ac1a2c9e610793a49d95eded7",
+      "logSha256": "1d5b227e125cba53b08834ff4c4c77649d7e22055036cd014001a71461aec2a2",
+      "montageSha256": "3ba81f70f52c26077f19f0350e0ae1d018b22211a52a5f78a1e8f2c5f6c91117",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "W",
+      "projectSha256": "3efc6aec2d0c3b02eccc99c1c1b1a9250add6aee162243c7a5a9d8a65706a897",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "bdd8e9ed5b0ca8a7907087e022d4c645840096df57247d123fbd43abd68cf4d7",
+      "logSha256": "8c5b4062c5c115569ddc48b51470f0c8f8bd50fa2d382548e5981e4c993fecde",
+      "montageSha256": "b2893b9ee4d474ffc60a52c3f145792135ee180012390ebb99f98d35b6397eb3",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    },
+    {
+      "facing": "NW",
+      "projectSha256": "4f21f1cdf5098f42cf5cd08305f1c9ff19f16a22ac5cb374391825c02a07129b",
+      "framesDecoded": 156,
+      "waveStartsNative": [
+        72,
+        84,
+        97,
+        109
+      ],
+      "waveContactsNative": [
+        81,
+        93,
+        105,
+        117
+      ],
+      "sourceLayersRendered": 34,
+      "movieSha256": "114937d72896f1aa9428765e23ba0da068e3af9338093e992f40e2925ed8f35e",
+      "logSha256": "2422feb07ee9f41ceb7a06f40895c53dfcd5095dfb9b962c84f3d09004e22e07",
+      "montageSha256": "b65e3301047e989289ff082419b1566eb9fd6987f89ee9384c620a66d4ac315d",
+      "sampleFrames": [
+        1,
+        39,
+        70,
+        81,
+        93,
+        105,
+        117,
+        138
+      ]
+    }
+  ]
+}

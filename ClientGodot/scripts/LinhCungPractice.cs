@@ -5,6 +5,16 @@ using System.Text.Json;
 
 namespace Ngumach.VisualReboot;
 
+public interface IPracticeGroundAim
+{
+    int Slot { get; }
+    bool IsAiming { get; }
+    void ToggleAim();
+    bool CancelAim();
+    void SetPreview(Vector2? point);
+    void RequestPlacement(Vector2 point);
+}
+
 /// <summary>The local Bến Mưa archery practice. Contact comes from the
 /// terrain/dummy ray cast. The scene has no access to online combat state.</summary>
 public partial class LinhCungPractice : Node2D
@@ -72,11 +82,13 @@ public partial class LinhCungPractice : Node2D
     private Vector2? _castTarget;
     private double _flightTime, _dummyTime, _tailTime, _markTime;
     public bool Selected => _selectedTarget != null;
-    public bool IsCasting => _animator.CurrentAction is "cast" or "trap" or "volley" or "fan" or "retreat";
+    public bool IsCasting => _animator.CurrentAction is "cast" or "trap" or "volley" or "fan" or "retreat" or "rain";
     public LinhCungTrapPractice Trap { get; private set; } = null!;
     public LinhCungVolleyPractice Volley { get; private set; } = null!;
     public LinhCungFanPractice Fan { get; private set; } = null!;
     public LinhCungRetreatPractice Retreat { get; private set; } = null!;
+    public LinhCungRainPractice Rain { get; private set; } = null!;
+    public IPracticeGroundAim? GroundAim => Trap.IsAiming ? Trap : Rain.IsAiming ? Rain : null;
     public bool LowFx { get; set; }
     public event Action<string, bool>? Feedback;
     internal bool ArrowVisible => _arrow.Sprite.Visible;
@@ -128,6 +140,9 @@ public partial class LinhCungPractice : Node2D
         Retreat = new LinhCungRetreatPractice();
         AddChild(Retreat);
         Retreat.Configure(hero, animator, targets, effects);
+        Rain = new LinhCungRainPractice();
+        AddChild(Rain);
+        Rain.Configure(hero, animator, targets, environment, effects, face, () => LowFx);
         _animator.ActionReleased += Release;
     }
 
@@ -154,6 +169,17 @@ public partial class LinhCungPractice : Node2D
     }
 
     public void ClearTarget() { _selectedTarget = null; _ring.Visible = false; }
+
+    internal static bool CanAimAtGround(CharacterBody2D hero, BenMuaEnvironment terrain, Vector2 point, float range)
+    {
+        Vector2 from = hero.GlobalPosition;
+        float distance = from.DistanceSquaredTo(point);
+        if (distance > range * range || !terrain.IsWalkable(point)) return false;
+        if (distance < 1) return true;
+        var ray = PhysicsRayQueryParameters2D.Create(from, point, TerrainLayer,
+            new Godot.Collections.Array<Rid> { hero.GetRid() });
+        return hero.GetWorld2D().DirectSpaceState.IntersectRay(ray).Count == 0;
+    }
     public bool TryVolley(Vector2 aim) => Volley.TryCast(aim, _selectedTarget?.GlobalPosition + TargetOffset);
 
     public bool TryCast(Vector2 aim)

@@ -1,0 +1,634 @@
+{
+  "batch": "20261119a",
+  "expectedSourcePages": 11,
+  "scope": "LINH_CUNG_BACH_TIEN_EIGHT_AUTHORED_FACINGS_AND_THREE_ZONE_EFFECTS",
+  "records": [
+    {
+      "id": "class_linh_cung_skill_06_e",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_e_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_e_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_e_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_e_v1_20261118d.png",
+          "sourceSha256": "1999d2e9d9c170afa16c711c35d4564128e3400c6c3e1908d9f0dea2625cafd9"
+        }
+      ],
+      "sourceSha256": "e828117a05a1a9f8f8f8285b4c2f865400a627d9f4bc50ca58f990505be78d1f",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "E",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_s",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_s_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_s_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_s_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_s_v1_20261118d.png",
+          "sourceSha256": "b82b2d1f300b95021988e39080cc3098c0d9cb6d4d44ef5781369282d98f8774"
+        }
+      ],
+      "sourceSha256": "9df0693bd1dabfb79c11c350f8b53014fe0244c107e86e79cbbbbc430dfefc18",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "S",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_n",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_n_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_n_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_n_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_n_v1_20261118d.png",
+          "sourceSha256": "c7f1cb8bff73a0fed486bf108ec5fe11aa45ae325bc58945cbe2ab04f9cf7034"
+        }
+      ],
+      "sourceSha256": "bfbacbcbab623e9f6a451c315ddcef4ffe008efc3d77e304c57c0a944d876bb4",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "N",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_w",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_w_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_w_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_w_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_w_v1_20261118d.png",
+          "sourceSha256": "59008423a5cb35b99cd0d3711b764eea44992a15cf6e156a9727cdee3f0157c9"
+        }
+      ],
+      "sourceSha256": "946711638d0ede2f0ed5f3098f64b7e977dc4f9a428e9d820066fb7fed049fd5",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "W",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_ne",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_ne_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_ne_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_ne_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_ne_v1_20261118d.png",
+          "sourceSha256": "1550895f479b2fb38657348dd209416d1a7fca0102c0df3b7fa975b49f1186ea"
+        }
+      ],
+      "sourceSha256": "9d872116337f4d2c4caf7b6e4cd59ddb6bdd62afab94fd516666f2178986d51c",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "NE",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_sw",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_sw_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_sw_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_sw_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_sw_v1_20261118d.png",
+          "sourceSha256": "962beb8530a7c4b244971502f1395a47481314d774b1d8b8b2a9f81a6769b798"
+        }
+      ],
+      "sourceSha256": "63f02af1c0dc5bd63eca4d04e6f9e80c0b999598712a3930e14d479efac343af",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "SW",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_06_nw",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_nw_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_nw_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_nw_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_nw_v1_20261118d.png",
+          "sourceSha256": "e012e9ae6eb9d7854f09e08bb4fc96d051511b418118236777cc83f238782ab0"
+        }
+      ],
+      "sourceSha256": "69b420f2284afe07bd540a321a539ddd4e1529831495b0793294175825093e1e",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "NW",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_lc_06_rain_telegraph_component",
+      "source": "Candidates_20261119a/sk_lc_06_rain_telegraph_component_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/sk_lc_06_rain_telegraph_component_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_open_component_v1_20261118d.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_open_component_v1_20261118d.png",
+          "sourceSha256": "b0f99c3ef21aa0eeee175271ec49bdd4b497fe4988e830f6c987a2af59f99b02"
+        }
+      ],
+      "sourceSha256": "ddd1f6204bd1c34bfaafae11f700081095716b6f93b46d27c871a388fafb1eb4",
+      "sourceFrameDurationsMs": [
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75,
+        75
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 1.2,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "GROUND_RING",
+        "fixedRadius": true,
+        "marks": 3
+      }
+    },
+    {
+      "id": "sk_lc_06_rain_arrow_component",
+      "source": "Candidates_20261119a/sk_lc_06_rain_arrow_component_v2_20261119a.png",
+      "prompt": "Candidates_20261119a/sk_lc_06_rain_arrow_component_v2_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_arrow_component_v1_20261118e.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_arrow_component_v1_20261118e.png",
+          "sourceSha256": "8ecf897b94df41fe67b18bc340ff277a6e45615a0e91fcbd51cb4ccf5728174d"
+        }
+      ],
+      "sourceSha256": "269fd998a2eec0fbae0f06e58b5990871211cf17cb20f0ac90cce626bb9a9409",
+      "sourceFrameDurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.32,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "FALLING_ARROW_AND_RESIDUE",
+        "contactPose": 7
+      }
+    },
+    {
+      "id": "sk_lc_06_rain_impact_component",
+      "source": "Candidates_20261119a/sk_lc_06_rain_impact_component_v2_20261119a.png",
+      "prompt": "Candidates_20261119a/sk_lc_06_rain_impact_component_v2_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_fall_component_v1_20261118d.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_fall_component_v1_20261118d.png",
+          "sourceSha256": "563c402cf49e5198562c6432aea9e1af5418ac0e1539f7547e24d5de2ded9b07"
+        }
+      ],
+      "sourceSha256": "fa906abad2074b033222a2f1eb5b289ddf83354ec9ed9569e0d6a94183327b97",
+      "sourceFrameDurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.32,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "GROUND_CONTACT_FLECKS"
+      }
+    },
+    {
+      "id": "class_linh_cung_skill_06_se",
+      "source": "Candidates_20261119a/class_linh_cung_skill_06_se_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/class_linh_cung_skill_06_se_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_se_v1_20261118d.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_se_v1_20261118d.png",
+          "sourceSha256": "cd1a80c924912a4b52683ec644951ec1c617ab6762f08ba337b7781e97d64998"
+        }
+      ],
+      "sourceSha256": "69aca958a1a0a48e58fa0af9e4807d4ce7469b2f0b95aacb3621172f4ef101f3",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        65,
+        65,
+        70,
+        70,
+        75,
+        75,
+        80,
+        85,
+        85,
+        65,
+        65,
+        65,
+        70,
+        80
+      ],
+      "direction": "SE",
+      "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    }
+  ],
+  "history": [
+    {
+      "id": "sk_lc_06_rain_impact_component",
+      "source": "Candidates_20261119a/sk_lc_06_rain_impact_component_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/sk_lc_06_rain_impact_component_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_heel_component_v1_20261118e.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_heel_component_v1_20261118e.png",
+          "sourceSha256": "d43c3fd8549409daa0e6e7dbdf89cf02794d9b217b000b2bba65a074381fe2f8"
+        }
+      ],
+      "sourceSha256": "81ecf1f0194714af7fe5f2202a834523cb7e287b1aa2fe0e49d15596a41c5e00",
+      "sourceFrameDurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.32,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "GROUND_CONTACT_FLECKS"
+      }
+    },
+    {
+      "id": "sk_lc_06_rain_arrow_component",
+      "source": "Candidates_20261119a/sk_lc_06_rain_arrow_component_v1_20261119a.png",
+      "prompt": "Candidates_20261119a/sk_lc_06_rain_arrow_component_v1_20261119a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261119a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_arrow_component_v1_20261118e.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_arrow_component_v1_20261118e.png",
+          "sourceSha256": "8ecf897b94df41fe67b18bc340ff277a6e45615a0e91fcbd51cb4ccf5728174d"
+        }
+      ],
+      "sourceSha256": "e0fb8d2db8cd2afce2096f7c2b6b0493d430dff27cbfdb9eb056649dd6c490c6",
+      "sourceFrameDurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.32,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "FALLING_ARROW_AND_RESIDUE",
+        "contactPose": 7
+      }
+    }
+  ],
+  "selected": 11,
+  "generatedVariants": 13,
+  "remainingSourcePages": 0,
+  "sourceCells": 176,
+  "productionApproved": false
+}
