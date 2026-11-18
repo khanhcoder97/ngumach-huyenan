@@ -15,6 +15,7 @@ public partial class HeroAnimator : Sprite2D
     private int _direction=4,_actionDirection=4;
     private PoseFrame? _shown;
     private bool _moving;
+    private bool _physicsDriven;
     private string _action="";
     private double _clock,_actionClock;
     private (string Action,int Direction,int PoseFrame)? _review;
@@ -95,40 +96,51 @@ public partial class HeroAnimator : Sprite2D
     internal Vector2 FirstReleaseOffset(string action) => _clips[action][_actionDirection].Releases[0].Offset * BodyHeight;
     public void SetFacing(int direction)=>_direction=((direction%8)+8)%8;
     public void SetMoving(bool moving){if(moving!=_moving)_clock=0;_moving=moving;}
-    private void StartAction(string action)
+    private void StartAction(string action, bool physicsDriven = false)
     {
         if(_action==action&&_actionClock<.32)return;
-        _action=action;_actionClock=0;_actionDirection=_direction;RenderFrame();
+        _action=action;_actionClock=0;_actionDirection=_direction;_physicsDriven=physicsDriven;RenderFrame();
     }
     public void Attack()=>StartAction("attack");
     public void Cast()=>StartAction("cast");
-    public bool TryCast(string action="cast")
+    public bool TryCast(string action="cast", bool physicsDriven = false)
     {
         if(IsAttacking||!_clips.ContainsKey(action))return false;
-        StartAction(action);
+        StartAction(action, physicsDriven);
         return true;
     }
     public void ReviewPose(string action,int direction,int frame){_review=(action,direction,frame);RenderFrame();}
-    public void ClearReview(){_review=null;_action="";_clock=0;RenderFrame();}
+    public void ClearReview(){_review=null;_action="";_physicsDriven=false;_clock=0;RenderFrame();}
     public override void _Process(double delta)
     {
         if(_review!=null)return;
         _clock+=delta;
-        if(_action.Length>0)
-        {
-            var clip=_clips[_action][_actionDirection];
-            var previous=_actionClock;
-            _actionClock+=delta;
-            foreach (var release in clip.Releases)
-                if (previous < release.Time && _actionClock >= release.Time)
-                    ActionReleased?.Invoke(_action, release.Offset * BodyHeight);
-            if (_actionClock >= clip.Duration)
-            {
-                _action = "";
-                if (clip.Releases.Length > 0) _clock = 0;
-            }
-        }
+        if (!_physicsDriven) AdvanceAction(delta);
         RenderFrame();
+    }
+
+    internal void AdvancePhysicsAction(double delta)
+    {
+        if (!_physicsDriven || _review != null) return;
+        AdvanceAction(delta);
+        RenderFrame();
+    }
+
+    private void AdvanceAction(double delta)
+    {
+        if (_action.Length == 0) return;
+        var clip = _clips[_action][_actionDirection];
+        var previous = _actionClock;
+        _actionClock += delta;
+        foreach (var release in clip.Releases)
+            if (previous < release.Time && _actionClock >= release.Time)
+                ActionReleased?.Invoke(_action, release.Offset * BodyHeight);
+        if (_actionClock >= clip.Duration)
+        {
+            _action = "";
+            _physicsDriven = false;
+            if (clip.Releases.Length > 0) _clock = 0;
+        }
     }
     private void RenderFrame()
     {

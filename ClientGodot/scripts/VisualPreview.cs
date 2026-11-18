@@ -110,12 +110,13 @@ public partial class VisualPreview : Node2D
         {
             _practice=new LinhCungPractice();AddChild(_practice);
             _practice.Configure(_hero,animator,actors,_environment.Spawn+new Vector2(96,0),_environment,FaceDirection);
-            _hud.ConfigurePractice(_practice.Icon,_practice.Trap.Icon,_practice.Volley.Icon,_practice.Fan.Icon,
-                                   animator.Texture,animator.RegionRect);
+            _hud.ConfigurePractice(_practice.Icon,_practice.Trap.Icon,_practice.Volley.Icon,_practice.Fan.Icon,_practice.Retreat.Icon,
+                                   _practice.Retreat.HeelIcon,animator.Texture,animator.RegionRect);
             _practice.Feedback+=(message,ok)=>_hud.ShowAction(0,message,ok);
             _practice.Trap.Feedback+=(message,ok)=>_hud.ShowAction(1,message,ok);
             _practice.Volley.Feedback+=(message,ok)=>_hud.ShowAction(2,message,ok);
             _practice.Fan.Feedback+=(message,ok)=>_hud.ShowAction(3,message,ok);
+            _practice.Retreat.Feedback+=(message,ok)=>_hud.ShowAction(4,message,ok);
             FaceDirection(_practice.Aim(_facing));
         }
         if(!args.Any(a=>a.Contains("test",StringComparison.Ordinal))&&_capture==null&&!args.Contains("--performance-profile"))_dialog.ApplySavedPreferences();
@@ -256,7 +257,7 @@ public partial class VisualPreview : Node2D
             if(displacement.LengthSquared()>.0001f)_hero.MoveAndCollide(displacement);
             _movingGrace=_hero.Position.DistanceSquaredTo(previousPosition)>.0025f?.12:Math.Max(0,_movingGrace-delta);
         }
-        else
+        else if (_practice?.Retreat.StepHero(delta) != true)
         {
             _hero.Velocity=move*64;
             _hero.MoveAndSlide();
@@ -544,15 +545,28 @@ public partial class VisualPreview : Node2D
         if(_practice!=null)
         {
             if(index==1){_hud.LastSkill=LinhCungTrapPractice.SkillName;_practice.Trap.ToggleAim();return;}
-            if(index>3){_hud.ShowAction(index,"Ô kỹ năng đang khóa.");return;}
+            if(index is <0 or >4){_hud.ShowAction(index,"Ô kỹ năng đang khóa.");return;}
             _practice.Trap.CancelAim();
             if(_practice.IsCasting){_hud.ShowAction(index,"Đang thi triển kỹ năng.");return;}
             var aim=_practice.Aim(_facing);
             FaceDirection(aim);
-            bool started = index switch { 0 => _practice.TryCast(aim), 2 => _practice.TryVolley(aim), _ => _practice.Fan.TryCast(aim) };
+            bool started = index switch
+            {
+                0 => _practice.TryCast(aim),
+                2 => _practice.TryVolley(aim),
+                3 => _practice.Fan.TryCast(aim),
+                _ => _practice.Retreat.TryCast(aim)
+            };
             if(!started){_hud.ShowAction(index,"Chờ động tác hiện tại kết thúc.");return;}
-            _hud.LastSkill = index switch { 0 => LinhCungPractice.SkillName, 2 => LinhCungVolleyPractice.SkillName, _ => LinhCungFanPractice.SkillName };
-            _hud.ShowAction(index,_hud.LastSkill+(index==3?" · chuẩn bị quét cung":" · giương cung"),true);
+            _hud.LastSkill = index switch
+            {
+                0 => LinhCungPractice.SkillName,
+                2 => LinhCungVolleyPractice.SkillName,
+                3 => LinhCungFanPractice.SkillName,
+                _ => LinhCungRetreatPractice.SkillName
+            };
+            string hint = index switch { 3 => " · chuẩn bị quét cung", 4 => " · chuẩn bị bước lùi", _ => " · giương cung" };
+            _hud.ShowAction(index, _hud.LastSkill + hint, true);
             return;
         }
         _hud.LastSkill=SkillVfxPlayer.Names[index];

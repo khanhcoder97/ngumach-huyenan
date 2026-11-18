@@ -49,7 +49,7 @@ public partial class VisualPreview
                 for (int i = 0; i < 12; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             }
             await Capture("ready");
-            KeyPress(Key.Key5);
+            KeyPress(Key.Key6);
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             Check(!practice.IsCasting && practice.Releases == 0, "Unavailable skill does not start the animation.");
             Click(PreviewHud.SkillCenters()[0]);
@@ -106,7 +106,7 @@ public partial class VisualPreview
             var start = _hero.GlobalPosition;
             Click(PreviewHud.SkillCenters()[1]);
             await Until(() => trap.IsAiming, "The second HUD button selects a trap position.");
-            Click(PreviewHud.SkillCenters()[4]);
+            Click(PreviewHud.SkillCenters()[5]);
             Check(trap.IsAiming && trap.Placed == 0, "Clicking another HUD slot never plants under the HUD.");
             KeyPress(Key.Escape);
             await Until(() => !trap.IsAiming, "Escape cancels ground selection.");
@@ -347,6 +347,97 @@ public partial class VisualPreview
                 await Until(() => fan.Resolved && !fan.Active, $"Fan facing {facing} resolves exactly once and recovers.");
             }
             GD.Print($"LINH_CUNG_FAN PASS assertions={assertions - beforeFan} facings=8 authoringFrames=128");
+
+            int beforeRetreat = assertions;
+            var retreat = practice.Retreat;
+            await StandAt(start);
+            Check(practice.SelectAt(practice.TargetPoint), "The east dummy can be selected for the countershot.");
+            Click(PreviewHud.SkillCenters()[4]);
+            await Until(() => retreat.Active, "The fifth HUD button starts Phi Diệp.");
+            Check(animator.CurrentAction == "retreat" && retreat.Releases == 0 &&
+                  retreat.DistanceMoved == 0 && retreat.MarksShown == 0, "Windup holds ground and keeps the arrow hidden.");
+            await Until(() => retreat.MarksShown == 1, "The first mark appears at the beginning of retreat.");
+            ulong startTick = Engine.GetPhysicsFrames();
+            await Until(() => retreat.Releases == 1, "A single countershot leaves the bow during retreat.");
+            ulong elapsedTicks = Engine.GetPhysicsFrames() - startTick;
+            Check(elapsedTicks is 7 or 8, $"The native movement-to-shot interval represents 120 ms at 60 Hz ({elapsedTicks} ticks).");
+            Check(retreat.MarksShown == 2 && retreat.ArrowVisible && retreat.Hits == 0 &&
+                  retreat.DistanceMoved is > 1 and < LinhCungRetreatPractice.RetreatDistance,
+                  "The second mark and the shot begin before retreat finishes.");
+            Check(retreat.ShotDirection.IsEqualApprox(Vector2.Right), "The countershot follows the starting aim.");
+            await Capture("retreat_release");
+            KeyPress(Key.Key5);
+            await Until(() => retreat.Hits == 1, "The countershot contacts the selected dummy.");
+            await Capture("retreat_hit");
+            await Until(() => !retreat.Active && !practice.IsCasting, "The clear retreat fully recovers.");
+            Check(Mathf.Abs(retreat.DistanceMoved - LinhCungRetreatPractice.RetreatDistance) < .25f &&
+                  _hero.GlobalPosition.DistanceTo(start - Vector2.Right * LinhCungRetreatPractice.RetreatDistance) < .25f,
+                  "The clear route applies exactly five metres of backward physics travel.");
+            Check(retreat.Releases == 1 && retreat.MarksShown == 2 && retreat.Hits == 1, "Repeated input adds no shot or footprint.");
+
+            await StandAt(start);
+            var retreatWall = new StaticBody2D { Position = start - Vector2.Right * 32, CollisionLayer = 1 };
+            AddChild(retreatWall);
+            retreatWall.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = new Vector2(10, 80) } });
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            KeyPress(Key.Key5);
+            await Until(() => retreat.Active && retreat.BlockedRetreat, "The wall clips backward movement.");
+            var stopped = _hero.GlobalPosition;
+            Check(retreat.DistanceMoved is > 0 and < 32, "Retreat stops at the first obstruction with reduced travel.");
+            await Until(() => retreat.Releases == 1 && retreat.ArrowVisible, "A blocked retreat still fires.");
+            Check(stopped.DistanceTo(_hero.GlobalPosition) < .1f && retreat.ShotDirection.IsEqualApprox(Vector2.Right),
+                  "The blocked actor holds ground and keeps the same shot angle.");
+            await Capture("retreat_blocked");
+            await Until(() => !retreat.Active, "The blocked retreat and the separate shot finish.");
+            Check(retreat.Hits == 1 && retreat.Releases == 1, "The rear obstruction does not cancel the forward countershot.");
+            retreatWall.QueueFree();
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            await StandAt(start);
+            var shotWall = new StaticBody2D { Position = start + Vector2.Right * 51, CollisionLayer = 1 };
+            AddChild(shotWall);
+            shotWall.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = new Vector2(10, 80) } });
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            KeyPress(Key.Key5);
+            await Until(() => retreat.Active, "The front-obstruction cast starts.");
+            await Until(() => retreat.Releases == 1 && !retreat.ArrowVisible, "The separate projectile stops at the forward wall.");
+            Check(retreat.Hits == 0 && _hud.CombatHint.Contains("tên bị chặn"), "The forward wall prevents any hit.");
+            await Until(() => !retreat.Active, "The forward-obstruction cast finishes the retreat.");
+            Check(Mathf.Abs(retreat.DistanceMoved - LinhCungRetreatPractice.RetreatDistance) < .25f && !retreat.BlockedRetreat,
+                  "A forward obstruction does not shorten the rear movement.");
+            shotWall.QueueFree();
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            practice.ClearTarget();
+            await StandAt(shore);
+            FaceDirection(Vector2.Up);
+            KeyPress(Key.Key5);
+            await Until(() => retreat.Active, "The shore retreat starts.");
+            await Until(() => !retreat.Active, "The shore retreat ends.");
+            Check(retreat.BlockedRetreat && _environment.IsWalkable(_hero.GlobalPosition) && retreat.Releases == 1,
+                  "The built-in river collision stops retreat on shore and keeps the shot.");
+            await Capture("retreat_shore");
+
+            for (int facing = 0; facing < 8; facing++)
+            {
+                await StandAt(start);
+                var aim = Vector2.Up.Rotated(facing * Mathf.Pi / 4);
+                FaceDirection(aim);
+                KeyPress(Key.Key5);
+                await Until(() => animator.CurrentAction == "retreat", $"Retreat starts in facing {facing}.");
+                Check(animator.ActionDirection == facing, $"Retreat selects its authored clip for facing {facing}.");
+                var poses = new HashSet<int>();
+                for (int tick = 0; tick < 90 && practice.IsCasting; tick++)
+                {
+                    poses.Add(animator.DisplayedFrame);
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                Check(poses.Count == 16, $"Retreat facing {facing} renders all sixteen poses.");
+                await Until(() => !retreat.Active, $"Retreat facing {facing} clears its effects.");
+                Check(retreat.Releases == 1 && retreat.MarksShown == 2 && retreat.ShotDirection.IsEqualApprox(aim),
+                      $"Retreat facing {facing} has one shot and two marks.");
+            }
+            GD.Print($"LINH_CUNG_RETREAT PASS assertions={assertions - beforeRetreat} facings=8 authoringFrames=128");
             GetTree().Quit();
         }
         catch (Exception error)

@@ -32,6 +32,7 @@ public partial class PreviewHud : Node2D
     private Texture2D _skills=null!;
     private TextureRect _avatar=null!;
     private (Texture2D Texture,Rect2 Region)[]? _practiceSkills;
+    private (Texture2D Texture, Rect2 Region)? _practiceRetreatHeel;
     private readonly Rect2[] _icons=new Rect2[6];
     private MoonMapView _map=null!;
     private int _hover=-1,_questTab;
@@ -82,9 +83,11 @@ public partial class PreviewHud : Node2D
         InvalidateRender();
     }
     public void ConfigurePractice((Texture2D,Rect2) arrow,(Texture2D,Rect2) trap,(Texture2D,Rect2) volley,
-                                  (Texture2D,Rect2) fan,Texture2D body,Rect2 portrait)
+                                  (Texture2D,Rect2) fan,(Texture2D,Rect2) retreat,(Texture2D,Rect2) retreatHeel,
+                                  Texture2D body,Rect2 portrait)
     {
-        _practiceSkills=new[]{arrow,trap,volley,fan};
+        _practiceSkills=new[]{arrow,trap,volley,fan,retreat};
+        _practiceRetreatHeel = retreatHeel;
         _avatar.Material=null;
         _avatar.Texture=new AtlasTexture{Atlas=body,Region=portrait,FilterClip=true};
         _avatar.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
@@ -96,7 +99,8 @@ public partial class PreviewHud : Node2D
     {
         if(_practiceSkills==null)return SkillVfxPlayer.Names[slot];
         return slot switch{0=>LinhCungPractice.SkillName,1=>LinhCungTrapPractice.SkillName,
-                           2=>LinhCungVolleyPractice.SkillName,3=>LinhCungFanPractice.SkillName,_=>"Ô kỹ năng khóa"};
+                           2=>LinhCungVolleyPractice.SkillName,3=>LinhCungFanPractice.SkillName,
+                           4=>LinhCungRetreatPractice.SkillName,_=>"Ô kỹ năng khóa"};
     }
     private void AddButton(Rect2 rect,string icon,string tip,Action action)=>_buttons.Add((rect,icon,tip,action));
     public void ApplyOnline(NativeOnlineFrame frame)
@@ -254,7 +258,7 @@ public partial class PreviewHud : Node2D
             Text(new Vector2(36,247),practice?"Khu tập bắn Bến Mưa":q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
             var summary=practice?"1 Khóa Mạch · 2 Dây Gai":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
             Text(new Vector2(36,272),!practice&&summary.Length>35?summary[..32]+"…":summary,12);
-            Text(new Vector2(36,295),practice?"3 Liên Châu · 4 Tán Hoa":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
+            Text(new Vector2(36,295),practice?"3 Liên Châu · 4 Tán Hoa · 5 Phi Diệp":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
             if(practice)Text(new Vector2(36,312),"Chuột trái chọn · Chuột phải bỏ",11,MoonGlassTheme.Muted);
             Text(new Vector2(36,329),practice?"WASD di chuyển · F2 đổi tầm nhìn":"J  Mở nhật ký",11,MoonGlassTheme.Silver);
         }
@@ -292,6 +296,14 @@ public partial class PreviewHud : Node2D
                         var offset = new Vector2(-2 * Math.Abs(row), row * 5);
                         _drawer.DrawTextureRectRegion(texture, new Rect2(p + offset - size / 2, size), source, Colors.White);
                     }
+                }
+                else if (practice && i == 4 && _practiceRetreatHeel is { } heel)
+                {
+                    size *= .87f;
+                    _drawer.DrawTextureRectRegion(texture, new Rect2(p + new Vector2(0, -5) - size / 2, size), source, Colors.White);
+                    var markSize = heel.Region.Size * (11 / heel.Region.Size.X);
+                    _drawer.DrawTextureRectRegion(heel.Texture, new Rect2(p + new Vector2(-10, 7), markSize), heel.Region, Colors.White);
+                    _drawer.DrawTextureRectRegion(heel.Texture, new Rect2(p + new Vector2(2, 12), markSize), heel.Region, Colors.White);
                 }
                 else _drawer.DrawTextureRectRegion(texture,new Rect2(p-size/2,size),source,
                                                    disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);

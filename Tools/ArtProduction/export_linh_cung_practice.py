@@ -9,6 +9,8 @@ from prepare_linh_cung_khoa_mach_review import OUTPUT
 from prepare_linh_cung_day_gai import BODY as TRAP_BODY, EFFECTS as TRAP_EFFECTS, OUTPUT as TRAP_OUTPUT
 from prepare_linh_cung_lien_chau import (ARROW as VOLLEY_ARROW, NOCK as VOLLEY_NOCK,
                                        OUTPUT as VOLLEY_OUTPUT, RELEASE_MS, RELEASE_POSES, SOURCE_MS)
+from prepare_linh_cung_phi_diep import (ARROW as RETREAT_ARROW, HEEL, LANDING_MS, OUTPUT as RETREAT_OUTPUT,
+                                      RELEASE_MS as RETREAT_RELEASE_MS, RELEASE_POSE as RETREAT_RELEASE_POSE, START_MS)
 from prepare_linh_cung_tan_hoa import (FALL, FAN, FALL_DELAY_MS, FULL_POSE, OUTPUT as FAN_OUTPUT,
                                      RELEASE_POSE as FAN_RELEASE_POSE)
 from prepare_thach_chuy_candidates_20261116c import ART, ROOT, inspect, read, sha
@@ -36,7 +38,13 @@ def export(check):
     assert fan_review['nativeAuditSha256'] == sha(fan_audit_path)
     fan_audit = read(fan_audit_path)
     assert set(fan_review['nativeAssemblyFacingsReviewed']) == set(FACINGS)
-    reviewed = {item['id']: item['sourceSha256'] for report in (audit, trap_audit, volley_audit, fan_audit)
+    retreat_review = read(RETREAT_OUTPUT / 'manual_review.json')
+    retreat_audit_path = RETREAT_OUTPUT / 'native_audit.json'
+    assert retreat_review['nativeAuditSha256'] == sha(retreat_audit_path)
+    retreat_audit = read(retreat_audit_path)
+    assert set(retreat_review['nativeFullFacingsReviewed']) == set(FACINGS)
+    reports = (audit, trap_audit, volley_audit, fan_audit, retreat_audit)
+    reviewed = {item['id']: item['sourceSha256'] for report in reports
                 for item in report['sourceViews']}
     manifest = dict(clips={}, effects={}, sources={})
 
@@ -152,6 +160,30 @@ def export(check):
         effect['sourceHeight'] = effect['iconRect'][2]
         manifest['effects'][label] = effect
 
+    retreat_cast = []
+    for facing in FACINGS:
+        identifier = 'class_linh_cung_skill_05_' + facing.lower()
+        record, direction = candidate(identifier, RETREAT_OUTPUT)
+        data = read(RETREAT_OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+        timing = record['sourceFrameDurationsMs']
+        assert direction['direction'] == facing and data['releasePose'] == RETREAT_RELEASE_POSE
+        assert sum(timing[:RETREAT_RELEASE_POSE]) == RETREAT_RELEASE_MS == START_MS + 120
+        pivot = direction['frames'][RETREAT_RELEASE_POSE]['pivot']
+        offset = [(point - root) / direction['referenceHeight'] for point, root in zip(data['releaseSourcePoint'], pivot)]
+        retreat_cast.append(dict(format_clip(direction, package(identifier, record), sum(timing) / 1000),
+                                 frameEnds=[end / 1000 for end in accumulate(timing)],
+                                 release=RETREAT_RELEASE_MS / 1000, releaseOffset=offset))
+    manifest['clips']['retreat'] = retreat_cast
+    for label, identifier in (('retreat_arrow', RETREAT_ARROW), ('retreat_heel', HEEL)):
+        record, direction = candidate(identifier, RETREAT_OUTPUT)
+        timing = record['sourceFrameDurationsMs']
+        effect = format_clip(direction, package(identifier, record), sum(timing) / 1000)
+        effect['iconRect'] = icon_rect(direction['frames'][0])
+        effect['sourceHeight'] = effect['iconRect'][2]
+        if identifier == HEEL:
+            effect.update(retreatStartsAt=START_MS / 1000, retreatEndsAt=LANDING_MS / 1000)
+        manifest['effects'][label] = effect
+
     fan_cast = []
     for facing in FACINGS:
         identifier = 'class_linh_cung_skill_04_' + facing.lower()
@@ -196,7 +228,7 @@ def export(check):
         assert output.read_text(encoding='utf-8') == document, 'Practice pack is out of date'
     else:
         output.write_text(document, encoding='utf-8', newline='\n')
-    print('Linh Cung practice: four skills with eight authored facings each.')
+    print('Linh Cung practice: five skills with eight authored facings each.')
 
 
 if __name__ == '__main__':
