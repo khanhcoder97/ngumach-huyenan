@@ -6,6 +6,7 @@ from inspect_actor_library import ART,ROOT,inspect,binary_projection
 from calibrate_anh_dao_mobility import head_landmark
 from calibrate_huyen_but_20261114f import gutter_edges
 BATCH='20261116c';EV=ROOT/('Implementation/Reports/Evidence/Actor_Batch_'+BATCH)
+SUPPORTED_BATCHES = {'20261116c': 50, '20261119b': 18}
 def read(p):return json.loads(p.read_text(encoding='utf8'))
 def save(p,v):
     pending=p.with_suffix(p.suffix+'.pending')
@@ -41,11 +42,13 @@ def boot_contact(region,head_top,neutral_height):
     groups=sorted(groups,key=len,reverse=True)[:2];assert groups,'No grounded boot component; manual review required'
     xs=[x for group in groups for x,y in group]
     return (min(xs)+max(xs))/2,ground
-def prepare(only=None):
-    manifest=read(ART/('Candidates_'+BATCH)/'candidate_manifest.json');assert manifest['expectedSourcePages']==50 and manifest['selected']>0
-    assert not any(r.get('batch')==BATCH for r in read(ART/'generation_records.json'))
+def prepare(only=None, batch=BATCH):
+    expected = SUPPORTED_BATCHES[batch]
+    evidence = EV if batch == BATCH else EV.parent / ('Actor_Batch_' + batch)
+    manifest=read(ART/('Candidates_'+batch)/'candidate_manifest.json');assert manifest['expectedSourcePages']==expected and manifest['selected']>0
+    assert not any(r.get('batch')==batch for r in read(ART/'generation_records.json'))
     before={n:sha(ART/n) for n in ('generation_records.json','visual_review.json','structure_report.json')};entries=[];registrations=[];pending=[]
-    override_path=ART/('registration_overrides_'+BATCH+'.json')
+    override_path=ART/('registration_overrides_'+batch+'.json')
     overrides={e['id']:e for e in read(override_path)['entries']} if override_path.exists() else {}
     identifiers={r['id'] for r in manifest['records']}
     assert not only or set(only)<=identifiers,'Unknown candidate ID'
@@ -73,12 +76,30 @@ def prepare(only=None):
                         # above the boots. Include the whole hair silhouette:
                         # dark-hair landmarks alone made rear views too large.
                         neutral=f['bounds'][3]-f['bounds'][1]
-                        root_x,ground=boot_contact(region,head['top'],neutral);sole_offset=f['bounds'][3]-ground;assert 0<=sole_offset<=8,'Neutral soles require manual registration'
-                        neutral_x_correction=neutral_foot_center(region,f['bounds'][3],neutral)-root_x
+                        root_x,ground=boot_contact(region,head['top'],neutral)
+                        sole_offset=f['bounds'][3]-ground
+                        foot_center=neutral_foot_center(region,f['bounds'][3],neutral)
+                        if batch == '20261119b':
+                            assert 0 <= sole_offset <= 16, 'Neutral boot row requires manual registration'
+                            # The forward hammer can extend beyond the soles in SW.
+                            # Use the belt center when the alpha envelope includes
+                            # both the hammer and only one clearly visible boot.
+                            if abs(foot_center-root_x) > neutral*.1:
+                                foot_center, belt_pixels = sash_landmark(region,head['top'],neutral)
+                                assert belt_pixels >= 8, 'Neutral belt requires manual registration'
+                            sole_offset = min(9, sole_offset)
+                            neutral = ground + sole_offset - f['bounds'][1]
+                        else:
+                            assert 0<=sole_offset<=8,'Neutral soles require manual registration'
+                        neutral_x_correction=foot_center-root_x
                     root_x,ground=boot_contact(region,head['top'],neutral);root_x+=neutral_x_correction;sash_x,sash_pixels=sash_landmark(region,head['top'],neutral);x_method='BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION'
                     if sash_reference is None:
                         assert sash_pixels>=8,'Neutral pelvis reference requires manual registration';sash_reference=sash_pixels;sash_offset=root_x-sash_x
-                    if sash_pixels<sash_reference*.3:
+                    if (batch == '20261119b' and sash_pixels >= 8
+                        and abs(root_x-(sash_x+sash_offset)) > neutral*.10):
+                        root_x=sash_x+sash_offset
+                        x_method='WESTERN_BELT_ROOT_WHEN_BOOT_ENVELOPE_IS_ASYMMETRIC'
+                    elif sash_pixels<sash_reference*.3:
                         assert sash_pixels>=8,'Occluded pelvis requires a manual source pivot'
                         # The hammer hides a boot during the low slam. Do not
                         # jump the character root onto the remaining boot.
@@ -86,7 +107,7 @@ def prepare(only=None):
                     pivots.append([root_x,ground+sole_offset]);diagnostics.append(dict(head=head,root=pivots[-1],rootXMethod=x_method,sashCenterX=sash_x,sashPixelCount=sash_pixels))
             r.update(pivotMode='SOURCE_FOOT_PIVOTS',sourceFootPivots=pivots,bodyReferenceHeight=neutral,neutralFootCenterXCorrection=neutral_x_correction,registrationMethod='TC_NEUTRAL_FULL_ALPHA_HEIGHT_AND_FOOT_CENTER_BOOT_Y_OCCLUDED_SASH_X_PENDING_NATIVE_REVIEW');page=inspect(r)
         else:neutral=page['directions'][0]['referenceHeight']
-        assert page['sourceFrames']==16;frames=page['directions'][0]['frames'];bundle=EV/'Candidate_Studio'/r['id'];textures=bundle/'textures';dest=textures/(page['sha256']+'.png')
+        assert page['sourceFrames']==16;frames=page['directions'][0]['frames'];bundle=evidence/'Candidate_Studio'/r['id'];textures=bundle/'textures';dest=textures/(page['sha256']+'.png')
         if dest.exists():assert sha(dest)==page['sha256']
         loop=bool(r.get('previewLoop',False));keys=[dict(Frame=i,Pose=dict(X=0,Y=0,PivotX=f['pivot'][0],PivotY=f['pivot'][1],ScaleX=140/neutral,ScaleY=140/neutral,Angle=0,Alpha=1,SourceFrame=i)) for i,f in enumerate(frames)]
         layer=dict(Id='sprite',Name=r['id'],Kind='sprite',Texture='textures/'+dest.name,Regions=[f['rect'] for f in frames],Rest=keys[0]['Pose'],Z=0,Visible=True)
@@ -98,7 +119,7 @@ def prepare(only=None):
         print('REGISTER_SOURCE_COMPLETE '+r['id'],flush=True)
     assert before=={n:sha(ART/n) for n in before}
     prepared=len(entries)
-    registration_path=ART/('body_registration_'+BATCH+'.json')
+    registration_path=ART/('body_registration_'+batch+'.json')
     if only and registration_path.exists():
         current={r['id']:r for r in manifest['records']};changed={r['record']['id'] for r in registrations}
         for old in read(registration_path)['entries']:
@@ -109,7 +130,7 @@ def prepare(only=None):
             effective=dict(active)
             if override:effective.update(override['fields'])
             if any(r.get(k)!=v for k,v in effective.items()):continue
-            project=EV/'Candidate_Studio'/r['id']/'project.json';document=read(project)
+            project=evidence/'Candidate_Studio'/r['id']/'project.json';document=read(project)
             assert sha(ART/r['source'])==r['sourceSha256']==sha(project.parent/document['Layers'][0]['Texture'])
             assert document['Clips'][0]['DurationsMs']==r['sourceFrameDurationsMs']
             registrations.append(old);entries.append(dict(id=r['id'],project=project.relative_to(ROOT).as_posix(),source=(ART/r['source']).relative_to(ROOT).as_posix(),sourceSha256=r['sourceSha256'],timing=r['sourceFrameDurationsMs'],loop=bool(r.get('previewLoop',False))))
@@ -121,8 +142,8 @@ def prepare(only=None):
         dest.parent.mkdir(parents=True,exist_ok=True)
         if not dest.exists():shutil.copyfile(source,dest)
         save(project,document);save(project.parent/'source_registration.json',registration)
-    save(EV/'candidate_review_plan.json',dict(batch=BATCH,selected=len(entries),expected=50,pilot=len(entries)<50,catalogueUnchanged=True,missingCandidateIds=[r['id'] for r in manifest['records'] if r['id'] not in {e['id'] for e in entries}],entries=entries))
-    save(ART/('body_registration_'+BATCH+'.json'),dict(scope='GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW',pilot=len(entries)<50,entries=registrations,issues=[]))
-    print(json.dumps(dict(selected=len(entries),expected=50,preparedThisCall=prepared,registered=len(entries),catalogueUnchanged=True,productionApproved=False)))
+    save(evidence/'candidate_review_plan.json',dict(batch=batch,selected=len(entries),expected=expected,pilot=len(entries)<expected,catalogueUnchanged=True,missingCandidateIds=[r['id'] for r in manifest['records'] if r['id'] not in {e['id'] for e in entries}],entries=entries))
+    save(registration_path,dict(scope='GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW',pilot=len(entries)<expected,entries=registrations,issues=[]))
+    print(json.dumps(dict(selected=len(entries),expected=expected,preparedThisCall=prepared,registered=len(entries),catalogueUnchanged=True,productionApproved=False)))
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--only',nargs='+');args=parser.parse_args();prepare(args.only)
+    parser=argparse.ArgumentParser();parser.add_argument('--only',nargs='+');parser.add_argument('--batch',choices=SUPPORTED_BATCHES,default=BATCH);args=parser.parse_args();prepare(args.only,args.batch)

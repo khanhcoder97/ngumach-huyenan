@@ -1,17 +1,17 @@
-"""Check native Studio playback for the five-facing sanctuary preview."""
+"""Check native Studio playback for the sanctuary preview."""
 import argparse
 import re
 import subprocess
 from itertools import groupby
 
-from build_thach_chuy_sanctuary_preview import BUNDLE, FACINGS
-from prepare_thach_chuy_candidates_20261116c import ART, EV, read, save, sha
+from build_thach_chuy_sanctuary_preview import ALL_FACINGS, BUNDLE, FACINGS, WEST_BUNDLE, sanctuary_sources
+from prepare_thach_chuy_candidates_20261116c import ART, read, save, sha
 
 LAYER_TICK = re.compile(r'ART_STUDIO_LAYER_TICK nativeFrame=(\d+) layer=(\S+) sourceFrame=(\d+)')
 
 
-def read_capture(facing, project_sha, ffmpeg):
-    prefix = BUNDLE / ('preview_' + facing)
+def read_capture(facing, project_sha, ffmpeg, bundle=BUNDLE):
+    prefix = bundle / ('preview_' + facing)
     movie = prefix.with_suffix('.mp4')
     log_path = prefix.with_suffix('.godot.log')
     receipt = read(prefix.with_suffix('.receipt.json'))
@@ -55,22 +55,25 @@ def read_capture(facing, project_sha, ffmpeg):
                 montage=montage.name, montageSha256=sha(montage), nativeFrames=frames)
 
 
-def audit(directions, ffmpeg):
-    project = BUNDLE / 'project.json'
-    descriptor = read(BUNDLE / 'assembly_descriptor.json')
+def audit(directions, ffmpeg, include_west=False):
+    bundle = WEST_BUNDLE if include_west else BUNDLE
+    facings = ALL_FACINGS if include_west else FACINGS
+    project = bundle / 'project.json'
+    descriptor = read(bundle / 'assembly_descriptor.json')
     assert descriptor['projectSha256'] == sha(project)
-    manifest = read(ART / 'Candidates_20261116c/candidate_manifest.json')
-    records = {entry['id']: entry for entry in manifest['records']}
+    assert tuple(descriptor['directionalClips']) == facings
+    records = sanctuary_sources(include_west)
     for identifier, item in descriptor['sourceInputs'].items():
-        record = records[identifier]
-        registration = EV / 'Candidate_Studio' / identifier / 'source_registration.json'
+        record, studio = records[identifier]
+        registration = studio / identifier / 'source_registration.json'
         assert sha(registration) == item['registrationSha256']
         assert sha(ART / record['source']) == item['pngSha256'] == record['sourceSha256']
-        assert sha(BUNDLE / 'textures' / (item['pngSha256'] + '.png')) == item['pngSha256']
-    captures = [read_capture(facing, descriptor['projectSha256'], ffmpeg) for facing in directions]
-    if tuple(directions) == FACINGS:
-        save(BUNDLE / 'native_audit.json',
-             dict(scope='SANCTUARY_FIVE_FACING_STUDIO_PLAYBACK', projectSha256=sha(project),
+        assert sha(bundle / 'textures' / (item['pngSha256'] + '.png')) == item['pngSha256']
+    captures = [read_capture(facing, descriptor['projectSha256'], ffmpeg, bundle) for facing in directions]
+    if tuple(directions) == facings:
+        save(bundle / 'native_audit.json',
+             dict(scope='SANCTUARY_EIGHT_FACING_STUDIO_PLAYBACK' if include_west else 'SANCTUARY_FIVE_FACING_STUDIO_PLAYBACK',
+                  projectSha256=sha(project),
                   sourceInputs=descriptor['sourceInputs'], previewFrameClock=60,
                   captures=captures, productionApproved=False))
     print(f'Checked {len(captures)} native previews and extracted their phase views.')
@@ -78,7 +81,11 @@ def audit(directions, ffmpeg):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--direction', choices=FACINGS, action='append')
+    parser.add_argument('--direction', choices=ALL_FACINGS, action='append')
+    parser.add_argument('--include-west', action='store_true')
     parser.add_argument('--ffmpeg', default='D:/Project/NGUMACHHUYENAN-tools/review-media/imageio_ffmpeg/binaries/ffmpeg-win-x86_64-v7.1.exe')
     args = parser.parse_args()
-    audit(tuple(args.direction) if args.direction else FACINGS, args.ffmpeg)
+    facings = ALL_FACINGS if args.include_west else FACINGS
+    if args.direction and not set(args.direction) <= set(facings):
+        parser.error('Western directions require --include-west')
+    audit(tuple(args.direction) if args.direction else facings, args.ffmpeg, args.include_west)

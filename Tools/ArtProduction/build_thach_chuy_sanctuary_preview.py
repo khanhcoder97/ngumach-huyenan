@@ -1,4 +1,4 @@
-"""Build a five-facing editable Studio preview from the sanctuary sources."""
+"""Build an editable Studio preview from the sanctuary sources."""
 import shutil
 from pathlib import Path
 
@@ -6,6 +6,9 @@ from prepare_thach_chuy_candidates_20261116c import ART, EV, ROOT, read, save, s
 
 BUNDLE = ROOT / 'Implementation/Reports/Evidence/Actor_Assembly_20261117a/Sanctuary_TC06_v2'
 FACINGS = ('S', 'SE', 'E', 'NE', 'N')
+WEST_BATCH = '20261119b'
+WEST_BUNDLE = EV.parent / ('Actor_Batch_' + WEST_BATCH) / 'Sanctuary_TC06_v3'
+ALL_FACINGS = (*FACINGS, 'NW', 'W', 'SW')
 # These are presentation review times. The gameplay state controls duration.
 PHASES = {
     'charge': ('zone_charge', 0, 640, 40),
@@ -18,9 +21,22 @@ PREVIEW_ORIGIN_Y = 36
 CLIP_END = 5120
 
 
-def make(destination):
+def sanctuary_sources(include_west):
     manifest = read(ART / 'Candidates_20261116c/candidate_manifest.json')
-    records = {record['id']: record for record in manifest['records']}
+    records = {record['id']: (record, EV / 'Candidate_Studio') for record in manifest['records']}
+    if include_west:
+        manifest = read(ART / ('Candidates_' + WEST_BATCH) / 'candidate_manifest.json')
+        studio = WEST_BUNDLE.parent / 'Candidate_Studio'
+        for record in manifest['records']:
+            if record['id'].startswith('class_thach_chuy_skill_06_'):
+                assert record['id'] not in records
+                records[record['id']] = (record, studio)
+    return records
+
+
+def make(destination, include_west=False):
+    facings = ALL_FACINGS if include_west else FACINGS
+    records = sanctuary_sources(include_west)
     textures = destination / 'textures'
     textures.mkdir(parents=True, exist_ok=True)
     layers = []
@@ -28,8 +44,8 @@ def make(destination):
     schedules = {}
 
     def add_layer(identifier, source_id, depth, rest, schedule, socket=''):
-        record = records[source_id]
-        registration_path = EV / 'Candidate_Studio' / source_id / 'source_registration.json'
+        record, studio = records[source_id]
+        registration_path = studio / source_id / 'source_registration.json'
         registration = read(registration_path)
         assert source_id == registration['record']['id']
         assert sha(ART / record['source']) == record['sourceSha256'] == registration['record']['sourceSha256']
@@ -80,9 +96,10 @@ def make(destination):
         pose_index, alpha = phase_schedule(time, PLATE_START, PLATE_END, PLATE_STEP)
         return pose_index, alpha * (1 - fade_progress(time))
 
-    for facing in FACINGS:
+    for facing in facings:
         source_id = 'class_thach_chuy_skill_06_' + facing.lower()
-        registration = read(EV / 'Candidate_Studio' / source_id / 'source_registration.json')
+        _, studio = records[source_id]
+        registration = read(studio / source_id / 'source_registration.json')
         height = registration['record']['bodyReferenceHeight']
         add_layer('body_' + facing, source_id, 0, 140 / height,
                   lambda time, owner, facing=facing: body_schedule(time, facing, owner))
@@ -108,7 +125,7 @@ def make(destination):
                   lambda time, _: plate_schedule(time), name)
 
     clips = []
-    for facing in FACINGS:
+    for facing in facings:
         tracks = []
         for layer in layers:
             frames, schedule = schedules[layer['Id']]
@@ -132,15 +149,16 @@ def make(destination):
 
     project_path = destination / 'project.json'
     document = dict(SchemaVersion=1, Scope='PRESENTATION_AUTHORING_ONLY',
-                    Name='Sơn Thần Giáng Thế · 5 hướng', ProductionApproved=False,
+                    Name=f'Sơn Thần Giáng Thế · {len(facings)} hướng', ProductionApproved=False,
                     Layers=layers, Sockets=sockets, Clips=clips)
     if project_path.exists():
         assert read(project_path) == document, 'Keep manual edits and choose a new preview folder'
     else:
         save(project_path, document)
     save(destination / 'assembly_descriptor.json',
-         dict(scope='SANCTUARY_FIVE_FACING_STUDIO_PREVIEW', projectSha256=sha(project_path),
-              sourceInputs=inputs, directionalClips=list(FACINGS), phaseReferenceFrames=footprint_references,
+         dict(scope='SANCTUARY_EIGHT_FACING_STUDIO_PREVIEW' if include_west else 'SANCTUARY_FIVE_FACING_STUDIO_PREVIEW',
+              projectSha256=sha(project_path),
+              sourceInputs=inputs, directionalClips=list(facings), phaseReferenceFrames=footprint_references,
               previewOriginY=PREVIEW_ORIGIN_Y, plateToSustainFadeMs=[FADE_START, FADE_END],
               timelineSegments=len(durations), durationMs=CLIP_END, productionApproved=False))
     print(f'Built {len(clips)} editable clips from {len(inputs)} sources with {len(durations)} timeline segments.')
@@ -149,5 +167,7 @@ def make(destination):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--destination', type=Path, default=BUNDLE)
-    make(parser.parse_args().destination)
+    parser.add_argument('--destination', type=Path)
+    parser.add_argument('--include-west', action='store_true')
+    args = parser.parse_args()
+    make(args.destination or (WEST_BUNDLE if args.include_west else BUNDLE), args.include_west)

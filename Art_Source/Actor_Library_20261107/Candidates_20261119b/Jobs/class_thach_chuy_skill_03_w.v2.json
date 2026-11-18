@@ -1,0 +1,33 @@
+{
+  "batch": "20261119b",
+  "expectedSourcePages": 18,
+  "scope": "THACH_CHUY_SIX_SKILLS_WEST_SOUTHWEST_NORTHWEST_AUTHORED_FACINGS",
+  "version": 2,
+  "id": "class_thach_chuy_skill_03_w",
+  "direction": "W",
+  "prompt": "Create an original production-ready pixel art sprite sheet for Thạch Chùy, skill Thiết Bích. Image 1 supplies the project-owned character identity, short dark hair, ochre circlet, bronze-brown lamellar chest, grey steel pauldrons and bracers, rust red sash and sturdy brown boots. Image 2 provides the sequence and painterly cluster scale only, seen from an opposite heading. Draw new poses from the requested camera. The character keeps a compact chibi build and exactly one permanently connected grey cuboid hammer head and short wooden shaft. The two gloved hands grip the SHAFT below the head, with credible occlusion and no mirrored body markings derived from a flip. Camera fixed: true left profile facing screen LEFT. Show only the leftward near eye. Do not angle toward the viewer. His far right anatomical shoulder and hands may hide naturally on windup.\nNon-attacking defensive brace. Poses 0–2 soften knees and tip same hammer just forward toward the ground; 3–5 slowly lower the head close to the toes; 6 settle the head lightly in front; 7–11 hold a strong guarded brace with both hands on that shaft, three distinct tiny breathing/weight transfers and stable weapon contact; 12–15 lift and return to neutral. Never swing over shoulder, slam, change weapon or add magical stone plates.\nExactly 16 separately drawn full body poses in a strict 4-column by 4-row sheet, row-major and evenly spaced. Neutral at frame 0 and recovery with one distinct easing pose at 15. Crisp stepped pixels, full feet and weapon with wide empty margins. Use only muted brown, gold, steel and skin tones of the supplied identity. True transparent RGBA, including clear cutout gaps and wide transparent gutters. Subtle intentional motion in cape, body, legs and hand grip. Avoid duplicates, detached layers, extra hammer, painted motion trails, VFX, terrain, shadows, captions, dividers, background fill and checkerboard. EXTRA QUALITY CHECK: there must be strictly zero red pixels around the nose or mouth and strictly zero flecks in the transparent gaps. Do not include a red scarf or any fire. Render a crisp limited palette, dark colored outline and true clean alpha, with no color matte on edges. The sash alone is subdued earthen rust.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_e_v1_20261116c.png"
+  ],
+  "timing": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60
+  ],
+  "seconds": 0.96,
+  "inputRole": "OWNER_THACH_CHUY_IDENTITY_AND_EXISTING_CHOREOGRAPHY_REFERENCE"
+}
