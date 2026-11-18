@@ -9,6 +9,8 @@ from prepare_linh_cung_khoa_mach_review import OUTPUT
 from prepare_linh_cung_day_gai import BODY as TRAP_BODY, EFFECTS as TRAP_EFFECTS, OUTPUT as TRAP_OUTPUT
 from prepare_linh_cung_lien_chau import (ARROW as VOLLEY_ARROW, NOCK as VOLLEY_NOCK,
                                        OUTPUT as VOLLEY_OUTPUT, RELEASE_MS, RELEASE_POSES, SOURCE_MS)
+from prepare_linh_cung_tan_hoa import (FALL, FAN, FALL_DELAY_MS, FULL_POSE, OUTPUT as FAN_OUTPUT,
+                                     RELEASE_POSE as FAN_RELEASE_POSE)
 from prepare_thach_chuy_candidates_20261116c import ART, ROOT, inspect, read, sha
 
 CLIENT = ROOT / 'ClientGodot/assets'
@@ -29,7 +31,12 @@ def export(check):
     assert volley_review['nativeAuditSha256'] == sha(volley_audit_path)
     volley_audit = read(volley_audit_path)
     assert set(volley_review['nativeAssemblyFacingsReviewed']) == set(FACINGS)
-    reviewed = {item['id']: item['sourceSha256'] for report in (audit, trap_audit, volley_audit)
+    fan_review = read(FAN_OUTPUT / 'manual_review.json')
+    fan_audit_path = FAN_OUTPUT / 'native_audit.json'
+    assert fan_review['nativeAuditSha256'] == sha(fan_audit_path)
+    fan_audit = read(fan_audit_path)
+    assert set(fan_review['nativeAssemblyFacingsReviewed']) == set(FACINGS)
+    reviewed = {item['id']: item['sourceSha256'] for report in (audit, trap_audit, volley_audit, fan_audit)
                 for item in report['sourceViews']}
     manifest = dict(clips={}, effects={}, sources={})
 
@@ -144,6 +151,31 @@ def export(check):
         effect['iconRect'] = icon_rect(direction['frames'][0])
         effect['sourceHeight'] = effect['iconRect'][2]
         manifest['effects'][label] = effect
+
+    fan_cast = []
+    for facing in FACINGS:
+        identifier = 'class_linh_cung_skill_04_' + facing.lower()
+        record, direction = candidate(identifier, FAN_OUTPUT)
+        data = read(FAN_OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+        timing = record['sourceFrameDurationsMs']
+        assert direction['direction'] == facing and data['releasePose'] == FAN_RELEASE_POSE
+        pivot = direction['frames'][FAN_RELEASE_POSE]['pivot']
+        offset = [(point - root) / direction['referenceHeight'] for point, root in zip(data['releaseSourcePoint'], pivot)]
+        fan_cast.append(dict(format_clip(direction, package(identifier, record), sum(timing) / 1000),
+                             frameEnds=[end / 1000 for end in accumulate(timing)],
+                             release=sum(timing[:FAN_RELEASE_POSE]) / 1000, releaseOffset=offset))
+    manifest['clips']['fan'] = fan_cast
+    for label, identifier in (('fan_open', FAN), ('fan_fall', FALL)):
+        record, direction = candidate(identifier, FAN_OUTPUT)
+        timing = record['sourceFrameDurationsMs']
+        effect = format_clip(direction, package(identifier, record), sum(timing) / 1000)
+        if identifier == FAN:
+            data = read(FAN_OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+            effect.update(sourceHeight=data['sourceReach'], ratioY=data['fanRatioY'],
+                          angleCorrectionDegrees=data['sourceAngleCorrection'], sectorDegrees=data['measuredSectorDegrees'],
+                          iconRect=icon_rect(direction['frames'][FULL_POSE]), fullAt=sum(timing[:FULL_POSE]) / 1000,
+                          fallAt=FALL_DELAY_MS / 1000)
+        manifest['effects'][label] = effect
     records = {record['id']: record for record in read(ART / 'generation_records.json')}
     approvals = {record['id']: record['sourceSha256'] for record in read(ART / 'visual_review.json')['sourceApprovals']}
     for label, identifier, duration in (('mark', MARK, .96), ('dummy', TARGET, 1.6),
@@ -164,7 +196,7 @@ def export(check):
         assert output.read_text(encoding='utf-8') == document, 'Practice pack is out of date'
     else:
         output.write_text(document, encoding='utf-8', newline='\n')
-    print('Linh Cung practice: three skills with eight authored facings each.')
+    print('Linh Cung practice: four skills with eight authored facings each.')
 
 
 if __name__ == '__main__':

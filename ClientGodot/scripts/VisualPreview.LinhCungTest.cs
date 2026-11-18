@@ -49,7 +49,7 @@ public partial class VisualPreview
                 for (int i = 0; i < 12; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             }
             await Capture("ready");
-            KeyPress(Key.Key4);
+            KeyPress(Key.Key5);
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             Check(!practice.IsCasting && practice.Releases == 0, "Unavailable skill does not start the animation.");
             Click(PreviewHud.SkillCenters()[0]);
@@ -106,7 +106,7 @@ public partial class VisualPreview
             var start = _hero.GlobalPosition;
             Click(PreviewHud.SkillCenters()[1]);
             await Until(() => trap.IsAiming, "The second HUD button selects a trap position.");
-            Click(PreviewHud.SkillCenters()[3]);
+            Click(PreviewHud.SkillCenters()[4]);
             Check(trap.IsAiming && trap.Placed == 0, "Clicking another HUD slot never plants under the HUD.");
             KeyPress(Key.Escape);
             await Until(() => !trap.IsAiming, "Escape cancels ground selection.");
@@ -268,6 +268,85 @@ public partial class VisualPreview
                       $"Volley facing {facing} accounts for every distinct arrow.");
             }
             GD.Print($"LINH_CUNG_VOLLEY PASS assertions={assertions - beforeVolley} facings=8 authoringFrames=128");
+
+            int beforeFan = assertions;
+            var fan = practice.Fan;
+            Check(LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Right.Rotated(Mathf.DegToRad(49)) * 40) == 1 &&
+                  LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Right.Rotated(Mathf.DegToRad(51)) * 40) == 0,
+                  "The fan includes a point inside 50 degrees and rejects an outside point.");
+            Check(LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Left * 30) == 0 &&
+                  LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Right * (LinhCungFanPractice.Range + 1)) == 0,
+                  "The fan rejects rear and out-of-range targets.");
+            Check(Mathf.IsEqualApprox(LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Right * 15), .7f) &&
+                  LinhCungFanPractice.HitScale(Vector2.Right, Vector2.Right * LinhCungFanPractice.NearDistance) == 1,
+                  "The reduced factor applies strictly below the 0.8 metre boundary.");
+            var dummyFoot = practice.TargetPoint - LinhCungPractice.TargetOffset;
+            var normalPosition = dummyFoot - Vector2.Right * 59;
+            var closePosition = dummyFoot - Vector2.Right * 14;
+            async Task StandAt(Vector2 position)
+            {
+                Check(_environment.IsWalkable(position), "The fan setup uses walkable ground.");
+                _hero.GlobalPosition = position;
+                _hero.ResetPhysicsInterpolation();
+                for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            }
+
+            await StandAt(normalPosition);
+            Check(practice.SelectAt(practice.TargetPoint), "The fan can aim toward the east dummy.");
+            Click(PreviewHud.SkillCenters()[3]);
+            await Until(() => fan.Active, "The fourth HUD button starts Tán Hoa.");
+            Check(animator.CurrentAction == "fan" && !fan.FanVisible && !fan.Resolved, "The cone waits for the bow release.");
+            await Until(() => fan.FanVisible, "The measured bow cue opens the fan.");
+            Check(!fan.Resolved, "The opening effect appears before hit resolution.");
+            await Until(() => fan.Resolved, "Targets are resolved at the fully opened frame.");
+            Check(fan.NormalHits == 1 && fan.CloseHits == 0 && fan.Blocked == 0, "The east dummy counts one normal hit.");
+            await Capture("fan_open");
+            await Until(() => fan.LeavesVisible, "The falling fragments follow the main petal fan.");
+            await Capture("fan_leaves");
+            await Until(() => !fan.Active && !practice.IsCasting, "The fan and fragments finish recovery.");
+
+            await StandAt(closePosition);
+            practice.LowFx = true;
+            KeyPress(Key.Key4);
+            await Until(() => fan.Active, "Key 4 casts Tán Hoa at close range.");
+            await Until(() => fan.Resolved, "The close cast resolves.");
+            Check(fan.NormalHits == 0 && fan.CloseHits == 1 && fan.FanVisible, "The close hit reduces effect to seventy percent and keeps the visual cone.");
+            await Capture("fan_close");
+            for (int frame = 0; frame < 18; frame++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+            Check(fan.Active && !fan.LeavesVisible, "Low VFX hides falling fragments during the normal fall window.");
+            await Until(() => !fan.Active && !practice.IsCasting, "The close cast finishes.");
+            practice.LowFx = false;
+
+            await StandAt(normalPosition);
+            var fanWall = new StaticBody2D { Position = normalPosition + Vector2.Right * 33, CollisionLayer = 1 };
+            AddChild(fanWall);
+            fanWall.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = new Vector2(8, 80) } });
+            for (int frame = 0; frame < 3; frame++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            KeyPress(Key.Key4);
+            await Until(() => fan.Active, "The wall test starts the art sequence.");
+            await Until(() => fan.Resolved, "The blocked fan resolves.");
+            Check(fan.NormalHits + fan.CloseHits == 0 && fan.Blocked == 1, "An obstacle prevents the dummy hit.");
+            fanWall.QueueFree();
+            await Until(() => !fan.Active && !practice.IsCasting, "The wall test completes recovery.");
+
+            practice.ClearTarget();
+            await StandAt(start);
+            for (int facing = 0; facing < 8; facing++)
+            {
+                FaceDirection(Vector2.Up.Rotated(facing * Mathf.Pi / 4));
+                KeyPress(Key.Key4);
+                await Until(() => animator.CurrentAction == "fan", $"Fan starts in facing {facing}.");
+                Check(animator.ActionDirection == facing, $"Fan selects its authored clip for facing {facing}.");
+                var frames = new HashSet<int>();
+                for (int tick = 0; tick < 90 && practice.IsCasting; tick++)
+                {
+                    frames.Add(animator.DisplayedFrame);
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                Check(frames.Count == 16, $"Fan facing {facing} renders all sixteen poses.");
+                await Until(() => fan.Resolved && !fan.Active, $"Fan facing {facing} resolves exactly once and recovers.");
+            }
+            GD.Print($"LINH_CUNG_FAN PASS assertions={assertions - beforeFan} facings=8 authoringFrames=128");
             GetTree().Quit();
         }
         catch (Exception error)

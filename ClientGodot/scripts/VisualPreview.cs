@@ -110,10 +110,12 @@ public partial class VisualPreview : Node2D
         {
             _practice=new LinhCungPractice();AddChild(_practice);
             _practice.Configure(_hero,animator,actors,_environment.Spawn+new Vector2(96,0),_environment,FaceDirection);
-            _hud.ConfigurePractice(_practice.Icon,_practice.Trap.Icon,_practice.Volley.Icon,animator.Texture,animator.RegionRect);
+            _hud.ConfigurePractice(_practice.Icon,_practice.Trap.Icon,_practice.Volley.Icon,_practice.Fan.Icon,
+                                   animator.Texture,animator.RegionRect);
             _practice.Feedback+=(message,ok)=>_hud.ShowAction(0,message,ok);
             _practice.Trap.Feedback+=(message,ok)=>_hud.ShowAction(1,message,ok);
             _practice.Volley.Feedback+=(message,ok)=>_hud.ShowAction(2,message,ok);
+            _practice.Fan.Feedback+=(message,ok)=>_hud.ShowAction(3,message,ok);
             FaceDirection(_practice.Aim(_facing));
         }
         if(!args.Any(a=>a.Contains("test",StringComparison.Ordinal))&&_capture==null&&!args.Contains("--performance-profile"))_dialog.ApplySavedPreferences();
@@ -542,15 +544,15 @@ public partial class VisualPreview : Node2D
         if(_practice!=null)
         {
             if(index==1){_hud.LastSkill=LinhCungTrapPractice.SkillName;_practice.Trap.ToggleAim();return;}
-            if(index!=0&&index!=2){_hud.ShowAction(index,"Ô kỹ năng đang khóa.");return;}
+            if(index>3){_hud.ShowAction(index,"Ô kỹ năng đang khóa.");return;}
             _practice.Trap.CancelAim();
             if(_practice.IsCasting){_hud.ShowAction(index,"Đang thi triển kỹ năng.");return;}
             var aim=_practice.Aim(_facing);
             FaceDirection(aim);
-            bool started = index==0 ? _practice.TryCast(aim) : _practice.TryVolley(aim);
+            bool started = index switch { 0 => _practice.TryCast(aim), 2 => _practice.TryVolley(aim), _ => _practice.Fan.TryCast(aim) };
             if(!started){_hud.ShowAction(index,"Chờ động tác hiện tại kết thúc.");return;}
-            _hud.LastSkill=index==0?LinhCungPractice.SkillName:LinhCungVolleyPractice.SkillName;
-            _hud.ShowAction(index,_hud.LastSkill+" · giương cung",true);
+            _hud.LastSkill = index switch { 0 => LinhCungPractice.SkillName, 2 => LinhCungVolleyPractice.SkillName, _ => LinhCungFanPractice.SkillName };
+            _hud.ShowAction(index,_hud.LastSkill+(index==3?" · chuẩn bị quét cung":" · giương cung"),true);
             return;
         }
         _hud.LastSkill=SkillVfxPlayer.Names[index];

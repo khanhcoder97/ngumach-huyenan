@@ -82,9 +82,9 @@ public partial class PreviewHud : Node2D
         InvalidateRender();
     }
     public void ConfigurePractice((Texture2D,Rect2) arrow,(Texture2D,Rect2) trap,(Texture2D,Rect2) volley,
-                                  Texture2D body,Rect2 portrait)
+                                  (Texture2D,Rect2) fan,Texture2D body,Rect2 portrait)
     {
-        _practiceSkills=new[]{arrow,trap,volley};
+        _practiceSkills=new[]{arrow,trap,volley,fan};
         _avatar.Material=null;
         _avatar.Texture=new AtlasTexture{Atlas=body,Region=portrait,FilterClip=true};
         _avatar.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
@@ -96,7 +96,7 @@ public partial class PreviewHud : Node2D
     {
         if(_practiceSkills==null)return SkillVfxPlayer.Names[slot];
         return slot switch{0=>LinhCungPractice.SkillName,1=>LinhCungTrapPractice.SkillName,
-                           2=>LinhCungVolleyPractice.SkillName,_=>"Ô kỹ năng khóa"};
+                           2=>LinhCungVolleyPractice.SkillName,3=>LinhCungFanPractice.SkillName,_=>"Ô kỹ năng khóa"};
     }
     private void AddButton(Rect2 rect,string icon,string tip,Action action)=>_buttons.Add((rect,icon,tip,action));
     public void ApplyOnline(NativeOnlineFrame frame)
@@ -252,9 +252,10 @@ public partial class PreviewHud : Node2D
         if(_questTab==0)
         {
             Text(new Vector2(36,247),practice?"Khu tập bắn Bến Mưa":q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
-            var summary=practice?"1 Khóa Mạch · 2 Dây Gai · 3 Liên Châu":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
+            var summary=practice?"1 Khóa Mạch · 2 Dây Gai":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
             Text(new Vector2(36,272),!practice&&summary.Length>35?summary[..32]+"…":summary,12);
-            Text(new Vector2(36,296),practice?"Chuột trái xác nhận · Chuột phải bỏ":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
+            Text(new Vector2(36,295),practice?"3 Liên Châu · 4 Tán Hoa":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
+            if(practice)Text(new Vector2(36,312),"Chuột trái chọn · Chuột phải bỏ",11,MoonGlassTheme.Muted);
             Text(new Vector2(36,329),practice?"WASD di chuyển · F2 đổi tầm nhìn":"J  Mở nhật ký",11,MoonGlassTheme.Silver);
         }
         else{Text(new Vector2(36,254),_questTab==1?"Nhiệm vụ hằng ngày":"Sự kiện đang diễn ra",14,MoonGlassTheme.Gold);Text(new Vector2(36,281),"Chưa có dữ liệu trong phiên này.",12,MoonGlassTheme.Muted);}

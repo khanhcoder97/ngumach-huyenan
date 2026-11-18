@@ -16,6 +16,16 @@ Quạt mở phát 16 pha trong 560 ms. Mảnh lá phát 16 pha trong 400 ms. Qu�
 
 Mở `Implementation/Reports/Evidence/Actor_Batch_20261118d/TanHoa/<hướng>/project.json`. Mỗi project có bốn lớp gồm nhân vật, quạt, mảnh rơi và bia Rễ Nước. Chọn clip **Tán Hoa**. Kéo các mốc trong bảng để chỉnh điểm xuất phát, góc, kích thước, thứ tự vẽ và nhịp chuyển pha cho từng hướng. Biến đổi tỉ lệ và góc trên canvas đưa khẩu độ pha mở về 100° quanh chuôi cung.
 
+## Chơi thử tại Bến Mưa
+
+Chạy `ClientGodot/Run_Preview.ps1 -LinhCungPractice`. Tiến đến gần bia, bấm chuột trái để chọn rồi nhấn **4** hoặc bấm ô Tán Hoa. Bỏ chọn bằng chuột phải để thử theo hướng nhân vật đang nhìn.
+
+Khu tập dùng tầm 4 m và hình nón 100° từ chân nhân vật. Mục tiêu đủ tầm và có đường ngắm thông thoáng ghi nhận một hit khi quạt mở hết. Hệ số thường là 150%. Trong khoảng cách dưới 0,8 m, hệ số còn 105%, bằng 70% hiệu lực thường. HUD báo số mục tiêu và hệ số thử. Chế độ VFX nhẹ giữ đủ năm cánh chính và ẩn mảnh lá rơi.
+
+Chạy `ClientGodot/Run_Preview.ps1 -LinhCungPractice -Test` để kiểm tra phím 4, nút HUD, tám hướng, biên hình nón, hit thường, hit sát bia và vật cản. Bản có giao diện qua 60 xác nhận Tán Hoa. Ảnh và kết quả lưu ở `Implementation/Reports/Evidence/Tan_Hoa_Practice_20261118d`.
+
+Sát thương trực tuyến, chi phí 20 MP, hồi chiêu 12 giây và tín hiệu `FAN_HIT_CONFIRMED` còn cần nối với máy chủ.
+
 ## Kiểm hình
 
 Godot phát 10 atlas nguồn và 8 bản ghép ở mức cố định 60 FPS. Bài kiểm đọc đủ 1.800 frame nguồn, 768 frame ghép và 160 khung hoặc pha nguồn riêng. `native_audit.json` ghi mã băm của project, video và ảnh chuỗi. `manual_review.json` ghi kết quả soát hình theo hướng.
