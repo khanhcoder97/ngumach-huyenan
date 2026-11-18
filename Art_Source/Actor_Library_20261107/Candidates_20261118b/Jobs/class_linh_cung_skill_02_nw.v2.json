@@ -1,0 +1,33 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 2,
+  "id": "class_linh_cung_skill_02_nw",
+  "direction": "NW",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118b/class_linh_cung_skill_02_nw_v1_20261118b.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_NORTHWEST_GRIP_REPAIR_TARGET",
+  "prompt": "Precise art repair of image 2, same transparent 4-by-4 sixteen-frame northwest facing Linh Cung crouch. Preserve head, cape, costume, right-side quiver, boots, rough sprite timing, palette and camera. Correct the two hands in index-7 and index-8 release poses (last cell of row 2 and first cell of row 3). The anatomical LEFT hand must remain a closed fist wrapped around the recurved bow grip in its existing position, the same as the two previous poses. Restore one consistent left bow grip there. The anatomical RIGHT hand reaches forward and is visible as a small separate hand just to the UPPER-LEFT of the left fist, with fingers open on index 8 to release the invisible seed. Separate the open hand from the bow by a visible small gap; it does not take over the grip. Keep exactly two arms with distinct wrists, no doubling of hands or bows. Right hand retracts and is naturally occluded by cape in the final standing poses. Maintain frontaway NW direction and full planted feet. Keep clean alpha-zero transparent background and entire 4×4 equal-cell layout. No effect, seed, arrow, ground, text or other changes."
+}

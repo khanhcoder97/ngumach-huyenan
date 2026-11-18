@@ -128,6 +128,9 @@ public partial class ArtStudio : Control
         if (entry >= 0 && entry + 1 < args.Length) { SetDocument(ArtStudioLibrary.Load(args[entry + 1]), "", ""); int item = Array.FindIndex(_entries, e => e.Id == args[entry + 1]); if (item >= 0) _library.Select(item); }
         int direction = Array.IndexOf(args, "--studio-direction");
         if (direction >= 0 && direction + 1 < args.Length) { int at = _doc.Clips.FindIndex(c => c.Direction == args[direction + 1]); if (at >= 0) SelectClip(at); }
+        int clip = Array.IndexOf(args, "--studio-clip");
+        if (clip >= 0 && clip + 1 < args.Length && int.TryParse(args[clip + 1], out int clipIndex) &&
+            clipIndex >= 0 && clipIndex < _doc.Clips.Count) SelectClip(clipIndex);
         int componentArg = Array.IndexOf(args, "--studio-component");
         if (componentArg >= 0 && componentArg + 1 < args.Length) { ArtStudioLibrary.AddComponent(_doc, args[componentArg + 1]); component.Select(Array.FindIndex(components, e => e.Id == args[componentArg + 1])); _selected = _doc.Layers.Last().Id; Refresh(); }
         int frame = Array.IndexOf(args, "--studio-frame");

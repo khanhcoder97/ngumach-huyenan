@@ -1,0 +1,33 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 1,
+  "id": "class_linh_cung_skill_02_e",
+  "direction": "E",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_SAME_FACING_REVIEWED_KHOA_MACH_IDENTITY",
+  "prompt": "Create original Dây Gai trap-placement character animation for Ngũ Mạch Huyền Ấn. Image 1 is the Linh Cung idle identity and image 2 is the same-facing original chibi animation style reference. Keep exact dark brown high ponytail with olive tie, sage short shoulder cape, green tunic, brown boots and bracers, cream-fletched right-shoulder quiver and small recurve bow. Fixed right-facing side profile from the game camera. Actor reaches toward screen right. 16 distinct whole-body game sprites on a perfect 4x4 transparent RGBA atlas in reading order. Every cell uses unchanged oblique top-down camera, actor scale, and facing. Chronology: 1–2 low bow ready and knees begin to bend; 3–5 ease into a low athletic crouch, free right fingers pinch and reach toward the ground immediately in front; 6–8 lean and extend the free hand downward; 9 open the fingers once at calf level to release an invisible seed, just above ground; 10–12 lift the open empty hand and straighten knees; 13–16 finish a smooth return to the same low ready stance. Both boots planted next to one another through all 16 frames. The anatomical left hand holds one real continuous recurve bow at the grip on the other side of the body, at or above the boots. Right hand holds no bow. No arrow drawn or nocked, no second bow, no crouch walking, no jump, no hands cutting through soles, no green spell or seed drawn into the actor. Use crisp refined chibi pixel-art clusters and faithful lime-sage palette. Full feet, head, bow and quiver in each cell, substantial transparent gutters, no lines, title, grid, dirt or floor."
+}
