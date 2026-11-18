@@ -1,0 +1,537 @@
+{
+  "batch": "20261118c",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_LIEN_CHAU_EIGHT_AUTHORED_FACINGS_AND_TWO_PROJECTILE_EFFECTS",
+  "records": [
+    {
+      "id": "class_linh_cung_skill_03_e",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_e_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_e_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png",
+          "sourceSha256": "1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3"
+        }
+      ],
+      "sourceSha256": "cd497363bfec92eb7c7ac84e40c66441a3e734b64d8cc6eb981ab773bb636e5c",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "E",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_lc_03_volley_arrow_component",
+      "source": "Candidates_20261118c/sk_lc_03_volley_arrow_component_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/sk_lc_03_volley_arrow_component_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+          "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852"
+        }
+      ],
+      "sourceSha256": "3b98da2dbcff586579cdc16c6f9c4582607fc3aae62bc540af2d01718c839b0b",
+      "sourceFrameDurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.32,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "VOLLEY_PROJECTILE",
+        "attach": "BOW_TO_CONTACT",
+        "travelAxis": "E"
+      }
+    },
+    {
+      "id": "sk_lc_03_volley_nock_component",
+      "source": "Candidates_20261118c/sk_lc_03_volley_nock_component_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/sk_lc_03_volley_nock_component_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+          "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852"
+        }
+      ],
+      "sourceSha256": "84745457b8ddb86e5b694c9aa045cdefbd8394a3f80ccfb9af76d9f17e49b317",
+      "sourceFrameDurationsMs": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.48,
+      "previewLoop": true,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "QUICK_NOCK_LIGHT",
+        "attach": "BOW_SOCKET",
+        "instances": 5
+      }
+    },
+    {
+      "id": "class_linh_cung_skill_03_s",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_s_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_s_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_s_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_s_v2_20261118a.png",
+          "sourceSha256": "9f4709597dc78c9f219789661da2cee7aec453e0141c0d093703d7036f031f70"
+        }
+      ],
+      "sourceSha256": "a94d0db27bae855f925ad4eb0d6bff319811e43afeebf03de1ae996c0327d914",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "S",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_n",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_n_v2_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_n_v2_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118c/class_linh_cung_skill_03_n_v1_20261118c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118c/class_linh_cung_skill_03_n_v1_20261118c.png",
+          "sourceSha256": "5fb97bf65c1c2056fc6d16cd61d6a7738f7f468a96301589cbed6ea2be03da3f"
+        }
+      ],
+      "sourceSha256": "78c8076d30114861e1626809179a1c985f939efe92f4486a0d00c97718d6b239",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_IDLE_AND_NORTH_RELEASE_ART_REPAIR_TARGET",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_w",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_w_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_w_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_w_v1_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_w_v1_20261118a.png",
+          "sourceSha256": "1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33"
+        }
+      ],
+      "sourceSha256": "ff59d86e844fcf609b374ab2bf485be3b253f83575ab23f72bcac3805e32d46d",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "W",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_se",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_se_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_se_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_se_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_se_v2_20261118a.png",
+          "sourceSha256": "fa95e7758df232b5ba3f7a70ef030faf9fa99d8b4951458d8e14649001b786d4"
+        }
+      ],
+      "sourceSha256": "f6f34b4aa34fbcc978fe2121e77fa910461d62797c5c2362946dd05f9a60efd5",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "SE",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_sw",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_sw_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_sw_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_sw_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_sw_v2_20261118a.png",
+          "sourceSha256": "8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a"
+        }
+      ],
+      "sourceSha256": "cc696cd1b9ceb21d40be0abd208b3909d8acd8aaebdaf025b008d32c9d56c7f8",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "SW",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_ne",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_ne_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_ne_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_ne_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_ne_v2_20261118a.png",
+          "sourceSha256": "aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717"
+        }
+      ],
+      "sourceSha256": "1d19e73f23654c09ee41bfb942e9a01cf0d94679fa46ed3cb108e23e7b9c5de9",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "NE",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_linh_cung_skill_03_nw",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_nw_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_nw_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_nw_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_nw_v2_20261118a.png",
+          "sourceSha256": "f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06"
+        }
+      ],
+      "sourceSha256": "43047c72a57edbb1ec9b98c8f4f9649944e91dc00abce9b3d7de7d94f412a693",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "NW",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    }
+  ],
+  "history": [
+    {
+      "id": "class_linh_cung_skill_03_n",
+      "source": "Candidates_20261118c/class_linh_cung_skill_03_n_v1_20261118c.png",
+      "prompt": "Candidates_20261118c/class_linh_cung_skill_03_n_v1_20261118c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_n_v2_20261118a.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_n_v2_20261118a.png",
+          "sourceSha256": "8ed97d099f2e38d5ae92eefd6b82d224cda73244eafa0bf66c43fb49a28d3929"
+        }
+      ],
+      "sourceSha256": "5fb97bf65c1c2056fc6d16cd61d6a7738f7f468a96301589cbed6ea2be03da3f",
+      "sourceFrameDurationsMs": [
+        70,
+        60,
+        50,
+        45,
+        25,
+        40,
+        45,
+        25,
+        40,
+        45,
+        65,
+        45,
+        65,
+        45,
+        65,
+        80
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    }
+  ],
+  "selected": 10,
+  "generatedVariants": 11,
+  "remainingSourcePages": 0,
+  "sourceCells": 160,
+  "productionApproved": false
+}

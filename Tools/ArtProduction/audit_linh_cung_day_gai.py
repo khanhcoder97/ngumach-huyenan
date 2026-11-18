@@ -14,8 +14,8 @@ def distinct(values):
     return [value for value, _ in groupby(values)]
 
 
-def check_source(entry, ffmpeg):
-    prefix = OUTPUT / ('raw_' + entry['id'])
+def check_source(entry, ffmpeg, output=OUTPUT):
+    prefix = output / ('raw_' + entry['id'])
     movie = prefix.with_suffix('.mp4')
     receipt = read(prefix.with_suffix('.capture_receipt.json'))
     assert receipt['sourceSha256'] == entry['sourceSha256'] == sha(ROOT / entry['source'])

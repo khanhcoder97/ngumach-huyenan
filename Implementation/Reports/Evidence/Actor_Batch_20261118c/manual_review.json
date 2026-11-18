@@ -1,0 +1,77 @@
+{
+  "batch": "20261118c",
+  "scope": "STUDIO_NATIVE_ART_REVIEW",
+  "productionApproved": false,
+  "nativeAuditSha256": "4bf871fe53dc76e55925d744b082a9fe4466e98c55fa42b9af19e52fe2fdaacd",
+  "sourcePosesViewed": 160,
+  "nativeAssemblyFacingsReviewed": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "nativeReviewImages": [
+    {
+      "facing": "N",
+      "file": "LienChau/N/sequence.png",
+      "sha256": "0fdb5ed1f0a1ed0903eed4f336ecfd1f908c796baf781cdca2be57e0996bf087"
+    },
+    {
+      "facing": "NE",
+      "file": "LienChau/NE/sequence.png",
+      "sha256": "bd8165da5f028b3bd4f259413c00290cbf5722c1a17b1957a968d01f697e4d96"
+    },
+    {
+      "facing": "E",
+      "file": "LienChau/E/sequence.png",
+      "sha256": "488a326d4ac6aa2269ef3847307844350c8870ec5ed130e1a9fa079a7b201f08"
+    },
+    {
+      "facing": "SE",
+      "file": "LienChau/SE/sequence.png",
+      "sha256": "7961b96dc1245e8582952a5b68e2ed06c404a390678a0a6a3570e2a00a92ca1f"
+    },
+    {
+      "facing": "S",
+      "file": "LienChau/S/sequence.png",
+      "sha256": "d503385e6e6f31e90f0fb8ac7598179dd21f3edd98727533a7d88a7fd0e9bc3f"
+    },
+    {
+      "facing": "SW",
+      "file": "LienChau/SW/sequence.png",
+      "sha256": "747bea2adcfeb0cb3ee46e3edcb185212862622481d73ed159cd56f72ce70cbb"
+    },
+    {
+      "facing": "W",
+      "file": "LienChau/W/sequence.png",
+      "sha256": "85ede4ead712b9ca6711a81de2f5c9b0d2f9b47821ab2f44f769e44e39dbb91f"
+    },
+    {
+      "facing": "NW",
+      "file": "LienChau/NW/sequence.png",
+      "sha256": "d4acbc61d702ec8cd4523ddfd9b57b33ae17f91647094869b98097a8c4aaec74"
+    }
+  ],
+  "originalNockLoopWrapReviewed": [
+    14,
+    15,
+    0,
+    1
+  ],
+  "rejectedSourceRevisions": [
+    {
+      "id": "class_linh_cung_skill_03_n",
+      "sourceSha256": "5fb97bf65c1c2056fc6d16cd61d6a7738f7f468a96301589cbed6ea2be03da3f",
+      "reason": "Pale duplicate arrowheads appear on release frames."
+    }
+  ],
+  "observations": [
+    "All eight cast recordings show five independent releases from the bow and a tight spread.",
+    "Northern facing conceals much of the final release hand under the moving ponytail. The arrow and recoil remain visible.",
+    "The Waterroot is a presentation target. Native evidence verifies animation and flight, with no claim about hit resolution."
+  ]
+}

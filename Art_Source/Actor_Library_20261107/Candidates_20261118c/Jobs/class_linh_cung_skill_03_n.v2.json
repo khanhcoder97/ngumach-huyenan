@@ -1,0 +1,33 @@
+{
+  "batch": "20261118c",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_LIEN_CHAU_EIGHT_AUTHORED_FACINGS_AND_TWO_PROJECTILE_EFFECTS",
+  "version": 2,
+  "id": "class_linh_cung_skill_03_n",
+  "direction": "N",
+  "seconds": 0.81,
+  "timing": [
+    70,
+    60,
+    50,
+    45,
+    25,
+    40,
+    45,
+    25,
+    40,
+    45,
+    65,
+    45,
+    65,
+    45,
+    65,
+    80
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118c/class_linh_cung_skill_03_n_v1_20261118c.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_NORTH_RELEASE_ART_REPAIR_TARGET",
+  "prompt": "Edit image 2. It is a 4×4 game animation atlas from the back looking NORTH, with bow in anatomical left hand on camera-left. Keep its exact order and preserve the woman, rear camera, full boots, bow, quiver, brown tied ponytail, stance and crisp pixel-art. Fix the five release poses at ZERO-BASED indices 3, 6, 9, 11 and 13. All five show a SMALL open RIGHT hand next to the right edge of her hair and just above the quiver, clearly separated from the left grip. The open fingertips are naturally smaller in the top-down camera. At all five indices absolutely REMOVE the pale arrowhead above the bow and any loose shaft. No visible arrow anywhere on the atlas except the original fletching bundle inside quiver. At indices 2,5,8,10,12 show right hand pulling string, mostly occluded by her head, and a taut V in the visible gap as appropriate. At each release keep the connected bowstring straight and left grip closed. Keep the neutral first and last poses. Maintain exactly sixteen distinct fully contained sprites with wide empty gutters and truly transparent RGBA alpha-zero canvas. No matte, checker, pale fog, green magic, airborne arrows, text or floor."
+}

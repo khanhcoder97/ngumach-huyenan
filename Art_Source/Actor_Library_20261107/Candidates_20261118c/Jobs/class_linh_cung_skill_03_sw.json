@@ -1,0 +1,33 @@
+{
+  "batch": "20261118c",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_LIEN_CHAU_EIGHT_AUTHORED_FACINGS_AND_TWO_PROJECTILE_EFFECTS",
+  "version": 1,
+  "id": "class_linh_cung_skill_03_sw",
+  "direction": "SW",
+  "seconds": 0.81,
+  "timing": [
+    70,
+    60,
+    50,
+    45,
+    25,
+    40,
+    45,
+    25,
+    40,
+    45,
+    65,
+    45,
+    65,
+    45,
+    65,
+    80
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_sw_v2_20261118a.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_SAME_FACING_KHOA_MACH_STYLE_REFERENCE",
+  "prompt": "Original sprite sheet for Liên Châu, a five-beat magic archery animation. Image 1 is the owner-selected Linh Cung idle identity. Image 2 shows the correct same-facing bow and aiming geometry for the character. Create precisely 16 different full-body chibi pixel sprites on a 4x4 RGBA transparent sheet, read left to right then top to bottom. Preserve the dark brown ponytail, pale sage cape, olive-green outfit, brown boots, pale fletchings and small recurve bow of the references. Fixed camera: Front-left three-quarter position. Aim diagonally down left, matching face and stance, not down right. Both boot soles planted, anchored at a consistent height, left hand holds the SAME gripped bow continuously. Right hand quickly draws and releases magically loaded arrows. Show silhouette through bowstring tension and finger poses. Starting from indexed frame 0: 0 low ready; 1 raise bow; 2 draw hand closed at cheek with taut V string; 3 open right fingers behind cheek and release string; 4 recoil; 5 quick closed-hand draw; 6 second open-hand release; 7 recoil; 8 draw; 9 third release; 10 quick fourth draw; 11 fourth release; 12 quick fifth draw; 13 fifth release with a slightly stronger recoil; 14–15 lower the bow and return to ready. No visible arrows, particles or magic in the body atlas, since five released arrowheads and five reserve lights are separate image layers. Never swap the bow hand. No extra limbs, second bow, frame duplicates, hopping, turning, caption, floor, shadow matte, checkerboard or solid backdrop. Substantial isolated transparent margins, clean complete bow and body, crisp rich rounded pixel clusters consistent with the reference style."
+}
