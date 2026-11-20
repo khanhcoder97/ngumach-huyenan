@@ -12,10 +12,17 @@ public sealed class SkillAssemblySourceBounds
     private readonly Dictionary<ActorLibraryData.Frame, Rect2> _bounds = new();
     public SkillAssemblySourceBounds(ActorLibraryData library)
     {
-        using var json = JsonDocument.Parse(FileAccess.GetFileAsString(ActorLibraryData.Root + "pages.json"));
+        ReadBounds(library, ActorLibraryData.Root + "pages.json");
+        ReadBounds(library, ActorLibraryData.AssemblyComponents);
+    }
+    private void ReadBounds(ActorLibraryData library, string path)
+    {
+        if (!FileAccess.FileExists(path)) return;
+        using var json = JsonDocument.Parse(FileAccess.GetFileAsString(path));
         foreach (var p in json.RootElement.GetProperty("pages").EnumerateArray())
         {
-            var page = library.Pages[p.GetProperty("id").GetString()!]; int di = 0;
+            if (!library.Pages.TryGetValue(p.GetProperty("id").GetString()!, out var page)) continue;
+            int di = 0;
             foreach (var d in p.GetProperty("directions").EnumerateArray())
             {
                 int fi = 0;
@@ -48,6 +55,7 @@ public partial class SkillAssemblyPane : Control
     private SkillAssemblySourceBounds _bounds = null!;
     private SkillAssemblyProfile _profile = null!;
     private SkillAssemblyVariant _variant = null!;
+    private SkillAssemblyCaster _caster = null!;
     private ActorLibrarySprite _body = null!;
     private readonly List<(SkillAssemblyTrack Track, int Instance, Sprite2D Sprite)> _effects = new();
     private int _facing, _resource;
@@ -59,14 +67,17 @@ public partial class SkillAssemblyPane : Control
     public Rect2 WorldBounds { get; private set; }
     public int VisibleEffects => _effects.Count(e => e.Sprite.Visible);
     public int BodyFrame => _body.DisplayedFrame;
+    internal Texture2D BodyTexture => _body.Texture;
+    internal bool BodyMirrored => _body.FlipH;
     public float BodyDisplayHeight => _body.DisplayHeight;
     public override void _Ready() { ClipContents = true; MouseFilter = MouseFilterEnum.Ignore; }
 
-    public void Bind(ActorLibraryData library, SkillAssemblySourceBounds bounds, SkillAssemblyProfile profile, SkillAssemblyVariant variant, int facing, int resource, bool lowFx)
+    public void Bind(ActorLibraryData library, SkillAssemblySourceBounds bounds, SkillAssemblyProfile profile, SkillAssemblyVariant variant, int facing, int resource, bool lowFx, SkillAssemblyCaster? caster = null)
     {
         _library = library; _bounds = bounds; _profile = profile; _variant = variant; _facing = facing; _resource = resource; _lowFx = lowFx;
+        _caster = caster ?? SkillAssemblyCaster.Bind(profile);
         if (_body == null) { _body = new ActorLibrarySprite { Library = library, Paused = true, Loop = false, ZIndex = 1 }; AddChild(_body); }
-        _body.ActorId = profile.ActorId; _body.Facing = facing; _body.Restart();
+        _body.ActorId = _caster.ActorId; _body.Facing = facing; _body.CompactDirections = _caster.Compact; _body.Restart();
         foreach (var e in _effects) { e.Sprite.Visible = false; e.Sprite.QueueFree(); } _effects.Clear();
         foreach (var t in variant.Tracks)
         for (int i = 0; i < (t.ResourceInstances ? resource : 1); i++)
@@ -87,10 +98,10 @@ public partial class SkillAssemblyPane : Control
     {
         bool first = true; Rect2 result = default;
         void Include(Rect2 r) { result = first ? r : result.Merge(r); first = false; }
-        var clips = new[] { _profile.BodyClip, "idle", _variant.OverrideClip }.Where(c => c != "").Distinct();
+        var clips = new[] { _caster.Clip, "idle", _variant.OverrideClip }.Where(c => c != "").Distinct();
         foreach (string clip in clips)
         {
-            if (!_library.Resolve(_profile.ActorId, clip, _facing, out var direction)) throw new InvalidOperationException("Thiếu góc body: " + clip);
+            if (!_library.Resolve(_caster.ActorId, clip, _facing, out var direction, _caster.Compact)) throw new InvalidOperationException("Thiếu góc body: " + clip);
             foreach (var frame in direction!.Frames)
             foreach (float travel in new[] { 0f, _variant.DashDistance })
                 Include(SkillAssemblySourceBounds.Transform(_bounds.Visible(frame, direction.Flip), 140 / direction.Height, 0, SkillAssemblySampler.Facings[_facing] * travel));
@@ -120,9 +131,9 @@ public partial class SkillAssemblyPane : Control
     public void RenderAt(double clock)
     {
         if (_profile == null) return; _clock = clock;
-        var body = SkillAssemblySampler.Body(_profile, _variant, clock);
-        if (!_library.Resolve(_profile.ActorId, body.Clip, _facing, out var d)) throw new InvalidOperationException("Góc body không khả dụng.");
-        _body.Clip = body.Clip; _body.ManualFrame = ActorLibraryData.FrameAt(_profile.ActorId, body.Clip, d!, body.Local, body.Clip == "idle");
+        var body = SkillAssemblySampler.Body(_caster, _variant, clock);
+        if (!_library.Resolve(_caster.ActorId, body.Clip, _facing, out var d, _caster.Compact)) throw new InvalidOperationException("Góc body không khả dụng.");
+        _body.Clip = body.Clip; _body.ManualFrame = ActorLibraryData.FrameAt(_caster.ActorId, body.Clip, d!, body.Local, body.Clip == "idle");
         _body.Position = _origin + SkillAssemblySampler.Facings[_facing] * SkillAssemblySampler.Travel(_variant, clock) * _scale; _body._Process(0);
         foreach (var e in _effects)
         {

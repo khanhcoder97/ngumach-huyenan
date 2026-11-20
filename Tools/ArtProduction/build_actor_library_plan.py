@@ -144,9 +144,41 @@ def build():
         excludes=['equipment/outfit/body variants','static portraits and skill icons','mounts/pets','map tiles and UI','additional split VFX components required by each mechanic'],
         policy='Actor_Animation_16_20F_60FPS_20261107_vi.md',renderTargetFps=60,framesPerDirection=16,directionOrder=['N','NE','E','SE','S','SW','W','NW'],mirrorMap={'SW':'SE','W':'E','NW':'NE'},actors=actors,skills=skills,aliases=aliases,selectors=selectors,unresolvedManifestIds=unresolved),jobs
 
+def shared_plan(catalogue, jobs):
+    direction_map = {'N': 'N', 'NE': 'N', 'E': 'E', 'SE': 'S', 'S': 'S', 'SW': 'S', 'W': 'E', 'NW': 'N'}
+    classes = {actor['id'] for actor in catalogue['actors'] if actor['kind'] == 'CLASS'}
+    source_directions = ['N', 'E', 'S']
+    reusable = [
+        dict(id=job['id'], actorId=job['ownerId'], action=job['clip'],
+             framesPerDirection=job['framesPerDirection'], sourceDirections=source_directions,
+             sourceIds=[job['id'] + '_' + facing.lower() for facing in source_directions])
+        for job in jobs if job['ownerId'] in classes and job['kind'] == 'CLASS'
+        and not job['clip'].startswith('skill_') and 'direction' not in job
+    ]
+    skill_effects = [
+        dict(skillId=skill['id'], name=skill['name'], sourceDirection='OMNI_OR_ROTATED')
+        for skill in catalogue['skills']
+    ]
+    return dict(version=1, scope='SHARED_CLASS_BODY_AND_INDEPENDENT_SKILL_ART',
+                workflow='docs/production/Shared_Skill_Art_Workflow_vi.md', renderTargetFps=60,
+                visualAimDirections=catalogue['directionOrder'], bodyDirectionMap=direction_map,
+                mirrorBodyDirections=['W'], sharedMotionClips={'STRIKE': 'basic_attack', 'BRACE': 'idle', 'STEP': 'walk'},
+                reusableBodyActions=reusable, skillEffectProfiles=skill_effects)
+
+
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');parser.add_argument('--shared',action='store_true');args=parser.parse_args()
     catalogue,jobs=build()
+    if args.shared:
+        path = ART / 'shared_production_plan.json'
+        value = shared_plan(catalogue, jobs)
+        if args.check:
+            assert json.loads(path.read_text(encoding='utf8')) == value, f'stale shared plan: {path}'
+        else:
+            dump(path, value)
+        print(json.dumps(dict(reusableBodyActions=len(value['reusableBodyActions']),
+                              skillEffectProfiles=len(value['skillEffectProfiles']))))
+        raise SystemExit(0)
     for path,value in [(ART/'production_catalog.json',catalogue),(ART/'generation_jobs.json',jobs),(ROOT/'ClientGodot/assets/actor_library_v1/catalog.json',catalogue)]:
         if args.check:assert json.loads(path.read_text(encoding='utf8'))==value,'stale catalogue/queue: '+str(path)
         else:dump(path,value)

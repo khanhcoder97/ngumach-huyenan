@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ngumach.VisualReboot;
 
@@ -22,8 +23,12 @@ public sealed class SkillAssemblyProfile
 {
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
-    public string ActorId { get; set; } = "";
-    public string BodyClip { get; set; } = "";
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? ActorId { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? BodyClip { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Motion { get; set; }
     public float TargetDistance { get; set; } = 110;
     public List<SkillAssemblyVariant> Variants { get; set; } = new();
 }
@@ -38,6 +43,8 @@ public sealed class SkillAssemblyVariant
     public float DashDistance { get; set; }
     public string OverrideClip { get; set; } = "";
     public double OverrideStart { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? MotionContact { get; set; }
     public string Note { get; set; } = "";
 }
 public sealed class SkillAssemblyTrack
@@ -63,9 +70,31 @@ public sealed class SkillAssemblyTrack
     public bool DepthByFacing { get; set; } = true;
 }
 
+public sealed record SkillAssemblyCaster(string ActorId, string Clip, bool Compact)
+{
+    public static SkillAssemblyCaster Bind(SkillAssemblyProfile profile, string? actorId = null)
+    {
+        if (profile.Motion == null) return new(profile.ActorId!, profile.BodyClip!, false);
+        string clip = profile.Motion switch
+        {
+            "STRIKE" => "basic_attack",
+            "BRACE" => "idle",
+            "STEP" => "walk",
+            _ => throw new InvalidOperationException("Động tác dùng chung chưa hỗ trợ.")
+        };
+        return new(actorId ?? throw new ArgumentNullException(nameof(actorId)), clip, true);
+    }
+
+    public bool CanPlay(ActorLibraryData library) =>
+        Enumerable.Range(0, 8).All(facing =>
+            library.Resolve(ActorId, Clip, facing, out _, Compact) &&
+            library.Resolve(ActorId, "idle", facing, out _, Compact));
+}
+
 public static class SkillAssemblyCodec
 {
     public const string Source = "res://assets/actor_library_v1/skill_assemblies.json";
+    public const string CompactSource = "res://assets/actor_library_v1/skill_assemblies_compact.json";
     private static readonly JsonSerializerOptions Json = new() { PropertyNameCaseInsensitive = true, WriteIndented = true };
     public static string Encode(SkillAssemblyDocument value) => JsonSerializer.Serialize(value, Json);
     public static SkillAssemblyDocument Decode(string text, ActorLibraryData library)
@@ -78,18 +107,25 @@ public static class SkillAssemblyCodec
     {
         void Need(bool yes, string why) { if (!yes) throw new InvalidOperationException(why); }
         bool Number(double n, double min, double max) => double.IsFinite(n) && n >= min && n <= max;
-        Need(value.SchemaVersion == 1 && value.Scope == "PRESENTATION_ASSEMBLY_REVIEW_ONLY" && !value.ProductionApproved, "Assembly chỉ dành cho authoring, không cấp approval.");
+        Need(value.SchemaVersion is 1 or 2 && value.Scope == "PRESENTATION_ASSEMBLY_REVIEW_ONLY" && !value.ProductionApproved, "Assembly chỉ dành cho authoring, không cấp approval.");
         Need(value.Profiles is { Count: > 0 and <= 64 } && value.Profiles.Select(p => p.Id).Distinct().Count() == value.Profiles.Count, "Profile rỗng/trùng.");
         foreach (var p in value.Profiles)
         {
             Need(p.Id.Length is > 0 and <= 80 && p.Name.Length is > 0 and <= 120, "Tên profile sai.");
-            Need(p.ActorId is "CLASS_MINH_KIEM" or "CLASS_ANH_DAO" && library.Actors[p.ActorId].Clips.Contains(p.BodyClip), "Body profile chưa hỗ trợ.");
+            bool compact = value.SchemaVersion == 2;
+            if (compact)
+                Need(p.ActorId == null && p.BodyClip == null && p.Motion is "STRIKE" or "BRACE" or "STEP", "Profile dùng chung chỉ chọn kiểu động tác.");
+            else
+                Need(p.Motion == null && p.ActorId is "CLASS_MINH_KIEM" or "CLASS_ANH_DAO" && library.Actors[p.ActorId].Clips.Contains(p.BodyClip), "Body profile chưa hỗ trợ.");
             Need(Number(p.TargetDistance, 0, 300) && p.Variants is { Count: > 0 and <= 12 } && p.Variants.Select(v => v.Id).Distinct().Count() == p.Variants.Count, "Variant sai.");
             foreach (var v in p.Variants)
             {
                 Need(v.Id.Length is > 0 and <= 80 && v.Name.Length is > 0 and <= 120 && v.Note.Length <= 800 && Number(v.Duration, .1, 15), "Variant ngoài giới hạn.");
                 Need(Number(v.DashStart, 0, v.Duration) && Number(v.DashDuration, 0, v.Duration - v.DashStart) && Number(v.DashDistance, 0, 160) && (v.DashDistance == 0 || v.DashDuration > 0), "Đường dịch chuyển xem sai.");
-                Need(v.OverrideClip == "" || library.Actors[p.ActorId].Clips.Contains(v.OverrideClip), "Clip thay thế thiếu.");
+                Need(v.OverrideClip == "" || !compact && library.Actors[p.ActorId!].Clips.Contains(v.OverrideClip), "Clip thay thế thiếu.");
+                Need(v.MotionContact == null || compact && p.Motion == "STRIKE" &&
+                     Number(v.MotionContact.Value, .15, .45) && v.MotionContact.Value < v.Duration,
+                     "Mốc ra đòn dùng chung ngoài giới hạn.");
                 Need(Number(v.OverrideStart, 0, v.Duration) && v.Tracks is { Count: <= 32 } && v.Tracks.Select(t => t.Id).Distinct().Count() == v.Tracks.Count, "Track trùng/quá nhiều.");
                 foreach (var t in v.Tracks)
                 {
@@ -110,7 +146,9 @@ public static class SkillAssemblyCodec
         foreach (string id in document.Profiles.SelectMany(p => p.Variants).SelectMany(v => v.Tracks).Select(t => t.ComponentId).Distinct())
         {
             var page = library.Pages[id]; string file = page.Directions[0].Frames[0].File;
-            if (!file.StartsWith(ActorLibraryData.Root + "sheets/", StringComparison.Ordinal) || page.Directions[0].Frames.Any(f => f.File != file) ||
+            bool isAssemblySource = file.StartsWith(ActorLibraryData.AssemblyComponentFolder, StringComparison.Ordinal);
+            if ((!isAssemblySource && !file.StartsWith(ActorLibraryData.Root + "sheets/", StringComparison.Ordinal)) ||
+                (isAssemblySource && (document.SchemaVersion != 2 || page.Approved)) || page.Directions[0].Frames.Any(f => f.File != file) ||
                 !FileAccess.FileExists(file) || Convert.ToHexString(SHA256.HashData(FileAccess.GetFileAsBytes(file))).ToLowerInvariant() != page.SourceSha256)
                 throw new InvalidOperationException("Nguồn component/hash sai: " + id);
         }
@@ -135,12 +173,21 @@ public static class SkillAssemblySampler
     }
     public static float Travel(SkillAssemblyVariant variant, double clock) => variant.DashDuration <= 0 ? 0 : variant.DashDistance * (float)Math.Clamp((clock - variant.DashStart) / variant.DashDuration, 0, 1);
     public static int Depth(SkillAssemblyTrack track, int facing) => track.DepthByFacing && track.Z > 1 && track.Anchor == "CASTER" && track.Forward > 0 && track.Rotation == "FACING" && Facings[facing].Y < -.1f ? 0 : track.Z;
-    public static (string Clip, double Local) Body(SkillAssemblyProfile profile, SkillAssemblyVariant variant, double clock)
+    public static (string Clip, double Local) Body(SkillAssemblyCaster caster, SkillAssemblyVariant variant, double clock)
     {
-        string clip = profile.BodyClip; double local = Math.Max(0, clock);
+        string clip = caster.Clip; double local = Math.Max(0, clock);
         if (variant.OverrideClip != "" && clock >= variant.OverrideStart) { clip = variant.OverrideClip; local = clock - variant.OverrideStart; }
-        double duration = ActorLibraryData.Duration(profile.ActorId, clip);
-        return local < duration ? (clip, local) : ("idle", (local - duration) % ActorLibraryData.Duration(profile.ActorId, "idle"));
+        double duration = ActorLibraryData.Duration(caster.ActorId, clip);
+        if (local >= duration)
+            return ("idle", (local - duration) % ActorLibraryData.Duration(caster.ActorId, "idle"));
+        if (variant.MotionContact is double contact)
+        {
+            // Match the shared strike's middle pose to the skill's existing marker.
+            double phase = local <= contact ? .5 * local / contact :
+                .5 + .5 * (local - contact) / (duration - contact);
+            local = phase * duration;
+        }
+        return (clip, local);
     }
     public static Vector2 Anchor(SkillAssemblyTrack track, SkillAssemblyProfile profile, SkillAssemblyVariant variant, int facing, double clock)
     {

@@ -9,6 +9,11 @@ public partial class SkillAssemblyReview
 {
     private void RunTests()
     {
+        if (_document.SchemaVersion == 2)
+        {
+            RunCompactTests();
+            return;
+        }
         try
         {
             int checks=0;void Check(bool ok,string why){if(!ok)throw new InvalidOperationException(why);checks++;}
@@ -28,14 +33,15 @@ public partial class SkillAssemblyReview
             foreach(var profile in _document.Profiles)
             foreach(var variant in profile.Variants)
             {
+                var caster = SkillAssemblyCaster.Bind(profile);
                 foreach(int facing in Enumerable.Range(0,8))
                 {
-                    Check(_library.Resolve(profile.ActorId,profile.BodyClip,facing,out var body)&&body!.Frames.Length==16,"missing authored body angle");
-                    Check(production.Resolve(profile.ActorId,profile.BodyClip,facing,out _),"skill body approval gate");
+                    Check(_library.Resolve(caster.ActorId,caster.Clip,facing,out var body)&&body!.Frames.Length==16,"missing authored body angle");
+                    Check(production.Resolve(caster.ActorId,caster.Clip,facing,out _),"skill body approval gate");
                     Check(body!.Flip==(facing>=5),"body mirror ownership changed");
-                    var sample=SkillAssemblySampler.Body(profile,variant,variant.Duration);Check(sample.Clip=="idle","body not restored after review scenario");
+                    var sample=SkillAssemblySampler.Body(caster,variant,variant.Duration);Check(sample.Clip=="idle","body not restored after review scenario");
                 }
-                if(variant.OverrideClip!="")Check(SkillAssemblySampler.Body(profile,variant,variant.OverrideStart).Clip==variant.OverrideClip,"counter body override missing");
+                if(variant.OverrideClip!="")Check(SkillAssemblySampler.Body(caster,variant,variant.OverrideStart).Clip==variant.OverrideClip,"counter body override missing");
                 if(variant.DashDistance>0)
                 {
                     Check(SkillAssemblySampler.Travel(variant,0)==0,"dash starts early");
@@ -96,5 +102,82 @@ public partial class SkillAssemblyReview
             GD.Print("SKILL_ASSEMBLY_SELF_TEST PASS profiles=12 scenarios=20 angles=8 assertions="+checks+" INDEPENDENT_SOURCE_CLOCKS CONDITIONAL_EVENTS_ONLY NO_GAMEPLAY_MUTATION");GetTree().Quit();
         }
         catch(Exception e){GD.PushError("SKILL_ASSEMBLY_SELF_TEST FAIL "+e);GetTree().Quit(1);}
+    }
+
+    private void RunCompactTests()
+    {
+        try
+        {
+            int checks = 0;
+            void Check(bool ok, string why)
+            {
+                if (!ok) throw new InvalidOperationException(why);
+                checks++;
+            }
+
+            string serialized = SkillAssemblyCodec.Encode(_document);
+            var roundTrip = SkillAssemblyCodec.Decode(serialized, _library);
+            Check(roundTrip.Profiles.Count == 18, "Missing shared skill profiles.");
+            Check(!serialized.Contains("\"ActorId\"", StringComparison.Ordinal) &&
+                  !serialized.Contains("\"BodyClip\"", StringComparison.Ordinal), "Class data leaked into shared skill JSON.");
+            var actors = _library.Actors.Values.Where(actor => actor.Kind == "CLASS").ToArray();
+            Check(actors.Length == 5, "Missing previewable classes.");
+            foreach (var profile in roundTrip.Profiles)
+            foreach (var actor in actors)
+            {
+                var caster = SkillAssemblyCaster.Bind(profile, actor.Id);
+                Check(caster.CanPlay(_library), $"Missing shared motion: {actor.Id} / {profile.Id}.");
+                var distinct = new HashSet<ActorLibraryData.Frame[]>();
+                for (int facing = 0; facing < 8; facing++)
+                {
+                    Check(_library.Resolve(caster.ActorId, caster.Clip, facing, out var direction, caster.Compact),
+                          "Missing compact source facing.");
+                    Check(direction!.Frames.Length == 16 && direction.Flip == (facing == 6), "Compact source frame count or mirror changed.");
+                    distinct.Add(direction.Frames);
+                }
+                Check(distinct.Count == 3, "Eight input directions require exactly three body sources.");
+            }
+
+            var strike = roundTrip.Profiles.Single(profile => profile.Id == "SK_TC_01");
+            var hit = strike.Variants.Single(variant => variant.Id == "hit");
+            var crack = hit.Tracks.Single(track => track.Id == "impact_crack");
+            Check(!strike.Variants.Single(variant => variant.Id == "miss").Tracks.Any(track => track.Id == crack.Id),
+                  "Miss introduced contact FX.");
+            var a = SkillAssemblyCaster.Bind(strike, "CLASS_THACH_CHUY");
+            var b = SkillAssemblyCaster.Bind(strike, "CLASS_MINH_KIEM");
+            Check(SkillAssemblySampler.Body(a, hit, crack.Start).Local == .3 &&
+                  SkillAssemblySampler.Body(b, hit, crack.Start).Local == .3,
+                  "Shared strike did not reach its contact pose at the skill cue.");
+            var shockwave = roundTrip.Profiles.Single(profile => profile.Id == "SK_TC_02").Variants.Single();
+            Check(SkillAssemblySampler.Body(a, shockwave, .35).Local == .3, "Shockwave lost its independent cast timing.");
+            Check(SkillAssemblySampler.Anchor(crack, strike, hit, 1, .3) != SkillAssemblySampler.Anchor(crack, strike, hit, 0, .3),
+                  "Shared body snapped diagonal effect aim.");
+            _panes[2].Bind(_library, _bounds, strike, hit, 2, 0, false, a);
+            _panes[2].Fit(.45f);
+            _panes[2].RenderAt(.32);
+            var firstBody = _panes[2].BodyTexture;
+            int firstEffects = _panes[2].VisibleEffects;
+            _panes[2].Bind(_library, _bounds, strike, hit, 2, 0, false, b);
+            _panes[2].Fit(.45f);
+            _panes[2].RenderAt(.32);
+            Check(firstBody != _panes[2].BodyTexture && firstEffects == 1 && _panes[2].VisibleEffects == firstEffects,
+                  "Switching classes failed to retarget the same effect timeline.");
+            _panes[6].Bind(_library, _bounds, strike, hit, 6, 0, true, a);
+            _panes[6].Fit(.45f);
+            _panes[6].RenderAt(.55);
+            Check(_panes[6].BodyMirrored && _panes[6].VisibleEffects == 1, "Mirror or LowFX hid the contact cue.");
+
+            var legacy = SkillAssemblyCodec.Decode(FileAccess.GetFileAsString(SkillAssemblyCodec.Source), _library);
+            Check(legacy.SchemaVersion == 1 && legacy.Profiles.Count == 12, "Editing shared profiles broke legacy projects.");
+            using var production = new ActorLibraryData();
+            Check(!production.Pages.ContainsKey(crack.ComponentId), "Review components leaked into the live actor catalogue.");
+            GD.Print("SKILL_ASSEMBLY_COMPACT PASS profiles=18 classes=5 source_directions=3 aim_directions=8 assertions=" + checks);
+            GetTree().Quit();
+        }
+        catch (Exception e)
+        {
+            GD.PushError("SKILL_ASSEMBLY_COMPACT FAIL " + e);
+            GetTree().Quit(1);
+        }
     }
 }

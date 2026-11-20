@@ -19,7 +19,9 @@ public sealed class ActorLibraryData : IDisposable
     private readonly Queue<string> _order=new();
     public int CachedTextures=>_textures.Count;
     private readonly bool _reviewMode;
-    public ActorLibraryData(bool reviewMode=false)
+    public const string AssemblyComponents = Root + "skill_assembly_components.json";
+    internal const string AssemblyComponentFolder = Root + "assembly_components/";
+    public ActorLibraryData(bool reviewMode=false, bool includeAssemblyComponents=false)
     {
         _reviewMode=reviewMode;
         using var catalog=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"catalog.json"));
@@ -31,7 +33,17 @@ public sealed class ActorLibraryData : IDisposable
         }
         foreach(var skill in catalog.RootElement.GetProperty("skills").EnumerateArray())
         {var id=skill.GetProperty("id").GetString()!;Actors.Add(id,new Actor(id,skill.GetProperty("name").GetString()!,"VFX",100,true,new[]{"full_timeline"}));}
-        using var pages=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"pages.json"));
+        LoadPages(Root+"pages.json");
+        if(includeAssemblyComponents)
+        {
+            if(!reviewMode)throw new InvalidOperationException("Assembly components are review-only.");
+            LoadPages(AssemblyComponents);
+        }
+    }
+
+    private void LoadPages(string path)
+    {
+        using var pages=JsonDocument.Parse(FileAccess.GetFileAsString(path));
         foreach(var p in pages.RootElement.GetProperty("pages").EnumerateArray())
         {
             string common=p.GetProperty("file").GetString()!;float height=p.GetProperty("referenceHeight").GetSingle();
@@ -50,9 +62,24 @@ public sealed class ActorLibraryData : IDisposable
             var id=p.GetProperty("id").GetString()!;Pages.Add(id,new Page(id,p.GetProperty("status").GetString()!,directions.ToArray(),p.GetProperty("productionApproved").GetBoolean(),p.GetProperty("visualState").GetString()!,p.GetProperty("visualNotes").GetString()!,p.GetProperty("sha256").GetString()!));
         }
     }
-    public bool Resolve(string actorId,string clip,int direction,out Direction? result)
+    // Facing describes world input. A compact body reads N, E and S source poses.
+    internal static int CompactSourceFacing(int direction) => direction switch
+    {
+        0 or 1 or 7 => 0,
+        2 or 6 => 2,
+        _ => 4
+    };
+
+    public bool Resolve(string actorId,string clip,int direction,out Direction? result,bool compact=false)
     {
         result=null;if(!Actors.TryGetValue(actorId,out var actor))return false;
+        if(compact && actor.Kind=="CLASS")
+        {
+            if(direction==6&&!actor.Mirror)return false;
+            if(!Resolve(actorId,clip,CompactSourceFacing(direction),out result))return false;
+            if(direction==6)result=result! with { Flip=!result.Flip };
+            return true;
+        }
         string id=actorId.ToLowerInvariant()+"_"+clip;
         if(actor.Kind=="VFX")id=actorId.ToLowerInvariant().Replace('-','_')+"_vfx";
         string name=new[]{"N","NE","E","SE","S","SW","W","NW"}[Math.Clamp(direction,0,7)];
@@ -136,17 +163,17 @@ public partial class ActorLibrarySprite : Sprite2D
     public string ActorId="",Clip="idle";
     public int Facing=4,ManualFrame=-1,DisplayedFrame;
     public float DisplayHeight=72;
-    public bool Paused,Loop=true;
+    public bool Paused,Loop=true,CompactDirections;
     private double _clock;
     private ActorLibraryData.Frame? _shown;
-    public bool Available=>Library!=null&&Library.Resolve(ActorId,Clip,Facing,out _);
+    public bool Available=>Library!=null&&Library.Resolve(ActorId,Clip,Facing,out _,CompactDirections);
     public void Restart(){_clock=0;_shown=null;}
     public void Seek(int frame)
-    {if(Library!=null&&Library.Resolve(ActorId,Clip,Facing,out var direction)){ManualFrame=Math.Clamp(frame,0,direction!.Frames.Length-1);_clock=ActorLibraryData.TimeAt(ActorId,Clip,direction,ManualFrame);_shown=null;}}
+    {if(Library!=null&&Library.Resolve(ActorId,Clip,Facing,out var direction,CompactDirections)){ManualFrame=Math.Clamp(frame,0,direction!.Frames.Length-1);_clock=ActorLibraryData.TimeAt(ActorId,Clip,direction,ManualFrame);_shown=null;}}
     public override void _Ready(){RegionEnabled=true;Centered=false;TextureFilter=TextureFilterEnum.Nearest;}
     public override void _Process(double delta)
     {
-        if(Library==null||!Library.Resolve(ActorId,Clip,Facing,out var direction)){Visible=false;return;}
+        if(Library==null||!Library.Resolve(ActorId,Clip,Facing,out var direction,CompactDirections)){Visible=false;return;}
         Visible=true;if(!Paused)_clock+=delta;
         int count=direction!.Frames.Length;
         int frame=ManualFrame>=0?Math.Clamp(ManualFrame,0,count-1):ActorLibraryData.FrameAt(ActorId,Clip,direction,_clock,Loop);

@@ -1,5 +1,7 @@
 # Phạm vi động tác bắt buộc của năm lớp nhân vật
 
+> Quy trình sản xuất hiện dùng động tác chung, ba hướng thân nguồn và VFX riêng. Xem [quy trình asset kỹ năng dùng chung](Shared_Skill_Art_Workflow_vi.md). Chỉ tiêu 16 action mỗi lớp bên dưới ghi lại gói asset đã lập trước khi chuyển quy trình.
+
 ## Sửa thiếu sót trong hàng đợi sản xuất
 
 Đặc tả combat hiện hành đã yêu cầu chạy, tương tác và ba nhát đánh thường riêng tại `Combat_Skills_VFX_Animation_Spec_vi.md`, mục “Thiết kế combo đánh thường” và “Hướng dẫn asset”. Hàng đợi trước đây mới có 12 action/class, gộp đánh thường vào một clip và bỏ chạy/tương tác. Không dùng mức 12/12 cũ để nghiệm thu đầy đủ một lớp nhân vật.

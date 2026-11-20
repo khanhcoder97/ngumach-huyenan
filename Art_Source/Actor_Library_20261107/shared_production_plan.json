@@ -1,0 +1,988 @@
+{
+  "version": 1,
+  "scope": "SHARED_CLASS_BODY_AND_INDEPENDENT_SKILL_ART",
+  "workflow": "docs/production/Shared_Skill_Art_Workflow_vi.md",
+  "renderTargetFps": 60,
+  "visualAimDirections": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "bodyDirectionMap": {
+    "N": "N",
+    "NE": "N",
+    "E": "E",
+    "SE": "S",
+    "S": "S",
+    "SW": "S",
+    "W": "E",
+    "NW": "N"
+  },
+  "mirrorBodyDirections": [
+    "W"
+  ],
+  "sharedMotionClips": {
+    "STRIKE": "basic_attack",
+    "BRACE": "idle",
+    "STEP": "walk"
+  },
+  "reusableBodyActions": [
+    {
+      "id": "class_minh_kiem_idle",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "idle",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_idle_n",
+        "class_minh_kiem_idle_e",
+        "class_minh_kiem_idle_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_walk",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "walk",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_walk_n",
+        "class_minh_kiem_walk_e",
+        "class_minh_kiem_walk_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_run",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "run",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_run_n",
+        "class_minh_kiem_run_e",
+        "class_minh_kiem_run_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_basic_attack",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "basic_attack",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_basic_attack_n",
+        "class_minh_kiem_basic_attack_e",
+        "class_minh_kiem_basic_attack_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "basic_attack_02",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_basic_attack_02_n",
+        "class_minh_kiem_basic_attack_02_e",
+        "class_minh_kiem_basic_attack_02_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "basic_attack_03",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_basic_attack_03_n",
+        "class_minh_kiem_basic_attack_03_e",
+        "class_minh_kiem_basic_attack_03_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_hurt",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "hurt",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_hurt_n",
+        "class_minh_kiem_hurt_e",
+        "class_minh_kiem_hurt_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_death",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "death",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_death_n",
+        "class_minh_kiem_death_e",
+        "class_minh_kiem_death_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_dodge",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "dodge",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_dodge_n",
+        "class_minh_kiem_dodge_e",
+        "class_minh_kiem_dodge_s"
+      ]
+    },
+    {
+      "id": "class_minh_kiem_interact",
+      "actorId": "CLASS_MINH_KIEM",
+      "action": "interact",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_minh_kiem_interact_n",
+        "class_minh_kiem_interact_e",
+        "class_minh_kiem_interact_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_idle",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "idle",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_idle_n",
+        "class_anh_dao_idle_e",
+        "class_anh_dao_idle_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_walk",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "walk",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_walk_n",
+        "class_anh_dao_walk_e",
+        "class_anh_dao_walk_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_run",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "run",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_run_n",
+        "class_anh_dao_run_e",
+        "class_anh_dao_run_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_basic_attack",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "basic_attack",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_basic_attack_n",
+        "class_anh_dao_basic_attack_e",
+        "class_anh_dao_basic_attack_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "basic_attack_02",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_basic_attack_02_n",
+        "class_anh_dao_basic_attack_02_e",
+        "class_anh_dao_basic_attack_02_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "basic_attack_03",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_basic_attack_03_n",
+        "class_anh_dao_basic_attack_03_e",
+        "class_anh_dao_basic_attack_03_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_hurt",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "hurt",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_hurt_n",
+        "class_anh_dao_hurt_e",
+        "class_anh_dao_hurt_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_death",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "death",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_death_n",
+        "class_anh_dao_death_e",
+        "class_anh_dao_death_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_dodge",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "dodge",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_dodge_n",
+        "class_anh_dao_dodge_e",
+        "class_anh_dao_dodge_s"
+      ]
+    },
+    {
+      "id": "class_anh_dao_interact",
+      "actorId": "CLASS_ANH_DAO",
+      "action": "interact",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_anh_dao_interact_n",
+        "class_anh_dao_interact_e",
+        "class_anh_dao_interact_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_idle",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "idle",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_idle_n",
+        "class_huyen_but_idle_e",
+        "class_huyen_but_idle_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_walk",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "walk",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_walk_n",
+        "class_huyen_but_walk_e",
+        "class_huyen_but_walk_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_run",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "run",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_run_n",
+        "class_huyen_but_run_e",
+        "class_huyen_but_run_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_basic_attack",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "basic_attack",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_basic_attack_n",
+        "class_huyen_but_basic_attack_e",
+        "class_huyen_but_basic_attack_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "basic_attack_02",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_basic_attack_02_n",
+        "class_huyen_but_basic_attack_02_e",
+        "class_huyen_but_basic_attack_02_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "basic_attack_03",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_basic_attack_03_n",
+        "class_huyen_but_basic_attack_03_e",
+        "class_huyen_but_basic_attack_03_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_hurt",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "hurt",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_hurt_n",
+        "class_huyen_but_hurt_e",
+        "class_huyen_but_hurt_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_death",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "death",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_death_n",
+        "class_huyen_but_death_e",
+        "class_huyen_but_death_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_dodge",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "dodge",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_dodge_n",
+        "class_huyen_but_dodge_e",
+        "class_huyen_but_dodge_s"
+      ]
+    },
+    {
+      "id": "class_huyen_but_interact",
+      "actorId": "CLASS_HUYEN_BUT",
+      "action": "interact",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_huyen_but_interact_n",
+        "class_huyen_but_interact_e",
+        "class_huyen_but_interact_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_idle",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "idle",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_idle_n",
+        "class_thach_chuy_idle_e",
+        "class_thach_chuy_idle_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_walk",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "walk",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_walk_n",
+        "class_thach_chuy_walk_e",
+        "class_thach_chuy_walk_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_run",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "run",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_run_n",
+        "class_thach_chuy_run_e",
+        "class_thach_chuy_run_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_basic_attack",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "basic_attack",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_basic_attack_n",
+        "class_thach_chuy_basic_attack_e",
+        "class_thach_chuy_basic_attack_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_basic_attack_02",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "basic_attack_02",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_basic_attack_02_n",
+        "class_thach_chuy_basic_attack_02_e",
+        "class_thach_chuy_basic_attack_02_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_basic_attack_03",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "basic_attack_03",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_basic_attack_03_n",
+        "class_thach_chuy_basic_attack_03_e",
+        "class_thach_chuy_basic_attack_03_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_hurt",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "hurt",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_hurt_n",
+        "class_thach_chuy_hurt_e",
+        "class_thach_chuy_hurt_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_death",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "death",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_death_n",
+        "class_thach_chuy_death_e",
+        "class_thach_chuy_death_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_dodge",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "dodge",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_dodge_n",
+        "class_thach_chuy_dodge_e",
+        "class_thach_chuy_dodge_s"
+      ]
+    },
+    {
+      "id": "class_thach_chuy_interact",
+      "actorId": "CLASS_THACH_CHUY",
+      "action": "interact",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_thach_chuy_interact_n",
+        "class_thach_chuy_interact_e",
+        "class_thach_chuy_interact_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_idle",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "idle",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_idle_n",
+        "class_linh_cung_idle_e",
+        "class_linh_cung_idle_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_walk",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "walk",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_walk_n",
+        "class_linh_cung_walk_e",
+        "class_linh_cung_walk_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_run",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "run",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_run_n",
+        "class_linh_cung_run_e",
+        "class_linh_cung_run_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_basic_attack",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "basic_attack",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_basic_attack_n",
+        "class_linh_cung_basic_attack_e",
+        "class_linh_cung_basic_attack_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_basic_attack_02",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "basic_attack_02",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_basic_attack_02_n",
+        "class_linh_cung_basic_attack_02_e",
+        "class_linh_cung_basic_attack_02_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_basic_attack_03",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "basic_attack_03",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_basic_attack_03_n",
+        "class_linh_cung_basic_attack_03_e",
+        "class_linh_cung_basic_attack_03_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_hurt",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "hurt",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_hurt_n",
+        "class_linh_cung_hurt_e",
+        "class_linh_cung_hurt_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_death",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "death",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_death_n",
+        "class_linh_cung_death_e",
+        "class_linh_cung_death_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_dodge",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "dodge",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_dodge_n",
+        "class_linh_cung_dodge_e",
+        "class_linh_cung_dodge_s"
+      ]
+    },
+    {
+      "id": "class_linh_cung_interact",
+      "actorId": "CLASS_LINH_CUNG",
+      "action": "interact",
+      "framesPerDirection": 16,
+      "sourceDirections": [
+        "N",
+        "E",
+        "S"
+      ],
+      "sourceIds": [
+        "class_linh_cung_interact_n",
+        "class_linh_cung_interact_e",
+        "class_linh_cung_interact_s"
+      ]
+    }
+  ],
+  "skillEffectProfiles": [
+    {
+      "skillId": "SK-MK-01",
+      "name": "Phản Quang",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-MK-02",
+      "name": "Tầm Long",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-MK-03",
+      "name": "Kiếm Trận",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-MK-04",
+      "name": "Thiết Y",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-MK-05",
+      "name": "Bạch Hồng (cơ động)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-MK-06",
+      "name": "Vạn Tượng Quy Nhất (tuyệt kỹ)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-01",
+      "name": "Huyết Nguyệt",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-02",
+      "name": "Tàn Hỏa",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-03",
+      "name": "Xích Ảnh",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-04",
+      "name": "Tước Mạch",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-05",
+      "name": "Ảnh Bộ (cơ động)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-AD-06",
+      "name": "Tử Diệm (tuyệt kỹ)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-01",
+      "name": "Mực Triều",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-02",
+      "name": "Hàn Châm",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-03",
+      "name": "Thủy Kính",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-04",
+      "name": "Mưa Tinh",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-05",
+      "name": "Lưu Thủy Bộ (cơ động)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-HB-06",
+      "name": "Long Mạch Hồi Nguyên (tuyệt kỹ)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-01",
+      "name": "Trấn Sơn",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-02",
+      "name": "Chấn Địa",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-03",
+      "name": "Thiết Bích",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-04",
+      "name": "Khiêu Chiến",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-05",
+      "name": "Phá Nham (cơ động)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-TC-06",
+      "name": "Sơn Thần Giáng Thế (tuyệt kỹ)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-01",
+      "name": "Khóa Mạch",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-02",
+      "name": "Dây Gai",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-03",
+      "name": "Liên Châu",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-04",
+      "name": "Tán Hoa",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-05",
+      "name": "Phi Diệp (cơ động)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    },
+    {
+      "skillId": "SK-LC-06",
+      "name": "Bách Tiễn Quy Tông (tuyệt kỹ)",
+      "sourceDirection": "OMNI_OR_ROTATED"
+    }
+  ]
+}

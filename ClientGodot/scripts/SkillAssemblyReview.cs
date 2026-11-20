@@ -15,6 +15,11 @@ public partial class SkillAssemblyReview : Control
     private readonly List<SkillAssemblyPane> _panes = new();
     private readonly List<(SpinBox Box, Func<SkillAssemblyTrack,double> Read)> _numbers = new();
     private OptionButton _profiles = null!, _variants = null!, _tracks = null!, _anchors = null!, _rotations = null!;
+    private OptionButton _casters = null!;
+    private readonly List<SkillAssemblyCaster> _availableCasters = new();
+    private SkillAssemblyCaster _caster = null!;
+    private string? _preferredCaster;
+    private readonly List<Label> _facingLabels = new();
     private CheckBox _loopTrack = null!;
     private Label _readout = null!, _notice = null!, _source = null!;
     private HSlider _seek = null!;
@@ -33,7 +38,7 @@ public partial class SkillAssemblyReview : Control
         try
         {
             Engine.MaxFps = 60; ProcessPriority = -2; Theme = MoonGlassTheme.Create();
-            _library = new ActorLibraryData(reviewMode:true); _bounds = new SkillAssemblySourceBounds(_library);
+            _library = new ActorLibraryData(reviewMode:true, includeAssemblyComponents:true); _bounds = new SkillAssemblySourceBounds(_library);
             var args = OS.GetCmdlineUserArgs(); string Arg(string key, string fallback) { int at=Array.IndexOf(args,key); return at>=0&&at+1<args.Length?args[at+1]:fallback; }
             _document = SkillAssemblyCodec.Decode(FileAccess.GetFileAsString(Arg("--assembly-project",SkillAssemblyCodec.Source)),_library);
             SkillAssemblyCodec.VerifyComponentFiles(_document,_library);
@@ -41,9 +46,10 @@ public partial class SkillAssemblyReview : Control
             if(_profileIndex<0)throw new InvalidOperationException("Profile không tồn tại: "+profileId);
             string variantId=Arg("--assembly-variant",Profile.Variants[0].Id);_variantIndex=Profile.Variants.FindIndex(v=>v.Id==variantId);
             if(_variantIndex<0)throw new InvalidOperationException("Variant không tồn tại: "+variantId);
+            _preferredCaster = Arg("--assembly-caster", "");
             _lowFx=args.Contains("--assembly-low-fx");_resources=int.Parse(Arg("--assembly-resource","5"),CultureInfo.InvariantCulture);
             if(_resources is <0 or >5)throw new InvalidOperationException("Resource xem cần0–5.");
-            BuildUi(); _profiles.Select(_profileIndex); PopulateVariants(_variantIndex); Rebind();
+            BuildUi(); _profiles.Select(_profileIndex); PopulateCasters(); PopulateVariants(_variantIndex); Rebind();
             if(args.Contains("--assembly-time")){_clock=double.Parse(Arg("--assembly-time","0"),CultureInfo.InvariantCulture);_paused=true;}
             if(args.Contains("--assembly-self-test"))RunTests();
         }
@@ -60,8 +66,16 @@ public partial class SkillAssemblyReview : Control
         var controls=new HBoxContainer();stack.AddChild(controls);
         _profiles=new OptionButton();foreach(var p in _document.Profiles)_profiles.AddItem(p.Name+" · "+p.Id);controls.AddChild(_profiles);
         _variants=new OptionButton();controls.AddChild(_variants);
-        _profiles.ItemSelected+=index=>{_profileIndex=(int)index;_variantIndex=0;PopulateVariants(0);Rebind();};
+        _profiles.ItemSelected+=index=>{_profileIndex=(int)index;_variantIndex=0;PopulateCasters();PopulateVariants(0);Rebind();};
         _variants.ItemSelected+=index=>{_variantIndex=(int)index;Rebind();};
+        _casters = new OptionButton();
+        controls.AddChild(_casters);
+        _casters.ItemSelected += index =>
+        {
+            _caster = _availableCasters[(int)index];
+            _preferredCaster = _caster.ActorId;
+            Rebind(false);
+        };
         Button(controls,"Dừng / Phát",()=>_paused=!_paused);Button(controls,"Phát lại",()=>{_clock=0;_paused=false;Apply();});
         var speed=new SpinBox{MinValue=.1,MaxValue=2,Step=.1,Value=1,Prefix="× ",CustomMinimumSize=new Vector2(95,0)};controls.AddChild(speed);speed.ValueChanged+=n=>_speed=n;
         var low=new CheckBox{Text="LowFX",ButtonPressed=_lowFx};controls.AddChild(low);low.Toggled+=n=>{_lowFx=n;Rebind();};
@@ -72,7 +86,7 @@ public partial class SkillAssemblyReview : Control
         {
             var card=new VBoxContainer{SizeFlagsHorizontal=SizeFlags.ExpandFill,SizeFlagsVertical=SizeFlags.ExpandFill,CustomMinimumSize=new Vector2(180,180)};grid.AddChild(card);
             var pane=new SkillAssemblyPane{SizeFlagsHorizontal=SizeFlags.ExpandFill,SizeFlagsVertical=SizeFlags.ExpandFill,CustomMinimumSize=new Vector2(180,150)};card.AddChild(pane);_panes.Add(pane);pane.Resized+=()=>_layoutDirty=true;
-            card.AddChild(MoonGlassTheme.Label(ArtStudioCodec.Directions[facing]+(facing>=5?" · thân lật, VFX xoay theo hướng":" · thân nguồn"),11,MoonGlassTheme.Muted));
+            var facingLabel = MoonGlassTheme.Label("",11,MoonGlassTheme.Muted);card.AddChild(facingLabel);_facingLabels.Add(facingLabel);
         }
         var inspectorScroll=new ScrollContainer{CustomMinimumSize=new Vector2(245,0),SizeFlagsVertical=SizeFlags.ExpandFill};row.AddChild(inspectorScroll);
         var inspector=new VBoxContainer{CustomMinimumSize=new Vector2(228,0)};inspectorScroll.AddChild(inspector);
@@ -106,10 +120,38 @@ public partial class SkillAssemblyReview : Control
     }
     private void PopulateVariants(int selected)
     {_variants.Clear();foreach(var v in Profile.Variants)_variants.AddItem(v.Name);_variants.Select(selected);}
+    private void PopulateCasters()
+    {
+        _casters.Clear();
+        _availableCasters.Clear();
+        _casters.Visible = Profile.Motion != null;
+        if (!_casters.Visible)
+        {
+            _caster = SkillAssemblyCaster.Bind(Profile);
+            return;
+        }
+        foreach (var actor in _library.Actors.Values.Where(actor => actor.Kind == "CLASS"))
+        {
+            var caster = SkillAssemblyCaster.Bind(Profile, actor.Id);
+            if (!caster.CanPlay(_library)) continue;
+            _availableCasters.Add(caster);
+            _casters.AddItem(actor.Name);
+        }
+        if (_availableCasters.Count == 0) throw new InvalidOperationException("Thiếu thân nhân vật cho động tác dùng chung.");
+        int index = _availableCasters.FindIndex(caster => caster.ActorId == _preferredCaster);
+        _casters.Select(Math.Max(0, index));
+        _caster = _availableCasters[_casters.Selected];
+    }
     private void Rebind(bool resetClock=true)
     {
         if(resetClock){_clock=0;_trackIndex=0;}
-        for(int i=0;i<8;i++)_panes[i].Bind(_library,_bounds,Profile,Variant,i,_resources,_lowFx);
+        for(int i=0;i<8;i++)
+        {
+            _panes[i].Bind(_library,_bounds,Profile,Variant,i,_resources,_lowFx,_caster);
+            string input = ArtStudioCodec.Directions[i];
+            string body = _caster.Compact ? ArtStudioCodec.Directions[ActorLibraryData.CompactSourceFacing(i)] : input;
+            _facingLabels[i].Text = input + (_caster.Compact ? " · thân " + body + (i == 6 ? " lật" : "") : i>=5 ? " · thân lật" : " · thân nguồn");
+        }
         _sync=true;_tracks.Clear();foreach(var t in Variant.Tracks)_tracks.AddItem(t.Id+" · "+t.ComponentId);if(Variant.Tracks.Count>0)_tracks.Select(Math.Clamp(_trackIndex,0,Variant.Tracks.Count-1));_seek.MaxValue=Variant.Duration;_sync=false;
         SyncInspector();_notice.Text=Variant.Note+" Kích thước/đường lướt là pixel xem art, không phải collider hoặc mét.";_layoutDirty=true;Apply();
     }
@@ -127,7 +169,7 @@ public partial class SkillAssemblyReview : Control
         if(_layoutDirty||_lastSize!=Size){_lastSize=Size;float fit=_panes.Min(p=>p.SuggestedScale)*_zoom;foreach(var p in _panes)p.Fit(fit);_layoutDirty=false;}
         foreach(var p in _panes)p.RenderAt(_clock);
         _sync=true;_seek.Value=_clock;_sync=false;
-        var body=SkillAssemblySampler.Body(Profile,Variant,_clock);int approved=Variant.Tracks.Count(t=>_library.Pages[t.ComponentId].Approved);
+        var body=SkillAssemblySampler.Body(_caster,Variant,_clock);int approved=Variant.Tracks.Count(t=>_library.Pages[t.ComponentId].Approved);
         _readout.Text=$"{Profile.Name} / {Variant.Id} · {_clock:0.00}/{Variant.Duration:0.00}s · {body.Clip} · VFX nguồn duyệt {approved}/{Variant.Tracks.Count} · nguồn16 pose, render mục tiêu60FPS; video offline không đo FPS.";
     }
     public override void _Process(double delta)
@@ -145,7 +187,7 @@ public partial class SkillAssemblyReview : Control
     private void Open()
     {
         var dialog=new FileDialog{Access=FileDialog.AccessEnum.Filesystem,FileMode=FileDialog.FileModeEnum.OpenFile,Filters=new[]{"*.json ; Skill assembly"},Title="Mở bản chỉnh skill assembly"};AddChild(dialog);
-        dialog.FileSelected+=path=>{try{var edited=SkillAssemblyCodec.Decode(FileAccess.GetFileAsString(path),_library);SkillAssemblyCodec.VerifyComponentFiles(edited,_library);_document=edited;_profileIndex=0;_variantIndex=0;_profiles.Clear();foreach(var p in edited.Profiles)_profiles.AddItem(p.Name+" · "+p.Id);_profiles.Select(0);PopulateVariants(0);Rebind();}catch(Exception e){_notice.Text=e.Message;}dialog.QueueFree();};dialog.Canceled+=()=>dialog.QueueFree();dialog.PopupCenteredRatio(.7f);
+        dialog.FileSelected+=path=>{try{var edited=SkillAssemblyCodec.Decode(FileAccess.GetFileAsString(path),_library);SkillAssemblyCodec.VerifyComponentFiles(edited,_library);_document=edited;_profileIndex=0;_variantIndex=0;_profiles.Clear();foreach(var p in edited.Profiles)_profiles.AddItem(p.Name+" · "+p.Id);_profiles.Select(0);PopulateCasters();PopulateVariants(0);Rebind();}catch(Exception e){_notice.Text=e.Message;}dialog.QueueFree();};dialog.Canceled+=()=>dialog.QueueFree();dialog.PopupCenteredRatio(.7f);
     }
     public override void _UnhandledKeyInput(InputEvent @event){if(@event is InputEventKey{Pressed:true,Keycode:Key.Escape})GetTree().Quit();}
     public override void _ExitTree()=>_library?.Dispose();

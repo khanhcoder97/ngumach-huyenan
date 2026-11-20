@@ -1,6 +1,7 @@
 param(
  [switch]$SkipBuild,[switch]$SelfTest,[string]$Profile,[string]$Variant,[switch]$LowFx,
- [ValidateRange(0,5)][int]$Resource=5,[string]$Project,[string]$GodotPath,[string]$DotnetPath
+ [ValidateRange(0,5)][int]$Resource=5,[string]$Project,[string]$GodotPath,[string]$DotnetPath,
+ [switch]$Legacy,[string]$Caster
 )
 $ErrorActionPreference='Stop'
 $toolRoot=Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'NGUMACHHUYENAN-tools'
@@ -19,7 +20,9 @@ try{
  if($Profile){$launch+=@('--assembly-profile',$Profile)}
  if($Variant){$launch+=@('--assembly-variant',$Variant)}
  if($LowFx){$launch+='--assembly-low-fx'}
+ if(-not $Project -and -not $Legacy){$Project='res://assets/actor_library_v1/skill_assemblies_compact.json'}
  if($Project){$launch+=@('--assembly-project',$Project)}
+ if($Caster){$launch+=@('--assembly-caster',$Caster)}
  if($SelfTest){$launch=@('--headless')+$launch;$launch+='--assembly-self-test'}
  & $GodotPath @launch
  if($LASTEXITCODE){throw 'Skill assembly review failed'}
