@@ -1,0 +1,62 @@
+{
+  "batch": "20261115i",
+  "manualReviewComplete": true,
+  "scope": "SOURCE_DIRECTION_COMPARISON_NOT_GAMEPLAY_ACCEPTANCE",
+  "entries": [
+    {
+      "clip": "idle",
+      "allEightFacingsInspected": true,
+      "temporalSamplesInspected": true,
+      "visualNotes": "All eight native cells and sixteen temporal samples inspected. N back/NE back-quarter/E side/SE front-quarter/S frontal are distinct; SW/W/NW explicitly labelled mirrors. Quiet breathing/blinks, retained brush and no blank imported cells. Source clip passes directional comparison; cross-action scale consistency still needs gameplay review.",
+      "evidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/idle_eight_angles.mp4": "f04d250ef7ce0a50148f2212c6cbeb5c946b466c70d1470c59e6dcb383a1c5d0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/idle_eight_angles.png": "65c18af2729f37d9320262ad6799b1490fc7df00cf86a34cba8e6039d89cf66a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/idle_eight_angles_samples.png": "090db6dc4f954df751cb6880676f93fe2e4dc7550fe9c59b38baf054f8dc1f31"
+      }
+    },
+    {
+      "clip": "walk",
+      "allEightFacingsInspected": true,
+      "temporalSamplesInspected": true,
+      "visualNotes": "All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes.",
+      "evidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/walk_eight_angles.mp4": "23ad839e5dee31c49c02267975800bb701507aa34b14c4de72fe3044c9db4be8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/walk_eight_angles.png": "92e468d70545241e32e0b4d3e5b4d8384e5c4ef6053f9d81af90faafc907b3fc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/walk_eight_angles_samples.png": "8738e9e2a6e2452a09694a20b2b99300b16bfc25acec52fda55643f2f87da4d7"
+      }
+    },
+    {
+      "clip": "basic_attack",
+      "allEightFacingsInspected": true,
+      "temporalSamplesInspected": true,
+      "visualNotes": "All eight native cells and sixteen temporal samples inspected. Each source retains a single brush and connected arms through wind-up/flick/recovery; source and labelled mirror cells display correctly without baked background. Rear N uses a lateral casting flick, not a straight melee thrust. Final world-facing release/aim coupling unaccepted.",
+      "evidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/basic_attack_eight_angles.mp4": "e6471cdd8137e2c75d3e7a22e48c02816b611234beb1e0f86d94a9744416ef80",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/basic_attack_eight_angles.png": "d4381dbd41459699cfb5daf735941e4c78a95bb3bce783584ac2956481fa1109",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/basic_attack_eight_angles_samples.png": "67546acc3be12d63054a507f09f59359e1d731016284af8548c1eb2c9430cf4f"
+      }
+    },
+    {
+      "clip": "hurt",
+      "allEightFacingsInspected": true,
+      "temporalSamplesInspected": true,
+      "visualNotes": "All eight native cells and sixteen temporal samples inspected. Single recoil/recovery remains distinct from attack or death, correct source/mirror display and retained brush; no blank resource or repeated fall. Actual authoritative damage response and cross-action blending unaccepted.",
+      "evidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/hurt_eight_angles.mp4": "a092a49d9619a9656f72c5b92fde3c715d6b4a0555d08ac9ddb9253f1a8c1186",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/hurt_eight_angles.png": "d9e15b37a1dda3c7b9e7d7fad07959a4f65af2c2ff5e1095a0e9523294c26853",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/hurt_eight_angles_samples.png": "faa5c61f5a0bf465d18bf2a146311e576957af4fb28a28590c40a26095829536"
+      }
+    },
+    {
+      "clip": "death",
+      "allEightFacingsInspected": true,
+      "temporalSamplesInspected": true,
+      "visualNotes": "All eight native cells and sixteen temporal samples inspected. Continuous lowering/collapse/settle without mid-sequence stand-up reset; source and labelled mirror cells retain connected bodies and brush. Final silhouettes stay low at neutral-body scale. No world corpse placement/collision or eight-angle transition acceptance.",
+      "evidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/death_eight_angles.mp4": "a50e241478de6fc26e05a763ecaf0a5f72b5f5e4fde537b9cd609e230c11b716",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/death_eight_angles.png": "70bd682b0fcf4aca5d5766c691e806efa21ff8e81e302ba3a73b50269cd605bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/death_eight_angles_samples.png": "ce9da669ff8ee1c2e45d02773ea7b7b6d4d3dc280d1133580db6b69d5c07d963"
+      }
+    }
+  ]
+}

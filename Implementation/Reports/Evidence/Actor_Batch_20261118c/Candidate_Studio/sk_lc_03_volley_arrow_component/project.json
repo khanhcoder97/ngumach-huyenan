@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "sk_lc_03_volley_arrow_component",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "sk_lc_03_volley_arrow_component",
+      "Kind": "sprite",
+      "Name": "sk_lc_03_volley_arrow_component",
+      "Visible": true,
+      "Z": 0,
+      "Texture": "textures/3b98da2dbcff586579cdc16c6f9c4582607fc3aae62bc540af2d01718c839b0b.png",
+      "Regions": [
+        [
+          0,
+          0,
+          314,
+          314
+        ],
+        [
+          314,
+          0,
+          313,
+          314
+        ],
+        [
+          627,
+          0,
+          313,
+          314
+        ],
+        [
+          940,
+          0,
+          314,
+          314
+        ],
+        [
+          0,
+          314,
+          314,
+          313
+        ],
+        [
+          314,
+          314,
+          313,
+          313
+        ],
+        [
+          627,
+          314,
+          313,
+          313
+        ],
+        [
+          940,
+          314,
+          314,
+          313
+        ],
+        [
+          0,
+          627,
+          314,
+          313
+        ],
+        [
+          314,
+          627,
+          313,
+          313
+        ],
+        [
+          627,
+          627,
+          313,
+          313
+        ],
+        [
+          940,
+          627,
+          314,
+          313
+        ],
+        [
+          0,
+          940,
+          314,
+          314
+        ],
+        [
+          314,
+          940,
+          313,
+          314
+        ],
+        [
+          627,
+          940,
+          313,
+          314
+        ],
+        [
+          940,
+          940,
+          314,
+          314
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 241,
+        "PivotY": 159,
+        "ScaleX": 0.8235294117647058,
+        "ScaleY": 0.8235294117647058,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "sk_lc_03_volley_arrow_component",
+      "Direction": "OMNI",
+      "Loop": false,
+      "DurationsMs": [
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20
+      ],
+      "Tracks": [
+        {
+          "LayerId": "sk_lc_03_volley_arrow_component",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 158,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 158,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 158,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 158,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 159,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 241,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 159.0,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 242,
+                "PivotY": 159,
+                "ScaleX": 0.8235294117647058,
+                "ScaleY": 0.8235294117647058,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": [],
+      "SourceNote": "Liên Châu · từng mũi tên và đốm tích tên có lớp riêng."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "scenario": "LOCAL_BEN_MUA_LINH_CUNG_RAIN",
+  "godot": "4.7.2 stable mono",
+  "renderer": "OpenGL Compatibility / GeForce 820M",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fixedSimulationFramesPerSecond": 60,
+  "tests": {
+    "headless": [
+      "LINH_CUNG_PRACTICE PASS assertions=57 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=50 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=66 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=57 facings=8 authoringFrames=128",
+      "LINH_CUNG_RETREAT PASS assertions=78 facings=8 authoringFrames=128",
+      "LINH_CUNG_RAIN PASS assertions=54 facings=8 authoringFrames=128"
+    ],
+    "native": [
+      "LINH_CUNG_PRACTICE PASS assertions=61 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=54 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=69 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=60 facings=8 authoringFrames=128",
+      "LINH_CUNG_RETREAT PASS assertions=82 facings=8 authoringFrames=128",
+      "LINH_CUNG_RAIN PASS assertions=58 facings=8 authoringFrames=128"
+    ],
+    "camera": [
+      "CAMERA_SELF_TEST PASS assertions=48"
+    ],
+    "scene": [
+      "SCENE_SELF_TEST PASS assertions=9"
+    ]
+  },
+  "frames": [
+    {
+      "file": "practice_rain_charge.png",
+      "sha256": "bf34267a8fd998ae6d22365ea1cc9791a69f3436c2272071392cae4cda44c5fd"
+    },
+    {
+      "file": "practice_rain_drop.png",
+      "sha256": "2924460df1a60f0e712a3fcdcf2378bd692efe5475748a7169ee52d28d7cb633"
+    },
+    {
+      "file": "practice_rain_wave4.png",
+      "sha256": "f7f1186b7b158261127a3a8ecf08056ddb15218e4fc73b720dbf75056828fdd3"
+    },
+    {
+      "file": "practice_rain_boost.png",
+      "sha256": "7ab1b37d0fd7fb56a0cb9f208ad0d3ea855e1d85ee4b5d1e7f8065bbd7d2772e"
+    }
+  ],
+  "scaleTransitionVisualCheck": {
+    "roiXYWH": [
+      610,
+      278,
+      36,
+      30
+    ],
+    "pixelsOverDifferenceThresholdBefore": 972,
+    "pixelsOverDifferenceThresholdAfter": 92,
+    "threshold": 40
+  },
+  "walkingProfile": "wide_walking.json"
+}

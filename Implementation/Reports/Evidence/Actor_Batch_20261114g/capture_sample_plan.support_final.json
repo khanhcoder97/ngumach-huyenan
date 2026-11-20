@@ -1,0 +1,50 @@
+[
+  {
+    "RenderedSourceFramesVerified": 16,
+    "Name": "raw_sk_hb_06_tell_component",
+    "SourceDurationMs": 550.0,
+    "NativeSampleIndices": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31
+    ],
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS"
+  },
+  {
+    "RenderedSourceFramesVerified": 16,
+    "Name": "raw_sk_hb_06_ally_heal_component",
+    "SourceDurationMs": 480.0,
+    "NativeSampleIndices": [
+      1,
+      2,
+      4,
+      6,
+      8,
+      9,
+      11,
+      13,
+      15,
+      17,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28
+    ],
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS"
+  }
+]

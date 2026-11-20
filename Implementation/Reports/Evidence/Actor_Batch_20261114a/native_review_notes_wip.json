@@ -1,0 +1,24 @@
+{
+  "scope": "INCOMPLETE_NATIVE_VISUAL_REVIEW_NO_SOURCE_APPROVAL",
+  "reviewComplete": false,
+  "sourcePinsUnchanged": 250,
+  "entries": [
+    {
+      "id": "class_minh_kiem_run_n",
+      "sourceSha256": "7ca9522d0246dfa42ff1c0d755f4c4f279887900c23f3ee563a2ff0d5c64a9a1",
+      "bindingSha256": "89f97c2696fc2b02ee02c1e292da0e735ad09f9c5f3ccb38a41af283268ffb1b",
+      "productionApproved": false,
+      "notes": "Viewed native focused N gait temporal samples and eight-facing still. Head/root stable; corrected opposite boot extension at0/8 visible; final full-cycle/class-transition review still required.",
+      "evidence": [
+        {
+          "file": "run_raw_n_actor_samples.png",
+          "sha256": "f1daa6c1fabf9b8cc6000a22ac1658954ce618672e3082ada1efb3aa4ee8eaa2"
+        },
+        {
+          "file": "run_eight_angles.png",
+          "sha256": "f6b0d0562daaa9aa0b1004c35bcaadda70025dede49c08eb4d9a0ab78db57778"
+        }
+      ]
+    }
+  ]
+}

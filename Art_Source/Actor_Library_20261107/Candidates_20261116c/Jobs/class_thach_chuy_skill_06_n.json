@@ -1,0 +1,37 @@
+{
+  "batch": "20261116c",
+  "id": "class_thach_chuy_skill_06_n",
+  "version": 2,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "direction": "N",
+  "seconds": 1.28,
+  "timing": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_06_n_v1_20261116c.png"
+  ],
+  "inputRole": "OWNER_IDENTITY_AND_EXISTING_NORTH_SANCTUARY_SHEET_EDIT_TARGET",
+  "layoutVerified": true,
+  "prompt": "Use case: precise-object-edit. Image1 is the approved identity/palette of Thach Chuy. Image2 is the EDIT TARGET: existing 4x4,16-pose baked chibi pixel-art NORTH rear-view Son Than Giang The exercise. Keep the exact16 full-body poses, rear camera orientation, one continuous raise/plant/brace/recover, armour, brown hair/headband, boots, sash, shapes and spacing. Repair frame7 (row2 col4) where two grey hammer-head shapes are visible stacked on the right of the actor. In that frame there is ONE coherent hammer head only, at the ground beside the planted stance like the contact in frame8. Show a short visible wooden shaft and one connected rear arm gripping the shaft above the single planted head. Upper rounded silver hand is smaller than the head and should read as glove, not second hammer. Far arm and forward grip occlude naturally behind torso. Do not add a hammer afterimage, extra object, extra limb, new attack, effect, ground, labels, shadows or change the rear-facing camera. Keep all other cells, especially first/last ready grip, as close as possible. Use genuine RGBA alpha-zero background, broad clear gutters and all16 separate source drawings.",
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_06_n_v2_20261116c.png",
+  "sourceSha256": "9915a4bbb48b808eb3a6e6118850c31e6594aa7f3766e84c0245dd54f6f4428e",
+  "state": "GENERATED_PENDING_REVIEW"
+}

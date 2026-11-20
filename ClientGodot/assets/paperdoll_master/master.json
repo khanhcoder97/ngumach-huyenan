@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "revision": "REGISTERED_PIXEL_MASTER_20261110_R1",
+  "canvas": [
+    96,
+    96
+  ],
+  "ground": [
+    48,
+    72
+  ],
+  "headHeight": 12,
+  "standingHeight": 54,
+  "headTop": 18,
+  "neckBottom": 33,
+  "shoulderY": 34,
+  "waistY": 48,
+  "hipY": 51,
+  "kneeY": 60,
+  "ankleY": 69,
+  "nearWrist": [
+    62,
+    51
+  ],
+  "farWrist": [
+    34,
+    51
+  ],
+  "poses": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      -1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      -1,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      -1,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      -2,
+      0,
+      -1,
+      -1,
+      -1,
+      0
+    ],
+    [
+      1,
+      -2,
+      0,
+      -2,
+      -1,
+      -1,
+      -1
+    ],
+    [
+      1,
+      -1,
+      -1,
+      -2,
+      -1,
+      -1,
+      -1
+    ],
+    [
+      1,
+      0,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    [
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      -1,
+      1,
+      -1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      -1,
+      1,
+      -1,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      -1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      -1,
+      -1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      -1,
+      1,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "note": "Native shared geometry authoring source; not final art approval. Each pose row: near wrist dx/dy, far wrist dx/dy, head dy, shoulder dy, waist dy. Foot-ground remains fixed."
+}

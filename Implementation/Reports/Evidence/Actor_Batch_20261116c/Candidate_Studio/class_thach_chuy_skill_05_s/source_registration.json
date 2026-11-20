@@ -1,0 +1,773 @@
+{
+  "record": {
+    "id": "class_thach_chuy_skill_05_s",
+    "source": "Candidates_20261116c/class_thach_chuy_skill_05_s_v1_20261116c.png",
+    "prompt": "Candidates_20261116c/class_thach_chuy_skill_05_s_v1_20261116c.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261116c",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png"
+    ],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+        "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+      },
+      {
+        "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+        "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51"
+      }
+    ],
+    "sourceSha256": "3915cb4ad2037d8acb96262d7abfc99747b3e1808340337232596c55bd9ef23f",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        196.5,
+        298
+      ],
+      [
+        179.5,
+        298
+      ],
+      [
+        155.0,
+        295
+      ],
+      [
+        127.5,
+        297
+      ],
+      [
+        208.5,
+        279
+      ],
+      [
+        149.5,
+        281
+      ],
+      [
+        139.5,
+        281
+      ],
+      [
+        116.0,
+        286
+      ],
+      [
+        219.5,
+        256
+      ],
+      [
+        188.0,
+        257
+      ],
+      [
+        158.0,
+        259
+      ],
+      [
+        106.0,
+        262
+      ],
+      [
+        207.5,
+        240
+      ],
+      [
+        178.0,
+        240
+      ],
+      [
+        155.0,
+        240
+      ],
+      [
+        129.0,
+        240
+      ]
+    ],
+    "bodyReferenceHeight": 217,
+    "neutralFootCenterXCorrection": 0.0,
+    "registrationMethod": "TC_NEUTRAL_FULL_ALPHA_HEIGHT_AND_FOOT_CENTER_BOOT_Y_OCCLUDED_SASH_X_PENDING_NATIVE_REVIEW"
+  },
+  "page": {
+    "id": "class_thach_chuy_skill_05_s",
+    "file": "sheets/class_thach_chuy_skill_05_s_v1_20261116c.png",
+    "source": "Candidates_20261116c/class_thach_chuy_skill_05_s_v1_20261116c.png",
+    "sha256": "3915cb4ad2037d8acb96262d7abfc99747b3e1808340337232596c55bd9ef23f",
+    "imageSize": [
+      1261,
+      1247
+    ],
+    "directions": [
+      {
+        "direction": "S",
+        "flip": false,
+        "referenceHeight": 217,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              92,
+              81,
+              260,
+              298
+            ],
+            "pivot": [
+              196.5,
+              298
+            ]
+          },
+          {
+            "rect": [
+              315,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              68,
+              88,
+              244,
+              296
+            ],
+            "pivot": [
+              179.5,
+              298
+            ]
+          },
+          {
+            "rect": [
+              630,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              41,
+              98,
+              223,
+              294
+            ],
+            "pivot": [
+              155.0,
+              295
+            ]
+          },
+          {
+            "rect": [
+              946,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              14,
+              109,
+              201,
+              295
+            ],
+            "pivot": [
+              127.5,
+              297
+            ]
+          },
+          {
+            "rect": [
+              0,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              88,
+              85,
+              287,
+              279
+            ],
+            "pivot": [
+              208.5,
+              279
+            ]
+          },
+          {
+            "rect": [
+              315,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              60,
+              77,
+              257,
+              280
+            ],
+            "pivot": [
+              149.5,
+              281
+            ]
+          },
+          {
+            "rect": [
+              630,
+              312,
+              316,
+              312
+            ],
+            "bounds": [
+              35,
+              74,
+              238,
+              295
+            ],
+            "pivot": [
+              139.5,
+              281
+            ]
+          },
+          {
+            "rect": [
+              946,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              3,
+              67,
+              223,
+              298
+            ],
+            "pivot": [
+              116.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              0,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              84,
+              48,
+              294,
+              269
+            ],
+            "pivot": [
+              219.5,
+              256
+            ]
+          },
+          {
+            "rect": [
+              315,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              60,
+              45,
+              263,
+              263
+            ],
+            "pivot": [
+              188.0,
+              257
+            ]
+          },
+          {
+            "rect": [
+              630,
+              624,
+              316,
+              311
+            ],
+            "bounds": [
+              42,
+              43,
+              230,
+              263
+            ],
+            "pivot": [
+              158.0,
+              259
+            ]
+          },
+          {
+            "rect": [
+              946,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              17,
+              40,
+              206,
+              261
+            ],
+            "pivot": [
+              106.0,
+              262
+            ]
+          },
+          {
+            "rect": [
+              0,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              92,
+              21,
+              276,
+              239
+            ],
+            "pivot": [
+              207.5,
+              240
+            ]
+          },
+          {
+            "rect": [
+              315,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              72,
+              21,
+              249,
+              239
+            ],
+            "pivot": [
+              178.0,
+              240
+            ]
+          },
+          {
+            "rect": [
+              630,
+              935,
+              316,
+              312
+            ],
+            "bounds": [
+              45,
+              20,
+              222,
+              240
+            ],
+            "pivot": [
+              155.0,
+              240
+            ]
+          },
+          {
+            "rect": [
+              946,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              19,
+              20,
+              197,
+              240
+            ],
+            "pivot": [
+              129.0,
+              240
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 218.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ]
+  },
+  "bodyRootDiagnostics": [
+    {
+      "head": {
+        "span": 127,
+        "centerX": 194.5,
+        "top": 81,
+        "searchRect": [
+          92,
+          81,
+          260,
+          172
+        ]
+      },
+      "root": [
+        196.5,
+        298
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 189.5,
+      "sashPixelCount": 473
+    },
+    {
+      "head": {
+        "span": 132,
+        "centerX": 174.0,
+        "top": 88,
+        "searchRect": [
+          68,
+          88,
+          244,
+          175
+        ]
+      },
+      "root": [
+        179.5,
+        298
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 162.5,
+      "sashPixelCount": 508
+    },
+    {
+      "head": {
+        "span": 142,
+        "centerX": 149.0,
+        "top": 98,
+        "searchRect": [
+          41,
+          98,
+          223,
+          180
+        ]
+      },
+      "root": [
+        155.0,
+        295
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 141.0,
+      "sashPixelCount": 416
+    },
+    {
+      "head": {
+        "span": 145,
+        "centerX": 127.5,
+        "top": 109,
+        "searchRect": [
+          14,
+          109,
+          201,
+          187
+        ]
+      },
+      "root": [
+        127.5,
+        297
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 105.5,
+      "sashPixelCount": 308
+    },
+    {
+      "head": {
+        "span": 151,
+        "centerX": 207.5,
+        "top": 85,
+        "searchRect": [
+          88,
+          85,
+          287,
+          166
+        ]
+      },
+      "root": [
+        208.5,
+        279
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 199.0,
+      "sashPixelCount": 373
+    },
+    {
+      "head": {
+        "span": 155,
+        "centerX": 179.5,
+        "top": 77,
+        "searchRect": [
+          60,
+          77,
+          257,
+          162
+        ]
+      },
+      "root": [
+        149.5,
+        281
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 177.5,
+      "sashPixelCount": 391
+    },
+    {
+      "head": {
+        "span": 186,
+        "centerX": 145.0,
+        "top": 74,
+        "searchRect": [
+          35,
+          74,
+          238,
+          167
+        ]
+      },
+      "root": [
+        139.5,
+        281
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 159.5,
+      "sashPixelCount": 215
+    },
+    {
+      "head": {
+        "span": 210,
+        "centerX": 118.0,
+        "top": 67,
+        "searchRect": [
+          3,
+          67,
+          223,
+          164
+        ]
+      },
+      "root": [
+        116.0,
+        286
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 130.5,
+      "sashPixelCount": 151
+    },
+    {
+      "head": {
+        "span": 202,
+        "centerX": 193.0,
+        "top": 48,
+        "searchRect": [
+          84,
+          48,
+          294,
+          141
+        ]
+      },
+      "root": [
+        219.5,
+        256
+      ],
+      "rootXMethod": "RED_SASH_REFERENCE_UNDER_HAND_HAMMER_OCCLUSION",
+      "sashCenterX": 212.5,
+      "sashPixelCount": 27
+    },
+    {
+      "head": {
+        "span": 188,
+        "centerX": 169.0,
+        "top": 45,
+        "searchRect": [
+          60,
+          45,
+          263,
+          137
+        ]
+      },
+      "root": [
+        188.0,
+        257
+      ],
+      "rootXMethod": "RED_SASH_REFERENCE_UNDER_HAND_HAMMER_OCCLUSION",
+      "sashCenterX": 181.0,
+      "sashPixelCount": 63
+    },
+    {
+      "head": {
+        "span": 147,
+        "centerX": 156.5,
+        "top": 43,
+        "searchRect": [
+          42,
+          43,
+          230,
+          135
+        ]
+      },
+      "root": [
+        158.0,
+        259
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 137.5,
+      "sashPixelCount": 394
+    },
+    {
+      "head": {
+        "span": 149,
+        "centerX": 131.5,
+        "top": 40,
+        "searchRect": [
+          17,
+          40,
+          206,
+          133
+        ]
+      },
+      "root": [
+        106.0,
+        262
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 137.0,
+      "sashPixelCount": 357
+    },
+    {
+      "head": {
+        "span": 141,
+        "centerX": 205.5,
+        "top": 21,
+        "searchRect": [
+          92,
+          21,
+          276,
+          113
+        ]
+      },
+      "root": [
+        207.5,
+        240
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 190.0,
+      "sashPixelCount": 316
+    },
+    {
+      "head": {
+        "span": 137,
+        "centerX": 177.5,
+        "top": 21,
+        "searchRect": [
+          72,
+          21,
+          249,
+          113
+        ]
+      },
+      "root": [
+        178.0,
+        240
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 184.5,
+      "sashPixelCount": 539
+    },
+    {
+      "head": {
+        "span": 134,
+        "centerX": 151.0,
+        "top": 20,
+        "searchRect": [
+          45,
+          20,
+          222,
+          112
+        ]
+      },
+      "root": [
+        155.0,
+        240
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 153.5,
+      "sashPixelCount": 535
+    },
+    {
+      "head": {
+        "span": 134,
+        "centerX": 126.0,
+        "top": 20,
+        "searchRect": [
+          19,
+          20,
+          197,
+          112
+        ]
+      },
+      "root": [
+        129.0,
+        240
+      ],
+      "rootXMethod": "BOOT_COMPONENTS_WITH_NEUTRAL_ALPHA_FOOT_CENTER_CORRECTION",
+      "sashCenterX": 125.0,
+      "sashPixelCount": 475
+    }
+  ],
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

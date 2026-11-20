@@ -1,0 +1,86 @@
+{
+  "scope": "NATIVE_OFFLINE_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "files": [
+    {
+      "file": "boatkeeper_idle_eight_angles.mp4",
+      "bytes": 377591,
+      "sha256": "757216184763b7f2f760e40eb7bdbe238f72e9d5809905003ac6dc0942dcea1b",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_interact_e.mp4",
+      "bytes": 206787,
+      "sha256": "ce0b212650369db41560de14e16f41ee43e221ba527a4e3df15c06db0d039781",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_interact_n.mp4",
+      "bytes": 205102,
+      "sha256": "5cf5a1b69cb147d9aa42594c70ada9d8d23df44b333c02747c818977f562a4ee",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_interact_ne.mp4",
+      "bytes": 214834,
+      "sha256": "6e7140fbadf607139738d3198163bc1a832cae576c09bfaa41c8d8fb3aba4828",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_interact_se.mp4",
+      "bytes": 209296,
+      "sha256": "d37061893171f80b40db5849a86b971d7e3af647fc685f91ff5b6f47c2ce5ed0",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_walk_e.mp4",
+      "bytes": 278852,
+      "sha256": "c73892627e61a23bfaee3518854ac7be12ba9d8c5c0c6dc01be62272c840ccf3",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_walk_n.mp4",
+      "bytes": 278317,
+      "sha256": "af37cc5d4208b0d9334f9c4bcd6cc014db52e24c3ac1a553e1a66ac277f4c7db",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_walk_ne.mp4",
+      "bytes": 272492,
+      "sha256": "96b9cf36e08f732216aa007d274a5ca6d8a880e063439535b968a582ba913309",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "boatkeeper_walk_se.mp4",
+      "bytes": 282091,
+      "sha256": "d47c84550bf9f45e569f4b7d82c82aae7478bf764c26a6c5ede902aa67f898ad",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    }
+  ]
+}

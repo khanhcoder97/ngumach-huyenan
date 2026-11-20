@@ -1,0 +1,37 @@
+{
+  "batch": "20261116c",
+  "id": "class_thach_chuy_skill_02_n",
+  "version": 2,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "direction": "N",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_n_v1_20261116c.png"
+  ],
+  "inputRole": "OWNER_IDENTITY_WITH_REJECTED_REAR_GRIP_EDIT_TARGET",
+  "layoutVerified": true,
+  "prompt": "Use case: precise-object-edit. Production whole baked chibi PIXEL-ART sprite sheet for Thạch Chùy,skill Chấn Địa,16authored poses. Image1 OWNER identity/style reference. Image2 is the rejected rear-facing skill sheet to CORRECT,not an approved grip reference. Keep the same boy identity,dark short hair,thin ochre headband,bronze armour,round steel shoulders/gauntlets,brown boots/trousers,red waist sash,one short wooden-shaft cuboid grey hammer. Refined cohesive shaded pixel clusters,not segmented paperdoll.\nCRITICAL CORRECTION: Character faces NORTH,away from camera for all16poses. The hands hold the hammer FORWARD of the chest on the FAR side of his body. In neutral/recovery the torso hides most of both hands and the horizontal shaft. Only the hammer head peeks just outside the RIGHT silhouette,never a horizontal shaft or a central hammerhead painted across his LOWER BACK. Natural occlusion is correct. Never put both palms behind his back. Arms rise along the body sides to raise that SAME shaft above and forward of head. Do not convert gauntlets into extra hammerheads. Two connected arms and hands,one cuboid head permanently attached to shaft; no dislocated limbs.\nExactly4columns4rows,16genuinely distinct chronological full-body poses:0neutral forward grip partly hidden;1-3ready and lift through visible side silhouette;4-6one overhead vertical lift;7brace;8-10ONE ground slam AHEAD of his feet on north/far side,head and torso naturally hide part of the low hammer;11-15recover same forward neutral grip. Keep both planted boots readable and the red back-waist sash unobscured whenever physically visible. No repeated strike,no duplicated8framecycle,no camera/facing changes,no detached weapon. Whole hair,boots,hammer and gloves fit central65%of EACHcell with broad alpha0gutters and outermargin. Same body scale and ground baseline across16cells. Genuine transparent RGBA alpha0background/corners; nofloor,shadow,VFX,rocks,cracks,particles,text,labels,grid or matte. Elevation and top-down orthographic camera must match owner. Source animation only; no server timing,damage or collision changes.",
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_n_v2_20261116c.png",
+  "sourceSha256": "6228f2839b2213d2fbe239d5f2009519b3b14107f921d2cd99a8fe09c6b3fd0e",
+  "state": "GENERATED_PENDING_REVIEW"
+}

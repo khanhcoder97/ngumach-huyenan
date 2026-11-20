@@ -1,0 +1,37 @@
+{
+  "batch": "20261116c",
+  "id": "class_thach_chuy_skill_04_e",
+  "version": 2,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "direction": "E",
+  "seconds": 0.8,
+  "timing": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v1_20261116c.png"
+  ],
+  "inputRole": "OWNER_IDENTITY_AND_EXISTING_TAUNT_SHEET_EDIT_TARGET",
+  "layoutVerified": true,
+  "prompt": "Use case: precise-object-edit. Image1 is the owner-approved Thach Chuy identity/palette reference. Image2 is the EDIT TARGET: the existing 4x4 sixteen-pose EAST-facing Khiêu Chiến whole-body sprite sheet. Make a targeted version2 correction to the SAME sheet, not a new choreography. Retain its single short hammer tap, lifted chest/head call and recovery, exact row-major16pose order, camera, single right-facing profile, proportions, armour, dark hair, gold headband, red sash, one connected grey hammer and two-hand grip. Preserve the existing stance and body drawing in every cell; change only the taunt CALL expression. At zero-based frame7 lips begin to part; frames8,9,10(row3columns1,2,3) must show an unmistakably OPEN MOUTH shouting toward screenRIGHT, readable along the near face/jaw. Frame11 closes the mouth. All other frames keep the calm closed-mouth expression. Do not turn head toward camera, add a second eye, exaggerate into a giant anime mouth, change hammer side, invent VFX/speech bubbles/letters, crop any boot/head/weapon, change outfit or use detached paperdoll parts. Retain crisp shaded chibi pixel-art clusters and genuinely transparent RGBA alpha0background and gutters. Exact4columns4rows with16existing distinct full-body source drawings, uniform grid spacing and generous empty margins. No opaque background, grid lines, labels or text. Skill remains a NON-DAMAGING taunt; .8s sixteen-phase source preview timing is not server status lifetime,damage or cooldown. Fix expression only; don't add a new strike.",
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v2_20261116c.png",
+  "sourceSha256": "57cd7fbd732a2d0dab69ad0bafa630b3fac12fe6c9ab067a41a35d6585a5cc1c",
+  "state": "GENERATED_PENDING_REVIEW"
+}

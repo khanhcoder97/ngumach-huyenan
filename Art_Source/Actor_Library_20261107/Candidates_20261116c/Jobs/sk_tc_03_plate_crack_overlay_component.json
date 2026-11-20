@@ -1,0 +1,48 @@
+{
+  "batch": "20261116c",
+  "id": "sk_tc_03_plate_crack_overlay_component",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "seconds": 0.4,
+  "timing": [
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25
+  ],
+  "loop": false,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png"
+  ],
+  "prompt": "Use case: stylized-concept. Production standalone crisp PIXEL-ART VFX sprite component for Thiết Bích / Thạch Chùy in Ngũ Mạch Huyền Ấn. Owner image is PALETTE and refined cluster STYLE reference only. Draw NOcharacter,hand,face,hammer,weapon or UI.\nONLY hairline ochre/cream and slate stress cracks for ONE compact stone armour plate. No filled stone face,no new plate or body: true alpha0between the lines. The line pattern develops across the same small fixed plate footprint through16phases,then settles as a visual end-state cue. No stone explosion,large lightning branch or shockwave. It overlays the existing plate using the same socket. This is buff-ending feedback,not a damage-absorption shield being depleted.\nExactly4columns4rows=16genuinely authored chronological drawings,row-major. ONE chronological gain/ending transition,not repeated pulses. Fixed orthographic camera and fixed cell-relative centre,consistent material and scale. Complete component fits central60%of each equal cell; broad fully transparent gutters and outermargin. True RGBA alpha0background/corners; nofloor,shadow,ambientcloud,glowmatte,checkerboard,grid,text,labels or numbers. Clean coherent pixel clusters,restrained cream highlights and dark chipped edges,not photoreal rock or smooth blurry paint. No duplicated8framecycle or simply resized copies.\nIMPORTANT COMPOSITION: Draw ONLY ONE small reusable plate component per cell,not three plates arranged around an invisible body. Runtime/Studio will instantiate the SAMEsource at shoulder,back and knee sockets with separately editable position/rotation/depth. Three actual plates on character must remain independently adjustable for all8facings. Whole visual envelope stays within the canonical96px module limit at20PPU after assembly; this source is not a hitbox. Do not draw a cage,dome,bubble,giant shield,body armour costume,terrain wall or absorption meter. Presentation only: preserve Thiết Bích damage-reduction buff semantics,not a new damage-absorption shield; no damage,state,timing or collision implemented by this sprite. Canonical references: Skill_VFX_Cards_v1_vi.md SK-TC-03 and Combat_Skills_VFX_Animation_Spec_vi.md.\nInput2 is UNAPPROVED plate geometry guidance only: match the footprint of its LAST intact plate cell,not its early stone fragments. DRAW ONLY CRACK/STRESS LINES as a transparent overlay. ALLnon-linepixels,including the entire stone-face area and the background,are alpha0. No filled brown/grey plate,no rocks,no fragments,no bevel outline or full-frame glow. Compact angular slate fissures with restrained warm-cream tiny stress glints develop ONCE within the central inner80%of that plate footprint through16distinct phases. Start with a tiny short stress mark,branch moderately,then settle into a few fine fixed cracks; no flying lightning or ground crater. Each equalcellsharesonefixedcentre. It will be composited over the separately rendered intact plate,so filling its surface would be incorrect.",
+  "layoutVerified": true,
+  "authoringUse": {
+    "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+    "instancesPerActor": 3,
+    "socketRoles": [
+      "guard_shoulder",
+      "back",
+      "guard_knee"
+    ],
+    "requiresPerFacingPerPoseAttachment": true,
+    "requiresDepthReview": true,
+    "productionApproved": false
+  },
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_crack_overlay_component_v1_20261116c.png",
+  "sourceSha256": "227d99d81536938d85add810adeebe4883f08f1e42e72995264373a3163322c9",
+  "state": "GENERATED_PENDING_REVIEW"
+}

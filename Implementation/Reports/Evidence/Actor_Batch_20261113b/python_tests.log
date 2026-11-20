@@ -1,0 +1,42 @@
+test_end_pose_does_not_recalibrate_whole_action (test_actor_scale.ActorScale.test_end_pose_does_not_recalibrate_whole_action) ... ok
+test_quarter_turn_preserves_long_axis_scale (test_actor_scale.ActorScale.test_quarter_turn_preserves_long_axis_scale) ... ok
+test_unknown_scale_policy_rejected (test_actor_scale.ActorScale.test_unknown_scale_policy_rejected) ... ok
+test_human_template_is_preserved_for_characters (test_creature_prompt.CreaturePrompt.test_human_template_is_preserved_for_characters) ... ok
+test_root_defeat_is_a_heap_not_a_kneeling_human (test_creature_prompt.CreaturePrompt.test_root_defeat_is_a_heap_not_a_kneeling_human) ... ok
+test_root_motion_preserves_root_anatomy_and_does_not_authorize_ai (test_creature_prompt.CreaturePrompt.test_root_motion_preserves_root_anatomy_and_does_not_authorize_ai) ... ok
+test_serpent_fall_and_locomotion_do_not_invent_human_support (test_creature_prompt.CreaturePrompt.test_serpent_fall_and_locomotion_do_not_invent_human_support) ... ok
+test_all_five_source_angles_complete (test_directional_coverage.DirectionalCoverage.test_all_five_source_angles_complete) ... ok
+test_component_is_not_full_skill (test_directional_coverage.DirectionalCoverage.test_component_is_not_full_skill) ... ok
+test_foreign_repair_does_not_fill_missing_direction (test_directional_coverage.DirectionalCoverage.test_foreign_repair_does_not_fill_missing_direction) ... ok
+test_mirror_is_not_authored_angle (test_directional_coverage.DirectionalCoverage.test_mirror_is_not_authored_angle) ... ok
+test_omni_effect_can_complete_its_own_job (test_directional_coverage.DirectionalCoverage.test_omni_effect_can_complete_its_own_job) ... ok
+test_original_plus_south_repair_completes_structure (test_directional_coverage.DirectionalCoverage.test_original_plus_south_repair_completes_structure) ... ok
+test_partial_four_angles_is_not_complete (test_directional_coverage.DirectionalCoverage.test_partial_four_angles_is_not_complete) ... ok
+test_unapproved_repair_does_not_complete_production (test_directional_coverage.DirectionalCoverage.test_unapproved_repair_does_not_complete_production) ... ok
+test_green_tail_motion_does_not_move_torso (test_fish_registration.FishRegistration.test_green_tail_motion_does_not_move_torso) ... ok
+test_no_silver_core_requires_manual_registration (test_fish_registration.FishRegistration.test_no_silver_core_requires_manual_registration) ... ok
+test_transparent_light_noise_does_not_move_torso (test_fish_registration.FishRegistration.test_transparent_light_noise_does_not_move_torso) ... ok
+test_crouched_start_keeps_neutral_scale (test_neutral_registration.NeutralRegistration.test_crouched_start_keeps_neutral_scale) ... ok
+test_invalid_override_fails (test_neutral_registration.NeutralRegistration.test_invalid_override_fails) ... ok
+test_old_moss_value_is_preserved (test_neutral_registration.NeutralRegistration.test_old_moss_value_is_preserved) ... ok
+test_incomplete_profile_rejected (test_preview_profile.PreviewProfile.test_incomplete_profile_rejected) ... ok
+test_invalid_duration_and_untyped_loop_rejected (test_preview_profile.PreviewProfile.test_invalid_duration_and_untyped_loop_rejected) ... ok
+test_only_components_can_declare_preview_timing (test_preview_profile.PreviewProfile.test_only_components_can_declare_preview_timing) ... ok
+test_optional_profile_preserves_old_binding_pin (test_preview_profile.PreviewProfile.test_optional_profile_preserves_old_binding_pin) ... ok
+test_brown_whip_does_not_drag_stump (test_root_registration.RootRegistration.test_brown_whip_does_not_drag_stump) ... ok
+test_invalid_scale_or_offset_is_rejected (test_root_registration.RootRegistration.test_invalid_scale_or_offset_is_rejected) ... ok
+test_missing_core_requires_manual_review (test_root_registration.RootRegistration.test_missing_core_requires_manual_review) ... ok
+test_thin_whip_tip_is_not_cut_at_projection_midpoint (test_root_registration.RootRegistration.test_thin_whip_tip_is_not_cut_at_projection_midpoint) ... ok
+test_touching_source_cells_are_rejected (test_root_registration.RootRegistration.test_touching_source_cells_are_rejected) ... ok
+test_transparent_noise_is_not_moss (test_root_registration.RootRegistration.test_transparent_noise_is_not_moss) ... ok
+test_direction_relabel_requires_review (test_source_approval.SourceApproval.test_direction_relabel_requires_review) ... ok
+test_missing_registration_pin_is_not_approval (test_source_approval.SourceApproval.test_missing_registration_pin_is_not_approval) ... ok
+test_new_art_does_not_inherit_review (test_source_approval.SourceApproval.test_new_art_does_not_inherit_review) ... ok
+test_review_matches_unchanged_art_and_registration (test_source_approval.SourceApproval.test_review_matches_unchanged_art_and_registration) ... ok
+test_same_png_new_pivot_requires_review (test_source_approval.SourceApproval.test_same_png_new_pivot_requires_review) ... ok
+test_same_png_new_scale_requires_review (test_source_approval.SourceApproval.test_same_png_new_scale_requires_review) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.022s
+
+OK

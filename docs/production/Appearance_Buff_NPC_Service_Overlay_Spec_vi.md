@@ -1,4 +1,8 @@
+> 10/11/2026: Bộ áo/quần dùng một outfit visual từ master chung; giày/vũ khí/phụ kiện độc lập. Mũ giữ hairStyle và dùng coverage/under-hat. Không đổi item/stat/giá dịch vụ. Nguồn hiện hành: Registered_PaperDoll_Master_20261110_vi.md.
+
 # ĐẶC TẢ PHÒNG THAY ĐỒ, BUFF VÀ MẠNG DỊCH VỤ NPC
+
+> Quyết định chủ dự án07/11/2026: nhân vật người chơi chuyển sang base nam/nữ + bộ phận trang phục/vũ khí/diện mạo tách lớp. Xem [pipeline modular](Modular_Character_Appearance_20261107_vi.md). Mười profile class/giới tính dùng chung hai rig khi tương thích; các sprite class đã vẽ liền đồ chỉ còn reference/fallback. Chuẩn16–20pose thực/clip/hướng và render60FPS giữ nguyên.
 ## Ngũ Mạch: Huyền Ấn — bản sản xuất v1.0
 
 ### 1. Phạm vi và nguyên tắc theo game
@@ -23,7 +27,7 @@ Desktop: dialog tối đa 1360×840 CSS px, rộng 92vw/cao 88vh; trái 35% (pre
 #### 2.1 Trái — Sân khấu nhân vật/NPC
 
 - Render sprite sheet nhân vật/NPC hiện hành hoặc được chọn trên nền studio theo map: tile giấy mưa Bến Mưa, đá xanh Thanh Lạc, mực/đồng ở dịch vụ khác. Nền không kéo scene gameplay vào modal.
-- Layer order: body/face → hair → outfit/armor appearance → headwear → weapon skin → trail → aura → title/emote preview. Gear stats và layer hiển thị tách nhau; skin không ghi vào item instance stat.
+- Actor dùng paintOrder theo từng pose: pass trước/sau của tay, tóc, áo choàng và vũ khí theo Modular_Character_Appearance_20261107_vi.md; không dùng một thứ tự layer cứng cho mọi hướng. Gear stats và layer hiển thị tách nhau; skin không ghi vào item instance stat.
 - Chuyển trái/phải/front/back qua pose sprite có asset; nút zoom đổi integer scale 1×/2×/3×, không dùng scale phân số; nút `Đứng / Chiến đấu / Chào / Ngồi` phát animation frame preview. Không phát VFX combat lặp vô hạn.
 - `Nhân vật / NPC` selector: mặc định nhân vật. Khi ở tab NPC, portrait/idle của NPC hiện cùng service role/location; người chơi không thay outfit NPC bằng vanity của mình.
 - Preview unowned chỉ ghi vào `previewLoadout` phía client; nút `Hoàn tác thử` khôi phục trước preview. Không thay appearance gameplay tới khi server xác nhận `Equip`/`Save Appearance`.
@@ -53,11 +57,11 @@ Cosmetic không có chỉ số chiến đấu. Trường `Stat Bonuses` luôn n�
 
 #### 3.2 Diện mạo gốc nhân vật
 
-Nhân vật giữ lựa chọn `bodyFrame`, `facePreset`, `skinTone`, `hairStyle`, `hairColor`, `faceMark`, `accessoryPreset`; ID preset nằm trong Appearance Manifest, không biến thành item nếu không sở hữu/tiêu thụ. Baseline art pack:
+Nhân vật giữ lựa chọn `bodyFrame`, `facePreset`, `eyePreset`, `eyePalette`, `skinTone`, `hairStyle`, `hairColor`, `faceMark`, `accessoryPreset`; ID preset nằm trong Appearance Manifest, không biến thành item nếu không sở hữu/tiêu thụ. Baseline art pack:
 
 | Kênh | Gói tạo hình tiền sản xuất | Luật |
 |---|---:|---|
-| Silhouette/body frame | 3 biến thể | cùng collision capsule, reach, tốc độ, anchor vũ khí và animation combat |
+| Body rig V1 / silhouette mở rộng | 2 rig nam/nữ; 3 silhouette là phạm vi mở rộng chưa có asset | cùng collision capsule, reach, tốc độ, anchor vũ khí và animation combat |
 | Mặt | 6 preset | cùng voice/subtitle; không gắn lớp hay giới tính |
 | Tông da | 8 swatch có kiểm tra tương phản | không thay ánh sáng VFX/telegraph |
 | Tóc | 10 kiểu tương thích sprite-set | mọi lớp dùng chung; mũ có cờ `hairVisibility` |

@@ -1,0 +1,448 @@
+{
+  "record": {
+    "id": "sk_tc_01_charge_wedge_component",
+    "source": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.png",
+    "prompt": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261116c",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+        "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+      }
+    ],
+    "sourceSha256": "e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e",
+    "sourceFrameDurationsMs": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.4,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "sourcePivots": [
+      [
+        204.4,
+        176.5
+      ],
+      [
+        149.04,
+        177.0
+      ],
+      [
+        133.04,
+        178.5
+      ],
+      [
+        111.4,
+        176.5
+      ],
+      [
+        123.72,
+        130.0
+      ],
+      [
+        86.84,
+        129.0
+      ],
+      [
+        89.0,
+        130.0
+      ],
+      [
+        83.88,
+        129.5
+      ],
+      [
+        108.68,
+        123.5
+      ],
+      [
+        82.12,
+        126.0
+      ],
+      [
+        88.08,
+        126.0
+      ],
+      [
+        92.0,
+        126.0
+      ],
+      [
+        125.88,
+        117.0
+      ],
+      [
+        125.56,
+        117.5
+      ],
+      [
+        143.28,
+        118.5
+      ],
+      [
+        143.08,
+        116.0
+      ]
+    ],
+    "registrationMethod": "SHORT_WEDGE_REAR_GROUND_ORIGIN_NOT_APPROVED"
+  },
+  "page": {
+    "id": "sk_tc_01_charge_wedge_component",
+    "file": "sheets/sk_tc_01_charge_wedge_component_v2_20261116c.png",
+    "source": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.png",
+    "sha256": "e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "directions": [
+      {
+        "direction": "OMNI",
+        "flip": false,
+        "referenceHeight": 221,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              374,
+              296
+            ],
+            "bounds": [
+              202,
+              173,
+              232,
+              180
+            ],
+            "pivot": [
+              204.4,
+              176.5
+            ]
+          },
+          {
+            "rect": [
+              374,
+              0,
+              344,
+              296
+            ],
+            "bounds": [
+              144,
+              157,
+              207,
+              197
+            ],
+            "pivot": [
+              149.04,
+              177.0
+            ]
+          },
+          {
+            "rect": [
+              718,
+              0,
+              346,
+              296
+            ],
+            "bounds": [
+              124,
+              149,
+              237,
+              208
+            ],
+            "pivot": [
+              133.04,
+              178.5
+            ]
+          },
+          {
+            "rect": [
+              1064,
+              0,
+              384,
+              296
+            ],
+            "bounds": [
+              99,
+              138,
+              254,
+              215
+            ],
+            "pivot": [
+              111.4,
+              176.5
+            ]
+          },
+          {
+            "rect": [
+              0,
+              296,
+              374,
+              254
+            ],
+            "bounds": [
+              109,
+              86,
+              293,
+              174
+            ],
+            "pivot": [
+              123.72,
+              130.0
+            ]
+          },
+          {
+            "rect": [
+              374,
+              296,
+              344,
+              254
+            ],
+            "bounds": [
+              71,
+              83,
+              269,
+              175
+            ],
+            "pivot": [
+              86.84,
+              129.0
+            ]
+          },
+          {
+            "rect": [
+              718,
+              296,
+              346,
+              254
+            ],
+            "bounds": [
+              73,
+              81,
+              273,
+              179
+            ],
+            "pivot": [
+              89.0,
+              130.0
+            ]
+          },
+          {
+            "rect": [
+              1064,
+              296,
+              384,
+              254
+            ],
+            "bounds": [
+              67,
+              80,
+              278,
+              179
+            ],
+            "pivot": [
+              83.88,
+              129.5
+            ]
+          },
+          {
+            "rect": [
+              0,
+              550,
+              374,
+              260
+            ],
+            "bounds": [
+              91,
+              70,
+              312,
+              177
+            ],
+            "pivot": [
+              108.68,
+              123.5
+            ]
+          },
+          {
+            "rect": [
+              374,
+              550,
+              344,
+              260
+            ],
+            "bounds": [
+              65,
+              79,
+              279,
+              173
+            ],
+            "pivot": [
+              82.12,
+              126.0
+            ]
+          },
+          {
+            "rect": [
+              718,
+              550,
+              346,
+              260
+            ],
+            "bounds": [
+              72,
+              79,
+              273,
+              173
+            ],
+            "pivot": [
+              88.08,
+              126.0
+            ]
+          },
+          {
+            "rect": [
+              1064,
+              550,
+              384,
+              260
+            ],
+            "bounds": [
+              78,
+              82,
+              253,
+              170
+            ],
+            "pivot": [
+              92.0,
+              126.0
+            ]
+          },
+          {
+            "rect": [
+              0,
+              810,
+              374,
+              276
+            ],
+            "bounds": [
+              113,
+              75,
+              274,
+              159
+            ],
+            "pivot": [
+              125.88,
+              117.0
+            ]
+          },
+          {
+            "rect": [
+              374,
+              810,
+              344,
+              276
+            ],
+            "bounds": [
+              117,
+              83,
+              224,
+              152
+            ],
+            "pivot": [
+              125.56,
+              117.5
+            ]
+          },
+          {
+            "rect": [
+              718,
+              810,
+              346,
+              276
+            ],
+            "bounds": [
+              138,
+              94,
+              204,
+              143
+            ],
+            "pivot": [
+              143.28,
+              118.5
+            ]
+          },
+          {
+            "rect": [
+              1064,
+              810,
+              384,
+              276
+            ],
+            "bounds": [
+              139,
+              98,
+              190,
+              134
+            ],
+            "pivot": [
+              143.08,
+              116.0
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 86.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_PIVOTS",
+    "scaleMode": "LONGEST_AXIS",
+    "previewDurationSeconds": 0.4,
+    "previewLoop": false,
+    "sourceFrameDurationsMs": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ]
+  },
+  "bodyRootDiagnostics": [],
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

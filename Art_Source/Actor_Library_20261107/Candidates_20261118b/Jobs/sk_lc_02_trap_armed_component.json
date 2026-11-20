@@ -1,0 +1,35 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_02_trap_armed_component",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "loop": true,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_mark_component_v2_20261112f.png"
+  ],
+  "authoringUse": {
+    "role": "ARMED_LOOP",
+    "attach": "GROUND"
+  },
+  "prompt": "Original animated gameplay visual effect for Ngũ Mạch Huyền Ấn, skill Dây Gai, armed ground trap. Image 1 is a palette and pixel texture reference for moss, jade, warm ivory. Make a transparent 4×4 sprite atlas with exactly sixteen distinct frames in chronological row-major order. Every cell depicts the SAME centered low, open, flat ground trap from a 2D top-down-oblique camera: thin split stitched-vine ellipse roughly 2.3:1, and EXACTLY three squat distinct thorn spears rising off the ground. One at 10 o'clock rear-left, one at 2 o'clock rear-right, one at 6 o'clock just behind the ellipse's front arc. Three roots have woody brown outlines, moss greens and pale leaf-green tips. High silhouette readability at small gameplay size. All frames already armed and look like one object at all times. The ground ring and all three root bases stay at fixed screen coordinates in all frames. Animate only very subtle breathing at the three tips and an organic glint drifting once round the thin ellipse, with playable continuous wrap from cell 16 to cell 1. Everything lies just above ground, unobstructed center, sparse, crisp hand-crafted pixel clusters, restrained luminosity. Generous equal transparent gaps between cells. No solid background, no floor paint or soil, no figures, no lettering, no dividing grid, no tall spikes, no extra thorn, no explosion, no columns, no projectile."
+}

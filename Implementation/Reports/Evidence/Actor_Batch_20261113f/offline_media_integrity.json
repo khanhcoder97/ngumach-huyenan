@@ -1,0 +1,98 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 9,
+  "supersededVideos": 0,
+  "files": [
+    {
+      "file": "huyet_nguyet_eight_angles.mp4",
+      "bytes": 662438,
+      "sha256": "52db62f34dd2f606479091ccd05501cc6533a4a9e0b3f123dbc51b5ee4411a89",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "huyet_nguyet_raw_se.mp4",
+      "bytes": 175510,
+      "sha256": "6f0087bd8632244f8b920bc9aaec848cce9593d6a6dd05267df044063f3c161a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tan_hoa_eight_angles.mp4",
+      "bytes": 557086,
+      "sha256": "c1d3596aa04f2bf260243087c6971a734e1f516848435a34569a5a4ff38e2344",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tan_hoa_expire.mp4",
+      "bytes": 140746,
+      "sha256": "b9bda343bcc410337e38213e61a7ecc0efcfa8fb2f7b37e14864b9d03660d68e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tan_hoa_mark.mp4",
+      "bytes": 232232,
+      "sha256": "25dd2181861ede986b7fbc24846c8dfb01c8324cc71fcbe11aea7c2e4e51fd04",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tan_hoa_pop.mp4",
+      "bytes": 134709,
+      "sha256": "bf7a2a56b92a5bd04eb85f68a7321bfce05c0644da80521b3fc0a60bfd54d4bf",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "xich_anh_eight_angles.mp4",
+      "bytes": 664603,
+      "sha256": "c5346d4111622cd0a7d3be428b0934b88994df6a8a09d0d6d78553bb683c92c4",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "xich_anh_first.mp4",
+      "bytes": 136171,
+      "sha256": "03b5f59957181ed3d75a7cfc0cd818f0607ed7bc265987e875eecd7567519b4e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "xich_anh_reverse.mp4",
+      "bytes": 134635,
+      "sha256": "c55e453eadeeee3e7af1a5033890231453d473b876823d060dd03c1ef54aa19f",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

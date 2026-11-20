@@ -1,0 +1,10 @@
+{
+  "issue": "Eight-facing comparison sampling stopped after31 source videos because skill01/02 southern timing records belong to batchE, not the F-only subset.",
+  "verifiedTerminalSession": 44770,
+  "sourceImagesLost": 0,
+  "fix": "Read selected southern timings from full current generation registry; require exactly one selected record and16 durations before recording.",
+  "resumePolicy": "Reuse decoded180-frame movies only when their source bindings remain unchanged. Changed skill05/fade registrations are archived and recorded again.",
+  "retainedInitialPilotArchive": "Superseded_Initial_Registration",
+  "secondArchive": "Superseded_Backstep_And_Fade_Origins",
+  "sourceApprovalsGranted": 0
+}

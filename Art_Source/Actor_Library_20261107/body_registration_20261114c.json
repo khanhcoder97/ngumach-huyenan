@@ -1,0 +1,3955 @@
+{
+  "scope": "WIP_GEOMETRY_ONLY_NOT_VISUAL_APPROVAL",
+  "entries": [
+    {
+      "id": "class_minh_kiem_basic_attack_n",
+      "source": "Sheets/class_minh_kiem_basic_attack_n_v1_20261114c.png",
+      "sourceSha256": "0ef20f37733957614beb85b17d6ff4e8200ad427ee5b169bc832076ab0956fc1",
+      "bodyReferenceHeight": 262.0,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          162.5,
+          291
+        ],
+        [
+          127.0,
+          291
+        ],
+        [
+          130.0,
+          290
+        ],
+        [
+          140.0,
+          290
+        ],
+        [
+          163.0,
+          280
+        ],
+        [
+          127.0,
+          280
+        ],
+        [
+          131.5,
+          280
+        ],
+        [
+          140.5,
+          279
+        ],
+        [
+          163.0,
+          279
+        ],
+        [
+          127.0,
+          279
+        ],
+        [
+          131.0,
+          279
+        ],
+        [
+          140.5,
+          279
+        ],
+        [
+          162.5,
+          281
+        ],
+        [
+          127.0,
+          281
+        ],
+        [
+          130.5,
+          281
+        ],
+        [
+          140.0,
+          281
+        ]
+      ],
+      "method": "BOTH_WARM_BOOT_SILHOUETTES",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_n",
+        "sourceSha256": "da1abf4b7c9b79adc24cc221e116ffcfc755f36da20fec110cf4a34e278512f9",
+        "referenceHeight": 262,
+        "head": {
+          "span": 109,
+          "centerX": 161.5,
+          "top": 32,
+          "searchRect": [
+            97,
+            32,
+            226,
+            142
+          ]
+        },
+        "boots": {
+          "centerX": 160.0,
+          "bottom": 292,
+          "componentSizes": [
+            552,
+            503
+          ],
+          "cutoffY": 228.5
+        },
+        "headHorizontalOffset": 0.0,
+        "bootHorizontalOffset": 1.5
+      },
+      "headLandmarks": [
+        {
+          "span": 109,
+          "centerX": 159.5,
+          "top": 38,
+          "searchRect": [
+            80,
+            38,
+            271,
+            146
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 124.5,
+          "top": 40,
+          "searchRect": [
+            36,
+            40,
+            250,
+            148
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 127.0,
+          "top": 38,
+          "searchRect": [
+            34,
+            38,
+            251,
+            146
+          ]
+        },
+        {
+          "span": 113,
+          "centerX": 135.5,
+          "top": 38,
+          "searchRect": [
+            36,
+            38,
+            280,
+            146
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 157.5,
+          "top": 29,
+          "searchRect": [
+            54,
+            29,
+            324,
+            137
+          ]
+        },
+        {
+          "span": 112,
+          "centerX": 125.0,
+          "top": 28,
+          "searchRect": [
+            24,
+            28,
+            231,
+            136
+          ]
+        },
+        {
+          "span": 112,
+          "centerX": 130.0,
+          "top": 29,
+          "searchRect": [
+            33,
+            29,
+            210,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 139.5,
+          "top": 29,
+          "searchRect": [
+            43,
+            29,
+            213,
+            137
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 160.0,
+          "top": 29,
+          "searchRect": [
+            68,
+            29,
+            249,
+            137
+          ]
+        },
+        {
+          "span": 111,
+          "centerX": 125.5,
+          "top": 28,
+          "searchRect": [
+            33,
+            28,
+            279,
+            136
+          ]
+        },
+        {
+          "span": 107,
+          "centerX": 127.5,
+          "top": 30,
+          "searchRect": [
+            36,
+            30,
+            268,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 138.5,
+          "top": 29,
+          "searchRect": [
+            51,
+            29,
+            264,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 159.5,
+          "top": 29,
+          "searchRect": [
+            73,
+            29,
+            282,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 124.5,
+          "top": 29,
+          "searchRect": [
+            47,
+            29,
+            241,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 128.5,
+          "top": 29,
+          "searchRect": [
+            49,
+            29,
+            244,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 138.5,
+          "top": 29,
+          "searchRect": [
+            62,
+            29,
+            250,
+            137
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 161.0,
+          "bottom": 291,
+          "componentSizes": [
+            597,
+            510
+          ],
+          "cutoffY": 231.5
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 291,
+          "componentSizes": [
+            532,
+            509
+          ],
+          "cutoffY": 232.0
+        },
+        {
+          "centerX": 128.5,
+          "bottom": 290,
+          "componentSizes": [
+            591,
+            528
+          ],
+          "cutoffY": 231.5
+        },
+        {
+          "centerX": 138.5,
+          "bottom": 290,
+          "componentSizes": [
+            565,
+            502
+          ],
+          "cutoffY": 231.5
+        },
+        {
+          "centerX": 161.5,
+          "bottom": 280,
+          "componentSizes": [
+            626,
+            525
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 280,
+          "componentSizes": [
+            532,
+            531
+          ],
+          "cutoffY": 221.5
+        },
+        {
+          "centerX": 130.0,
+          "bottom": 280,
+          "componentSizes": [
+            571,
+            537
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 139.0,
+          "bottom": 279,
+          "componentSizes": [
+            520,
+            515
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 161.5,
+          "bottom": 279,
+          "componentSizes": [
+            573,
+            546
+          ],
+          "cutoffY": 221.0
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 279,
+          "componentSizes": [
+            523,
+            511
+          ],
+          "cutoffY": 220.75
+        },
+        {
+          "centerX": 129.5,
+          "bottom": 279,
+          "componentSizes": [
+            551,
+            525
+          ],
+          "cutoffY": 221.25
+        },
+        {
+          "centerX": 139.0,
+          "bottom": 279,
+          "componentSizes": [
+            533,
+            529
+          ],
+          "cutoffY": 221.0
+        },
+        {
+          "centerX": 161.0,
+          "bottom": 281,
+          "componentSizes": [
+            535,
+            521
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 281,
+          "componentSizes": [
+            514,
+            474
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 129.0,
+          "bottom": 281,
+          "componentSizes": [
+            544,
+            539
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 138.5,
+          "bottom": 281,
+          "componentSizes": [
+            535,
+            483
+          ],
+          "cutoffY": 221.75
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          160.8004518072289,
+          295
+        ],
+        [
+          125.91750192752505,
+          293
+        ],
+        [
+          128.64635063957863,
+          296
+        ],
+        [
+          137.9648275862069,
+          292
+        ],
+        [
+          162.16157205240174,
+          286
+        ],
+        [
+          126.0971250971251,
+          281
+        ],
+        [
+          130.255530129672,
+          282
+        ],
+        [
+          138.96632732967893,
+          282
+        ],
+        [
+          160.4248120300752,
+          283
+        ],
+        [
+          126.4699074074074,
+          282
+        ],
+        [
+          127.7721324095458,
+          281
+        ],
+        [
+          138.06698564593302,
+          281
+        ],
+        [
+          160.8800298062593,
+          282
+        ],
+        [
+          123.93660855784469,
+          286
+        ],
+        [
+          127.9962742175857,
+          283
+        ],
+        [
+          137.52391975308643,
+          286
+        ]
+      ],
+      "contactSourceFrames": [],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_e",
+      "source": "Sheets/class_minh_kiem_basic_attack_e_v1_20261114c.png",
+      "sourceSha256": "c6ca7226ae1074c492e0705749fe9e84c5edafebaea487529b79463e58d57420",
+      "bodyReferenceHeight": 270.0,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          133.0,
+          289
+        ],
+        [
+          123.5,
+          288
+        ],
+        [
+          81.0,
+          291
+        ],
+        [
+          135.0,
+          294
+        ],
+        [
+          138.5,
+          293
+        ],
+        [
+          131.0,
+          293
+        ],
+        [
+          97.5,
+          293
+        ],
+        [
+          145.5,
+          293
+        ],
+        [
+          130.0,
+          291
+        ],
+        [
+          126.5,
+          292
+        ],
+        [
+          99.0,
+          287
+        ],
+        [
+          138.0,
+          292
+        ],
+        [
+          130.5,
+          292
+        ],
+        [
+          131.0,
+          296
+        ],
+        [
+          104.0,
+          299
+        ],
+        [
+          148.5,
+          295
+        ]
+      ],
+      "method": "BOTH_WARM_BOOT_SILHOUETTES",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_e",
+        "sourceSha256": "64cc2cdb0fe7e6f80b5158078229c4e3971307fbcf0c5c63a0e4f82f9ac21e78",
+        "referenceHeight": 270,
+        "head": {
+          "span": 120,
+          "centerX": 160.0,
+          "top": 20,
+          "searchRect": [
+            100,
+            20,
+            220,
+            133
+          ]
+        },
+        "boots": {
+          "centerX": 178.0,
+          "bottom": 287,
+          "componentSizes": [
+            447,
+            114
+          ],
+          "cutoffY": 222.5
+        },
+        "headHorizontalOffset": -3.0,
+        "bootHorizontalOffset": -21.0
+      },
+      "headLandmarks": [
+        {
+          "span": 120,
+          "centerX": 142.0,
+          "top": 44,
+          "searchRect": [
+            82,
+            44,
+            220,
+            151
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 144.0,
+          "top": 55,
+          "searchRect": [
+            67,
+            55,
+            222,
+            157
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 118.0,
+          "top": 58,
+          "searchRect": [
+            26,
+            58,
+            199,
+            159
+          ]
+        },
+        {
+          "span": 122,
+          "centerX": 177.0,
+          "top": 58,
+          "searchRect": [
+            16,
+            58,
+            255,
+            159
+          ]
+        },
+        {
+          "span": 122,
+          "centerX": 168.0,
+          "top": 53,
+          "searchRect": [
+            11,
+            53,
+            247,
+            155
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 159.0,
+          "top": 56,
+          "searchRect": [
+            60,
+            56,
+            237,
+            157
+          ]
+        },
+        {
+          "span": 121,
+          "centerX": 125.5,
+          "top": 52,
+          "searchRect": [
+            49,
+            52,
+            209,
+            155
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 169.0,
+          "top": 54,
+          "searchRect": [
+            98,
+            54,
+            253,
+            156
+          ]
+        },
+        {
+          "span": 123,
+          "centerX": 149.5,
+          "top": 48,
+          "searchRect": [
+            88,
+            48,
+            303,
+            152
+          ]
+        },
+        {
+          "span": 124,
+          "centerX": 150.0,
+          "top": 54,
+          "searchRect": [
+            78,
+            54,
+            312,
+            155
+          ]
+        },
+        {
+          "span": 124,
+          "centerX": 120.0,
+          "top": 53,
+          "searchRect": [
+            58,
+            53,
+            237,
+            155
+          ]
+        },
+        {
+          "span": 124,
+          "centerX": 166.0,
+          "top": 56,
+          "searchRect": [
+            96,
+            56,
+            243,
+            157
+          ]
+        },
+        {
+          "span": 125,
+          "centerX": 149.5,
+          "top": 54,
+          "searchRect": [
+            81,
+            54,
+            220,
+            157
+          ]
+        },
+        {
+          "span": 124,
+          "centerX": 147.0,
+          "top": 55,
+          "searchRect": [
+            85,
+            55,
+            213,
+            158
+          ]
+        },
+        {
+          "span": 121,
+          "centerX": 118.5,
+          "top": 54,
+          "searchRect": [
+            58,
+            54,
+            185,
+            157
+          ]
+        },
+        {
+          "span": 122,
+          "centerX": 161.0,
+          "top": 54,
+          "searchRect": [
+            100,
+            54,
+            225,
+            157
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 154.0,
+          "bottom": 289,
+          "componentSizes": [
+            472,
+            110
+          ],
+          "cutoffY": 234.5
+        },
+        {
+          "centerX": 144.5,
+          "bottom": 288,
+          "componentSizes": [
+            418,
+            347
+          ],
+          "cutoffY": 237.25
+        },
+        {
+          "centerX": 102.0,
+          "bottom": 291,
+          "componentSizes": [
+            579,
+            329
+          ],
+          "cutoffY": 238.0
+        },
+        {
+          "centerX": 156.0,
+          "bottom": 294,
+          "componentSizes": [
+            498,
+            395
+          ],
+          "cutoffY": 238.0
+        },
+        {
+          "centerX": 159.5,
+          "bottom": 293,
+          "componentSizes": [
+            488,
+            413
+          ],
+          "cutoffY": 236.0
+        },
+        {
+          "centerX": 152.0,
+          "bottom": 293,
+          "componentSizes": [
+            475,
+            250
+          ],
+          "cutoffY": 236.75
+        },
+        {
+          "centerX": 118.5,
+          "bottom": 293,
+          "componentSizes": [
+            405,
+            362
+          ],
+          "cutoffY": 235.75
+        },
+        {
+          "centerX": 166.5,
+          "bottom": 293,
+          "componentSizes": [
+            547,
+            451
+          ],
+          "cutoffY": 236.25
+        },
+        {
+          "centerX": 151.0,
+          "bottom": 291,
+          "componentSizes": [
+            542,
+            311
+          ],
+          "cutoffY": 233.25
+        },
+        {
+          "centerX": 147.5,
+          "bottom": 292,
+          "componentSizes": [
+            528,
+            402
+          ],
+          "cutoffY": 234.75
+        },
+        {
+          "centerX": 120.0,
+          "bottom": 287,
+          "componentSizes": [
+            440,
+            313
+          ],
+          "cutoffY": 235.25
+        },
+        {
+          "centerX": 159.0,
+          "bottom": 292,
+          "componentSizes": [
+            583,
+            487
+          ],
+          "cutoffY": 236.0
+        },
+        {
+          "centerX": 151.5,
+          "bottom": 292,
+          "componentSizes": [
+            505,
+            384
+          ],
+          "cutoffY": 238.5
+        },
+        {
+          "centerX": 152.0,
+          "bottom": 296,
+          "componentSizes": [
+            529,
+            274
+          ],
+          "cutoffY": 238.75
+        },
+        {
+          "centerX": 125.0,
+          "bottom": 299,
+          "componentSizes": [
+            481,
+            128
+          ],
+          "cutoffY": 238.5
+        },
+        {
+          "centerX": 169.5,
+          "bottom": 295,
+          "componentSizes": [
+            425,
+            137
+          ],
+          "cutoffY": 238.5
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          145.4248120300752,
+          299
+        ],
+        [
+          178.12907608695653,
+          294
+        ],
+        [
+          103.94532739987285,
+          299
+        ],
+        [
+          158.33977066988533,
+          299
+        ],
+        [
+          126.30293501048219,
+          297
+        ],
+        [
+          152.40538885486833,
+          297
+        ],
+        [
+          115.99633475870495,
+          297
+        ],
+        [
+          164.1560975609756,
+          297
+        ],
+        [
+          151.25870646766168,
+          296
+        ],
+        [
+          148.8962962962963,
+          296
+        ],
+        [
+          117.91832797427652,
+          297
+        ],
+        [
+          160.60236465463598,
+          297
+        ],
+        [
+          147.66624843161856,
+          300
+        ],
+        [
+          119.67957746478874,
+          300
+        ],
+        [
+          98.03169014084507,
+          300
+        ],
+        [
+          160.3673076923077,
+          300
+        ]
+      ],
+      "contactSourceFrames": [],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_se",
+      "source": "Sheets/class_minh_kiem_basic_attack_se_v1_20261114c.png",
+      "sourceSha256": "996fe9f79204d7ec9ee26a5b9c1dd61340515791e9ef53afd2bc30f2d674991e",
+      "bodyReferenceHeight": 252.69642857142858,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          179.14285714285714,
+          283
+        ],
+        [
+          140.14285714285714,
+          288
+        ],
+        [
+          120.64285714285714,
+          290
+        ],
+        [
+          157.64285714285714,
+          287
+        ],
+        [
+          149.64285714285714,
+          271
+        ],
+        [
+          150.14285714285714,
+          274
+        ],
+        [
+          123.64285714285714,
+          276
+        ],
+        [
+          161.64285714285714,
+          270
+        ],
+        [
+          149.14285714285714,
+          278
+        ],
+        [
+          146.64285714285714,
+          278
+        ],
+        [
+          97.14285714285714,
+          277
+        ],
+        [
+          165.14285714285714,
+          276
+        ],
+        [
+          150.14285714285714,
+          280
+        ],
+        [
+          143.64285714285714,
+          283
+        ],
+        [
+          125.64285714285714,
+          284
+        ],
+        [
+          160.64285714285714,
+          284
+        ]
+      ],
+      "method": "BOTH_WARM_BOOT_SILHOUETTES",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_se",
+        "sourceSha256": "915e3d51e261626eefe224bb681e6e0b713898e747628c8cb46000d6a931d8a9",
+        "referenceHeight": 267,
+        "head": {
+          "span": 112,
+          "centerX": 155.0,
+          "top": 23,
+          "searchRect": [
+            94,
+            23,
+            213,
+            136
+          ]
+        },
+        "boots": {
+          "centerX": 165.5,
+          "bottom": 288,
+          "componentSizes": [
+            440,
+            359
+          ],
+          "cutoffY": 225.5
+        },
+        "headHorizontalOffset": -1.5,
+        "bootHorizontalOffset": -12.0
+      },
+      "headLandmarks": [
+        {
+          "span": 106,
+          "centerX": 156.0,
+          "top": 35,
+          "searchRect": [
+            84,
+            35,
+            226,
+            145
+          ]
+        },
+        {
+          "span": 112,
+          "centerX": 157.0,
+          "top": 48,
+          "searchRect": [
+            70,
+            48,
+            242,
+            152
+          ]
+        },
+        {
+          "span": 111,
+          "centerX": 138.5,
+          "top": 48,
+          "searchRect": [
+            52,
+            48,
+            226,
+            151
+          ]
+        },
+        {
+          "span": 111,
+          "centerX": 180.5,
+          "top": 48,
+          "searchRect": [
+            36,
+            48,
+            264,
+            151
+          ]
+        },
+        {
+          "span": 112,
+          "centerX": 171.0,
+          "top": 34,
+          "searchRect": [
+            18,
+            34,
+            254,
+            136
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 165.5,
+          "top": 33,
+          "searchRect": [
+            24,
+            33,
+            252,
+            135
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 144.0,
+          "top": 33,
+          "searchRect": [
+            27,
+            33,
+            222,
+            135
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 176.5,
+          "top": 31,
+          "searchRect": [
+            106,
+            31,
+            260,
+            133
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 163.5,
+          "top": 36,
+          "searchRect": [
+            97,
+            36,
+            294,
+            139
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 158.5,
+          "top": 33,
+          "searchRect": [
+            98,
+            33,
+            309,
+            138
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 139.5,
+          "top": 37,
+          "searchRect": [
+            80,
+            37,
+            243,
+            140
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 172.5,
+          "top": 37,
+          "searchRect": [
+            114,
+            37,
+            260,
+            140
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 163.5,
+          "top": 41,
+          "searchRect": [
+            83,
+            41,
+            251,
+            143
+          ]
+        },
+        {
+          "span": 113,
+          "centerX": 155.5,
+          "top": 38,
+          "searchRect": [
+            81,
+            38,
+            241,
+            143
+          ]
+        },
+        {
+          "span": 111,
+          "centerX": 132.5,
+          "top": 36,
+          "searchRect": [
+            60,
+            36,
+            216,
+            141
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 166.5,
+          "top": 29,
+          "searchRect": [
+            99,
+            29,
+            241,
+            138
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 190.5,
+          "bottom": 283,
+          "componentSizes": [
+            318,
+            220
+          ],
+          "cutoffY": 232.25
+        },
+        {
+          "centerX": 151.5,
+          "bottom": 288,
+          "componentSizes": [
+            528,
+            359
+          ],
+          "cutoffY": 234.0
+        },
+        {
+          "centerX": 132.0,
+          "bottom": 290,
+          "componentSizes": [
+            471,
+            310
+          ],
+          "cutoffY": 231.75
+        },
+        {
+          "centerX": 169.0,
+          "bottom": 287,
+          "componentSizes": [
+            485,
+            365
+          ],
+          "cutoffY": 231.75
+        },
+        {
+          "centerX": 161.0,
+          "bottom": 271,
+          "componentSizes": [
+            485,
+            318
+          ],
+          "cutoffY": 215.5
+        },
+        {
+          "centerX": 161.5,
+          "bottom": 274,
+          "componentSizes": [
+            769,
+            327
+          ],
+          "cutoffY": 214.5
+        },
+        {
+          "centerX": 135.0,
+          "bottom": 276,
+          "componentSizes": [
+            463,
+            269
+          ],
+          "cutoffY": 215.25
+        },
+        {
+          "centerX": 173.0,
+          "bottom": 270,
+          "componentSizes": [
+            418,
+            355
+          ],
+          "cutoffY": 214.0
+        },
+        {
+          "centerX": 160.5,
+          "bottom": 278,
+          "componentSizes": [
+            559,
+            276
+          ],
+          "cutoffY": 220.5
+        },
+        {
+          "centerX": 158.0,
+          "bottom": 278,
+          "componentSizes": [
+            456,
+            322
+          ],
+          "cutoffY": 219.75
+        },
+        {
+          "centerX": 108.5,
+          "bottom": 277,
+          "componentSizes": [
+            403,
+            238
+          ],
+          "cutoffY": 220.75
+        },
+        {
+          "centerX": 176.5,
+          "bottom": 276,
+          "componentSizes": [
+            416,
+            328
+          ],
+          "cutoffY": 220.75
+        },
+        {
+          "centerX": 161.5,
+          "bottom": 280,
+          "componentSizes": [
+            424,
+            388
+          ],
+          "cutoffY": 224.0
+        },
+        {
+          "centerX": 155.0,
+          "bottom": 283,
+          "componentSizes": [
+            313,
+            183
+          ],
+          "cutoffY": 224.75
+        },
+        {
+          "centerX": 137.0,
+          "bottom": 284,
+          "componentSizes": [
+            461,
+            391
+          ],
+          "cutoffY": 224.25
+        },
+        {
+          "centerX": 172.0,
+          "bottom": 284,
+          "componentSizes": [
+            613,
+            360
+          ],
+          "cutoffY": 224.0
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          186.52857142857144,
+          290
+        ],
+        [
+          187.03154574132492,
+          286
+        ],
+        [
+          98.27356020942409,
+          293
+        ],
+        [
+          163.79307858687815,
+          293
+        ],
+        [
+          154.27516292541637,
+          276
+        ],
+        [
+          156.54374548083877,
+          276
+        ],
+        [
+          128.976290097629,
+          276
+        ],
+        [
+          168.83834586466165,
+          275
+        ],
+        [
+          150.64389410760035,
+          282
+        ],
+        [
+          155.55668703326543,
+          282
+        ],
+        [
+          138.3967720242098,
+          282
+        ],
+        [
+          138.08649289099526,
+          282
+        ],
+        [
+          198.6787204450626,
+          280
+        ],
+        [
+          188.63110539845758,
+          280
+        ],
+        [
+          134.49460580912864,
+          288
+        ],
+        [
+          197.65064935064936,
+          284
+        ]
+      ],
+      "contactSourceFrames": [],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_ne",
+      "source": "Sheets/class_minh_kiem_basic_attack_ne_v1_20261114c.png",
+      "sourceSha256": "e23f2a767a16514ff9e977c7d9f1f188097b52ab089de3e5dbdbb5df18b4855b",
+      "bodyReferenceHeight": 252.97297297297297,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          149.8918918918919,
+          288
+        ],
+        [
+          136.3918918918919,
+          282
+        ],
+        [
+          129.3918918918919,
+          287
+        ],
+        [
+          151.8918918918919,
+          289
+        ],
+        [
+          156.8918918918919,
+          270
+        ],
+        [
+          125.39189189189189,
+          272
+        ],
+        [
+          145.3918918918919,
+          268
+        ],
+        [
+          154.8918918918919,
+          271
+        ],
+        [
+          161.3918918918919,
+          266
+        ],
+        [
+          136.3918918918919,
+          267
+        ],
+        [
+          123.89189189189189,
+          270
+        ],
+        [
+          160.3918918918919,
+          271
+        ],
+        [
+          157.8918918918919,
+          268
+        ],
+        [
+          129.3918918918919,
+          274
+        ],
+        [
+          137.3918918918919,
+          276
+        ],
+        [
+          149.3918918918919,
+          271
+        ]
+      ],
+      "method": "BOTH_WARM_BOOT_SILHOUETTES",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_ne",
+        "sourceSha256": "0cb7b70288f650ba98ce966224f85ba3cd71e9808780d9b46a65ba74573b63ce",
+        "referenceHeight": 260,
+        "head": {
+          "span": 111,
+          "centerX": 162.5,
+          "top": 29,
+          "searchRect": [
+            97,
+            29,
+            224,
+            139
+          ]
+        },
+        "boots": {
+          "centerX": 156.5,
+          "bottom": 292,
+          "componentSizes": [
+            716,
+            397
+          ],
+          "cutoffY": 226.25
+        },
+        "headHorizontalOffset": -2.0,
+        "bootHorizontalOffset": 4.0
+      },
+      "headLandmarks": [
+        {
+          "span": 108,
+          "centerX": 163.0,
+          "top": 33,
+          "searchRect": [
+            85,
+            33,
+            233,
+            141
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 143.5,
+          "top": 41,
+          "searchRect": [
+            66,
+            41,
+            198,
+            146
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 144.0,
+          "top": 43,
+          "searchRect": [
+            56,
+            43,
+            198,
+            147
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 164.5,
+          "top": 44,
+          "searchRect": [
+            50,
+            44,
+            219,
+            148
+          ]
+        },
+        {
+          "span": 107,
+          "centerX": 165.5,
+          "top": 33,
+          "searchRect": [
+            32,
+            33,
+            223,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 145.5,
+          "top": 34,
+          "searchRect": [
+            45,
+            34,
+            203,
+            137
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 144.0,
+          "top": 35,
+          "searchRect": [
+            58,
+            35,
+            205,
+            137
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 165.0,
+          "top": 36,
+          "searchRect": [
+            82,
+            36,
+            247,
+            138
+          ]
+        },
+        {
+          "span": 176,
+          "centerX": 201.0,
+          "top": 35,
+          "searchRect": [
+            87,
+            35,
+            289,
+            137
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 145.0,
+          "top": 35,
+          "searchRect": [
+            65,
+            35,
+            259,
+            137
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 144.0,
+          "top": 37,
+          "searchRect": [
+            67,
+            37,
+            244,
+            138
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 164.5,
+          "top": 38,
+          "searchRect": [
+            86,
+            38,
+            229,
+            139
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 165.5,
+          "top": 38,
+          "searchRect": [
+            92,
+            38,
+            226,
+            139
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 145.0,
+          "top": 38,
+          "searchRect": [
+            75,
+            38,
+            201,
+            139
+          ]
+        },
+        {
+          "span": 108,
+          "centerX": 143.0,
+          "top": 38,
+          "searchRect": [
+            72,
+            38,
+            204,
+            139
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 163.0,
+          "top": 37,
+          "searchRect": [
+            95,
+            37,
+            229,
+            139
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 146.0,
+          "bottom": 288,
+          "componentSizes": [
+            446,
+            256
+          ],
+          "cutoffY": 226.5
+        },
+        {
+          "centerX": 132.5,
+          "bottom": 282,
+          "componentSizes": [
+            286,
+            170
+          ],
+          "cutoffY": 228.5
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 287,
+          "componentSizes": [
+            317,
+            151
+          ],
+          "cutoffY": 228.25
+        },
+        {
+          "centerX": 148.0,
+          "bottom": 289,
+          "componentSizes": [
+            221,
+            186
+          ],
+          "cutoffY": 229.25
+        },
+        {
+          "centerX": 153.0,
+          "bottom": 270,
+          "componentSizes": [
+            262,
+            222
+          ],
+          "cutoffY": 218.25
+        },
+        {
+          "centerX": 121.5,
+          "bottom": 272,
+          "componentSizes": [
+            403,
+            112
+          ],
+          "cutoffY": 218.5
+        },
+        {
+          "centerX": 141.5,
+          "bottom": 268,
+          "componentSizes": [
+            278,
+            210
+          ],
+          "cutoffY": 218.0
+        },
+        {
+          "centerX": 151.0,
+          "bottom": 271,
+          "componentSizes": [
+            451,
+            117
+          ],
+          "cutoffY": 219.0
+        },
+        {
+          "centerX": 157.5,
+          "bottom": 266,
+          "componentSizes": [
+            316,
+            266
+          ],
+          "cutoffY": 217.25
+        },
+        {
+          "centerX": 132.5,
+          "bottom": 267,
+          "componentSizes": [
+            376,
+            259
+          ],
+          "cutoffY": 217.25
+        },
+        {
+          "centerX": 120.0,
+          "bottom": 270,
+          "componentSizes": [
+            409,
+            143
+          ],
+          "cutoffY": 217.75
+        },
+        {
+          "centerX": 156.5,
+          "bottom": 271,
+          "componentSizes": [
+            192,
+            129
+          ],
+          "cutoffY": 218.0
+        },
+        {
+          "centerX": 154.0,
+          "bottom": 268,
+          "componentSizes": [
+            258,
+            232
+          ],
+          "cutoffY": 218.0
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 274,
+          "componentSizes": [
+            361,
+            189
+          ],
+          "cutoffY": 218.75
+        },
+        {
+          "centerX": 133.5,
+          "bottom": 276,
+          "componentSizes": [
+            432,
+            414
+          ],
+          "cutoffY": 218.75
+        },
+        {
+          "centerX": 145.5,
+          "bottom": 271,
+          "componentSizes": [
+            349,
+            182
+          ],
+          "cutoffY": 219.25
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          150.41262848751836,
+          292
+        ],
+        [
+          130.12588401697312,
+          292
+        ],
+        [
+          130.14014084507042,
+          291
+        ],
+        [
+          153.61360544217686,
+          292
+        ],
+        [
+          154.22101694915256,
+          281
+        ],
+        [
+          133.51002227171492,
+          281
+        ],
+        [
+          130.6330827067669,
+          280
+        ],
+        [
+          153.80959198282034,
+          281
+        ],
+        [
+          155.0142372881356,
+          279
+        ],
+        [
+          97.57954545454545,
+          276
+        ],
+        [
+          132.43278463648835,
+          279
+        ],
+        [
+          116.3611859838275,
+          276
+        ],
+        [
+          154.82080924855492,
+          279
+        ],
+        [
+          135.62653208363375,
+          280
+        ],
+        [
+          132.5383512544803,
+          280
+        ],
+        [
+          152.9457422758101,
+          280
+        ]
+      ],
+      "contactSourceFrames": [],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_walk_e",
+      "source": "Sheets/class_minh_kiem_walk_e_v1_20261114c.png",
+      "sourceSha256": "2e531ec94f092c440a41901abf1732c25766219dd334af7818c8be61d9e3d33e",
+      "bodyReferenceHeight": 229.5,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          154.45,
+          284.0
+        ],
+        [
+          147.95,
+          284.625
+        ],
+        [
+          149.45,
+          286.25
+        ],
+        [
+          155.95,
+          285.875
+        ],
+        [
+          154.45,
+          274.5
+        ],
+        [
+          147.45,
+          275.125
+        ],
+        [
+          149.45,
+          275.75
+        ],
+        [
+          155.45,
+          276.375
+        ],
+        [
+          154.45,
+          277.0
+        ],
+        [
+          147.95,
+          276.375
+        ],
+        [
+          149.45,
+          275.75
+        ],
+        [
+          155.95,
+          275.125
+        ],
+        [
+          154.45,
+          273.5
+        ],
+        [
+          147.95,
+          272.875
+        ],
+        [
+          149.45,
+          272.25
+        ],
+        [
+          155.95,
+          271.625
+        ]
+      ],
+      "method": "HEAD_PACKING_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_e",
+        "sourceSha256": "64cc2cdb0fe7e6f80b5158078229c4e3971307fbcf0c5c63a0e4f82f9ac21e78",
+        "referenceHeight": 270,
+        "head": {
+          "span": 120,
+          "centerX": 160.0,
+          "top": 20,
+          "searchRect": [
+            100,
+            20,
+            220,
+            133
+          ]
+        },
+        "boots": {
+          "centerX": 178.0,
+          "bottom": 287,
+          "componentSizes": [
+            447,
+            114
+          ],
+          "cutoffY": 222.5
+        },
+        "headHorizontalOffset": -3.0,
+        "bootHorizontalOffset": -21.0
+      },
+      "headLandmarks": [
+        {
+          "span": 102,
+          "centerX": 157.0,
+          "top": 53,
+          "searchRect": [
+            94,
+            53,
+            229,
+            150
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 150.5,
+          "top": 53,
+          "searchRect": [
+            92,
+            53,
+            201,
+            150
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 152.0,
+          "top": 54,
+          "searchRect": [
+            90,
+            54,
+            209,
+            151
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 158.5,
+          "top": 53,
+          "searchRect": [
+            106,
+            53,
+            213,
+            150
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 157.0,
+          "top": 41,
+          "searchRect": [
+            105,
+            41,
+            215,
+            138
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 150.0,
+          "top": 41,
+          "searchRect": [
+            99,
+            41,
+            220,
+            138
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 152.0,
+          "top": 41,
+          "searchRect": [
+            101,
+            41,
+            205,
+            138
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 158.0,
+          "top": 41,
+          "searchRect": [
+            107,
+            41,
+            210,
+            138
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 157.0,
+          "top": 41,
+          "searchRect": [
+            97,
+            41,
+            218,
+            140
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 150.5,
+          "top": 41,
+          "searchRect": [
+            100,
+            41,
+            201,
+            139
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 152.0,
+          "top": 41,
+          "searchRect": [
+            100,
+            41,
+            203,
+            139
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 158.5,
+          "top": 41,
+          "searchRect": [
+            101,
+            41,
+            209,
+            138
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 157.0,
+          "top": 40,
+          "searchRect": [
+            98,
+            40,
+            208,
+            137
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 150.5,
+          "top": 40,
+          "searchRect": [
+            94,
+            40,
+            222,
+            136
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 152.0,
+          "top": 40,
+          "searchRect": [
+            98,
+            40,
+            203,
+            137
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 158.5,
+          "top": 40,
+          "searchRect": [
+            98,
+            40,
+            232,
+            137
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 155.0,
+          "bottom": 281,
+          "componentSizes": [
+            534,
+            218
+          ],
+          "cutoffY": 226.25
+        },
+        {
+          "centerX": 141.5,
+          "bottom": 282,
+          "componentSizes": [
+            387,
+            285
+          ],
+          "cutoffY": 226.25
+        },
+        {
+          "centerX": 152.5,
+          "bottom": 283,
+          "componentSizes": [
+            547,
+            124
+          ],
+          "cutoffY": 227.25
+        },
+        {
+          "centerX": 155.0,
+          "bottom": 284,
+          "componentSizes": [
+            524,
+            174
+          ],
+          "cutoffY": 227.0
+        },
+        {
+          "centerX": 156.0,
+          "bottom": 271,
+          "componentSizes": [
+            445,
+            334
+          ],
+          "cutoffY": 214.25
+        },
+        {
+          "centerX": 155.5,
+          "bottom": 271,
+          "componentSizes": [
+            517,
+            392
+          ],
+          "cutoffY": 214.25
+        },
+        {
+          "centerX": 153.0,
+          "bottom": 270,
+          "componentSizes": [
+            367,
+            213
+          ],
+          "cutoffY": 214.25
+        },
+        {
+          "centerX": 158.0,
+          "bottom": 271,
+          "componentSizes": [
+            277,
+            238
+          ],
+          "cutoffY": 214.25
+        },
+        {
+          "centerX": 147.0,
+          "bottom": 274,
+          "componentSizes": [
+            619,
+            139
+          ],
+          "cutoffY": 217.25
+        },
+        {
+          "centerX": 135.5,
+          "bottom": 275,
+          "componentSizes": [
+            594,
+            237
+          ],
+          "cutoffY": 216.5
+        },
+        {
+          "centerX": 149.5,
+          "bottom": 272,
+          "componentSizes": [
+            548,
+            103
+          ],
+          "cutoffY": 215.75
+        },
+        {
+          "centerX": 157.5,
+          "bottom": 270,
+          "componentSizes": [
+            373,
+            174
+          ],
+          "cutoffY": 215.0
+        },
+        {
+          "centerX": 123.0,
+          "bottom": 269,
+          "componentSizes": [
+            534
+          ],
+          "cutoffY": 212.5
+        },
+        {
+          "centerX": 150.0,
+          "bottom": 268,
+          "componentSizes": [
+            450,
+            332
+          ],
+          "cutoffY": 211.75
+        },
+        {
+          "centerX": 153.5,
+          "bottom": 269,
+          "componentSizes": [
+            431,
+            195
+          ],
+          "cutoffY": 213.25
+        },
+        {
+          "centerX": 168.5,
+          "bottom": 270,
+          "componentSizes": [
+            458,
+            359
+          ],
+          "cutoffY": 213.25
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          149.77564637197665,
+          284
+        ],
+        [
+          121.31372549019608,
+          283
+        ],
+        [
+          142.6710369487485,
+          286
+        ],
+        [
+          143.0611510791367,
+          286
+        ],
+        [
+          137.656,
+          273
+        ],
+        [
+          150.3601134215501,
+          273
+        ],
+        [
+          141.1501416430595,
+          265
+        ],
+        [
+          156.61631944444446,
+          273
+        ],
+        [
+          124.59639389736478,
+          277
+        ],
+        [
+          133.44302643573383,
+          276
+        ],
+        [
+          132.24580152671757,
+          275
+        ],
+        [
+          141.82864792503347,
+          274
+        ],
+        [
+          136.67178924259056,
+          271
+        ],
+        [
+          149.9235668789809,
+          270
+        ],
+        [
+          139.1484375,
+          269
+        ],
+        [
+          159.28846153846155,
+          271
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_walk_ne",
+      "source": "Sheets/class_minh_kiem_walk_ne_v1_20261114c.png",
+      "sourceSha256": "2486e8105531f8a98fc027e7b46758e88176a02e47ab8b5b331d4f7687f75c82",
+      "bodyReferenceHeight": 257.65765765765764,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          165.018018018018,
+          292.0
+        ],
+        [
+          147.018018018018,
+          291.875
+        ],
+        [
+          146.018018018018,
+          290.75
+        ],
+        [
+          144.518018018018,
+          289.625
+        ],
+        [
+          165.518018018018,
+          281.5
+        ],
+        [
+          147.518018018018,
+          280.375
+        ],
+        [
+          146.518018018018,
+          279.25
+        ],
+        [
+          144.518018018018,
+          278.125
+        ],
+        [
+          165.018018018018,
+          281.0
+        ],
+        [
+          147.518018018018,
+          282.125
+        ],
+        [
+          146.018018018018,
+          283.25
+        ],
+        [
+          144.518018018018,
+          284.375
+        ],
+        [
+          165.518018018018,
+          284.5
+        ],
+        [
+          147.518018018018,
+          285.625
+        ],
+        [
+          146.518018018018,
+          286.75
+        ],
+        [
+          144.518018018018,
+          287.875
+        ]
+      ],
+      "method": "HEAD_PACKING_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_ne",
+        "sourceSha256": "0cb7b70288f650ba98ce966224f85ba3cd71e9808780d9b46a65ba74573b63ce",
+        "referenceHeight": 260,
+        "head": {
+          "span": 111,
+          "centerX": 162.5,
+          "top": 29,
+          "searchRect": [
+            97,
+            29,
+            224,
+            139
+          ]
+        },
+        "boots": {
+          "centerX": 156.5,
+          "bottom": 292,
+          "componentSizes": [
+            716,
+            397
+          ],
+          "cutoffY": 226.25
+        },
+        "headHorizontalOffset": -2.0,
+        "bootHorizontalOffset": 4.0
+      },
+      "headLandmarks": [
+        {
+          "span": 110,
+          "centerX": 167.0,
+          "top": 37,
+          "searchRect": [
+            106,
+            37,
+            249,
+            144
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 149.0,
+          "top": 38,
+          "searchRect": [
+            88,
+            38,
+            227,
+            144
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 148.0,
+          "top": 38,
+          "searchRect": [
+            87,
+            38,
+            228,
+            140
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 146.5,
+          "top": 38,
+          "searchRect": [
+            80,
+            38,
+            226,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 167.5,
+          "top": 31,
+          "searchRect": [
+            102,
+            31,
+            249,
+            132
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 149.5,
+          "top": 31,
+          "searchRect": [
+            82,
+            31,
+            232,
+            133
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 148.5,
+          "top": 31,
+          "searchRect": [
+            83,
+            31,
+            231,
+            131
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 146.5,
+          "top": 31,
+          "searchRect": [
+            86,
+            31,
+            228,
+            131
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 167.0,
+          "top": 35,
+          "searchRect": [
+            103,
+            35,
+            249,
+            138
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 149.5,
+          "top": 35,
+          "searchRect": [
+            87,
+            35,
+            231,
+            138
+          ]
+        },
+        {
+          "span": 110,
+          "centerX": 148.0,
+          "top": 35,
+          "searchRect": [
+            88,
+            35,
+            235,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 146.5,
+          "top": 35,
+          "searchRect": [
+            82,
+            35,
+            229,
+            137
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 167.5,
+          "top": 34,
+          "searchRect": [
+            103,
+            34,
+            247,
+            134
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 149.5,
+          "top": 34,
+          "searchRect": [
+            84,
+            34,
+            232,
+            131
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 148.5,
+          "top": 34,
+          "searchRect": [
+            88,
+            34,
+            231,
+            135
+          ]
+        },
+        {
+          "span": 109,
+          "centerX": 146.5,
+          "top": 34,
+          "searchRect": [
+            85,
+            34,
+            229,
+            139
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 158.5,
+          "bottom": 287,
+          "componentSizes": [
+            410,
+            276
+          ],
+          "cutoffY": 227.5
+        },
+        {
+          "centerX": 146.5,
+          "bottom": 280,
+          "componentSizes": [
+            460,
+            282
+          ],
+          "cutoffY": 227.0
+        },
+        {
+          "centerX": 149.5,
+          "bottom": 268,
+          "componentSizes": [
+            436,
+            187
+          ],
+          "cutoffY": 221.0
+        },
+        {
+          "centerX": 134.5,
+          "bottom": 261,
+          "componentSizes": [
+            393
+          ],
+          "cutoffY": 214.25
+        },
+        {
+          "centerX": 157.5,
+          "bottom": 256,
+          "componentSizes": [
+            396
+          ],
+          "cutoffY": 211.0
+        },
+        {
+          "centerX": 120.5,
+          "bottom": 271,
+          "componentSizes": [
+            333
+          ],
+          "cutoffY": 214.0
+        },
+        {
+          "centerX": 151.0,
+          "bottom": 254,
+          "componentSizes": [
+            344,
+            302
+          ],
+          "cutoffY": 210.25
+        },
+        {
+          "centerX": 137.0,
+          "bottom": 257,
+          "componentSizes": [
+            480,
+            278
+          ],
+          "cutoffY": 208.75
+        },
+        {
+          "centerX": 166.5,
+          "bottom": 270,
+          "componentSizes": [
+            321,
+            153
+          ],
+          "cutoffY": 219.5
+        },
+        {
+          "centerX": 144.5,
+          "bottom": 277,
+          "componentSizes": [
+            518,
+            347
+          ],
+          "cutoffY": 218.75
+        },
+        {
+          "centerX": 144.5,
+          "bottom": 265,
+          "componentSizes": [
+            448,
+            417
+          ],
+          "cutoffY": 217.25
+        },
+        {
+          "centerX": 125.5,
+          "bottom": 270,
+          "componentSizes": [
+            459
+          ],
+          "cutoffY": 216.5
+        },
+        {
+          "centerX": 168.5,
+          "bottom": 263,
+          "componentSizes": [
+            342,
+            240
+          ],
+          "cutoffY": 211.75
+        },
+        {
+          "centerX": 137.5,
+          "bottom": 256,
+          "componentSizes": [
+            344
+          ],
+          "cutoffY": 206.5
+        },
+        {
+          "centerX": 149.0,
+          "bottom": 270,
+          "componentSizes": [
+            607,
+            299
+          ],
+          "cutoffY": 214.0
+        },
+        {
+          "centerX": 149.0,
+          "bottom": 278,
+          "componentSizes": [
+            337,
+            337
+          ],
+          "cutoffY": 220.75
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          133.6831091180867,
+          292
+        ],
+        [
+          125.56635802469135,
+          289
+        ],
+        [
+          135.9785407725322,
+          280
+        ],
+        [
+          141.4817415730337,
+          274
+        ],
+        [
+          160.29254302103251,
+          271
+        ],
+        [
+          122.95833333333333,
+          276
+        ],
+        [
+          134.6927374301676,
+          270
+        ],
+        [
+          143.92449799196788,
+          266
+        ],
+        [
+          129.73709677419356,
+          281
+        ],
+        [
+          126.5126050420168,
+          280
+        ],
+        [
+          128.14644970414201,
+          278
+        ],
+        [
+          124.44517184942717,
+          278
+        ],
+        [
+          158.670245398773,
+          271
+        ],
+        [
+          144.51383399209487,
+          265
+        ],
+        [
+          135.50116279069766,
+          273
+        ],
+        [
+          116.5896551724138,
+          283
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_walk_se",
+      "source": "Sheets/class_minh_kiem_walk_se_v1_20261114c.png",
+      "sourceSha256": "a390f99f292772a7b80caf5c99cce90cf5a9143befba9f7af52149794ef5bd8d",
+      "bodyReferenceHeight": 274.1517857142857,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          154.95982142857142,
+          296.0
+        ],
+        [
+          154.45982142857142,
+          295.125
+        ],
+        [
+          154.95982142857142,
+          295.25
+        ],
+        [
+          154.95982142857142,
+          294.375
+        ],
+        [
+          154.95982142857142,
+          285.5
+        ],
+        [
+          154.45982142857142,
+          284.625
+        ],
+        [
+          154.95982142857142,
+          283.75
+        ],
+        [
+          154.45982142857142,
+          282.875
+        ],
+        [
+          155.45982142857142,
+          283.0
+        ],
+        [
+          153.95982142857142,
+          283.875
+        ],
+        [
+          154.45982142857142,
+          283.75
+        ],
+        [
+          154.45982142857142,
+          285.625
+        ],
+        [
+          155.45982142857142,
+          285.5
+        ],
+        [
+          154.95982142857142,
+          286.375
+        ],
+        [
+          155.45982142857142,
+          287.25
+        ],
+        [
+          154.45982142857142,
+          288.125
+        ]
+      ],
+      "method": "HEAD_PACKING_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_se",
+        "sourceSha256": "915e3d51e261626eefe224bb681e6e0b713898e747628c8cb46000d6a931d8a9",
+        "referenceHeight": 267,
+        "head": {
+          "span": 112,
+          "centerX": 155.0,
+          "top": 23,
+          "searchRect": [
+            94,
+            23,
+            213,
+            136
+          ]
+        },
+        "boots": {
+          "centerX": 165.5,
+          "bottom": 288,
+          "componentSizes": [
+            440,
+            359
+          ],
+          "cutoffY": 225.5
+        },
+        "headHorizontalOffset": -1.5,
+        "bootHorizontalOffset": -12.0
+      },
+      "headLandmarks": [
+        {
+          "span": 115,
+          "centerX": 156.5,
+          "top": 33,
+          "searchRect": [
+            82,
+            33,
+            220,
+            144
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 33,
+          "searchRect": [
+            87,
+            33,
+            226,
+            144
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 156.5,
+          "top": 34,
+          "searchRect": [
+            89,
+            34,
+            231,
+            144
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 156.5,
+          "top": 34,
+          "searchRect": [
+            88,
+            34,
+            231,
+            144
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 156.5,
+          "top": 26,
+          "searchRect": [
+            87,
+            26,
+            233,
+            135
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 26,
+          "searchRect": [
+            87,
+            26,
+            230,
+            136
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 156.5,
+          "top": 26,
+          "searchRect": [
+            89,
+            26,
+            227,
+            136
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 26,
+          "searchRect": [
+            88,
+            26,
+            220,
+            136
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 157.0,
+          "top": 27,
+          "searchRect": [
+            87,
+            27,
+            221,
+            137
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 155.5,
+          "top": 27,
+          "searchRect": [
+            82,
+            27,
+            222,
+            137
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 26,
+          "searchRect": [
+            84,
+            26,
+            227,
+            135
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 27,
+          "searchRect": [
+            84,
+            27,
+            232,
+            136
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 157.0,
+          "top": 26,
+          "searchRect": [
+            82,
+            26,
+            233,
+            136
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 156.5,
+          "top": 26,
+          "searchRect": [
+            83,
+            26,
+            230,
+            136
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 157.0,
+          "top": 26,
+          "searchRect": [
+            88,
+            26,
+            219,
+            136
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 156.0,
+          "top": 26,
+          "searchRect": [
+            85,
+            26,
+            220,
+            136
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 176.0,
+          "bottom": 285,
+          "componentSizes": [
+            197
+          ],
+          "cutoffY": 231.0
+        },
+        {
+          "centerX": 162.0,
+          "bottom": 286,
+          "componentSizes": [
+            156,
+            56
+          ],
+          "cutoffY": 231.0
+        },
+        {
+          "centerX": 163.5,
+          "bottom": 289,
+          "componentSizes": [
+            263,
+            115
+          ],
+          "cutoffY": 229.75
+        },
+        {
+          "centerX": 158.5,
+          "bottom": 272,
+          "componentSizes": [
+            268
+          ],
+          "cutoffY": 229.75
+        },
+        {
+          "centerX": 163.5,
+          "bottom": 267,
+          "componentSizes": [
+            172,
+            104
+          ],
+          "cutoffY": 221.0
+        },
+        {
+          "centerX": 164.0,
+          "bottom": 272,
+          "componentSizes": [
+            209,
+            50
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 161.5,
+          "bottom": 280,
+          "componentSizes": [
+            152,
+            128
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 177.0,
+          "bottom": 275,
+          "componentSizes": [
+            183,
+            58
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 193.5,
+          "bottom": 278,
+          "componentSizes": [
+            149,
+            69
+          ],
+          "cutoffY": 223.5
+        },
+        {
+          "centerX": 167.0,
+          "bottom": 279,
+          "componentSizes": [
+            240,
+            82
+          ],
+          "cutoffY": 223.5
+        },
+        {
+          "centerX": 158.0,
+          "bottom": 266,
+          "componentSizes": [
+            226
+          ],
+          "cutoffY": 221.0
+        },
+        {
+          "centerX": 153.5,
+          "bottom": 266,
+          "componentSizes": [
+            197,
+            49
+          ],
+          "cutoffY": 221.25
+        },
+        {
+          "centerX": 165.5,
+          "bottom": 268,
+          "componentSizes": [
+            200
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 165.5,
+          "bottom": 278,
+          "componentSizes": [
+            187
+          ],
+          "cutoffY": 222.5
+        },
+        {
+          "centerX": 168.5,
+          "bottom": 269,
+          "componentSizes": [
+            166
+          ],
+          "cutoffY": 221.75
+        },
+        {
+          "centerX": 177.0,
+          "bottom": 276,
+          "componentSizes": [
+            239
+          ],
+          "cutoffY": 222.5
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          170.44280442804427,
+          296
+        ],
+        [
+          161.67666666666668,
+          291
+        ],
+        [
+          158.09230769230768,
+          295
+        ],
+        [
+          156.86382978723404,
+          278
+        ],
+        [
+          176.28836424957842,
+          275
+        ],
+        [
+          175.88661710037175,
+          284
+        ],
+        [
+          151.15625,
+          256
+        ],
+        [
+          175.3030303030303,
+          287
+        ],
+        [
+          187.64496124031007,
+          283
+        ],
+        [
+          180.80410447761193,
+          288
+        ],
+        [
+          157.10834813499113,
+          275
+        ],
+        [
+          150.96635514018692,
+          273
+        ],
+        [
+          159.61702127659575,
+          241
+        ],
+        [
+          161.31348511383538,
+          289
+        ],
+        [
+          168.08457711442787,
+          287
+        ],
+        [
+          172.27005870841487,
+          285
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    },
+    {
+      "id": "class_minh_kiem_run_ne",
+      "source": "Sheets/class_minh_kiem_run_ne_v1_20261114c.png",
+      "sourceSha256": "7e271271cfd526637e4ae71cdd1bd74c97029dbc0dfdca06ea44bfc19af366de",
+      "bodyReferenceHeight": 224.86486486486487,
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "sourceFootPivots": [
+        [
+          159.27027027027026,
+          290.0
+        ],
+        [
+          150.27027027027026,
+          289.625
+        ],
+        [
+          150.77027027027026,
+          288.25
+        ],
+        [
+          157.27027027027026,
+          282.875
+        ],
+        [
+          156.27027027027026,
+          266.5
+        ],
+        [
+          147.27027027027026,
+          267.125
+        ],
+        [
+          151.77027027027026,
+          268.75
+        ],
+        [
+          156.27027027027026,
+          270.375
+        ],
+        [
+          160.77027027027026,
+          277.0
+        ],
+        [
+          149.77027027027026,
+          276.375
+        ],
+        [
+          151.77027027027026,
+          275.75
+        ],
+        [
+          157.27027027027026,
+          273.125
+        ],
+        [
+          158.27027027027026,
+          268.5
+        ],
+        [
+          149.77027027027026,
+          271.875
+        ],
+        [
+          151.77027027027026,
+          273.25
+        ],
+        [
+          157.27027027027026,
+          274.625
+        ]
+      ],
+      "method": "HEAD_PACKING_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "reference": {
+        "id": "class_minh_kiem_skill_01_ne",
+        "sourceSha256": "0cb7b70288f650ba98ce966224f85ba3cd71e9808780d9b46a65ba74573b63ce",
+        "referenceHeight": 260,
+        "head": {
+          "span": 111,
+          "centerX": 162.5,
+          "top": 29,
+          "searchRect": [
+            97,
+            29,
+            224,
+            139
+          ]
+        },
+        "boots": {
+          "centerX": 156.5,
+          "bottom": 292,
+          "componentSizes": [
+            716,
+            397
+          ],
+          "cutoffY": 226.25
+        },
+        "headHorizontalOffset": -2.0,
+        "bootHorizontalOffset": 4.0
+      },
+      "headLandmarks": [
+        {
+          "span": 96,
+          "centerX": 161.0,
+          "top": 64,
+          "searchRect": [
+            86,
+            64,
+            232,
+            158
+          ]
+        },
+        {
+          "span": 94,
+          "centerX": 152.0,
+          "top": 64,
+          "searchRect": [
+            82,
+            64,
+            226,
+            152
+          ]
+        },
+        {
+          "span": 93,
+          "centerX": 152.5,
+          "top": 63,
+          "searchRect": [
+            79,
+            63,
+            223,
+            150
+          ]
+        },
+        {
+          "span": 90,
+          "centerX": 159.0,
+          "top": 58,
+          "searchRect": [
+            80,
+            58,
+            235,
+            139
+          ]
+        },
+        {
+          "span": 106,
+          "centerX": 158.0,
+          "top": 42,
+          "searchRect": [
+            92,
+            42,
+            240,
+            133
+          ]
+        },
+        {
+          "span": 104,
+          "centerX": 149.0,
+          "top": 43,
+          "searchRect": [
+            81,
+            43,
+            230,
+            133
+          ]
+        },
+        {
+          "span": 93,
+          "centerX": 153.5,
+          "top": 45,
+          "searchRect": [
+            79,
+            45,
+            229,
+            132
+          ]
+        },
+        {
+          "span": 94,
+          "centerX": 158.0,
+          "top": 47,
+          "searchRect": [
+            89,
+            47,
+            232,
+            136
+          ]
+        },
+        {
+          "span": 95,
+          "centerX": 162.5,
+          "top": 54,
+          "searchRect": [
+            91,
+            54,
+            237,
+            147
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 151.5,
+          "top": 53,
+          "searchRect": [
+            84,
+            53,
+            230,
+            142
+          ]
+        },
+        {
+          "span": 93,
+          "centerX": 153.5,
+          "top": 52,
+          "searchRect": [
+            82,
+            52,
+            228,
+            137
+          ]
+        },
+        {
+          "span": 94,
+          "centerX": 159.0,
+          "top": 49,
+          "searchRect": [
+            88,
+            49,
+            237,
+            129
+          ]
+        },
+        {
+          "span": 102,
+          "centerX": 160.0,
+          "top": 44,
+          "searchRect": [
+            86,
+            44,
+            242,
+            134
+          ]
+        },
+        {
+          "span": 101,
+          "centerX": 151.5,
+          "top": 47,
+          "searchRect": [
+            80,
+            47,
+            236,
+            139
+          ]
+        },
+        {
+          "span": 93,
+          "centerX": 153.5,
+          "top": 48,
+          "searchRect": [
+            79,
+            48,
+            229,
+            137
+          ]
+        },
+        {
+          "span": 96,
+          "centerX": 159.0,
+          "top": 49,
+          "searchRect": [
+            89,
+            49,
+            233,
+            140
+          ]
+        }
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 130.0,
+          "bottom": 281,
+          "componentSizes": [
+            410
+          ],
+          "cutoffY": 232.75
+        },
+        {
+          "centerX": 127.0,
+          "bottom": 271,
+          "componentSizes": [
+            393
+          ],
+          "cutoffY": 221.5
+        },
+        {
+          "centerX": 135.0,
+          "bottom": 263,
+          "componentSizes": [
+            274,
+            258
+          ],
+          "cutoffY": 218.25
+        },
+        {
+          "centerX": 144.5,
+          "bottom": 250,
+          "componentSizes": [
+            418,
+            204
+          ],
+          "cutoffY": 202.75
+        },
+        {
+          "centerX": 120.5,
+          "bottom": 253,
+          "componentSizes": [
+            433
+          ],
+          "cutoffY": 204.0
+        },
+        {
+          "centerX": 101.5,
+          "bottom": 254,
+          "componentSizes": [
+            317
+          ],
+          "cutoffY": 203.5
+        },
+        {
+          "centerX": 143.5,
+          "bottom": 247,
+          "componentSizes": [
+            291,
+            251
+          ],
+          "cutoffY": 199.5
+        },
+        {
+          "centerX": 150.5,
+          "bottom": 256,
+          "componentSizes": [
+            426,
+            250
+          ],
+          "cutoffY": 206.0
+        },
+        {
+          "centerX": 124.0,
+          "bottom": 274,
+          "componentSizes": [
+            386
+          ],
+          "cutoffY": 220.5
+        },
+        {
+          "centerX": 118.0,
+          "bottom": 260,
+          "componentSizes": [
+            530
+          ],
+          "cutoffY": 212.0
+        },
+        {
+          "centerX": 123.5,
+          "bottom": 248,
+          "componentSizes": [
+            316,
+            78
+          ],
+          "cutoffY": 204.25
+        },
+        {
+          "centerX": 141.0,
+          "bottom": 234,
+          "componentSizes": [
+            593
+          ],
+          "cutoffY": 191.5
+        },
+        {
+          "centerX": 140.0,
+          "bottom": 257,
+          "componentSizes": [
+            390
+          ],
+          "cutoffY": 204.5
+        },
+        {
+          "centerX": 113.0,
+          "bottom": 261,
+          "componentSizes": [
+            354
+          ],
+          "cutoffY": 210.5
+        },
+        {
+          "centerX": 132.0,
+          "bottom": 258,
+          "componentSizes": [
+            445,
+            311
+          ],
+          "cutoffY": 207.0
+        },
+        {
+          "centerX": 140.0,
+          "bottom": 265,
+          "componentSizes": [
+            351,
+            292
+          ],
+          "cutoffY": 211.0
+        }
+      ],
+      "visibleBootLandmarks": [
+        [
+          127.02377972465582,
+          290
+        ],
+        [
+          124.99240121580547,
+          275
+        ],
+        [
+          121.54719235364396,
+          271
+        ],
+        [
+          148.21603375527425,
+          252
+        ],
+        [
+          117.62815884476534,
+          259
+        ],
+        [
+          99.18955512572533,
+          258
+        ],
+        [
+          128.625,
+          252
+        ],
+        [
+          141.23506988564168,
+          259
+        ],
+        [
+          115.4609375,
+          277
+        ],
+        [
+          115.11428571428571,
+          266
+        ],
+        [
+          118.77093206951027,
+          256
+        ],
+        [
+          139.72772277227722,
+          240
+        ],
+        [
+          138.71561338289962,
+          259
+        ],
+        [
+          109.41709401709402,
+          266
+        ],
+        [
+          138.12027491408935,
+          261
+        ],
+        [
+          149.1095890410959,
+          266
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "rasterModified": false,
+      "scope": "CANDIDATE_VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_APPROVAL"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_02_trap_seed_component",
+  "seconds": 0.48,
+  "timing": [
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_mark_component_v2_20261112f.png"
+  ],
+  "authoringUse": {
+    "role": "SEED_SET",
+    "attach": "GROUND"
+  },
+  "prompt": "Use case: original pixel game Dây Gai ground seed placement special effect. Image 1 is the moss/jade/ivory palette and texture reference only. Draw exactly sixteen distinct sprites in a 4×4 RGBA transparent atlas, chronologically. THE SAME single pea-sized dark moss jade oblong seed with two pale folded ridges and tiny woody brown end, pictured in a fixed overhead-oblique view and thin crisp pixel clusters. In cell 1 it hovers visibly above the center ground anchor. It descends along a straight vertical line down by about 35 pixels during cells 2–7. Cells 8–10 it taps onto the ground, tips on its side and emits two small muted pale jade flecks around the seed. Cells 11–16 it settles, the two flecks disappear, ending only the tiny folded seed, ready for a separate growth effect. Keep scale consistent and the ground location fixed using a subtle small muted underseed contact accent that disappears after landing. Keep the atlas full effect roughly a third of cell width at widest and keep generous gutters. Authentic rich moss and jade tiny pixel texture. No arrow, character, flower, dirt, glowing bright line, firework, tree, label, background, floor or checkerboard. Actual transparency."
+}

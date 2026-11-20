@@ -1,0 +1,92 @@
+{
+  "batch": "20261116a",
+  "manualReviewComplete": false,
+  "selectedSources": 5,
+  "sourcePoses": 80,
+  "individualNativeSourcesInspected": 5,
+  "actualLoopWrapsInspected": 5,
+  "sourceApprovalsApplied": 0,
+  "scope": "MANUAL_SOURCE_OBSERVATIONS_NOT_APPROVAL_LEDGER",
+  "entries": [
+    {
+      "id": "class_huyen_but_walk_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116a/class_huyen_but_walk_n_v1_20261116a.png",
+      "sourceSha256": "f43012ce9bb18822ba9925613106510d4bc3d5573985e9570f41169037172aaa",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_LOOP_LEG_SNAP",
+      "visualNotes": "Both opposite contacts are more readable at0/8 than I, but actual14/15/0/1wrap retains the opposite trailing-foot ordering until15 then swaps feet abruptly at0. Inspected original/all16native phases/actual wrap; repair final passing/contact approach before acceptance.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_n.mp4": "0a126d00d231317630bd5a595e10dfe15d7ed3372a1fe64308e67063b061a75c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_n.png": "87c3e6c3059f6da2b8aac98113255ad82979805638a0d38b328db144feff8264",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_n_poses.png": "ef0298aebc78d2f2d138b0f5b82107dade06de33ccd79d302f31505fb1d32dc1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_n_loop_seam.png": "0be49eb58d7e9cb25dd5ab39a66b722b46d8f00d3c09a2774c4efae92df1a54a"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116a/class_huyen_but_walk_ne_v1_20261116a.png",
+      "sourceSha256": "81b4ad31fb9097bd52e0788931263d8929d6c414ff95e7dc229c57464ec6b965",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_LEG_OWNERSHIP_UNCLEAR",
+      "visualNotes": "Clear back-quarter camera and quiet actual wrap,one retained brush,two arms; all16native phases inspected. Dominant boot/leg ownership at0/8 remains obscured under hem and contact swap cannot be certified from changed right-arm phase. Keep hold.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_ne.mp4": "e75e62766716c3512bbbaa8cc0ecc7cf536b3743dc9ff54314a08d756380642c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_ne.png": "2d90949cf0d12af38c0bdd09d8eebce547bc41063786837ab8ce07a7eb63ef86",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_ne_poses.png": "d053c17d7edb5e789e3c3d13da39de42bfbf412c6466d98a6fc28da5ff25eb32",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_ne_loop_seam.png": "db82559c9068dd375f45b74451875a7c280667c694251af324500cdfd7822f87"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116a/class_huyen_but_walk_e_v1_20261116a.png",
+      "sourceSha256": "b8f0561c65fa0f8d08ea83aff9d792ee148a24f4b3f856c3db8bf9c9a642f181",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_LEG_OWNERSHIP_UNCLEAR",
+      "visualNotes": "Upright torso and quiet actual14/15/0/1wrap improve on run-like I. All16native phases inspected,brush intact. Contact0/8still repeats the same visible leading near-boot shape rather than clearly showing near-right leg exchange; require more readable leg ownership.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_e.mp4": "852ac364f1d384f63d23463de49d3d9e79e57ead46563142e8f16f515bf8fa55",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_e.png": "45df501f0b82a9dd5af698cbdebce445d3e5e4c79868f21243ed572b7a8ae060",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_e_poses.png": "3bf03481f453e80044f31b55ac3b03f3e9ac0e55e5b26cdc1517841f57dc4f22",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_e_loop_seam.png": "818096dc86833a86b21bb44d63b49bad228dbd60c1522c5574b55d796d44cf4d"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116a/class_huyen_but_walk_se_v1_20261116a.png",
+      "sourceSha256": "3b67a012dfe8dcccf4c629c3232fb390d21563efc33576168c5b705c32812da2",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_LEG_OWNERSHIP_UNCLEAR",
+      "visualNotes": "Quiet actual wrap and coherent face/brush through16native phases, but dominant lower-right boot shape persists across0/8. Changed arm/robe do not prove opposite leg ownership. Keep hold for a clearer advancing left knee/right trailing leg.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_se.mp4": "2faf5bd2b7251b319d7b7b80a021a13771412eeca3ff16da033566e69bd54230",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_se.png": "a0c228bf7cbf670a267677705093e557c07e10d67451a62723192a6c114f035b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_se_poses.png": "a7810107ed62daf8995d754bb0c25a46b0b60b28247951346152bf85db1a2631",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_se_loop_seam.png": "009e3a1745bc4381871f8c0fbb7fe2a4a427a50b856536849764921b92206b37"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116a/class_huyen_but_walk_s_v1_20261116a.png",
+      "sourceSha256": "06f45a9e9734226a15169936540802ffd1ab5344381e38a2cce2d3100ace0924",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_PROMISING_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Inspected original/all16native phases and actual14/15/0/1wrap. Contact0screen-left/right-anatomical boot leads down,contact8opposite screen-right/left boot leads; separate boots pass between contacts. Upright quiet torso,connected hands,one brush retained. Native gutter registration preserves whole source; no new hand/weapon/background. Actual wrap small and coherent. World travel/foot planting/transitions remain unaccepted.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.mp4": "4a7a04f818d540ab87e2180449956beda93f23f2a19ebe673f65b8b3a3d7b47e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.png": "eb7bfa444c245396528ded4ab8ce902e41bb0a92e13860978d847b9310403a9b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_poses.png": "a54c48a433af7d9d16ef0efab86cb2b617d893923ba964b580fccf72f609516d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_loop_seam.png": "6b332daed4fe77a6528945355ef28f60e4192996bbf12352a517f8fe2895e02e"
+      }
+    }
+  ]
+}

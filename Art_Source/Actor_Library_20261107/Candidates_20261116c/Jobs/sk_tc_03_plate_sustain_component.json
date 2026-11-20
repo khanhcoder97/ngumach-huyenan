@@ -1,0 +1,48 @@
+{
+  "batch": "20261116c",
+  "id": "sk_tc_03_plate_sustain_component",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "seconds": 1.28,
+  "timing": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+  ],
+  "loop": true,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png"
+  ],
+  "prompt": "Use case: stylized-concept. Production standalone crisp PIXEL-ART VFX sprite component for Thiết Bích / Thạch Chùy in Ngũ Mạch Huyền Ấn. Owner image is PALETTE and refined cluster STYLE reference only. Draw NOcharacter,hand,face,hammer,weapon or UI.\nONE intact small stone armour plate stays in place through a closed16phase sustain loop. Same compact chipped-corner outline,bronze-ochre face and slate-brown side facets as gain. A restrained mineral glint moves along the bevel,subtle tiny edge flex returns smoothly15to0. No growing,breaking,spinning,bobbing,vanishing,orbiting or repeated gain pulses. Everyframe is separately drawn,but the plate remains intact and nearly steady. Actual buff lifetime is driven by state,not loop duration.\nExactly4columns4rows=16genuinely authored chronological drawings,row-major. ONE seamless16phase LOOP,15to0continuous; no extinction/restart at wrap. Fixed orthographic camera and fixed cell-relative centre,consistent material and scale. Complete component fits central60%of each equal cell; broad fully transparent gutters and outermargin. True RGBA alpha0background/corners; nofloor,shadow,ambientcloud,glowmatte,checkerboard,grid,text,labels or numbers. Clean coherent pixel clusters,restrained cream highlights and dark chipped edges,not photoreal rock or smooth blurry paint. No duplicated8framecycle or simply resized copies.\nIMPORTANT COMPOSITION: Draw ONLY ONE small reusable plate component per cell,not three plates arranged around an invisible body. Runtime/Studio will instantiate the SAMEsource at shoulder,back and knee sockets with separately editable position/rotation/depth. Three actual plates on character must remain independently adjustable for all8facings. Whole visual envelope stays within the canonical96px module limit at20PPU after assembly; this source is not a hitbox. Do not draw a cage,dome,bubble,giant shield,body armour costume,terrain wall or absorption meter. Presentation only: preserve Thiết Bích damage-reduction buff semantics,not a new damage-absorption shield; no damage,state,timing or collision implemented by this sprite. Canonical references: Skill_VFX_Cards_v1_vi.md SK-TC-03 and Combat_Skills_VFX_Animation_Spec_vi.md.\nInput2 is the UNAPPROVED gain source,used as plate identity/material guide only. Match the ONE INTACT beveled stone plate in its LAST cell exactly in proportions,muted ochre-brown face,slate side facets and chipped corners. Do NOT copy its early fragments or gain sequence. Every sustain cell contains ONE intact plate from the start,stationary at the same cell-relative centre. Sixteen individually drawn mineral bevel glints form a quiet closed cycle; frame15flows to0with a small coherent light change. No transparency extinction,break/growth,repeated burst,rock orbit or spinning. It will be instanced THREE times on separate body sockets,not rendered as a three-plate cluster in this PNG.",
+  "layoutVerified": true,
+  "authoringUse": {
+    "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+    "instancesPerActor": 3,
+    "socketRoles": [
+      "guard_shoulder",
+      "back",
+      "guard_knee"
+    ],
+    "requiresPerFacingPerPoseAttachment": true,
+    "requiresDepthReview": true,
+    "productionApproved": false
+  },
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_sustain_component_v1_20261116c.png",
+  "sourceSha256": "f45eb41a3351501e7d47ac4c1d4da636e38e0a0986f16ceeb56c455231e5d5b0",
+  "state": "GENERATED_PENDING_REVIEW"
+}

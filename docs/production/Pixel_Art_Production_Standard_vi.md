@@ -1,77 +1,84 @@
-> Cập nhật05/11/2026: camera/map tuân CAM-TOPDOWN-WIDE-20261105, default64×36WU/1280×720/20PPU, gần nhìn thẳng từ trên; HUD độc lập. Các default32×18 và chỉ hub48×27 bên dưới là lịch sử. Art/Godot runtime do Codex; Muse chỉ media theo work28. Không thay canonical geometry từ ảnh.
+# Chuẩn sản xuất đồ họa pixel art hiện hành
 
-# CHUẨN SẢN XUẤT PIXEL ART — NGŨ MẠCH: HUYỀN ẤN
+> Quyết định chủ dự án07/11/2026: nhân vật người chơi chuyển sang base nam/nữ + bộ phận trang phục/vũ khí/diện mạo tách lớp. Xem [pipeline modular](Modular_Character_Appearance_20261107_vi.md). Mười profile class/giới tính dùng chung hai rig khi tương thích; các sprite class đã vẽ liền đồ chỉ còn reference/fallback. Chuẩn16–20pose thực/clip/hướng và render60FPS giữ nguyên.
 
-**Trạng thái:** art direction hiện hành theo quyết định chủ dự án ngày 2026-10-26; **bản sửa 2026-10-27 theo DEC-015** khóa định dạng sheet nhân vật 8 hướng, cell 48×64 (Mẫu A) và tạo hình Minh Kiếm đã chốt, thay các dòng mâu thuẫn tương ứng của bản 2026-10-26.  
-**Phạm vi:** nhân vật, quái, boss, map, VFX, thời tiết, icon, HUD, menu, portrait, preview ngoại trang và mọi hình runtime.  
-**Nguồn chuẩn:** tài liệu này khóa cách dựng/render; các spec domain giữ nguyên ID, gameplay, tọa độ WU, thời gian server và nội dung.
+Cập nhật 07/11/2026 theo quyết định trực tiếp của chủ dự án. Chuẩn này áp dụng cho asset mới và thay mới, cùng [Chuẩn animation 16–20 khung / 60 FPS](Actor_Animation_16_20F_60FPS_20261107_vi.md). Các mức idle4–6, walk6–8, hit2–4, skill5–10 khung trước đây đã hết hiệu lực nghiệm thu. File cũ trong Git vẫn là lịch sử, không tự trở thành asset đạt chuẩn.
 
-## 1. Ngôn ngữ hình ảnh
+## Engine, góc nhìn và tỷ lệ
 
-- Pixel art 2D nhìn từ trên, vẽ pixel thủ công theo cụm màu có chủ ý; silhouette lớn, tương phản rõ, chi tiết trang phục/kiến trúc gợi chất fantasy võ hiệp Lạc Châu nguyên bản.
-- Tham chiếu tạo hình đã chốt ngày 2026-10-27 (DEC-015): chibi kiếm sĩ tóc xanh gai, kiếm vàng bản lớn với guard gắn ngọc lục giác, áo choàng đỏ, áo teal viền trắng, khóa thắt lưng lục giác vàng, giáp thép đen (gunmetal) viền vàng ấm. Dùng như hướng mỹ thuật tổng quát; không sao chép nhân vật/tên/huy hiệu cụ thể trong ảnh tham chiếu.
-- Không vector line art, tranh raster HD được thu nhỏ, AI upscale, blur, anti-aliasing, gradient mượt, normal-map lighting hoặc skeletal deformation làm biến dạng cụm pixel. Ánh sáng/gradient chỉ được vẽ thành dải pixel/banding hoặc dithering có kiểm soát.
-- Màu là một phần tín hiệu nhưng không phải tín hiệu duy nhất. Telegraph, đội, rarity và trạng thái luôn khác nhau cả về silhouette, pattern, icon hoặc motion.
-- Giữ rào chắn nguyên bản: không lấy hoặc tái dựng sprite, UI, tên riêng, âm thanh hay hình nhận diện từ KPAH/JAR.
+- Godot4.7.2 .NET, .NET8, renderer Compatibility; Unity/URP là hướng lịch sử.
+- Gameplay2D orthographic north-up, XY là mặt đất,8hướng di chuyển. Kiến trúc gần nhìn từ trên theo [quyết định camera rộng](TopDown_Wide_Camera_20261105_vi.md).
+- Viewport1280×720,20pixel/WU, mặc định64×36WU; F2 chọn48×27WU. HUD tách CanvasLayer và giữ cỡ chữ/nút. Không tự quay lại640×360/32×18WU hoặc chỉ mở góc rộng trong hub.
+- Renderer nearest, không mipmap; integer viewport/letterbox khi phù hợp. Không đổi tọa độ, footprint, collision hoặc kích thước world của server để khớp hình.
+- Hero runtime hiện hiển thị cao36pixel; mỗi atlas khai báo referenceHeight để chuyển từ kích thước nguồn sang cỡ hiển thị. Cell48×64 cũ là quy cách export tham khảo, không phải lý do phóng mọi actor lên64pixel trong runtime góc rộng.
+- Không tự scale các bounds WU lịch sử trong Art Bible thành collider mới.
 
-## 2. Pixel grid và world scale
+## Tạo hình và chất lượng ảnh
 
-| Thiết lập | Giá trị chuẩn |
-|---|---:|
-| Logical render | 640×360 pixel, landscape 16:9 |
-| Pixels Per Unit | 20 px/WU; 1 WU vẫn bằng 0,5 m |
-| Base camera view | 32×18 WU ở 16:9 |
-| World pixel step | 0,05 WU; render origin/camera/sprite pivot snap vào lưới này |
-| Hero | cell hiển thị tối đa 2,4×3,2 WU; footprint capsule ngang 1,2×0,6 WU, offset (0;0,3); sheet nhân vật dùng cell 48×64 source px, pivot bottom-center; hiển thị 192 screen px ở output 1920×1080 (scale 3×) |
-| Tile art | tile nền chuẩn 16×16 source px (0,8 WU); module lớn là bội nguyên của tile, placement gameplay tiếp tục dùng WU |
+Pixel art sắc nét, silhouette dễ đọc, cụm màu có chủ ý, bề mặt3tone+1highlight khi phù hợp. Không dùng concept như nền map hoặc cắt tranh concept thành actor. Tạo hình class lấy catalogue hiện hành; Minh Kiếm runtime tóc đen búi cao, áo ngà/teal, kiếm thẳng. Concept tóc xanh/choàng đỏ trước đây là tham khảo lịch sử.
 
-Unity dùng URP 2D + Pixel Perfect Camera, Reference Resolution 640×360, Assets Pixels Per Unit 20, integer upscale; đầu ra 720p/1080p/1440p lần lượt dùng scale 2×/3×/4×. Tỉ lệ không chia hết dùng integer viewport có letterbox/pillarbox; không kéo scale phân số lên sprite. Với 20:9 landscape giữ 360 logical pixel chiều cao và mở rộng chiều ngang; vùng gameplay/camera không được cấp lợi thế đối kháng riêng cho thiết bị. Portrait dùng layout UI riêng, không ép xoay/scale sprite.
+Nguồn PNG lossless có alpha thật; không nền caro giả, không crop chân/vũ khí, không noisy fringe/halo hoặc gradient phủ kín silhouette. Mục tiêu24–40màu cho hero,12–24cho quái thường; kiểm bằng mắt ở cỡ chơi trên nền sáng/tối. Một ảnh được sinh thành công chưa đồng nghĩa đạt pixel art production.
 
-## 3. Import và đóng gói
+UI hiện dùng MoonGlass xanh tím bán trong suốt, viền bạc/champagne theo [MoonGlass UI/UX](MoonGlass_UI_UX_vi.md). Theme UI này thay hướng toàn bộ panel gỗ nâu/viền vàng cũ. Typography tiếng Việt phải đủ dấu và dễ đọc; không ép bitmap-font mờ hoặc icon thiếu nét chỉ để giữ phong cách pixel.
 
-- Sprite Filter Mode `Point (no filter)`, Compression `None` hoặc định dạng lossless, Mip Maps `Off`, anti-aliasing `Off`; Sprite Atlas padding tối thiểu 2 source pixels để bleed không lộ khi pack. Giữ metadata import/atlas trong version control.
-- Runtime chỉ dùng pixel source đúng grid; không resample bằng bilinear/bicubic, không upscale ảnh tham chiếu thành texture production. UI canvas có thể bố trí responsive nhưng icon, chữ và viền raster theo logical grid; khi scale phải giữ integer scale.
-- Texture: actor/prop pack 512² hoặc 1024²; boss/environment sheet tối đa 2048² mỗi trang theo nhóm animation/layer; icon/item 32²–64²; skill/UI icon 32²–48²; portrait 64²–96². Mọi frame có trim/pivot guide và kích thước cell khai báo rõ; atlas không buộc mọi frame cùng kích thước nếu dùng trim metadata.
-- Tile palette và sprite sheet dùng palette role cố định. Mục tiêu khoảng 24–40 màu cho hero outfit hoàn chỉnh, 12–24 màu quái thường, tối đa 64 màu cho boss/biome hero sheet; tái dùng ramp màu trong cùng khu vực.
-- NPC, mob và người chơi có thể dùng shared silhouette base nhưng animation/runtime character là frame-based sprite sheets, không bone-warp. Thiết bị/ngoại trang tách layer chỉ khi layer vẫn snap cùng pixel grid và pose; ưu tiên sprite variant đã vẽ thay material recolor không kiểm soát.
+## Animation bắt buộc
 
-## 4. Animation, camera và combat readability
+- **16–20 khung nguồn thực cho mỗi clip, mỗi hướng; mặc định16.** Áp dụng idle, walk/run, attack/combo, sáu skill riêng, hurt, death, dodge, interact/work và hành động nhiệm vụ có trong gameplay.
+- Không nhân bản4/8pose để báo16, không lấy cùng một cast chung và báo hoàn thành sáu skill riêng. Frame hash khác nhau chỉ là kiểm cấu trúc, không chứng minh pose khác nhau hoặc chuyển động đúng.
+- Actor di chuyển cần8hướng. Khi được phép,5hướng N/NE/E/SE/S có thể cung cấp3hướng lật; manifest ghi rõ source/flip. Băng tay, sừng gãy, mặt nạ hoặc chi tiết bất đối xứng có ý nghĩa cần góc vẽ riêng.
+- Atlas80pose có8cột×10hàng, mỗi hướng2hàng liên tiếp8khung. Atlas16pose4×4 một hướng là phương án thay/sửa từng góc. Không đoán ô theo kích thước chia đều khi nguồn có padding không đều; frame rect/pivot phải được nghiệm thu.
+- Idle/walk loop không nhảy ở15→0. Hurt là một lần recoil rồi phục hồi, không hai vòng8khung. Death là một lần ngã liên tục; khung cuối nằm xuống; runtime one-shot giữ khung cuối.
+- Pose không điều khiển vị trí hoặc sát thương. Giữ ground anchor; dùng referenceHeight được hiệu chỉnh theo trang/hướng vì các ảnh nguồn có thể khác độ phân giải. Không lấy chiều cao pose nằm để phóng người ngã thành người khổng lồ.
+- Render mục tiêu60FPS, physics60Hz. Timeline theo giây độc lập số frame nguồn và server tick. Không ép16khung phát trong16/60giây. Dùng timeline server cho cue/hit; animation không tự cấp damage/heal/loot/credit.
+- Mặc định xem thử: idle1,0s, walk0,8s, basic0,6s, hurt0,3s, death1,2s. Đây là nhịp review; cast/telegraph/attack/recovery production phải khớp kỹ năng và encounter được duyệt.
 
-- Animation vẽ frame-by-frame. Idle 4–6 frame ở 6–8 fps; walk/run 6–8 frame ở 8–12 fps; hit/reaction 2–4 frame; kỹ năng chủ lực 5–10 frame cho từng pha. Giữ thời gian gameplay theo spec và server tick; không đổi thời lượng/collision theo số frame vẽ.
-- Gameplay dùng sprite sheet **8 hướng**, thứ tự hàng `N, NE, E, SE, S, SW, W, NW` (DEC-015, Mẫu A). Walk: 6 frame/hướng ở 8 fps, loop, pivot bottom-center. Hướng đối xứng được phép lật gương bằng code (ví dụ SW từ SE) nhưng chỉ nghiệm thu khi audit xác nhận khớp tuyệt đối từng pixel. Pose front/back/side cho menu, preview, hội thoại lấy từ chính các hàng của sheet hoặc vẽ bổ sung khi content cần.
-- Gameplay collider, attack shape, range, movement, hit result và reward không được lấy từ opaque sprite bounds/frame event. Chỉ vẽ cue; server xác nhận kết quả. Pivot/foot contact ổn định giữa frame để nhân vật không rung.
-- Hạn chế shake theo pixel step và thời lượng trong Combat spec. Không subpixel-scroll nền gameplay: camera snap theo pixel; parallax dùng hệ số di chuyển nhưng vị trí render cuối vẫn lượng tử hóa.
+## VFX và weather
 
-## 5. VFX, weather và giảm hiệu ứng
+VFX tách cast/projectile/impact/loop/end khi cơ chế cần; mỗi thành phần được bàn giao dưới dạng clip cần16–20khung. Một atlas timeline mẫu không tự hoàn thành toàn bộ chuỗi thành phần. Hướng đạn, tâm vùng và thời gian nguy hiểm lấy từ gameplay; không bake đường đi thế giới vào từng cell.
 
-- VFX là sprite/pixel-particle theo cùng grid, palette và outline; tia, cung kiếm, nước, khói và bụi tạo bằng shape pixel dễ đọc. Không dùng bloom, blur hậu kỳ, glow mượt hoặc hạt dưới 1 source pixel. Parallax/weather có thể dùng các pattern tileable.
-- Giữ nguyên cue shape, thời lượng và vùng nguy hiểm ở LowFX. LowFX giảm số particle, layer weather phụ và shake; không xóa telegraph, hit-confirm icon hoặc tương phản mục tiêu.
-- Pixel burst theo hướng dẫn Art Bible/Combat: mobile ≤40 hạt chính mỗi burst, HighFX ≤120; hạt có kích thước cụm 1–4 source px, cap theo actor và vùng.
+LowFX giảm hạt/layer phụ, giữ shape/timing/outline bắt buộc. Telegraph boss luôn đọc được dưới skill, weather và UI. Không dùng flash toàn màn, bloom hoặc blur che mục tiêu. Vật thể môi trường có animation riêng được ghi phạm vi rõ; vòng nước trang trí4frame lịch sử không được báo là VFX chiến đấu16frame.
 
-## 6. UI, chữ và layout
+## Export, import và bộ nhớ
 
-- Frame, icon, button, badge, avatar và map/minimap dùng pixel-art assets cùng palette; viền/panel dùng 9-slice theo biên pixel rõ. Bitmap font tiếng Việt phải có đầy đủ dấu/hoa/thường/số/ký tự chat; test không rơi dấu ở 640×360 logical.
-- Scale UI theo safe area và grid; không làm mờ raster khi hover, focus hoặc disabled. Trạng thái dùng frame/icon/pattern/shape khác nhau, không chỉ đổi hue.
-- Menu lớn có thể chi tiết hơn gameplay nhưng vẫn vẽ ở logical scale có chủ ý và scale nguyên; không pha icon HD/vector vào cùng bộ pixel art.
+PNG gốc giữ nguyên; sửa raster bằng imagegen tích hợp, lưu phiên bản mới và prompt. Công cụ phân tích chỉ đọc ảnh, xác định gutters/bounds/rect/hash và xuất JSON; không vẽ hoặc resample bitmap để cứu ảnh sinh lỗi.
 
-## 7. Bàn giao và nghiệm thu
+Mỗi clip có asset/entity/skill ID, nguồn, SHA256, frame order/rect/bounds, pivot, referenceHeight theo hướng, flip, duration, timeline type loop/one-shot, trạng thái nghiệm thu và provenance. Runtime dùng lossless + nearest, không mipmap; margin/gutter ít nhất2pixel nhìn thấy quanh frame. Chia page/lazy load và giới hạn cache; không nạp toàn thư viện cùng lúc.
 
-Mỗi asset ghi `asset_id`, entity/map/skill link, source PNG/layer, cell/frame table, pixel size, PPU, pivot, palette, atlas page, compression/import preset, animation FPS, LowFX variant nếu có, provenance/license, trạng thái (`CONCEPT`, `APPROVED`, `INTEGRATED`, `DEVICE_QA`). Preview tại 640×360 logical và output 1280×720, 1920×1080, 2560×1440 phải giữ cạnh pixel sắc, không shimmer, không bleed/halo và silhouette/telegraph còn đọc được trên nền sáng/tối.
+## Cổng nghiệm thu và người phụ trách
 
-## 8. Phạm vi migration và phần chờ
+REQUESTED → GENERATED → STRUCTURE_PASS → VISUAL_REVIEW → ENGINE_IMPORTED → DEVICE_QA. Thiếu bất kỳ bước cần thiết nào thì chưa production-approved. Ảnh đủ ô nhưng sai hướng, đảo tay, trượt chân, đổi khuôn mặt hoặc lặp nửa chu kỳ phải sửa. Nghiệm thu60FPS bằng mẫu đo native có GPU/viewport/warmup/median/p95, không bằng ảnh chụp FPS hoặc số frame nguồn.
 
-- Giữ nguyên schema, ID, map WU, spawn/gather placement, quest, combat balance, network/server contracts và nội dung. Thay visual export, animation representation, camera render, import preset, UI art và tiêu chí nghiệm thu.
-- Các concept SVG cũ của Minh Kiếm chỉ là hồ sơ ý tưởng lịch sử, không phải art source/runtime; thay bằng sprite concept pixel-art trước bước model/animation production.
-- Quy trình sản xuất của Muse (DEC-015): sinh ảnh theo từng strip một hướng, ghép sheet bằng code theo đúng lưới cell, rồi **audit bằng đếm pixel** trước khi gọi là đạt — đủ số cell theo kế hoạch, mọi frame trong một hàng khác nhau, không tái dùng frame giữa các hàng, hàng gương phải khớp tuyệt đối. Bản draft lưu ở workspace của Muse; chỉ sau khi chủ dự án duyệt mới bàn giao vào repo bằng nhánh `muse/` + PR theo quy trình handoff.
+Codex phụ trách asset, UI/UX, VFX, sprite và animation. Muse chỉ làm video/cinematic/âm thanh theo quyết định hiện hành; quy trình giao Muse làm sprite/ghép atlas trước đây hết hiệu lực.
 
-## 9. Camera và footprint hiện hành
+Catalogue và hàng đợi đầy đủ ở Art_Source/Actor_Library_20261107; ảnh sinh có thể chỉ là ứng viên. Công cụ Godot ActorLibrary là scene review riêng, không chứng nhận toàn bộ game hoặc mở khóa class/skill backend chưa triển khai.
 
-DEC-016 và `Top_Down_Gameplay_World_Spec_vi.md` chốt góc nhìn từ trên, di chuyển XY 8 hướng. Các số actor 5 WU/capsule 3,6 WU cũ đã hết hiệu lực; 48×64 px/20 PPU không được kéo lên 5 WU. Menu portrait là preview riêng; gameplay mobile vẫn landscape.
 
-## 10. Mức chi tiết đơn giản (DEC-020)
+## Khối chính sách cho công cụ audit
 
-Đích mới là pixel game dễ sản xuất: material3tone+1highlight, module nhà/tile dùng lại, texture noise thấp, nước4frame. Giữ640×360/20PPU/48×64/8hướng và integer scale; rõ/nét không đồng nghĩa thêm hàng nghìn chi tiết. Capital_Scale_and_Simple_Pixel_v2_vi.md và Art_Concept_References/v2/02_simple_pixel_street.png là hướng tham chiếu; board v1 nhiều chi tiết chỉ còn mood/material, không mật độ source runtime.
+Khối dưới là hợp đồng máy đọc theo DEC-024. `cellWidth/Height` chỉ phục vụ kiểm các sheet legacy theo grid; ảnh trim mới dùng rect/pivot/referenceHeight trong manifest. `walkFrames / walkDurationSeconds = 20` là nhịp đổi pose mẫu, **không phải FPS render**. Audit cũ không được lấy quy định walk6frame để thay quyết định hiện hành.
 
-## 11. Ngoại lệ logical render cho hub (DEC-021)
-
-Hub an toàn dùng target960×540 world render/20PPU để nhìn48×27WU; baseline combat640×360 giữ nguyên. HUD là canvas riêng không thu nhỏ theo camera. Chi tiết fallback/device/integer scale ở Hub_Wide_Camera_Profile_vi.md, không dùng fractional zoom làm mờ pixel.
+<!-- actor-animation-policy -->
+```json
+{
+  "pixelsPerUnit": 20,
+  "cellWidth": 48,
+  "cellHeight": 64,
+  "cellIsNominalLegacyGrid": true,
+  "framesPerDirectionMin": 16,
+  "framesPerDirectionMax": 20,
+  "walkFrames": 16,
+  "walkDurationSeconds": 0.8,
+  "renderTargetFps": 60,
+  "physicsHz": 60,
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ]
+}
+```

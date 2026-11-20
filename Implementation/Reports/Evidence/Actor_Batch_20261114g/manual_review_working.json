@@ -1,0 +1,1057 @@
+{
+  "batch": "20261114g",
+  "manualReviewComplete": true,
+  "reviewDate": "2026-11-15",
+  "reviewScale": "ORIGINAL_ATLAS_AND_256PX_NATIVE_STAGE_16_REAL_PHASES_PLUS_8_FACINGS_AND_LOOP_WRAPS",
+  "scope": "SOURCE_CLIP_VISUAL_REVIEW_NOT_CLASS_SKILL_ASSEMBLY_OR_GAMEPLAY_ACCEPTANCE",
+  "entries": [
+    {
+      "id": "class_huyen_but_skill_03_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_03_n_v1_20261114g.png",
+      "sourceSha256": "c630efa5bf1b3ebc30ccf873e0858526ae69d92a4040a9029372eeaa32a58662",
+      "bindingSha256": "f4af42cabb1f2fd6f556d07b9d0934cfbaf03346a9b4debf68ff88ef8fdfd9ae",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS repaired shield-cast N source: all16 native poses inspected. Right brush stays connected or naturally occluded during the chest crossover, left palm remains visibly empty; old left-sleeve handoff ambiguity removed. Rear view and boot root stable; full shield/target/confirmed-event assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n.mp4": "2a9014496222f336f6ae053fc2e2065d6321642b3fbb25acebe5298bf5867511",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n.png": "b45454b7e349023f51a96ef086705428f96c407916b4d67a014c227df803caba",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_poses.png": "eaf2f94a5c0cc2b0ee8ff9418969623b98d66ae2ff73ff95bda6058844580e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_source_samples.png": "80bd8b96c3a82762fe245b760326e6f2d2d53c3ea061632a65b227cad1c79472",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_03_n_samples.png": "a71e11d3aa16dd660fd2f049403e76176b4e5688e8c818d6988eb8848488ca01",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles.mp4": "ee7065d29ab251036e1e87139b2aa712ed53fe6c764e9768d51bb301747b3f7d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles.png": "db3c35445a31066cb50ff1924ea8f8faf5ce90764baa077035f1deec9fae6b28",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_03_eight_angles_samples.png": "532a4d612009bfd86edd91f179cf4f4cfba02e2857e388e921625b70109d9fdb"
+      }
+    },
+    {
+      "id": "class_huyen_but_skill_04_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_04_n_v1_20261114g.png",
+      "sourceSha256": "6e5f07197472a17eb2d07f09a86f9c9825b1c85e6e495263a8af36d0761ec89e",
+      "bindingSha256": "04663fda110e076be56a94acf0c31b2d72634b5ae301ce3b3a4d4737478a04c6",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS repaired rain-cast N source: all16 native poses inspected. Low brush ellipse then lift/settle, empty left hand, one cream tip including source9; old duplicate tip removed. Stable rear root; per-facing source-clock/presentation alignment and heal-zone mechanics unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n.mp4": "24f32f97b25fbc515a8c459efc0f9c8a7ff897777946ae6715f91b20d6b017aa",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n.png": "6b9a58985ee61e1fb02524d85b8bd44af39d0b225a61e1038e1c278283aa5e55",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_poses.png": "b9d6ef00915e3b117de1cffe6980b9605cae4426ef333a6a3dc927642f236240",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_source_samples.png": "46db730837727a3fa3f42cf557e6dccf29bfeeb431cfb7aea175f6cce2fedde3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_skill_04_n_samples.png": "412d80a836eb36a49f597ba37ac69ff7fb8d0f742b7595bd1b801862d1f2482e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles.mp4": "86f012cd2d3687ae63772e26a5f81d6ce5a78e3cf7ac57193186feedcfcaba97",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles.png": "40bd5d9d6c478202c990c831499003e96b09ca99a86214c11cfdf7d4d8d76509",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/skill_04_eight_angles_samples.png": "365042992d54952782c53e3f7f89525d96f85bca726f3a68f4b2c862a6cbc6f7"
+      }
+    },
+    {
+      "id": "sk_hb_04_rain_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_rain_component_v1_20261114g.png",
+      "sourceSha256": "2e5b8863eaf8393b218321f99d9c9bf254c75b3ce0483db247e97938709517f1",
+      "bindingSha256": "7532a6a6acf9300e2b88e1e12031268d81deb0912c1d24391daa92d06d1bb91d",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Sparse ivory-core droplets and separate landing rings now read clearly on native grid. All16 phases and actual14/15/0/1 loop wrap inspected; no opaque veil/whole-field jump. Zone density/scaling with actors and server heal ticks still unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component.mp4": "951a8becb6821b21a689f75e2b1b65d305e037acfb1e13325e4f6e391fdc5558",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component.png": "ba3aa56730bca215f70296c392c142a617cb3f6fea4c22333a4a303368fe0116",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_poses.png": "72808de527102a8f1a793c0071806180c9410b3bf222a4d811750cb3663dd23b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_source_samples.png": "2b678a7ac9aaa776dd5c91f8069fd50afcffde582a4120373af267545dc65cd8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_samples.png": "6590b0d3e6ce6b95510e1e19f601c11ed379b920922336e188b50df9a7ee1fdc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_04_rain_component_loop_seam.png": "7a0bc645eda24a8ebdebc99f8fa4a1498e918ff1171c4295574b14650209b424"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_n_v1_20261114g.png",
+      "sourceSha256": "04880ab21984c7cee0d4ea5e633e998c75d9c13f52ce807b99bc7f0034768241",
+      "bindingSha256": "604432aecd0bed647df9c559f91acb8948a2e4862f9cf958cdad39e60e56474c",
+      "productionApproved": false,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "HOLD: Native16 poses repeat very similar leading-foot/arm silhouettes at0 and8. The intended opposite support remains ambiguous behind the robe; redraw readable alternating contacts. Pixel uniqueness does not prove a16-phase stride.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n.mp4": "c557a65fae3a7952961c9188ac773c7d57968ff0d65a899b70bcbd5911982499",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n.png": "5e7e436b294ebe370a930a101dece3a2b075dd7fd56865a04b6c0c4f6eade58c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_poses.png": "85792a47e372b0ad621d3903aecae2330ca5af4ae60fe971c05335522bd19716",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_source_samples.png": "c0f3785adcd54b960e275e5449ca04f5154b172c1ee5d535b8a71a6df4a15614",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_n_samples.png": "1a7e2cc740d76d786047a79a6d8759f5ea19f1eb62ddf6e9c5ec7074ec0c7eca",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4": "0b9e5621b0a89677515e99a361de6a0658a99469c2bbe80d9af2f767ce374279",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png": "f5fe6c45db892d22fa1ac7c763f40727ed02b5c00db89149131138a832a112da",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png": "46a21c14f821b84192fb7e926c7b3c9dc684c10205b369329f6f730a52b5de6c"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_ne_v1_20261114g.png",
+      "sourceSha256": "bcc433e492cc7ae55cb22611701a649a86f734a529b858fb142a41288a75df4d",
+      "bindingSha256": "c12550d11f433bbc907a0f470191e8b7c10dc4c4e6c38052b05e9bd273fee89d",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source NE: all16 native poses and actual14/15/0/1 loop wrap inspected. Opposite leg extensions and arm/brush counter-motion readable; narrow boots remain connected, rear/front diagonal stays distinct from N/E. No borrowed cells or mirrored authored pose claims. Source-loop approval only; in-world gait speed/root motion unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne.mp4": "e6d64c77e913ee5126e3de312e546950ddac366fa34d4d5500ee3859fc54fd1e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne.png": "dde5ac6a57b9c602568b9a529e8b6a7462e5b770cf028788993b798782ae957a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_poses.png": "73052abf209bac025d20cf3de028c67e06b0c0c756a28a7020ab8d76e60908c6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_source_samples.png": "f0ef2370b1720b826e968527aee357e500c3e81a0e729fdbd9fca5587cbe51f1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_samples.png": "5abc9aa3862791dac97e7ba08689515790870855ca0084b4fb41984e76d42c7f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4": "0b9e5621b0a89677515e99a361de6a0658a99469c2bbe80d9af2f767ce374279",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png": "f5fe6c45db892d22fa1ac7c763f40727ed02b5c00db89149131138a832a112da",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png": "46a21c14f821b84192fb7e926c7b3c9dc684c10205b369329f6f730a52b5de6c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_ne_loop_seam.png": "e2f3a526cd06bdc80689d35d7035fd539e9de18ae0ce3a69834426e4e66e0973"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_e_v1_20261114g.png",
+      "sourceSha256": "2c6da64173d96d824549d287f48d0e84ecc31a6acd615daadf5e8e014e142aed",
+      "bindingSha256": "5f2c78305373f8302bb039b09c3563d1d294b94aebe579ad86aabbfcb035df91",
+      "productionApproved": false,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "HOLD: Native side-view16 poses return to a very similar front-boot/empty-fist configuration at0 and8. Opposite anatomical supports for the intended single stride are not clear enough; redraw leg passing/contact shapes before approval.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e.mp4": "48e3301e977df536cc9dd6de676d7e2534e9081d7801f6afc257579786ebfc5e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e.png": "e0d9381d6c9a9c1ab4678089b581f096dd587a5d82e3b491c0353e147f926238",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_poses.png": "eab720ae447cdcbafa1be5fd68c07ae459779c7172479c0dd82dc901efd9b027",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_source_samples.png": "074eba8b9a5767d4d5ea9e5d5dea2fb94e2ac72c72cdaace54deaf38c8fe61a4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_e_samples.png": "23185996541453d006d99f103af586c743f3d65c31b846414e9342be9b931d62",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4": "0b9e5621b0a89677515e99a361de6a0658a99469c2bbe80d9af2f767ce374279",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png": "f5fe6c45db892d22fa1ac7c763f40727ed02b5c00db89149131138a832a112da",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png": "46a21c14f821b84192fb7e926c7b3c9dc684c10205b369329f6f730a52b5de6c"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_se_v1_20261114g.png",
+      "sourceSha256": "b5b3873574f9859d84b1e6a968fb031a463c92904a908c7196e9c06e25dfc217",
+      "bindingSha256": "28c26fd62f681989db85f389b9679ab52b4dfa0079e86990e56534997fbb4f74",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source SE: all16 native poses and actual14/15/0/1 loop wrap inspected. Opposite leg extensions and arm/brush counter-motion readable; narrow boots remain connected, rear/front diagonal stays distinct from N/E. No borrowed cells or mirrored authored pose claims. Source-loop approval only; in-world gait speed/root motion unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se.mp4": "64650f36289d3a0ccf4d008d251d9461df7f626da1ec313521831ca9e14f575b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se.png": "45167bd8c2eee3c865faf405ca4dd2e75acd239939eed212c8cab9a01c85a82d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_poses.png": "a01d65e09e4412dbf57648f1f7bcf231c268da0fabf6650e3c673d53d898f844",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_source_samples.png": "7fbc1dd5dc9d0d70678a4e9d2154e3c137064341a3e6059f60a07f6cc57731d9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_samples.png": "5cf4568b2f1d5ad52c79703c74b4145f964c8cfc7500201cee195d9a5eff45b4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4": "0b9e5621b0a89677515e99a361de6a0658a99469c2bbe80d9af2f767ce374279",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png": "f5fe6c45db892d22fa1ac7c763f40727ed02b5c00db89149131138a832a112da",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png": "46a21c14f821b84192fb7e926c7b3c9dc684c10205b369329f6f730a52b5de6c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_se_loop_seam.png": "386c1a773ac20f8e6ee9fbbbc7e6c592bc08281947c3458b6bba8c174bcecf53"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_s_v3_20261114g.png",
+      "sourceSha256": "de4d8056b928cf7d0de260849b88bd4ff430c6680b6b2390d4e6c3ab0d1419ee",
+      "bindingSha256": "27804ec453591df14a5bd8f842c7df2426930279e058ae20e1a6e053c18993a2",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS v3 source S: all16 final native poses plus actual14/15/0/1 wrap and updated eight-facing comparison inspected. Opposite0/8 forward-boot shapes now separate outside the hem; dark plain boots/brown belt restored after the rejected armour-contaminated v2. One right brush, empty left hand, stable measured root. Cross-action style transitions and world travel remain unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s.mp4": "0a497c0e28e76d5ebf469168ad2d4675b39812fa7d65e21ed95266dc26c5ee44",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s.png": "4cafd7a072d6754e2db32e171550fdd058cdb0654d5b62707554f481d0e41164",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_poses.png": "a838e1ccdf51902a2d5b7eff4397a1c70c1243228bed012ed1a9b93ff93ec95f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_source_samples.png": "5b35c813f6c6ec320211a3bf55d6a26d2df5940ed84bf45dcc71d69e3af5cabf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_samples.png": "73a3ed725ea48249dec5c332ff834910e99bc9e4a20e651215b9f21ea6d33b0c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.mp4": "0b9e5621b0a89677515e99a361de6a0658a99469c2bbe80d9af2f767ce374279",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles.png": "f5fe6c45db892d22fa1ac7c763f40727ed02b5c00db89149131138a832a112da",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/run_eight_angles_samples.png": "46a21c14f821b84192fb7e926c7b3c9dc684c10205b369329f6f730a52b5de6c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_run_s_loop_seam.png": "c528869c539166292d58c08111d3e550518d80b4a74a36297d1b34157c2e755e"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_02_n_v1_20261114g.png",
+      "sourceSha256": "94f46648f555adc61ce55af20e479955f79ca9d6baf8bf01a7f9fea1b8f5e7bb",
+      "bindingSha256": "6fb94bae35ff3f15b67f7d36ea841bd25f1f1cef8a0faff74e23f3a7100b6e33",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source N: all16 native poses inspected. One connected right-hand brush follows a rising flick, empty left hand balances, facing and costume retained, stable boot root and return. Eight-facing comparison inspected; strike/VFX timing in gameplay remains unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n.mp4": "92db2f486f10d4dc89055b15f5fe849a4d2fcc240f6caa05c2a9185a44c4734e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n.png": "2b6d1c6edbb381317e507331531ec7c7010511c42ebcbb893e29ce0c2b595d75",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_poses.png": "bf37f0cbb461c2d1c1730fce19e8bf69992b73a2a83e8951d6399520bbd66234",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_source_samples.png": "bba81a2bbf5a3672e758249f27c52046000791f013942985442326e72eec8d39",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_n_samples.png": "fdfb76bc304ea472d010351dc24da32d2966a69b4c5e7d902d25bceccc4bdcaf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4": "34fa4516f7bec9bd8e2863c0f8dca115fa267891380cdaf98b51e13c115c4b2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png": "bde319ff7842e3e9da49f821222331cd9840a9aa69f17aa76cd2f5eaab810fef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png": "7282f2e2942019b8b752ba765d2d2cf0cd3b33cec6c57caa8a6b1e458c257d31"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_02_ne_v1_20261114g.png",
+      "sourceSha256": "1ee6e94479f8f35dcc542d46f805b36eb6d326f5e703b3be60d9fb2835201071",
+      "bindingSha256": "242bcfe8ec2f8f0e1ef7f1574cce5ff54c9a11d626ca6d004fc397517fa70b8d",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source NE: all16 native poses inspected. One connected right-hand brush follows a rising flick, empty left hand balances, facing and costume retained, stable boot root and return. Eight-facing comparison inspected; strike/VFX timing in gameplay remains unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne.mp4": "2d4ff3201047b4e7dbd81e62ef12323e1629fdc1b746db6eee56a71448ffa768",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne.png": "7dac6dd0604927405fcdd5488f0741c7a11fafe6100b6387b520b0f5821d53af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_poses.png": "7c09b29ccb5557122c79f4256d3b8d450de512982d243cf6c8970dfb8436ac0d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_source_samples.png": "de00bb9584d6f39e2afaf463f505d16a39d0944ad50dcdc2c45aed246b6a3b52",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_ne_samples.png": "2a57c5cc7b7726b392a8e951eab27e39280f52f33bdc0e30ba726230ca918e72",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4": "34fa4516f7bec9bd8e2863c0f8dca115fa267891380cdaf98b51e13c115c4b2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png": "bde319ff7842e3e9da49f821222331cd9840a9aa69f17aa76cd2f5eaab810fef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png": "7282f2e2942019b8b752ba765d2d2cf0cd3b33cec6c57caa8a6b1e458c257d31"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_02_e_v1_20261114g.png",
+      "sourceSha256": "04b10de8b023ce50f150634197d16842cc4cc0bb9bfae5332be77c79e61474b1",
+      "bindingSha256": "f5314ecbdf44044065e67634beaf050f8974fc67933af2c2cde6d29160cf7a62",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source E: all16 native poses inspected. One connected right-hand brush follows a rising flick, empty left hand balances, facing and costume retained, stable boot root and return. Eight-facing comparison inspected; strike/VFX timing in gameplay remains unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e.mp4": "dfb3742ee17f83dc1a7eee573f87a2e17a7a6134131579e1d71ce522c51718d4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e.png": "694bf37dd8a3a96c086980ee4ed0ad7219288ed6fd5c15a9541c39cf5fd479cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_poses.png": "2e3939a1157f9de9d91e8f9cf39c0dcf651e758716c48e101cfe210cc856b6a7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_source_samples.png": "6a78fb320c9a2bd0ea76d9b8e5245c1ca70275536b07662ede610bbf9493ab44",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_e_samples.png": "2a62e787b44d8b165cf8a729ef54f57bdf16955a0f10fc3e4bf6475d06e8eff1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4": "34fa4516f7bec9bd8e2863c0f8dca115fa267891380cdaf98b51e13c115c4b2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png": "bde319ff7842e3e9da49f821222331cd9840a9aa69f17aa76cd2f5eaab810fef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png": "7282f2e2942019b8b752ba765d2d2cf0cd3b33cec6c57caa8a6b1e458c257d31"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_02_se_v1_20261114g.png",
+      "sourceSha256": "79eb30c88a572615570bfd42e97b3f9eccf54ea905e0fd76f7f55b15498aa292",
+      "bindingSha256": "07aec07ee4465a84d4de92445b2b4f4d86573589d42e560e241f0d2268c2c217",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source SE: all16 native poses inspected. One connected right-hand brush follows a rising flick, empty left hand balances, facing and costume retained, stable boot root and return. Eight-facing comparison inspected; strike/VFX timing in gameplay remains unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se.mp4": "6b83aa31e121c4db101cbd4366453e261a9ae7112d6983af23307a5f82720b23",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se.png": "61daec596a470a3938be646815a06912474962fb2bfdbb118c8e7de802bdc38f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_poses.png": "086471adf79b1d5562ab184d023247c97758842b2082a5d89ad4d8eda83a0e69",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_source_samples.png": "56b984ef79d2e8351ed9d1b92cb77dc7468032e358c25218710fd648d0733b6f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_se_samples.png": "e64cdabb47bac7407635e15420a2641d8101b38e8fb5ca038ef44f6ad3ddc226",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4": "34fa4516f7bec9bd8e2863c0f8dca115fa267891380cdaf98b51e13c115c4b2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png": "bde319ff7842e3e9da49f821222331cd9840a9aa69f17aa76cd2f5eaab810fef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png": "7282f2e2942019b8b752ba765d2d2cf0cd3b33cec6c57caa8a6b1e458c257d31"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_02_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_02_s_v1_20261114g.png",
+      "sourceSha256": "252995e0d75a91de321152bf501cf0e51af91552b2730a05eff6564ec5b752ff",
+      "bindingSha256": "9da4a4c105213a6bcb6fe965ae2e23e096a28271eb52061e48e418470800aa13",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source S: all16 native poses inspected. One connected right-hand brush follows a rising flick, empty left hand balances, facing and costume retained, stable boot root and return. Eight-facing comparison inspected; strike/VFX timing in gameplay remains unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s.mp4": "41c10b033d6af44b1c32d0a7e2ab0e16621a94276fd2aecf4137757d3778c6bd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s.png": "f93735af433a32e32413425bd98dd277e8ce344e8864ca14283074ab22740d93",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_poses.png": "28f8bf438b62396f010dc6ccc33d562e39a9b3303781cace67aab5c554b15750",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_source_samples.png": "b014a44b9e2052cdbcceac77a343cbaf8da7822631bf5791a1ac8381b4b7e9c0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_02_s_samples.png": "572a03d2c21bb00a6cb85dc7755551f086523779c6788f4f02ed06ddb60a8f05",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.mp4": "34fa4516f7bec9bd8e2863c0f8dca115fa267891380cdaf98b51e13c115c4b2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles.png": "bde319ff7842e3e9da49f821222331cd9840a9aa69f17aa76cd2f5eaab810fef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_02_eight_angles_samples.png": "7282f2e2942019b8b752ba765d2d2cf0cd3b33cec6c57caa8a6b1e458c257d31"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_03_n_v1_20261114g.png",
+      "sourceSha256": "06b145a96d7df5d9785a41629edc3c1118b888acbfbeea600f98baf862d0a795",
+      "bindingSha256": "1a888f576a6850b0907c5e9c413aea90af514ab741cf91e844e667cc859b58e9",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source N: all16 native poses inspected. Distinct lift, low downward stroke and recoil/return; knees/shoulder/brush drawings change through the action, only one brush, no left-hand tip or cropped limb. Native eight-facing comparison inspected; full combat assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n.mp4": "e8a9796fadbee20236e0fffdcf71d9f52ab2abae0e53bc6b2b470b820719e863",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n.png": "bcc5df1d0db8ed5127a8ab4c5a2d97ee0061d8a9da195c20337c8b2fc5e10ccd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_poses.png": "00b31836f9131a9652fa839d75d6d467783077fdae229d96b91079fae11a488c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_source_samples.png": "62b98ff7ddbfb5240e5cbe75e39abc3385daa5192634365127f136595605dfd2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_n_samples.png": "87ba50b92b0e5e9b30c1ec4505c793b23f4985a6350adb4ce339a857d03395c5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4": "827a37ffe104f895950b890ffcf6887f6f2f0080b870c137a84d717a2599a1af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png": "db5d787d096ee04fd125f72b468dcbd5a146834a0d72f6445b5c265b2a7c6322",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png": "c9eb4a22e92579d83ae871a1a4d25e356209405160221d37be93ce79617d69b5"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_03_ne_v1_20261114g.png",
+      "sourceSha256": "1a9b243ccf3b1d5f9b6d1793c8b04a027a0bd72d11d704e52584752bc61c7d51",
+      "bindingSha256": "f593d754407744e5ea16e369fc36e7a193c48fd52a154db89cc3f5b7bc845fca",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source NE: all16 native poses inspected. Distinct lift, low downward stroke and recoil/return; knees/shoulder/brush drawings change through the action, only one brush, no left-hand tip or cropped limb. Native eight-facing comparison inspected; full combat assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne.mp4": "bf0b81bd24c865b6dc60eb1528087f957766122758096312d77a6c24c16a6c06",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne.png": "bc479f8d88d357b7725128529d70fd8b282c171836f9932737940f6e9d6d11d1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_poses.png": "34b7ad3c885e4a62599d58e37f5b24153c5f31e7890bce8c215b71def35bdca7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_source_samples.png": "bab9c7fc3f2710d9300861843736ff94edfe0076c0289a0b61e8f9e3424ea319",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_ne_samples.png": "885eeaae36c222ceaa57b5427584254196889ddd4b23e8f33ce2fc03ef2c898a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4": "827a37ffe104f895950b890ffcf6887f6f2f0080b870c137a84d717a2599a1af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png": "db5d787d096ee04fd125f72b468dcbd5a146834a0d72f6445b5c265b2a7c6322",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png": "c9eb4a22e92579d83ae871a1a4d25e356209405160221d37be93ce79617d69b5"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_03_e_v1_20261114g.png",
+      "sourceSha256": "84181ce2d4e14875f96f678bd1771964698010d19410b4c3b03ca4e9ed4b4f02",
+      "bindingSha256": "c57d6e57f5237f7da7cc75a6bc748a2346a76aab93a38a077ceea64dbe31dc7d",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source E: all16 native poses inspected. Distinct lift, low downward stroke and recoil/return; knees/shoulder/brush drawings change through the action, only one brush, no left-hand tip or cropped limb. Native eight-facing comparison inspected; full combat assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e.mp4": "74c25fdee4133b2b4277a9700702aaebf6f2c273bfcfb184d45af05754792b94",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e.png": "817fd9b96615ca66d8b997dae6fc2397195cb818dd5d03ff6003958949ee93cf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_poses.png": "43f8afa497aafc2a6bdff415223214c50b5d3496a4a71d7463fd9a58be407078",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_source_samples.png": "e5a0a269a9889dbefeeb5a087c889c3c3f7b2381fbf316070e8b2f60dfef38b2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_e_samples.png": "027bb3a36b7a3ac15b4ed58be84dacde5345ac563151d88fcbe132b2bd8bf676",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4": "827a37ffe104f895950b890ffcf6887f6f2f0080b870c137a84d717a2599a1af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png": "db5d787d096ee04fd125f72b468dcbd5a146834a0d72f6445b5c265b2a7c6322",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png": "c9eb4a22e92579d83ae871a1a4d25e356209405160221d37be93ce79617d69b5"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_03_se_v1_20261114g.png",
+      "sourceSha256": "59405886eada0565d09a524693094d0d7465ef1404b5704778e0712cbfa2c10a",
+      "bindingSha256": "68e9165b8b73defb756e722ac87331ff98186dea59d8c220d5731466fdf70e3c",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source SE: all16 native poses inspected. Distinct lift, low downward stroke and recoil/return; knees/shoulder/brush drawings change through the action, only one brush, no left-hand tip or cropped limb. Native eight-facing comparison inspected; full combat assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se.mp4": "6197e4a17cb21c88b297d1f73030d1eaa3497a26e3dca8d771d23cd61f4fc971",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se.png": "dec0be8d5a86dd72af3f84e4437946077d29a017e5284a7a26d1fc276926781b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_poses.png": "f875fd7a3e21ce9631988dd79f1f4c5f9e1364a0f09a2ff85831783d6f355ee2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_source_samples.png": "d6fdee6bb3d2a750304c89db03a19c97342450e84e988480cf10c070cda4a2d9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_se_samples.png": "26704125f59382ef1d83ba840483ef63da03a7a9ff7be5d0a4b4378518bb23f5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4": "827a37ffe104f895950b890ffcf6887f6f2f0080b870c137a84d717a2599a1af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png": "db5d787d096ee04fd125f72b468dcbd5a146834a0d72f6445b5c265b2a7c6322",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png": "c9eb4a22e92579d83ae871a1a4d25e356209405160221d37be93ce79617d69b5"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_03_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack_03_s_v1_20261114g.png",
+      "sourceSha256": "6f8be054ea51ff26fa59e14d9c42cf3c98f54b766e9f98abebb5e897d7e14a2d",
+      "bindingSha256": "479573c02ef880fc64032f6431a3a3d6fecbe75a107fa9e053583386525d225b",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source S: all16 native poses inspected. Distinct lift, low downward stroke and recoil/return; knees/shoulder/brush drawings change through the action, only one brush, no left-hand tip or cropped limb. Native eight-facing comparison inspected; full combat assembly unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s.mp4": "eae36f442b0dce2991c0cd7cf8243fba5521f1d5f78f2a31cf7f0d2a98ed21f1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s.png": "decd6cd9c710a9075258a20026b786dfa6de42edf2fd4944f50bc2f2bce8dfa3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_poses.png": "6efe7afd2ac97ef02c4ecaa6da5da25c437df827a25cbc9d4f03210d8bba0014",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_source_samples.png": "8ce04195b8c3b5280039badd4860cdd1508b1402dabf07704f5575bfde410cc5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_basic_attack_03_s_samples.png": "3254531dde25831b66d38036ed696bc0d9664e1e933ce588b9612c5a98628248",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.mp4": "827a37ffe104f895950b890ffcf6887f6f2f0080b870c137a84d717a2599a1af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles.png": "db5d787d096ee04fd125f72b468dcbd5a146834a0d72f6445b5c265b2a7c6322",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/basic_attack_03_eight_angles_samples.png": "c9eb4a22e92579d83ae871a1a4d25e356209405160221d37be93ce79617d69b5"
+      }
+    },
+    {
+      "id": "class_huyen_but_dodge_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_dodge_n_v1_20261114g.png",
+      "sourceSha256": "a5052734221b8d094039c0ea03ccc6a286d19343d4001dff649b08b0a0780c54",
+      "bindingSha256": "d406f1fd2984ff13cc5005caa79dddc43713ee90067f32f04383adc34bb1587d",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source N: all16 native poses inspected. Low staggered quickstep, cloth/braid follow-through, connected limbs and right brush, recover to standing. Compressed-pose boot origins remain stable; E background halo absent in native view. In-place source only, not world displacement or collision acceptance.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n.mp4": "fb7be18d64197c70fa69d9d501ee3135e5ed32247706cee7feb3358894a93fbd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n.png": "58a4c4f89ea34ab960a9e9e469d9f95d1633c859656005afdf705500538933f7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_poses.png": "5d5e2d46806a0f452c087dcec6abc0da9acfaf27a2499eced212ea90857c2cfc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_source_samples.png": "029bc53dc8026c0d006f25a37847e6ac1b8f18a4784442d0977825acfa2934c9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_n_samples.png": "e0ac429c1032c25106fbe6fcd52c83fdd8d54b1fd4fc213427e460724bc71cdd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4": "3f26b16a77f51980ad2ac0f335c70707ae846bb2bbddd302cbdbcb728a34ece1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png": "322718c6ad5b1e960ba824e6dd8b064d41f92dcfbcbeada1424540fb78aac18c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png": "622df7807abbcaf19b389e29e9663e0505935df7982685bf59dfc223a25f4e6a"
+      }
+    },
+    {
+      "id": "class_huyen_but_dodge_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_dodge_ne_v1_20261114g.png",
+      "sourceSha256": "71f280643786df02092df848a6e3088eab754cd23518d238ad9fa28a2dde7f5c",
+      "bindingSha256": "9876dca7ce000aa631e08454058467fa19ca148ffa36e9ba5abda1e95607eaf9",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source NE: all16 native poses inspected. Low staggered quickstep, cloth/braid follow-through, connected limbs and right brush, recover to standing. Compressed-pose boot origins remain stable; E background halo absent in native view. In-place source only, not world displacement or collision acceptance.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne.mp4": "c7c921e3648ed8cad300c94c8f26ccde62011bd0860048d65ff73e3ba030014a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne.png": "892c20c84127b0dbed8d25db0bce232ec989580e398937512cd4d3b5378ac8f9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_poses.png": "0198016f0ddf0570953880ba094c47a9028a8e1aa4c4011f7626977b48b181bd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_source_samples.png": "a493fbede910d0df3bcd9c6b41bd1a9f9f9eac88e076b77683c661287a190845",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_ne_samples.png": "5e40a74387f2b8e6d1518bdd8de71e1773c01947edc44bcd9bc89a29621a6905",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4": "3f26b16a77f51980ad2ac0f335c70707ae846bb2bbddd302cbdbcb728a34ece1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png": "322718c6ad5b1e960ba824e6dd8b064d41f92dcfbcbeada1424540fb78aac18c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png": "622df7807abbcaf19b389e29e9663e0505935df7982685bf59dfc223a25f4e6a"
+      }
+    },
+    {
+      "id": "class_huyen_but_dodge_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_dodge_e_v1_20261114g.png",
+      "sourceSha256": "1e4e3f66c328536ce6a0db2eae309245db72d3feedfcd1c09917038d0c3f9e4f",
+      "bindingSha256": "f2de15a8ba3e1c0705f25f1df7d8cd60c7e9d1f0948cb07b16daf094526b36a7",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source E: all16 native poses inspected. Low staggered quickstep, cloth/braid follow-through, connected limbs and right brush, recover to standing. Compressed-pose boot origins remain stable; E background halo absent in native view. In-place source only, not world displacement or collision acceptance.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e.mp4": "c9fb71f928e8963832b5bb489d5c9ed2f33b8f3d152b4287b63a34f236e77702",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e.png": "f51b4f6ab456e3d4194bf6c2189a7463951c19973874227aad5bc83e8eed3140",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_poses.png": "638ff76d3b80ae7daf004154ab1008b036bd05a8be257fb28a7caae3e56aeb95",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_source_samples.png": "ea04cf4ad73fde224aed34d3558554dedb0f8f121b7dcf97eb10ab3aee746d9c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_e_samples.png": "1b33015babd46a87668c9cd573b5fd55d2ee9006e92b3350212a49a5ea1958e7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4": "3f26b16a77f51980ad2ac0f335c70707ae846bb2bbddd302cbdbcb728a34ece1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png": "322718c6ad5b1e960ba824e6dd8b064d41f92dcfbcbeada1424540fb78aac18c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png": "622df7807abbcaf19b389e29e9663e0505935df7982685bf59dfc223a25f4e6a"
+      }
+    },
+    {
+      "id": "class_huyen_but_dodge_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_dodge_se_v1_20261114g.png",
+      "sourceSha256": "396c621b7234e48fcda3d719ecf29df884d23db97034b1d01dfe24cff2262feb",
+      "bindingSha256": "d2b8e440395a727a662c927bd9f2e5c36523acd0db66a0b194d85239bbc095f2",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source SE: all16 native poses inspected. Low staggered quickstep, cloth/braid follow-through, connected limbs and right brush, recover to standing. Compressed-pose boot origins remain stable; E background halo absent in native view. In-place source only, not world displacement or collision acceptance.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se.mp4": "7f9cd047a75d2a78624913073e48b0c7acfa3b9cd03a5895e9f9aef3dd2ecc95",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se.png": "9a044712ac578592b11d5096667e5ac68e3ed9d241a1076db2fc42ee57701ca3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_poses.png": "643e09b2ad7ad322637b843d48d147fbe738fe34e8d057bf7b2655f10dbffd67",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_source_samples.png": "22775fc7e3d3a33a4f47aaf2f96f45e1612078b7c5bc93dfe7ef322e6756f989",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_se_samples.png": "1b6640aec62677cc4b0677c0f031c39aa6ffef138c7c7c462b0be4756ecc17f0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4": "3f26b16a77f51980ad2ac0f335c70707ae846bb2bbddd302cbdbcb728a34ece1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png": "322718c6ad5b1e960ba824e6dd8b064d41f92dcfbcbeada1424540fb78aac18c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png": "622df7807abbcaf19b389e29e9663e0505935df7982685bf59dfc223a25f4e6a"
+      }
+    },
+    {
+      "id": "class_huyen_but_dodge_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_dodge_s_v1_20261114g.png",
+      "sourceSha256": "258dee7614bcafa92cf4851afb04add6daac4a0fd8ef9fcbf08c9bb0c174bbdc",
+      "bindingSha256": "6ad5168b935e0538a99cc50670a7b140ef6a2502f63e45374bad59e82e4bc220",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source S: all16 native poses inspected. Low staggered quickstep, cloth/braid follow-through, connected limbs and right brush, recover to standing. Compressed-pose boot origins remain stable; E background halo absent in native view. In-place source only, not world displacement or collision acceptance.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s.mp4": "db7d7a19b8e032716989b8cc9ff169e5a3fd0cc4ff8e42866a25b6f0610fce2a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s.png": "92a78e56f58b65a9f2eca00c09bacb93dc8916c9f8e2e626fbafbd126c28f301",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_poses.png": "880f1305fdbb0269dfad40546f1afd3202cbb2ba84111ada30eb56150f1858e0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_source_samples.png": "9b90a0518cc0dce4178adfc85b876fcd55701965c45500a4c381797b73c50c67",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_dodge_s_samples.png": "e8725931032a15501a2e6a801d6b07af55eef65ac1608be68ff9d37d9e839486",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.mp4": "3f26b16a77f51980ad2ac0f335c70707ae846bb2bbddd302cbdbcb728a34ece1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles.png": "322718c6ad5b1e960ba824e6dd8b064d41f92dcfbcbeada1424540fb78aac18c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/dodge_eight_angles_samples.png": "622df7807abbcaf19b389e29e9663e0505935df7982685bf59dfc223a25f4e6a"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_n_v1_20261114g.png",
+      "sourceSha256": "6f7480099b801ab2f3f2cad0528d79f17f0dd2cd53783696a9cf0c83ebce7f22",
+      "bindingSha256": "1b8376ae5e78c6501e02c4d11d52fe849b9676962d337a2a6d111d17b9c1c1c4",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source N: all16 native poses inspected. Courteous bow then one empty left-palm extension and return while right hand keeps the brush. Two hands only, face/facing retained, no invented pickup prop, stable source root. Dialogue/quest interaction is outside this source review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n.mp4": "4aec14a1741c4b30f16c230028291916384adbfbf7ea315e7def231004af236c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n.png": "bddc2ff38c26fa996451802e28b53f67185e81e901bb4d34f85b55933742ae51",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_poses.png": "0cf3f01ae90b56ab8bd8f862ad7bd4cf881daa3433bf2562d2b56fc556160610",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_source_samples.png": "7db78162b19a0a35eb33cc7362ad451e0dba310a42a55aacbb5736feb25bde8c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_n_samples.png": "bca6e9e7ca7b1f86a38a2436b515f68688003960392b2d0cedb3d969717ad710",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4": "70830a182d28fc87b594dd53ada17a51c82a0901769136189189b4795fe37cb2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png": "9f115808e45721166b48d9e64e5d1c09f9a5a48a89db61c4e1435ddf36ed0b74",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png": "5cf229093f60d380410fc22793473cfdf1e4d6d9da88d5e08a519b60bea4e61a"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
+      "sourceSha256": "1f93fa58dc98a9fe642a181ee12d49b192322b06cec4373ac47d721e92b524dc",
+      "bindingSha256": "6fdec9ae16357633ac6b02be4309403d3af5c4262b54963cdbb94854fd6ae09f",
+      "productionApproved": false,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "HOLD: Around sources5..10 the idle rear-left dangling hand remains visible while another empty palm reaches in front and the right hand holds the brush. This reads as three hands; remove the retained idle hand and redraw proper far-arm occlusion.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne.mp4": "de3294265ed1ce6aa4a28fa9e3b0b10d26bde191b68af7581efc296e32956801",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne.png": "17992ebcf59b995019c19dc8855918a008d906959bef5a6d83ecf044c199253b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_poses.png": "790913b576936a375831df40b25119a01fa7dfecbc8048a2d45c55f846bbe59c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_source_samples.png": "606e5ecaab4c4431d405acc14fbee4c3d0776aabcc5c1930f547fdcbd701f6a9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_ne_samples.png": "3dc5434957d744d0d166becb651eb4326e7af4ab793aa76497657fec0667a765",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4": "70830a182d28fc87b594dd53ada17a51c82a0901769136189189b4795fe37cb2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png": "9f115808e45721166b48d9e64e5d1c09f9a5a48a89db61c4e1435ddf36ed0b74",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png": "5cf229093f60d380410fc22793473cfdf1e4d6d9da88d5e08a519b60bea4e61a"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_e_v1_20261114g.png",
+      "sourceSha256": "0583f055bb0f529b38bb1e79b6310c1360e763c83301f4deff3d1327dc47146f",
+      "bindingSha256": "77c31c0fe54e93fa3bc288eaccfc745c6f3f60c21a3908ffa2839e0c2f4741de",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source E: all16 native poses inspected. Courteous bow then one empty left-palm extension and return while right hand keeps the brush. Two hands only, face/facing retained, no invented pickup prop, stable source root. Dialogue/quest interaction is outside this source review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e.mp4": "ae9292f9112c25bfda171340b873ac170f4db696c8bf321656d865bd75fc378b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e.png": "4d8dffce1e859299f5e67e5e5555391934411f5122bfaf3f1001e60cd7cf4cb5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_poses.png": "121f4957d9e2b63503e9611833fa6f3337262b18e44d29e33c3e43c8ee917db2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_source_samples.png": "09d2b71091ee02d8cbdd01672832849ec78a9b3ef4e57e3e8c73d37714c1ebbd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_e_samples.png": "baf322a3be00d6cee6def9a9dd2a91584608f9adfc6119296591feab60e9adef",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4": "70830a182d28fc87b594dd53ada17a51c82a0901769136189189b4795fe37cb2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png": "9f115808e45721166b48d9e64e5d1c09f9a5a48a89db61c4e1435ddf36ed0b74",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png": "5cf229093f60d380410fc22793473cfdf1e4d6d9da88d5e08a519b60bea4e61a"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_se_v1_20261114g.png",
+      "sourceSha256": "5f3a98953cd94fcdba5a998909e439bb4e2bafd8fd5a93ff6ed724475a7be4c5",
+      "bindingSha256": "7ed98f82a2c9589076ceec4497e50f637354f67f6a704c94c2cdbce637217558",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source SE: all16 native poses inspected. Courteous bow then one empty left-palm extension and return while right hand keeps the brush. Two hands only, face/facing retained, no invented pickup prop, stable source root. Dialogue/quest interaction is outside this source review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se.mp4": "3de82a528b35877bc27fdba772bdac2bcf4bd37faa59232d2b12ff73573f5ec9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se.png": "74e284963559cd6b7aba748cede7b8c80b5e46f5f1b31bdd49787ada9916da2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_poses.png": "066f8b47071f28d1d30e69e54f1c933910edd90df3f8b384d5290f23547a0c83",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_source_samples.png": "01fdeafdc0c2a73acb2eae74e346bc23338488acb19ed38d8df0be305cd2da24",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_se_samples.png": "e32b49cf90696d3ce62e81d55fab3366972f57f9e417888f01fd1d05b6050567",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4": "70830a182d28fc87b594dd53ada17a51c82a0901769136189189b4795fe37cb2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png": "9f115808e45721166b48d9e64e5d1c09f9a5a48a89db61c4e1435ddf36ed0b74",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png": "5cf229093f60d380410fc22793473cfdf1e4d6d9da88d5e08a519b60bea4e61a"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_s_v1_20261114g.png",
+      "sourceSha256": "f487ff1e9401e42360c126b8877043a1adf4c3e2366aba885b508728510f51d7",
+      "bindingSha256": "e5a9b6b17fc8d1a6d205317641a98a12815cad8aadf2e7164b790f884b871b1e",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source S: all16 native poses inspected. Courteous bow then one empty left-palm extension and return while right hand keeps the brush. Two hands only, face/facing retained, no invented pickup prop, stable source root. Dialogue/quest interaction is outside this source review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s.mp4": "4de69897ab4f63e0232830fb81e43c5c7093d1dea3251c0f55d37db9878741f5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s.png": "ba6371def8fdd5f39dce074c2209a78ae770794568db3e518e4810b9230ece0f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_poses.png": "28853df34bd33648b2fa6493f50fef5b8a9ad3a67c33b989b6c3f018a9717dbf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_source_samples.png": "dece380aa9b6131dd63d0b4ecc58ab3dc2cf2fb03ffca9a170cbeb8151a25988",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_class_huyen_but_interact_s_samples.png": "fc3ed2332514b4e82ad4eab9ec3670ffbc2031b36b346b8acd8cb5457cf1fdb9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.mp4": "70830a182d28fc87b594dd53ada17a51c82a0901769136189189b4795fe37cb2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles.png": "9f115808e45721166b48d9e64e5d1c09f9a5a48a89db61c4e1435ddf36ed0b74",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/interact_eight_angles_samples.png": "5cf229093f60d380410fc22793473cfdf1e4d6d9da88d5e08a519b60bea4e61a"
+      }
+    },
+    {
+      "id": "sk_hb_05_departure_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_05_departure_component_v1_20261114g.png",
+      "sourceSha256": "d914a82d99a4d8714a59d06e3564b6399437ac4421105bb25ea90a36a97ae2c1",
+      "bindingSha256": "250818d5e4493a701df51ad21c2a5075869ef098146f59a4a9ed470bed5045a0",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Two low diagonal water strokes draw and release into beads over16 phases; no vertical cloud, solid badge or cropped tip. Fixed emitter registration inspected. Source preview0.32s visits16 phases at60Hz and does not change server mobility duration.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component.mp4": "ae053b632693839181cd9b8887362309143530d09a3d5f0543d3569c13faaca4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component.png": "a6e4f8bf93e5e493643635c2e1f8b62005dfabcd5b8bf54bacf3e7cd3d08f0ca",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_poses.png": "6ce7f8e0f9eaaaaf82464d0921c6e8e28339ac87317e99a5d30c02c02f6effb4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_source_samples.png": "26d635aa8aaacfae2af16c413d57eb6a9e1531c0e5150ae085c429e85b817743",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_departure_component_samples.png": "6f96e444b9a4ade163a368bd0dbd186fa6497a0c602571bff2eb57465d4f92d6"
+      }
+    },
+    {
+      "id": "sk_hb_05_trail_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_05_trail_component_v1_20261114g.png",
+      "sourceSha256": "c721fb847002bdac2645eb41902db13628aba07912038613dd34a3c7754bc11b",
+      "bindingSha256": "d4d152cc8290797185d0f539093312be9ce15c319d0b7ebc670064e7608d761f",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: First low wake then staggered second wake, development and small fading beads readable through16 phases. Separate grounded marks with a clear path axis, no character/solid haze; module only, not proof of path/collision or all-direction trail assembly.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component.mp4": "15671acc4a9ac71a83cb46ef4399a4f7ea89cb08f8e89a52c251780af8cc4943",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component.png": "b444b837a62ede17545de95f9326b4d0cb5010750419d32afa0cbc12acfc3962",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_poses.png": "edb2c0bb9f5869b42cb000e96429362c00e271fc28bf39389d364abdd0d9b81f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_source_samples.png": "5166f90d86e21e195aec9a948f7eeeaecf3c016432f078f8d0852ac29978c5f0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_trail_component_samples.png": "aae99850d4dd5403a288423c929eed7c61616a4f68af1698eebe8ba3b04a8bd7"
+      }
+    },
+    {
+      "id": "sk_hb_05_expire_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_05_expire_component_v2_20261114g.png",
+      "sourceSha256": "54c1e34da29d4b419125ead5d3bb035c16697193bba78e39e0755721cc43c56c",
+      "bindingSha256": "2d3208a315fda23f2e8dbc63386013c81ea1ac2bb7c5a2c35d145d89fb3fd35a",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Selected v2 begins with developed paired shallow crescents then only fragments/shrinks into beads over16 phases; rejected v1 buildup not used. Fixed ground footprint remains stable; no late bright reactivation.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component.mp4": "a3596465a85a580216bf3b01c50b247d9f5fdaeedf8d0a5577bb86b588cc0b96",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component.png": "c3857acbfea3f685916eb9490702b9b3f8fa0ae4c4193091390afce8491d67f2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_poses.png": "0dc863472f7caa88b2999b423b1938ed929dc7cadbde7c09eedd29c42fad4814",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_source_samples.png": "15230f1463582fb7911512536a8e7a987212c9c94f8387f784875687c3c994db",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_05_expire_component_samples.png": "fe4d5df62abf735b5e50aef68ce07dcaaa167afcf31234c8dd7eb1943260e257"
+      }
+    },
+    {
+      "id": "sk_hb_06_tell_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_tell_component_v1_20261114g.png",
+      "sourceSha256": "ee1dc17a803cf2abda64d31e060095240ec91eda8ea0fa6359f87f942e2cec24",
+      "bindingSha256": "71ef30adad644ab5ae51bc3bc5c2b01bfac98c1e6913cb9e0e5e6422fb18cc19",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Final16 native poses inspected after complete-triangle row383 correction. Three jade nodes/arcs remain grouped per cell; centroid of persistent nodes holds the source origin as arcs close. Empty centre, no borrowed next-row nodes. Gameplay radius/telegraph readability still requires assembly.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component.mp4": "4b5a81bfa1f4c27db8d00ffc46396eeed7335b38c9ff179607bb1b3bc54cf038",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component.png": "f226ffc951d85055ba78de047d6a30a8297a783dd5a057298784a5611f7cb568",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_poses.png": "fd68a2faace8d9384b85bc9a78ad341a337392cba31b0c1d133ba7df2c07a68b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_source_samples.png": "29f5ab7b9f90c4a19570ae391b38b148981bcd8bff6730fc7bbfe31d9006d2c1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_tell_component_samples.png": "a8e3417fdf54cf8151ba6b252f39d22d7b24757a193c5e80a573314d53aae45b"
+      }
+    },
+    {
+      "id": "sk_hb_06_wave_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_wave_component_v1_20261114g.png",
+      "sourceSha256": "2ddaa7c9ff53bf064d2b8c7c39a202fe62a939a174f26214aa4831b683b9b9ca",
+      "bindingSha256": "3de6f2c16589bd7b7095f33dcd582177619da34cdba2a61a70cff9493133ec48",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: All16 native phases inspected: small low ellipse expands to a broad rim then fragments; open centre, restrained bright leading edge, no opaque dome or screen fog. Stable ellipse centre. Module is not an8m gameplay hitbox or confirmed heal event.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component.mp4": "737aa70a27cc9b98f4e63120cb45d8366df139cbed8f11c1b8ece8aaf67f7ea3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component.png": "63db5adb5eb8a4ff95ac20d5bf846f95523194f9e8ba07ad99660c5ba5dd41c6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_poses.png": "2d776730a9f070e149f60354474330ef9e2121f1f250a67aa3a6d2254d6c1e26",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_source_samples.png": "a46eabd4ffdc7d06e72a4206a4c8e0d9f12829a0a1130b2626021a77b5e4c3bb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_wave_component_samples.png": "2e803f6945d0bd8d16bfc69d675f195831298e12eb03badf4df9853f822ca1d2"
+      }
+    },
+    {
+      "id": "sk_hb_06_ally_heal_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_ally_heal_component_v1_20261114g.png",
+      "sourceSha256": "61182e1acd53668aa85736d082f1555c757de86b6abdef07f71fd6bc89fa18fd",
+      "bindingSha256": "4fab5c1ec4c50a316629fc6511c36c08eb6c5b678bbd006d7211f490a3bc7ba1",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Final16 native poses inspected after measured early-row foot origins replace unequal cell84percent anchors. Two narrow separate ribbons develop from feet then rise/break into beads, centre remains open; no row-boundary emitter jump. Ally attach/scaling and actual heal confirmation unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component.mp4": "baf66f51c61353a9226dc5ad07c974863a2e687cd7263fd2c59e1db8eb3f30fd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component.png": "9fe104d48f28b122187dc4ff9ff8783d6ae7ea91a555d921572509e22a2deb04",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_poses.png": "9ff8b496fd70f511720a0eb2f9c65c330e580346add90c261256c2da481dac58",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_source_samples.png": "5b4789ded9482885db6b615d241b2076418e233e14337b000c622cf0914e0488",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_ally_heal_component_samples.png": "52f570caa43923ff302dbd864caced42a97a6df180de90847215454d7dcf0e78"
+      }
+    },
+    {
+      "id": "sk_hb_06_cleanse_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_cleanse_component_v1_20261114g.png",
+      "sourceSha256": "9cd4e658aa0c4b7a511c6cc521f56f3d94c5ef70717bdf15b66e5eb184caa7af",
+      "bindingSha256": "9a1f4be7b12912cf23edfec6562b20694356fde6448225b8e48e4c6b6115f7b2",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: All16 native phases inspected: a few dull violet motes split under two crisp outward jade sweeps, then fade. Open centre, no opaque poison cloud, skull/cross badge or stun-removal claim; effect cannot remove a status without a confirmed server event.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component.mp4": "7e0bbdf5231c35b1a370a210fc0df144bbb5849d9f49540fec390679ba043f20",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component.png": "6e886faf155eac994038a9eb013f108c04847c3117cf4a3a26c0c78a038ab8c8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_poses.png": "4dd3886d6d81d5f5a4aa485102f857b249bd49ca4cad4b51315c2f5dd9ef19be",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_source_samples.png": "f4505fb3d430ea395d0c1e99cc00adee497c948f97ff8ebfc333898cf9d2df39",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_cleanse_component_samples.png": "efe044538bab6f61e41d21eacc17219e25da88f885440c07d74e7b68b3295314"
+      }
+    },
+    {
+      "id": "sk_hb_06_expire_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_expire_component_v3_20261114g.png",
+      "sourceSha256": "681d0373ac15b49f9fb467915cf7a26f09dad7376b17a10c1ce2a7c891fe0a3c",
+      "bindingSha256": "c7686fe4668e0c5b81fde9b4b08ac4172e5ea0e48e9b0768bac14f33fadbfe12",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source component: Final v3 all16 native poses inspected after row876 complete-triangle correction. Same three-node motif as preparation; arcs shorten and three bead groups fade at a stable origin, without an extra next-row top node or background tint. Transition with the complete ultimate still needs assembly.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component.mp4": "30043f3bc1629f96441c3fa18635663a76e2cd75a995f786318f68000bc1020f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component.png": "ae35567b39629830ecf4177838eca381e5aed9dcdf31973462f04242c19bf66e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_poses.png": "dd8e3165af406beb652ad94fd562884cf43e8ae94da308332899eee7736f8202",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_source_samples.png": "223fd9b80498698b41b6e1567b1f19c466b9a9aa92dcae6c6916288faf4ba425",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114g/raw_sk_hb_06_expire_component_samples.png": "a4454208a06528b94dee754b390dc1d8aacbe009cb3b3a5edb0fee2883b19e43"
+      }
+    }
+  ],
+  "historicalSourceObservations": [
+    {
+      "id": "class_huyen_but_run_s",
+      "decision": "HOLD",
+      "visualNotes": "Native16 pose view does not make the intended opposite anatomical contact at phases0 and8 clearly readable. Repeating leading-boot silhouette can read as skipping/sliding; redraw clear alternating contacts before approval. Pixel uniqueness alone insufficient.",
+      "posesActuallyViewed": 16,
+      "sourceSha256": "cdb36f1c320843d0935fc9df4f87e3138e8f3eace81daf33b34729294b09456d",
+      "bindingSha256": "18111d2fdbe4b5b2133e40c8197d7cd6060d490913fb20e10e62c71e2aae7f60",
+      "nativePoseProof": "Implementation/Reports/Evidence/Actor_Batch_20261114g/Superseded_Run_S1/raw_class_huyen_but_run_s_poses.png",
+      "nativePoseProofSha256": "59d4e6f13ef63c222e697297a114ca4a162b5be983da287a5316b1f2250ae3b6",
+      "supersededBySource": "Sheets/class_huyen_but_run_s_v3_20261114g.png"
+    }
+  ],
+  "browserStatusHeaders": "Captured before final ledger application; HOLD counts there are not the final catalogue status."
+}

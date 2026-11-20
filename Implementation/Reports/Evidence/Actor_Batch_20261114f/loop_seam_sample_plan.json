@@ -1,0 +1,53 @@
+{
+  "scope": "NATIVE_LOOP_BOUNDARY_SOURCE_REVIEW_NOT_GAMEPLAY_FPS",
+  "entries": [
+    {
+      "id": "sk_hb_02_frost_sustain_component",
+      "sourceFrames": [
+        14,
+        15,
+        0,
+        1
+      ],
+      "nativeFrames": [
+        43,
+        46,
+        49,
+        52
+      ],
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114f/raw_sk_hb_02_frost_sustain_component_loop_seam.png"
+    },
+    {
+      "id": "sk_hb_03_sustain_component",
+      "sourceFrames": [
+        14,
+        15,
+        0,
+        1
+      ],
+      "nativeFrames": [
+        43,
+        46,
+        49,
+        52
+      ],
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114f/raw_sk_hb_03_sustain_component_loop_seam.png"
+    },
+    {
+      "id": "sk_hb_04_rain_component",
+      "sourceFrames": [
+        14,
+        15,
+        0,
+        1
+      ],
+      "nativeFrames": [
+        43,
+        46,
+        49,
+        52
+      ],
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114f/raw_sk_hb_04_rain_component_loop_seam.png"
+    }
+  ]
+}

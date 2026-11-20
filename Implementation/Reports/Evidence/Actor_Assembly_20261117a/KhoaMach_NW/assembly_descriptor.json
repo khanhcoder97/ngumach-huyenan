@@ -1,0 +1,41 @@
+{
+  "sources": {
+    "class_linh_cung_skill_01_nw": {
+      "source": "Candidates_20261118a/class_linh_cung_skill_01_nw_v2_20261118a.png",
+      "sha256": "f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06",
+      "texture": "textures/f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06.png"
+    },
+    "sk_lc_01_projectile_component": {
+      "source": "Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "sha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "texture": "textures/d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852.png"
+    },
+    "sk_lc_01_leaf_dissipate_component": {
+      "source": "Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.png",
+      "sha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "texture": "textures/ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b.png"
+    },
+    "mob_waterroot_idle_s": {
+      "source": "Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "sha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "texture": "textures/9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75.png"
+    },
+    "sk_lc_01_mark_component": {
+      "source": "Sheets/sk_lc_01_mark_component_v2_20261112f.png",
+      "sha256": "7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05",
+      "texture": "textures/7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05.png"
+    }
+  },
+  "projectSha256": "8d0e5d829b7ebbf071232673c29a291e9eb5ff0561128cdc9841da06aad08ff7",
+  "releaseMs": 480,
+  "contactMs": 800,
+  "releasePosition": [
+    35.53846153846155,
+    -26.153846153846146
+  ],
+  "contactPosition": [
+    -86.90744138157035,
+    -105.67114526604013
+  ],
+  "productionApproved": false
+}

@@ -1,0 +1,62 @@
+{
+  "scope": "SANCTUARY_FIVE_FACING_STUDIO_PREVIEW",
+  "projectSha256": "9eafa6d3e4f951fe8f20842be579c2c9b25f15c78099cf32452b119c0882eac0",
+  "sourceInputs": {
+    "class_thach_chuy_skill_06_s": {
+      "pngSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+      "registrationSha256": "7a3339d6548050aef261c037998fa13d75c5f25fdf5a6b31fc3de924042e662d"
+    },
+    "class_thach_chuy_skill_06_se": {
+      "pngSha256": "29a189053cfbbfde100d5da37cbd16a3270a1ebfacfd2fad924fff384ceb9d5f",
+      "registrationSha256": "d5e8912fed8e1c323199f72c6ff770a7dbbcdb5678d6c8ee58dfbd3964101a0a"
+    },
+    "class_thach_chuy_skill_06_e": {
+      "pngSha256": "f4b7528db88ab39098ac36885a632c7ec1dcfed2129346b352619ddf863b163e",
+      "registrationSha256": "e32211e4031ebd017dba53353c116919c65d059a1d7b224dbdef1c8b4f61bf1c"
+    },
+    "class_thach_chuy_skill_06_ne": {
+      "pngSha256": "903a90565b57cb2442212c7909ca7b15343d74fb69b454f380b87cd38063bc13",
+      "registrationSha256": "a1f91c03ddcb78c1460419c27548cdfff5047eacb672b27a745c68b7f434e52e"
+    },
+    "class_thach_chuy_skill_06_n": {
+      "pngSha256": "9915a4bbb48b808eb3a6e6118850c31e6594aa7f3766e84c0245dd54f6f4428e",
+      "registrationSha256": "3e1736fc980289f7737dbe2382dd3d2454e0f4f374cc77a60d8cb85d533de781"
+    },
+    "sk_tc_06_zone_charge_component": {
+      "pngSha256": "15c54b62a221620aadbe27c6c57c92d50615169ba980fd7178cc30827dc6296e",
+      "registrationSha256": "aa13690215b3098c5a6aa3beb99a9edce6c6af57e435679a17d789ecc68eb13b"
+    },
+    "sk_tc_06_open_zone_sustain_component": {
+      "pngSha256": "6125b704a2886ac0714d81ec9a26e55aa70cd07a8443a786e5df4de3f3b31269",
+      "registrationSha256": "63fd6146c326600e6711a0e78e126bef21df9d9bb4e41582ad9dd30c30f2b676"
+    },
+    "sk_tc_06_zone_end_component": {
+      "pngSha256": "4b01869dd87cfa65c3c77cb19c7add4895cbfbc01cac5c084ee3beec84a07757",
+      "registrationSha256": "e35e80f6044fa87e3f5ba1f15c9095addb7f7615d8571be30842f0ddf3554bff"
+    },
+    "sk_tc_06_plate_gain_component": {
+      "pngSha256": "da9346bfec5561728c5d241ac19c46d089f1b0636f4da7265a8cd5dda55f9ec5",
+      "registrationSha256": "7f9282af31e3adfd351c18491de8d31728d97258c7b3ddc0f3a48edaa49ed69b"
+    }
+  },
+  "directionalClips": [
+    "S",
+    "SE",
+    "E",
+    "NE",
+    "N"
+  ],
+  "phaseReferenceFrames": {
+    "charge": 12,
+    "sustain": 0,
+    "end": 0
+  },
+  "previewOriginY": 36,
+  "plateToSustainFadeMs": [
+    920,
+    1040
+  ],
+  "timelineSegments": 88,
+  "durationMs": 5120,
+  "productionApproved": false
+}

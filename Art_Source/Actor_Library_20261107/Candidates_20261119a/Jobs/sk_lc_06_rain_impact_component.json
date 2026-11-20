@@ -1,0 +1,33 @@
+{
+  "batch": "20261119a",
+  "expectedSourcePages": 11,
+  "scope": "LINH_CUNG_BACH_TIEN_EIGHT_AUTHORED_FACINGS_AND_THREE_ZONE_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_06_rain_impact_component",
+  "prompt": "Draw a new restrained original 2D pixel effect of a single wood arrow touching the ground. The reference gives sage and pale ochre wooden color and outline. Overhead compact impact with 3 tiny tapered pointed olive and gold fragments just around a fixed central ground contact. In the first four frames they lift only a very short distance, in frames 4–8 they settle outward as distinct leaf slivers, in 9–15 they quickly fade into separated 1–3 pixel accents while retaining a visible shape at every source phase. Distinguish 16 phases in an exact row-major 4x4 grid. This is very small readable ground contact, no explosion or beam, no radial wave, no fog, no trees, no circles, no boulder, no actor or arrow shaft. One tight independent effect per cell. Real transparent RGBA everywhere between flakes, with ample invisible gutters; original nearest-neighbor pixel clusters.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118e/sk_lc_05_retreat_heel_component_v1_20261118e.png"
+  ],
+  "timing": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20
+  ],
+  "seconds": 0.32,
+  "authoringUse": {
+    "role": "GROUND_CONTACT_FLECKS"
+  }
+}

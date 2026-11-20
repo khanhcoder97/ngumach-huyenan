@@ -1,7 +1,8 @@
 param(
     [string]$GodotPath,
     [string]$DotnetPath,
-    [switch]$Test
+    [switch]$Test,
+    [switch]$LinhCungPractice
 )
 $ErrorActionPreference = 'Stop'
 $clientRoot = $PSScriptRoot
@@ -20,9 +21,14 @@ $env:DOTNET_ROOT = Split-Path $DotnetPath -Parent
 $env:PATH = $env:DOTNET_ROOT + ';' + $env:PATH
 & $DotnetPath build (Join-Path $clientRoot 'VisualReboot.csproj') -p:RestoreLockedMode=true --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Build failed; preview was not started.' }
-& $GodotPath --headless --editor --path $clientRoot --quit
+$importMode = if ($LinhCungPractice) { '--import' } else { '--quit' }
+& $GodotPath --headless --editor --path $clientRoot $importMode
 if ($LASTEXITCODE -ne 0) { throw 'Import failed; preview was not started.' }
-if ($Test) {
+if ($LinhCungPractice) {
+    if ($Test) { & $GodotPath --headless --fixed-fps 60 --path $clientRoot -- --linh-cung-practice-test }
+    else { & $GodotPath --path $clientRoot -- --linh-cung-practice }
+}
+elseif ($Test) {
     & $GodotPath --headless --path $clientRoot -- --camera-self-test
     if ($LASTEXITCODE -eq 0) { & $GodotPath --headless --path $clientRoot -- --scene-self-test }
 }

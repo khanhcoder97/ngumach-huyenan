@@ -1,0 +1,55 @@
+{
+  "batch": "20261116a",
+  "pilot": false,
+  "selectedVideos": 5,
+  "sourceFramesMeasured": 80,
+  "actualLoopWraps": 5,
+  "files": [
+    {
+      "file": "raw_class_huyen_but_walk_n.mp4",
+      "sha256": "0a126d00d231317630bd5a595e10dfe15d7ed3372a1fe64308e67063b061a75c",
+      "sourceSha256": "f43012ce9bb18822ba9925613106510d4bc3d5573985e9570f41169037172aaa",
+      "portableProjectSha256": "2306c00f98c2712dd781765a56364b6be1e93934f33c42aeee33e7c3c40c85c5",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_huyen_but_walk_ne.mp4",
+      "sha256": "e75e62766716c3512bbbaa8cc0ecc7cf536b3743dc9ff54314a08d756380642c",
+      "sourceSha256": "81b4ad31fb9097bd52e0788931263d8929d6c414ff95e7dc229c57464ec6b965",
+      "portableProjectSha256": "a59ec3118f5d41b1fe1dce636e645c9d0d43b062b6aa42da63b2a4111cf5c41e",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_huyen_but_walk_e.mp4",
+      "sha256": "852ac364f1d384f63d23463de49d3d9e79e57ead46563142e8f16f515bf8fa55",
+      "sourceSha256": "b8f0561c65fa0f8d08ea83aff9d792ee148a24f4b3f856c3db8bf9c9a642f181",
+      "portableProjectSha256": "36b7582f204820bc22e2e488c95597f344fbc620f9299873e3d858d1cde0d88a",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_huyen_but_walk_se.mp4",
+      "sha256": "2faf5bd2b7251b319d7b7b80a021a13771412eeca3ff16da033566e69bd54230",
+      "sourceSha256": "3b67a012dfe8dcccf4c629c3232fb390d21563efc33576168c5b705c32812da2",
+      "portableProjectSha256": "6e0e9ad91760a88068e74c9e13031fcd4dca6a8d03b58d029db04bbedb0470dd",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_huyen_but_walk_s.mp4",
+      "sha256": "4a7a04f818d540ab87e2180449956beda93f23f2a19ebe673f65b8b3a3d7b47e",
+      "sourceSha256": "06f45a9e9734226a15169936540802ffd1ab5344381e38a2cce2d3100ace0924",
+      "portableProjectSha256": "7d2095326fbc7cf8f426a4fe38ab967ff729a9f8e85ca0ce0940dda1965f090d",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    }
+  ],
+  "scope": "NATIVE_CAPTURE_IDENTITY_AND_PHASES_NOT_VISUAL_ACCEPTANCE"
+}

@@ -1,0 +1,279 @@
+{
+  "batch": "20261113i",
+  "scope": "SOURCE_CLIP_VISUAL_REVIEW_NOT_GAMEPLAY_ACCEPTANCE",
+  "approved": 14,
+  "held": 1,
+  "entries": [
+    {
+      "id": "class_anh_dao_idle_se",
+      "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+      "bindingSha256": "357d842d36f03f2409764198c944713d37180986df925832b035a415ddf21e1d",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One quiet breath and held low dao; clean loop."
+    },
+    {
+      "id": "class_anh_dao_walk_se",
+      "sourceSha256": "45a6c0872a8eea624b91f8de0f3be4096645e727c961829efec97b452c595d4a",
+      "bindingSha256": "e4c934622c1208bc47d5d43f62413cea61ff72d6983cb6184c21ead264b7c310",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v2_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "Opposite contact/leg overlap at0/8 and passing phases; selected repaired source where needed. E/W excluded."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_se",
+      "sourceSha256": "c76a4053d2b915d5cfa1389e5d1c8d50a9e205a6bd0f31ead4fc6f4baa5bf6a3",
+      "bindingSha256": "01a48e0656e611d3dd4faea94cdda7554e2f3b48d4106ad2453d29ff4e4e1b08",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_se_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One low forehand with low recovery, secure right-hand grip; combo stage1 only."
+    },
+    {
+      "id": "class_anh_dao_idle_n",
+      "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8",
+      "bindingSha256": "547f7675062eb3d59a0537759052d5d597c0733339913180395c4e201a6c6843",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One quiet breath and held low dao; clean loop."
+    },
+    {
+      "id": "class_anh_dao_walk_n",
+      "sourceSha256": "c0ac0efed5acf518ddea975a86b1841cd463b74cb392c2f3a297cf91cef8025a",
+      "bindingSha256": "88024c2d59ef842f7d542e883e819917b1dcc3029c435e6d080b3d782985d34a",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_n_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "Opposite contact/leg overlap at0/8 and passing phases; selected repaired source where needed. E/W excluded."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_n",
+      "sourceSha256": "256fff1ce1f21e3151fe69c6fc75b81d9bfbef11654f13f360c7a3eedddcdca6",
+      "bindingSha256": "9315832c4a4824a9b880131d8407fefc7c5faf960e523e8fbbac43ed4bafc6c1",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_n_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One low forehand with low recovery, secure right-hand grip; combo stage1 only."
+    },
+    {
+      "id": "class_anh_dao_idle_ne",
+      "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd",
+      "bindingSha256": "41a6861d9f35b4bb93502f91d938fbfedfdfae9d70e2628d0c9f364e40d0aaf4",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One quiet breath and held low dao; clean loop."
+    },
+    {
+      "id": "class_anh_dao_walk_ne",
+      "sourceSha256": "4477c25759961624b10ee1340943880610710fbad2625b96cf1b5e6787e097f7",
+      "bindingSha256": "116ebfd07accbc56c6ed4960ede2a1c9da68da4a4988cb5f1b87be16007fd7dd",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v3_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "Opposite contact/leg overlap at0/8 and passing phases; selected repaired source where needed. E/W excluded."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_ne",
+      "sourceSha256": "07d429bd809e2be115a2a92667ef4ed06ee954540b3245a711d9c9e69037f360",
+      "bindingSha256": "d8d5715836e8085b01b74599f4c229cab088e3f99063ebcd974cd646daa7fb5e",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_ne_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One low forehand with low recovery, secure right-hand grip; combo stage1 only."
+    },
+    {
+      "id": "class_anh_dao_idle_e",
+      "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+      "bindingSha256": "ddc3ffb7b3dff938cc30fef5a46968be2c0a311c32ab2f7b02d4ae440b560db2",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One quiet breath and held low dao; clean loop."
+    },
+    {
+      "id": "class_anh_dao_walk_e",
+      "sourceSha256": "6ca5120108a07dfa12eb936a253d60090998607cacbe298489bc028fbe12508d",
+      "bindingSha256": "a3475a24c66bd028759f9f11669531f7c24d83042dfc0c18159abaf73bdead17",
+      "reviewedSourceFrames": 16,
+      "productionApproved": false,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "HOLD: E near/far contact/overlap at0/8 not convincingly opposite; mirroredW inherits hold."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_e",
+      "sourceSha256": "e3b87c946ca07e8c528714d13b13db7dbf30b3ebc85472fddba785ec294316ea",
+      "bindingSha256": "63aba25ec70ceebc2ce341c18019cf21187d3274ea3955b8246202adcb410d21",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_e_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One low forehand with low recovery, secure right-hand grip; combo stage1 only."
+    },
+    {
+      "id": "class_anh_dao_idle_s",
+      "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c",
+      "bindingSha256": "a01907b011b8f2c14c7c656e62e615e4195a5d7683ec6d300d9f3a95db715edb",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One quiet breath and held low dao; clean loop."
+    },
+    {
+      "id": "class_anh_dao_walk_s",
+      "sourceSha256": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5",
+      "bindingSha256": "62e26d10e7f5a529b19f7400d5553af032bd252aaf40930faa75961af1c0fda0",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "Opposite contact/leg overlap at0/8 and passing phases; selected repaired source where needed. E/W excluded."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_s",
+      "sourceSha256": "23a4dbba73d52b301128db297b87097dca664bcc91a6fd8d9aded08afe1e257b",
+      "bindingSha256": "bd92262af49dd257264b78a6699d3fb77aa34f5ae14f46b8634c223cfd129ae0",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_s_v1_20261113i.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png"
+      ],
+      "nativeReviewed": true,
+      "visualNotes": "One low forehand with low recovery, secure right-hand grip; combo stage1 only."
+    }
+  ],
+  "notes": "Temporal sample captures supplement full original sheet review; source-pose visitation checked separately at60steps. No real-time FPS acceptance. E/W walk hold remains."
+}

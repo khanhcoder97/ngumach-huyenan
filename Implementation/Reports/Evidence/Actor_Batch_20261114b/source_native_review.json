@@ -1,0 +1,458 @@
+{
+  "batch": "20261114b",
+  "manualReviewComplete": true,
+  "reviewDate": "2026-11-14",
+  "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+  "entries": [
+    {
+      "id": "class_minh_kiem_idle_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+      "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+      "bindingSha256": "9c96f008710d2d55633b4411c926821283945274701f955e37d764ddcbe90818",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.mp4": "692c21252165c2990c3ac2835ab57474e8043da883d4ea84d8bd8c7db56c69eb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.png": "51a822de28f343c1263b5a5a6037eca63b9fae6cf2ccca1919c99cf98c9a4793",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_actor_samples.png": "218764e2b33e6883a4ea0fff7c7c1f3a2d2d75c05a9fcb5f53d7866515be0e6d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_samples.png": "394a3d411418d4ee02231efbee7dc55bc6b0de5dc5812dedc2a4ca5e8ab1785a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_idle_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+      "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+      "bindingSha256": "1ce3394d16ff7a6238a28394e9407c40786589c68e8351af908c000e4deb27ca",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.mp4": "f24cd2c20976cee72cbd1350892616940b90f55270251efb267a2da32aa5eb04",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.png": "425e5cb5570fea2fc71936305f9a428d5f4d21f21e3851abf621a40c26f03f2e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_actor_samples.png": "303afcde48b9598080be0229128e7e2a34b6fe8d59d87a2af3f880a1bb66d451",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_samples.png": "40ec893b3872a92738b577bd7f81e8b884954846dd767934f8f6ce98597fa2a3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_idle_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+      "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+      "bindingSha256": "5167ad84a55c1fa8b1414f4acd73482038bde414177e62d4798534b934f524aa",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.mp4": "e4bff86b1af6c5bf5ef3339b902ebb1a2b0ce52844ebeff9b9ee3d9fd84c13c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.png": "25b177d040f0f8c496873f283b31ab71f38fa8458b595b163bc9d8b6ca5fafa8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_actor_samples.png": "ecce10e05f6f8c0c98ab575d8288c764d069d26309031faead065ec165e67a1a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_samples.png": "ff4169f79f9e7ffc35ce2b2944612229516c806fac419914b252246c28a1b7b3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_idle_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+      "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+      "bindingSha256": "819e476b06cc100301d8adc20acf974ca0f1614ea159af105ffbf617d36f025d",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.mp4": "958ad4027ccb55fada0161fcea4afac8dcbd248093a8c86ad375af4953578655",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.png": "45ec805fe0a69c7acc271e0a77ec38d73d2bf6ff00786d3750fade995db2144a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_actor_samples.png": "ab8a4dbb8758f4e57823ea380b066ba819c19a87bcbc268a723d9e1a5cf0b7d6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_samples.png": "5bb56c24050d67dfb354f63170f57075a63d53b6667e11a607f7fb639a02c344",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_idle_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+      "sourceSha256": "99af76a54f6202f9871e51aa4957a8721b157b1180ce332441ac8cdc5cb2fd32",
+      "bindingSha256": "f10c5b9f14cf8977a9e644586395b4c7689406ad3ef8c872625d24645ac428c2",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.mp4": "34d3374918c34fd63bb9ab868798741303d82d0ad6a7f93c667a86a9eb2234b2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.png": "7e6b1a15fdd8e0cd0935f4b9d3e9fb5cd9ef622b9229b5c735221a58fdc66eca",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_actor_samples.png": "914f47c1c1d0c20289155dad2390c2addd3c9ca90e333de3c22afdac5764de82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_samples.png": "aa08859a30630e8aaae37f388151a0e5cbb6f0c8dc7f63672bd14a88b6ec0690",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_n_v1_20261114b.png",
+      "sourceSha256": "4d4e0d44d0f509755c39ebcf4aecec339eae7b9be51e9c835a2f57c1be4f2aa3",
+      "bindingSha256": "122e014fe3a38f2e224247fa754cf6b982cca070f24724929316ffb32ef00be5",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: clear opposite left/right boot ownership across two halves, grounded walk support and low right-hand jian; root registration stable in review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.mp4": "04fb96f70c918abfa7d0e74fb0d86932d9e71bbd55d01f9b975cc24eb3c5ddc6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.png": "c9fe357717db3f3010f07ee2a9198144a56fee516e0ac19620aaae3503d475d9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_actor_samples.png": "e106d08fc2db04f6f608da142f5162bcbdb2b92052eee1ccb4d50478758dec4e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_samples.png": "718004270cc4024714755bb91d5cb112b584af9a7cfa5607ac9e632f68fba68a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v2_20261114b.png",
+      "sourceSha256": "cce05ae787b5ee41e5656bf154bee8a4844c194c9da799a6fe3aba9ce9a7bb58",
+      "bindingSha256": "cb849dd65a6f61d984b2f8b17c67cb60e2c8b50ec338c63404e49b35748bd295",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne.mp4": "42a8a5601345a69f14e7c1b2bc8f3c23c31e97c08d64cf6276f7e881e848834c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne.png": "a38a4aec8e2ee52e8dcb503d06ffede1d8a5be4c18c00922f60811538af20f89",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne_actor_samples.png": "73e39ea21954afd5fe7dbeda1241ce1e3da1c27998df72abe2886e9375b330c5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_ne_samples.png": "124a1e1b52217a503ace33532269d8264b6f6eeee459a14eee04e9daea05cf69",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_e_v1_20261114b.png",
+      "sourceSha256": "4391e704fec18c3a593e251b44cafb9b9ef1b7f6b631a0e79ba0339c1d863caf",
+      "bindingSha256": "086c242d22154cfc5500a77fac9f3ab56fbb955c7d6f09fb899b5a6925801359",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e.mp4": "50393e33aa494ae1df9825865fe2efa762e05d137b55a5a8613d6dfabd1a2ec9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e.png": "6508f48777e2023c33055be195fd6ff03772d6a71ed93297d5d7410965543118",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e_actor_samples.png": "aca9b13d5f4e293477ee2a0f0ef706958714a769054d3f163cce9dc37454ecd6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_e_samples.png": "ef4762beff952d8a8654f396ebda9720900e90496e8a73d740147d3699bb790f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_se_v1_20261114b.png",
+      "sourceSha256": "7d380ad354a3de37d7a88cd6290ef8be1a3df49b5474de957e548370f2f9c2f0",
+      "bindingSha256": "657ec355cd4cda2176f568eec53dc2ec25ad99b273d9c52dd01efe21f433aa70",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se.mp4": "a2f9580a3e2e98c36a833fa5f0da676f8e2d81787760a33dd5b206a94a0f5cf5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se.png": "2de1d3e02360e2c9dc5af6e81a3ea61580a19a37c3907554d1b7aacc709d59f2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se_actor_samples.png": "ae8e55ec31583ac74410098ab2481521769b5d68f8ee01403d1fce0455bdd63a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_se_samples.png": "a9d1d845756a11a97c0a19f2c991c8b5184ce02c4ac6f2621447d5e5697f1353",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_s_v1_20261114b.png",
+      "sourceSha256": "57923b8e66f16b9f2f9ca7475ac2d00480795bff9b36838f462624eb57d139ed",
+      "bindingSha256": "d4c003037ff7221ce0f43f2f1842db1cb41518145a6a5399a62730ca353a7d95",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: clear opposite left/right boot ownership across two halves, grounded walk support and low right-hand jian; root registration stable in review.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.mp4": "4382cb922e7d5c8626fc27d027ac44d8bc4addfd7c3221b5e9dabff5a069ace6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.png": "b4b1dd70c7479e91102de0ca94f2e9210099dbe17c94b8073436000cb784448a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_actor_samples.png": "b362f6414248d95e08eca420f84c0746e4e5bcc8fdf0429bf4e70df750dfa066",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_samples.png": "1eb02c080ba110874450d080854cdef393f5add39d6532fce76727c406d01258",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v2_20261114b.png",
+      "sourceSha256": "3a09756638b356eecf53f3b477c7d97e38329c91ab2ffedb0dec90070ab8c87a",
+      "bindingSha256": "078ace887f35b20511b1d46896d4d8b9515ae9859605ac342434aed51faac0a1",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: v2 improves early right-hand chamber but crossing frames still appear to transfer sword grip toward the left-side arm; right-hand continuity/depth requires repair.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n.mp4": "e9bfd8d77389f9f14503a7a2af6c3d4a7ab743953e7f84701a7bfd19e2795a11",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n.png": "e78832bc7d24b905a832f268af5f4644d468ea7d7e3a170bda6fb4a7f56a9c37",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n_actor_samples.png": "ab3167bd869ed5dda713950f5172cb3c7101597d14bc235fcc62535c31da0536",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_n_samples.png": "5ee1768b2ad39e112a97e6bebea8cd66e6494300cb2a29568fb4fbfdf74b0d14",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_ne_v1_20261114b.png",
+      "sourceSha256": "885cb4cfee7f6371cbd14dc23638c5c0b316e4a97c8dc7f30d9e4fbcf8540d53",
+      "bindingSha256": "4cf69ec4d17b3b49f430b010e0e2dd19db24004929d24e8392464c5bf45f350a",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne.mp4": "6b85ffa876b5ede1d1689b4c9a786a089dde381b713ad95ee3ae9a4697914abb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne.png": "1947c4b9c731d27d9ce0c2a13ea9fa47247eb0f1697c255589549fa1d551856d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne_actor_samples.png": "ccb898c55d9046700163fde4d39c41681826c37b1a652e1cf9c711f52eb45ba7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_ne_samples.png": "3005e795103022e1cf6394cad7cda934b4e3dedb3391d14b357c70a9a2e6db9c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png",
+      "sourceSha256": "6e155f3a89d17060ead16f69b8df537b761310bf278b28e1a6e5c68f5de89ec6",
+      "bindingSha256": "8770e322c3b51cf9f70aa3ac194be25aeb1790fdad255d5bc8bd4d4440d63970",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e.mp4": "98fceb73a67e772b461c1edf83470bb89c4bf90719711e8c5ab7001945e72bd3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e.png": "56841a41e812fe53082c774d61db865f48a84b81adb02141e2acc2377ccca3bb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e_actor_samples.png": "2492e8eec68c0892bd15a4f2a64d560bd0db1f26a0c1de403f5abd78af7dd406",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_e_samples.png": "f5be9148bb2ceb5afd212d6f84723942ca351cbf19648c7216583a3643f49bca",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_se_v1_20261114b.png",
+      "sourceSha256": "9dab0e54c665ccd856bfba77dc8b47480bcb16c3628e772a53623bca1a132bfd",
+      "bindingSha256": "4bc7a4648359d81c43d5ad561c90461e0a662b0380d70e3d20bc46a968882661",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se.mp4": "1717d481c9308abdf663cfa2e2898988ccd1958ffffbafc30165691518ac2d2e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se.png": "70843bbf3041d86ea769018eb3fc40284e33ae4b12eac2e34a2b3216516bc55e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se_actor_samples.png": "f11ec9aa1637cbab3dce00399015c0b98acc3d6ca45471dac7a16819e0dc1905",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_se_samples.png": "73cb1b739cd4d9c3a03c4d8f0863f1f32afce8f8518f5d494b30d8792185eed2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_s",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+      "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+      "bindingSha256": "fa052c2a8b85df66c27ad740787571a33fc4c57af60b58635cbb5a500a8da8d7",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native: one continuous waist-level lateral sweep from left through front to right, with perspective foreshortening and return to low right-hand grip; planted feet.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.mp4": "a0fe14b8299cedaf7687326789b1295b5bd23fde491fe900dc1b941228cfa440",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.png": "884b0121be682dd06434129fca9aa3bdcdf718bc04ab2610141d7eef8eab6198",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_actor_samples.png": "64ee3984e517526dc0c266a94bf118dd5f101df1300e62fffbc6f6b8d7a6d085",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_samples.png": "a8cc9dd8d0d4e7dbf40b99cf105f9e4c4c3d426de17baf6f8452dda449621167",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      }
+    }
+  ]
+}

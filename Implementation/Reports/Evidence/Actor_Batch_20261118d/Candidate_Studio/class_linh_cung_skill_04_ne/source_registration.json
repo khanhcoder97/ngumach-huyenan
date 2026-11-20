@@ -1,0 +1,453 @@
+{
+  "record": {
+    "id": "class_linh_cung_skill_04_ne",
+    "source": "Candidates_20261118d/class_linh_cung_skill_04_ne_v1_20261118d.png",
+    "prompt": "Candidates_20261118d/class_linh_cung_skill_04_ne_v1_20261118d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261118d",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Candidates_20261118c/class_linh_cung_skill_03_ne_v1_20261118c.png"
+    ],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+        "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+      },
+      {
+        "path": "Art_Source/Actor_Library_20261107/Candidates_20261118c/class_linh_cung_skill_03_ne_v1_20261118c.png",
+        "sourceSha256": "1d19e73f23654c09ee41bfb942e9a01cf0d94679fa46ed3cb108e23e7b9c5de9"
+      }
+    ],
+    "sourceSha256": "1550895f479b2fb38657348dd209416d1a7fca0102c0df3b7fa975b49f1186ea",
+    "sourceFrameDurationsMs": [
+      65,
+      60,
+      60,
+      55,
+      50,
+      45,
+      35,
+      35,
+      45,
+      45,
+      55,
+      55,
+      60,
+      60,
+      65,
+      70
+    ],
+    "direction": "NE",
+    "inputRole": "OWNER_IDLE_AND_SAME_FACING_LIEN_CHAU_IDENTITY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        153.5,
+        287
+      ],
+      [
+        143.5,
+        287
+      ],
+      [
+        139.5,
+        287
+      ],
+      [
+        134.5,
+        287
+      ],
+      [
+        153.0,
+        286
+      ],
+      [
+        147.5,
+        286
+      ],
+      [
+        143.0,
+        286
+      ],
+      [
+        139.0,
+        286
+      ],
+      [
+        155.5,
+        286
+      ],
+      [
+        146.5,
+        286
+      ],
+      [
+        140.5,
+        286
+      ],
+      [
+        135.0,
+        286
+      ],
+      [
+        157.0,
+        286
+      ],
+      [
+        145.5,
+        286
+      ],
+      [
+        140.5,
+        286
+      ],
+      [
+        136.5,
+        286
+      ]
+    ],
+    "bodyReferenceHeight": 258
+  },
+  "page": {
+    "id": "class_linh_cung_skill_04_ne",
+    "file": "sheets/class_linh_cung_skill_04_ne_v1_20261118d.png",
+    "source": "Candidates_20261118d/class_linh_cung_skill_04_ne_v1_20261118d.png",
+    "sha256": "1550895f479b2fb38657348dd209416d1a7fca0102c0df3b7fa975b49f1186ea",
+    "imageSize": [
+      1246,
+      1263
+    ],
+    "directions": [
+      {
+        "direction": "NE",
+        "flip": false,
+        "referenceHeight": 258,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              312,
+              316
+            ],
+            "bounds": [
+              71,
+              29,
+              259,
+              287
+            ],
+            "pivot": [
+              153.5,
+              287
+            ]
+          },
+          {
+            "rect": [
+              312,
+              0,
+              311,
+              316
+            ],
+            "bounds": [
+              52,
+              28,
+              237,
+              287
+            ],
+            "pivot": [
+              143.5,
+              287
+            ]
+          },
+          {
+            "rect": [
+              623,
+              0,
+              311,
+              316
+            ],
+            "bounds": [
+              46,
+              28,
+              247,
+              287
+            ],
+            "pivot": [
+              139.5,
+              287
+            ]
+          },
+          {
+            "rect": [
+              934,
+              0,
+              312,
+              316
+            ],
+            "bounds": [
+              33,
+              28,
+              242,
+              287
+            ],
+            "pivot": [
+              134.5,
+              287
+            ]
+          },
+          {
+            "rect": [
+              0,
+              316,
+              312,
+              316
+            ],
+            "bounds": [
+              48,
+              32,
+              267,
+              286
+            ],
+            "pivot": [
+              153.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              312,
+              316,
+              311,
+              316
+            ],
+            "bounds": [
+              26,
+              29,
+              255,
+              286
+            ],
+            "pivot": [
+              147.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              623,
+              316,
+              311,
+              316
+            ],
+            "bounds": [
+              14,
+              27,
+              268,
+              286
+            ],
+            "pivot": [
+              143.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              934,
+              316,
+              312,
+              316
+            ],
+            "bounds": [
+              14,
+              30,
+              263,
+              286
+            ],
+            "pivot": [
+              139.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              0,
+              632,
+              312,
+              315
+            ],
+            "bounds": [
+              46,
+              31,
+              269,
+              286
+            ],
+            "pivot": [
+              155.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              312,
+              632,
+              311,
+              315
+            ],
+            "bounds": [
+              37,
+              29,
+              254,
+              286
+            ],
+            "pivot": [
+              146.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              623,
+              632,
+              311,
+              315
+            ],
+            "bounds": [
+              39,
+              29,
+              252,
+              286
+            ],
+            "pivot": [
+              140.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              934,
+              632,
+              312,
+              315
+            ],
+            "bounds": [
+              36,
+              29,
+              246,
+              286
+            ],
+            "pivot": [
+              135.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              0,
+              947,
+              312,
+              316
+            ],
+            "bounds": [
+              53,
+              30,
+              259,
+              286
+            ],
+            "pivot": [
+              157.0,
+              286
+            ]
+          },
+          {
+            "rect": [
+              312,
+              947,
+              311,
+              316
+            ],
+            "bounds": [
+              41,
+              30,
+              246,
+              286
+            ],
+            "pivot": [
+              145.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              623,
+              947,
+              311,
+              316
+            ],
+            "bounds": [
+              47,
+              31,
+              240,
+              286
+            ],
+            "pivot": [
+              140.5,
+              286
+            ]
+          },
+          {
+            "rect": [
+              934,
+              947,
+              312,
+              316
+            ],
+            "bounds": [
+              43,
+              31,
+              233,
+              286
+            ],
+            "pivot": [
+              136.5,
+              286
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 257.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      65,
+      60,
+      60,
+      55,
+      50,
+      45,
+      35,
+      35,
+      45,
+      45,
+      55,
+      55,
+      60,
+      60,
+      65,
+      70
+    ]
+  },
+  "releasePose": 6,
+  "releaseSourcePoint": [
+    253,
+    99
+  ],
+  "productionApproved": false
+}

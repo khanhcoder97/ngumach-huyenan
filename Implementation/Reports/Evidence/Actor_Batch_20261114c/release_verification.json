@@ -1,0 +1,38 @@
+{
+  "batch": "20261114c",
+  "fullInspector": {
+    "passed": true,
+    "pages": 324,
+    "boundJobs": 79,
+    "pendingJobs": 949,
+    "sourceReviewedJobs": 50,
+    "visualHoldPages": 20
+  },
+  "python": {
+    "passed": 92,
+    "log": "python_tests.log"
+  },
+  "inventoriesChecked": 19,
+  "dotnetBuildReference": {
+    "head": "6a1f3dad438f32f36d128418cc18a0e1f0c2f8cf",
+    "csharpChanged": false,
+    "errors": 0,
+    "warnings": 0,
+    "log": "../Actor_Batch_20261114b/build.log"
+  },
+  "native": {
+    "library": 18360,
+    "studioAssertions": 91800,
+    "studioEntries": 398,
+    "minhKiemMobility": 9029,
+    "minhKiemBase": 4367
+  },
+  "lfs": {
+    "stagedMediaPaths": 60,
+    "uniqueObjects": 52,
+    "allMatch": true
+  },
+  "newSourceApprovals": 5,
+  "remainingSourceHolds": 3,
+  "fullGameComplete": false
+}

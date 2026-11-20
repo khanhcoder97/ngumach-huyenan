@@ -1,0 +1,646 @@
+{
+  "scope": "STAGED_MEDIA_INTEGRITY_NOT_VISUAL_APPROVAL",
+  "stagedMediaPaths": 91,
+  "uniqueObjects": 76,
+  "allMatch": true,
+  "repairsPerformed": 0,
+  "files": [
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_e_v1_20261113i.png",
+      "oid": "e3b87c946ca07e8c528714d13b13db7dbf30b3ebc85472fddba785ec294316ea",
+      "bytes": 1007734,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_n_v1_20261113i.png",
+      "oid": "256fff1ce1f21e3151fe69c6fc75b81d9bfbef11654f13f360c7a3eedddcdca6",
+      "bytes": 952557,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_ne_v1_20261113i.png",
+      "oid": "07d429bd809e2be115a2a92667ef4ed06ee954540b3245a711d9c9e69037f360",
+      "bytes": 1422946,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_s_v1_20261113i.png",
+      "oid": "23a4dbba73d52b301128db297b87097dca664bcc91a6fd8d9aded08afe1e257b",
+      "bytes": 1323462,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_se_v1_20261113i.png",
+      "oid": "c76a4053d2b915d5cfa1389e5d1c8d50a9e205a6bd0f31ead4fc6f4baa5bf6a3",
+      "bytes": 1050303,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+      "oid": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+      "bytes": 1093806,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+      "oid": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8",
+      "bytes": 841163,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+      "oid": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd",
+      "bytes": 1379587,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+      "oid": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c",
+      "bytes": 1174572,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+      "oid": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+      "bytes": 1239663,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+      "oid": "6ca5120108a07dfa12eb936a253d60090998607cacbe298489bc028fbe12508d",
+      "bytes": 975470,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_e_v2_20261113i.png",
+      "oid": "78cafecd9753020dc773b2a1afeb22cd0eaf61fa6f453c6d3d3e64a319820d20",
+      "bytes": 1325753,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_n_v1_20261113i.png",
+      "oid": "c0ac0efed5acf518ddea975a86b1841cd463b74cb392c2f3a297cf91cef8025a",
+      "bytes": 903217,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v1_20261113i.png",
+      "oid": "e35870a7c042b33f4bfaf4cb50acca0c7641cce79c3b8f8887e9d3f35b3d06fe",
+      "bytes": 1521466,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v2_20261113i.png",
+      "oid": "4e436d2f80e8d64c7d1df882c8d654e09daa2a55dcc921ed367b612307d2f275",
+      "bytes": 1340561,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v3_20261113i.png",
+      "oid": "4477c25759961624b10ee1340943880610710fbad2625b96cf1b5e6787e097f7",
+      "bytes": 1402322,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+      "oid": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5",
+      "bytes": 1211950,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+      "oid": "db0befdbecd80caf1c78957705391fee9f69e1f60787cb5823ec8f0f03d0c202",
+      "bytes": 973442,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v2_20261113i.png",
+      "oid": "45a6c0872a8eea624b91f8de0f3be4096645e727c961829efec97b452c595d4a",
+      "bytes": 1153482,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_basic_attack_e_v1_20261113i.png",
+      "oid": "e3b87c946ca07e8c528714d13b13db7dbf30b3ebc85472fddba785ec294316ea",
+      "bytes": 1007734,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_basic_attack_n_v1_20261113i.png",
+      "oid": "256fff1ce1f21e3151fe69c6fc75b81d9bfbef11654f13f360c7a3eedddcdca6",
+      "bytes": 952557,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_basic_attack_ne_v1_20261113i.png",
+      "oid": "07d429bd809e2be115a2a92667ef4ed06ee954540b3245a711d9c9e69037f360",
+      "bytes": 1422946,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_basic_attack_s_v1_20261113i.png",
+      "oid": "23a4dbba73d52b301128db297b87097dca664bcc91a6fd8d9aded08afe1e257b",
+      "bytes": 1323462,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_basic_attack_se_v1_20261113i.png",
+      "oid": "c76a4053d2b915d5cfa1389e5d1c8d50a9e205a6bd0f31ead4fc6f4baa5bf6a3",
+      "bytes": 1050303,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_idle_e_v1_20261113i.png",
+      "oid": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+      "bytes": 1093806,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_idle_n_v1_20261113i.png",
+      "oid": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8",
+      "bytes": 841163,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+      "oid": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd",
+      "bytes": 1379587,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_idle_s_v1_20261113i.png",
+      "oid": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c",
+      "bytes": 1174572,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_idle_se_v1_20261113i.png",
+      "oid": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+      "bytes": 1239663,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_walk_e_v1_20261113i.png",
+      "oid": "6ca5120108a07dfa12eb936a253d60090998607cacbe298489bc028fbe12508d",
+      "bytes": 975470,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_walk_n_v1_20261113i.png",
+      "oid": "c0ac0efed5acf518ddea975a86b1841cd463b74cb392c2f3a297cf91cef8025a",
+      "bytes": 903217,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_walk_ne_v3_20261113i.png",
+      "oid": "4477c25759961624b10ee1340943880610710fbad2625b96cf1b5e6787e097f7",
+      "bytes": 1402322,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_walk_s_v1_20261113i.png",
+      "oid": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5",
+      "bytes": 1211950,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_anh_dao_walk_se_v2_20261113i.png",
+      "oid": "45a6c0872a8eea624b91f8de0f3be4096645e727c961829efec97b452c595d4a",
+      "bytes": 1153482,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.mp4",
+      "oid": "c808f004a71c8e2663866a13e27a1326f67880b03b58e654a6333d861e5668f0",
+      "bytes": 701484,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles.png",
+      "oid": "a34e004ad354df4503e7f674628dc4925cf8383e7cc903500765102677d20c25",
+      "bytes": 304272,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_eight_angles_samples.png",
+      "oid": "77ce19768ed1d97aa3f1c6183e41e22c792fc8529a95be895543e631356824ae",
+      "bytes": 436531,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_e.mp4",
+      "oid": "c190e1d087ca460374e4c0a8a5a39d75e9c0d9d5b761684b8f5bd61347a9b5c9",
+      "bytes": 185945,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_e.png",
+      "oid": "ffe9c6bc895ca5a38d073c1104bdcb0ec240e69eec59c1f40c26ffdcef23c9e2",
+      "bytes": 542976,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_e_samples.png",
+      "oid": "0058561311be588269ddb914deb49a0c6d09dbea6faa8468c93ece52e5f93a75",
+      "bytes": 583836,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_n.mp4",
+      "oid": "b74f3cd7cc8b1f54fb9a22c6fc45b2eb5e1c6e723091f38923a32b65d51d6f8a",
+      "bytes": 181011,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_n.png",
+      "oid": "a31cf82f2bb7366b942070aeada8bb9e0ee3e07afe31a81b92ea9f3d74ee3d4c",
+      "bytes": 543868,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_n_samples.png",
+      "oid": "136b8571dda4e99e890201935c98373ed6e7a1d3ff41580c15eafecf816ed515",
+      "bytes": 586019,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_ne.mp4",
+      "oid": "a40693ffb909f22a9cdd3a49d44a8baa71a10048e1265380ac1a7043c2d38a84",
+      "bytes": 190557,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_ne.png",
+      "oid": "47d76568810a0397e951d38d78b2fe99bf57b26153f7cb8bc3bb21c6cfcd84cc",
+      "bytes": 556085,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_ne_samples.png",
+      "oid": "db2020d524570cb1d0a7f177bd67fe9b4455c569db522598b1aece87bd6119e0",
+      "bytes": 597065,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_s.mp4",
+      "oid": "a10edeb6e98fd6f458e5eda393bd19dc7107c544c6d57f3e1d81c0a4e61ffc51",
+      "bytes": 186832,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_s.png",
+      "oid": "b4880ca9f1d1cd2e8bfed06d0fc65b91e3da948e14b62815353ac9511c1d0fa1",
+      "bytes": 543674,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_s_samples.png",
+      "oid": "fa071378aa65261e9bf4b61764da59bf09bdd028357d81f9498deac5fc699e9e",
+      "bytes": 566169,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_se.mp4",
+      "oid": "524271564a3e996be3b2731eddef7cc63d26ca86acfb2f3addc898ff3d2d6040",
+      "bytes": 189198,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_se.png",
+      "oid": "e32437c65ae49cd86018f3ea1bc2a51bfc95519de0d70cd546fd1d9a25b74752",
+      "bytes": 546245,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/basic_attack_raw_se_samples.png",
+      "oid": "d1df4c333a11268a7720d0ddb6dac8b21918b344c2b10d79dca6cb65f69c996c",
+      "bytes": 582718,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.mp4",
+      "oid": "9fe70190b6a7a2221a8a694fd5a5ec3300860785c361cafe44304bd142a12a24",
+      "bytes": 494045,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles.png",
+      "oid": "55fd7d2fef6f0c85ce3e992dbd0a5c91890d6e2d67b644250139dec3f6d7d377",
+      "bytes": 297830,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_eight_angles_samples.png",
+      "oid": "cd30e2958cab2e121bae54987ab4608f8086392bff62aed84293387285c4e63e",
+      "bytes": 433785,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_e.mp4",
+      "oid": "2cca03bb3c298ef83dece5867ab06928e91d52d46b900137b73872cc51c092a8",
+      "bytes": 313709,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_e.png",
+      "oid": "e408bd195107d3032abfe74c08ec8427701e1059e4cdd1f718fb242130bb60d7",
+      "bytes": 535227,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_e_samples.png",
+      "oid": "bc5755ed720886b041e0b7ceedb80e68e608a2b21b9cc8ccf46dbd0ad7bef209",
+      "bytes": 580685,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_n.mp4",
+      "oid": "397d5c926ea8a48cdd1ff3a83fa461c9318ccd33af49ab91ce4fa4f455874596",
+      "bytes": 296161,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_n.png",
+      "oid": "0347135fb11b74ef3a19229b34f25ad8b80ea8950bd96a3bc89619aaf44b97cc",
+      "bytes": 530553,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_n_samples.png",
+      "oid": "16b217a1392b5ddcd24050c00491bf0407136494b29f59f176d075064c29e568",
+      "bytes": 574799,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_ne.mp4",
+      "oid": "da4b9919554dce185d5874524467fcaec0981429939f92cbc7ec4b75c8733ff7",
+      "bytes": 304842,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_ne.png",
+      "oid": "465c05337e4087792bc87b77a6cd5a84e613e630ae5e6440acbe0fa17eba5e32",
+      "bytes": 540774,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_ne_samples.png",
+      "oid": "e637ab05cba2be946ec278d11b5e8f74202e89b79dbbf96a18c384cddc2e616d",
+      "bytes": 583420,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_s.mp4",
+      "oid": "fed6739b93a9ed3fb7f9327cd788f62c31ae2eb753a8b72fb66ed359bfe90d63",
+      "bytes": 319818,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_s.png",
+      "oid": "7f79bb7c3c38ea66aad70d3d6e3c563dc56bada3877ce6166fd31e68a12b237c",
+      "bytes": 535829,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_s_samples.png",
+      "oid": "ebe2f0567b42dc8ffcf1f18d7b28100df4418369a3039ef55565527b6ba3db11",
+      "bytes": 560793,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_se.mp4",
+      "oid": "e255042793ce2b15e8ac60e8717df1ca7d6719800134840f057a5597217cee88",
+      "bytes": 310775,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_se.png",
+      "oid": "ed175e1694e855ac59c9b61e3600f7e5c22b6bf44cd8e04c8ee6fe32a600226e",
+      "bytes": 531322,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/idle_raw_se_samples.png",
+      "oid": "0db45045cabb9a5fdaacbce9a15b96f53967a495629882eee3b7318b364749f8",
+      "bytes": 572275,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.mp4",
+      "oid": "4b60ba32d42547c3da4b1d985482059dc2be4b79fe094ee45069f644da7501d5",
+      "bytes": 1036473,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain.png",
+      "oid": "363b0a68f1d831cbc2848a1ffcbdae21edf3d6e0f7c6fa47a7249f5e9c42d779",
+      "bytes": 297547,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/locomotion_chain_samples.png",
+      "oid": "75c3b5c9f01660b8e809bcc761f2f6b30ab911920b35b0bfb973116940b6d784",
+      "bytes": 466709,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.mp4",
+      "oid": "deab74401b0b1ae67a4912ae4e74f5c3d3c76d87f0053c9f0b8a9365048a28b8",
+      "bytes": 566620,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles.png",
+      "oid": "3b071930696548eaee7c5b00b12ca5b525824c10371f24ad7404f61d58983230",
+      "bytes": 296390,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_eight_angles_samples.png",
+      "oid": "8271f97eca60af50837ab77dbfd5e9ef350e54c55ba4dfb6a37992460e0dc45b",
+      "bytes": 435302,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_e.mp4",
+      "oid": "f60e5e7fb37405fde3bf1a0acedba3c210da445a8e1b8d894c8ab599ea0e7e93",
+      "bytes": 357061,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_e.png",
+      "oid": "06656eed457845e7c5c1dccc7f51aece6f7d7265a6d21f84e081bce2ddaed504",
+      "bytes": 520719,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_e_samples.png",
+      "oid": "05aa9553a42022d31d9b43a92d80798acc1dcf285211cb5189abf864fd4bd7a2",
+      "bytes": 558862,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_n.mp4",
+      "oid": "81e3f96ad288ae188486889ae311a0a8b484dad9274271f4518eeb2550d159c6",
+      "bytes": 320979,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_n.png",
+      "oid": "1017fd4e937c3dea48876e1388c9c88c783a5e1c03ffd8c8bc2fe223671503f4",
+      "bytes": 535526,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_n_samples.png",
+      "oid": "09286165494aceeb7f5dde66545870027859e4af28c2f0413b00fc6b44d4ba34",
+      "bytes": 572255,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_ne.mp4",
+      "oid": "3cd6f0988e1e9c73f02ee1ca532c5d35ba14e6ae42df015157528899a2490607",
+      "bytes": 357201,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_ne.png",
+      "oid": "61144d2f4013a174ed4997020269ec296a992b7c271d24528e9501e8686d40dd",
+      "bytes": 541473,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_ne_samples.png",
+      "oid": "59640086d3c30128459500b1e72bc3b7d41a5128bdf12ded832d277675764faa",
+      "bytes": 568997,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_s.mp4",
+      "oid": "d6cf2b32441f9c1dc88fe8de1d428099da6675f7a889e672a18cb8a13d9a4714",
+      "bytes": 356795,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_s.png",
+      "oid": "5d033e58bee09822bef79b8336e255e88facf4ef73e4096a66c34c19f19fc04f",
+      "bytes": 539577,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_s_samples.png",
+      "oid": "54c26f879cddda8341901baa063e86cb6901a8b9c9c35a1c3801aead70a4a5ba",
+      "bytes": 560780,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_se.mp4",
+      "oid": "b4a567afa01077db5397fb19efaf128b275327412bab1a7126c3bf8376dd8852",
+      "bytes": 352792,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_se.png",
+      "oid": "ba46bb8f6f49d7415afd5cc95630c49404ebef3d78e0ff590db20f1d4f06098e",
+      "bytes": 535406,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261113i/walk_raw_se_samples.png",
+      "oid": "19130bee80cae0abff59ee35eee1a53b82f0fd1b1fa980a098afd2d52d676f5a",
+      "bytes": 568505,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    }
+  ]
+}

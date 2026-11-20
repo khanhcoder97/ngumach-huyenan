@@ -1,0 +1,108 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 10,
+  "supersededVideos": 0,
+  "files": [
+    {
+      "file": "anh_dao_death_eight_angles.mp4",
+      "bytes": 442253,
+      "sha256": "0bbc412e3759cc34171195bd9ed3c0ee8c4066199c6ef425c0a3268bb7f3720c",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "anh_dao_hurt_eight_angles.mp4",
+      "bytes": 1056588,
+      "sha256": "4c82cb98fdf09e9a91ceb9240f14f3f28ebe8b3c8e5ea4c27b70afbfb79bb92d",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "anh_dao_reaction_chain.mp4",
+      "bytes": 943688,
+      "sha256": "552b1642e4954fd37878c9262046973a84930c29e77342795f5c13d22e4cdbad",
+      "decodedFrames": 240,
+      "decodedSeconds": 4.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_e.mp4",
+      "bytes": 187299,
+      "sha256": "f71a030fcecedceafe04dc8d1a267b3cc15875d194ec1ad8aeea97f11d2a816e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_n.mp4",
+      "bytes": 177244,
+      "sha256": "da628507bcb4053e0878526701e9736a19c3b86cf41fed8ae2c43eaa03a5bd17",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_ne.mp4",
+      "bytes": 185108,
+      "sha256": "308bb2f16443e13a10a4538d769db948b76b38eee0aa43649ba2d46b4f229586",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_s.mp4",
+      "bytes": 178026,
+      "sha256": "5ead1e2f294d8919df9d5e816188a966f5021f211dc785be26b1182f9d418fd9",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_se.mp4",
+      "bytes": 187531,
+      "sha256": "1dfd7402fa13cb2268424790cd9215b665132123d88ec198114abfd43ea56422",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "hurt_raw_e.mp4",
+      "bytes": 167278,
+      "sha256": "d01daba6687c54bfa343c5f1791cd48f6c8edfb98b21c8b2c0739edb79752d1a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "hurt_raw_se.mp4",
+      "bytes": 172512,
+      "sha256": "12ca416d597abc04e5c9decd140be06e3214283190956dc9913461ce9131c13b",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

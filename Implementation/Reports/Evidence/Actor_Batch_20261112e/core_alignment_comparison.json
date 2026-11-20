@@ -1,0 +1,62 @@
+{
+  "scope": "METADATA_CORE_ANCHOR_SPREAD_NOT_ANATOMICAL_OR_GAMEPLAY_ACCEPTANCE",
+  "reviewDisplayHeightPx": 88,
+  "angles": [
+    {
+      "direction": "N",
+      "beforeSpreadPx": [
+        7.068107688663222,
+        4.451433999362479
+      ],
+      "afterSpreadPx": [
+        0,
+        0
+      ]
+    },
+    {
+      "direction": "NE",
+      "beforeSpreadPx": [
+        18.525672970053233,
+        6.529359483703971
+      ],
+      "afterSpreadPx": [
+        0,
+        0
+      ]
+    },
+    {
+      "direction": "E",
+      "beforeSpreadPx": [
+        15.861547720680036,
+        2.64148295493748
+      ],
+      "afterSpreadPx": [
+        0,
+        0
+      ]
+    },
+    {
+      "direction": "SE",
+      "beforeSpreadPx": [
+        9.895250290778176,
+        2.3922142138786455
+      ],
+      "afterSpreadPx": [
+        0,
+        0
+      ]
+    },
+    {
+      "direction": "S",
+      "beforeSpreadPx": [
+        3.405633360437802,
+        4.893359391824205
+      ],
+      "afterSpreadPx": [
+        0,
+        0
+      ]
+    }
+  ],
+  "note": "Measured from per-page core offsets used by the renderer. Zero core registration spread does not prove matching silhouettes or physical foot placement; native images must still be inspected."
+}

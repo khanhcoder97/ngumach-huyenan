@@ -1,0 +1,34 @@
+{
+  "batch": "20261118a",
+  "id": "class_linh_cung_skill_01_ne",
+  "version": 1,
+  "expectedSourcePages": 7,
+  "scope": "LINH_CUNG_KHOA_MACH_FIVE_AUTHORED_FACINGS_AND_TWO_NEW_EFFECTS_REUSING_REVIEWED_TARGET_MARK",
+  "direction": "NE",
+  "seconds": 0.96,
+  "timing": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_n_v2_20261118a.png"
+  ],
+  "inputRole": "OWNER_IDLE_IDENTITY_AND_NORTH_AUTHORED_LEFT_HAND_POSE",
+  "prompt": "Create 16 full-body authored poses in a strict 4 by 4 chronological RGBA atlas for the original Linh Cung chibi pixel RPG character. Ref 1 is her owner idle atlas with a Northeast back-right three-quarter view on rows 3 and 4. Ref 2 is the repaired straight North shot. Draw this NEW atlas facing Northeast, turned toward the top-right of the screen for all 16 frames. Mostly see back of head and cape plus a narrow right cheek in profile. Her warm brown ponytail, tiny pale green tie, cream sage cape, olive fabric, right-shoulder cream-feather quiver, and short dark brown recurve bow must stay the same. Anatomical LEFT hand grips the bow throughout, raised forward on the far side of body. The right arm and fingers are visible closer to camera, and draw to her right cheek. The bow can be visible beyond the right edge of her silhouette because it is held forward in the Northeast direction, not because she has changed hands. One nocked arrow points up and right, about 40 degrees ABOVE horizontal. Its pale arrowhead sits higher than right cheek level and to the right, a single shaft going diagonally up-right from drawing fingers past the bow grip, never horizontal, vertical or diagonally down-right. Both tips of a single bowstring meet at the fingers. Frame 0–1 idle ready, 2–4 raise and nock, 5–7 draw, 8 one release and arrow gone, 9–11 recoil, 12–15 settle. Quiver can overlap the shoulder. A side view or front three-quarter look is wrong for this atlas. Both boots remain planted, with original style clean medium-res pixel clusters. Empty gutters, no paint beyond cell bounds. No extra limbs, no target, no airborne arrow, no effects, no glow, no motion labels, no floor, no white backing.",
+  "state": "READY_FOR_IMAGEGEN"
+}

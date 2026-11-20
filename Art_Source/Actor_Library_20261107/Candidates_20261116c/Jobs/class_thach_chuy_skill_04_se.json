@@ -1,0 +1,37 @@
+{
+  "batch": "20261116c",
+  "id": "class_thach_chuy_skill_04_se",
+  "version": 2,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "direction": "SE",
+  "seconds": 0.8,
+  "timing": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_se_v1_20261116c.png"
+  ],
+  "inputRole": "OWNER_IDENTITY_AND_EXISTING_TAUNT_SHEET_EDIT_TARGET",
+  "layoutVerified": true,
+  "prompt": "Use case: precise-object-edit. Image1 is owner-approved Thach Chuy character identity and palette. Image2 is the EDIT TARGET, existing sixteen-pose SOUTH-EAST Khiêu Chiến whole-body chibi pixel-art animation sheet. Correct ONLY the call facial expression, retaining all16distinct poses,exact4columns4rows,row-major chronology,transparent RGBA background and gutters. Keep the exact same front-right three-quarter facing toward screenLOWER-RIGHT in every cell. Do not rotate toward frontal or side profile. Preserve body proportions,dark hair,gold headband,bronze chest armour,round steel shoulder/gauntlets,brown boots,red sash,ONEconnected grey hammer with short shaft,twohandgrip,one gentle tap then chest/head lift and recovery. At zero-based phase7 mouth begins to part,phases8and9(row3columns1and2) have a CLEAR OPEN MOUTH calling/taunting,phase10 still open but starting to close,phase11 closed again. Keep mouth naturally small and readable in the same face; preserve eye number and face angle. All other phases and all armour/hands/weapon/body poses remain as in edit target. No mouth symbols,speech bubbles,text,labels,VFX,extra strike,grid,floor,shadows,opaque matte or paperdoll pieces. Keep complete head/boots/weapon inside each cell with broad alpha0margins. Same crisp refined shaded pixel clusters and coherent chibi silhouette,not a new graphic style. Non-damaging Khiêu Chiến,source preview.8s across16frames; actual threat/status/expiry is controlled externally,not by this artwork.",
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_se_v2_20261116c.png",
+  "sourceSha256": "13b4880f4226aac411e114149c9027ee57b8ca130f67e690bb886460297ed056",
+  "state": "GENERATED_PENDING_REVIEW"
+}

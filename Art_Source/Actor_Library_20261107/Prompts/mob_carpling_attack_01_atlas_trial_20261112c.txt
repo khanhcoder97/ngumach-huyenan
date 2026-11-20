@@ -1,0 +1,9 @@
+Use case: identity-preserve
+Asset MOB_CARPLING attack_01,64source poses,4directions, polished cohesive overhead chibi PIXEL ART. Reference1 locks broad silver-blue head, round cheeks, stout belly, LARGE teal leaf fins, curved flowing tail and16pose jaw snap. Reference2 shows direction/layout. SAME compact anatomy: no narrow needle/eel body, body/head width and length vary under5percent per direction.
+EXACT8COLUMNS8ROWS64complete fish, huge transparent gutters/margins, each at most55%cell, ALL8sprites in EVERY row. Two rows per16pose block:
+rows1-2NORTH headTOP tailBOTTOM, no face pasted on back;
+rows3-4NORTHEAST headUPPER RIGHT tailLOWER LEFT;
+rows5-6EAST head/nostrilsRIGHT tailLEFT;
+rows7-8SOUTHEAST headLOWER RIGHT tailUPPER LEFT.
+Fixed facing in EVERY16pose block. Each block depicts ONE attack:0-3mouth wide OPEN after windup;4-7jaws progressively snap CLOSED, fins sweep back;8-11mouth fully CLOSED, broad stout body intact;12-15closed mouth with fins reopen, tail followthrough. NORTH mouth hidden at far end; head/fin/tail motions communicate snap. No four repetitions of same4pose, no repeated8poses.16distinct drawings per action-angle, fixed groundpoint/scale, no whole-body translation or shrink/stretch.
+CLEAN true transparent RGBA, no aura/coloured speckled fringe/soft halo/ground/water/shadow/VFX/scene, no labels/text/numbers/grid. Keep all extremities inside each cell with large blank gutters. Preserve vibrant silver-blue/teal finely shaded chibi pixels, no smooth3D.

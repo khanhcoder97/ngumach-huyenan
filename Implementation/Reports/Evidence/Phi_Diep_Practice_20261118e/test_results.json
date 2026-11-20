@@ -1,0 +1,51 @@
+{
+  "scenario": "LOCAL_BEN_MUA_LINH_CUNG_RETREAT",
+  "godot": "4.7.2 stable mono",
+  "renderer": "OpenGL Compatibility / GeForce 820M",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fixedSimulationFramesPerSecond": 60,
+  "tests": {
+    "headless": [
+      "LINH_CUNG_PRACTICE PASS assertions=55 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=49 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=66 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=57 facings=8 authoringFrames=128",
+      "LINH_CUNG_RETREAT PASS assertions=78 facings=8 authoringFrames=128"
+    ],
+    "native": [
+      "LINH_CUNG_PRACTICE PASS assertions=59 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=53 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=69 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=60 facings=8 authoringFrames=128",
+      "LINH_CUNG_RETREAT PASS assertions=82 facings=8 authoringFrames=128"
+    ],
+    "camera": [
+      "CAMERA_SELF_TEST PASS assertions=48"
+    ],
+    "scene": [
+      "SCENE_SELF_TEST PASS assertions=9"
+    ]
+  },
+  "frames": [
+    {
+      "file": "practice_retreat_release.png",
+      "sha256": "1ad4151abb3339312b68d4613a375f5983b9775d491df52f235251b8beebc6c9"
+    },
+    {
+      "file": "practice_retreat_hit.png",
+      "sha256": "ab736c7b4b93a4ca0e0e65c4059764169eac4f6b757092772f3b36c44ec7c8fd"
+    },
+    {
+      "file": "practice_retreat_blocked.png",
+      "sha256": "5ec297a13a18c83fb16a071033f2a89d7c7a85c3a1ddcebdf5c26d4735397ef0"
+    },
+    {
+      "file": "practice_retreat_shore.png",
+      "sha256": "4e267bd5ecf1578a6d0ca5ef2e7935b1957b34aecbfe43efe5b2db63d9bd5439"
+    }
+  ],
+  "walkingProfile": "wide_walking.json"
+}

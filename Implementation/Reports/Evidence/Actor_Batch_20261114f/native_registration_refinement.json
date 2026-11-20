@@ -1,0 +1,256 @@
+{
+  "scope": "UNAPPROVED_REGISTRATION_REFINEMENT_NOT_RASTER_EDIT_OR_APPROVAL",
+  "changed": [
+    {
+      "id": "class_huyen_but_skill_05_n",
+      "oldBinding": "552085d9148f8182144dcbc8cd73678d3f278ef89c312149c7876dd331c5c3b8",
+      "newBinding": "112f75870801431ffb8278e1c20f30af3e03f27ba17ebae8d47a14db2212826d",
+      "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+    },
+    {
+      "id": "class_huyen_but_skill_05_ne",
+      "oldBinding": "f558692be1bc85b6e92e4583ce76564f987487f152dc37df2f17dbd1903f74b4",
+      "newBinding": "e4675d88287d0386e9c739f7b1237484f1715c6fd3154525f845371a27245799",
+      "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+    },
+    {
+      "id": "class_huyen_but_skill_05_e",
+      "oldBinding": "7a5cb4d4abd874d252bb700c46a4f05c839a7c9d305fdda1252983c9e1a28f6c",
+      "newBinding": "dbb71018835815f10a97d5794418890ab3ebbff9a82e66f2230909c245ca5a98",
+      "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+    },
+    {
+      "id": "class_huyen_but_skill_05_se",
+      "oldBinding": "f556cdd63a16d522a21c97fa6dc1b8c0e3e74b539441d9144e58d01966eb7ef4",
+      "newBinding": "8bf99c999182632a7b90dc2de6ab9d3bd903ff627e9ca5173523f0ecbf8125a8",
+      "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+    },
+    {
+      "id": "class_huyen_but_skill_05_s",
+      "oldBinding": "482e98a71a28a21b3407a71625e8f650a62d24e7da90bc7691a95c47162bd020",
+      "newBinding": "6d6404f89ebc818c5ca522005345b60a6f70d11d459ce220fdddab2b5a7367c7",
+      "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+    },
+    {
+      "id": "sk_hb_03_expire_component",
+      "oldBinding": "fb1920f0f001a6422bdbc0c7fee8b70afea865e04d789830d581ae3aeedf7f3f",
+      "newBinding": "74b31089cfb4802aba72e456f5bcb8e815748b0b0cf16e6a41fccc982749beef",
+      "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN"
+    },
+    {
+      "id": "sk_hb_03_break_component",
+      "oldBinding": "03abfc9dfb86883baaae9353e88bb7377cead45f0111b72525c8d2db6ce75a10",
+      "newBinding": "efa9a00726b6aa4f259d2a9d4296fc390db71364d8835cc645010b25ca846f41",
+      "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN"
+    }
+  ],
+  "runs": [
+    {
+      "changed": [
+        {
+          "id": "class_huyen_but_skill_01_ne",
+          "oldBinding": "efe81c4e9cb39ad20d79755d2d357dd600548824044309fcf0c2cfa66c617bd3",
+          "newBinding": "61a95f1591ed55f8b62333ad228b9003abcd2d26b55a97b9f8bc37fbcfb75df4",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_02_ne",
+          "oldBinding": "cd347a47b5afe4d4d67a49147aa22d5d479c30e5fc5d195f0ca329a87f90c0a5",
+          "newBinding": "058c03824f7374402a5988985c160b52f4246e4fb04b4aac920e2e395c846c58",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_03_n",
+          "oldBinding": "73e58121946018ce3e42a253059267e4749bddf3cc32368dfeb13d1a962bb3d3",
+          "newBinding": "b5feaa19696547d8b72a248308de409933288957d18665c86b0f764679a047eb",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_03_ne",
+          "oldBinding": "73aca8a5318bc31e25061570ec7762dd52e3f344a8484d552071008813fb0cd0",
+          "newBinding": "bdad2791fa861daa75eac54ccb55a84e3bb33ce340bfa6aa5e9a3340d536c412",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_03_e",
+          "oldBinding": "78fc7f2ef3cd5a16184bb14d8b539ad9fa71bb94f8fed70ed0fa7f997b646280",
+          "newBinding": "8c50d5b53a5ee4466d091ee506027b1ca52408774bdc9e6d9ec4fd9c7a102127",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_03_se",
+          "oldBinding": "dd212dc7ac6d6659665017602824f9b41cb5c987942e43a5030dc11998d8ee54",
+          "newBinding": "8a785b4d886ce91a2e10ee3908b30ca1d939934c72edbd7f5344b2118fd7c249",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_03_s",
+          "oldBinding": "27e36539255454f0507ce8f611b5755d85d3cf50ab76de3348fb86fa60e481fa",
+          "newBinding": "43095f687dcdbba2e989e3c288294dabd98cc9028a80aa44699ffd9b73b35587",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_04_n",
+          "oldBinding": "923ef3a57bc24b7723363b6f79648f81656e20c22736538ee1188547f74629cc",
+          "newBinding": "146ce2a57fa16861500908e62d9dc6262023133e30263d54c3cd125dd3bef014",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_04_ne",
+          "oldBinding": "a16a1975ca328acf396843150290195cff95f76ae18f254e210dbec781e97ee1",
+          "newBinding": "e7d070c679d44dc22b45dfe2307af0e8326366530dc19f8126d1bf0221f14b2e",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_04_e",
+          "oldBinding": "693b62503f2000d6662437495dac5a8c6faf7bc1c6158919215f932ac4824a48",
+          "newBinding": "2addcb7aa9c54f659b6e3993f10d17b3b4f92914fb4506bafe19433db784eaaa",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_04_se",
+          "oldBinding": "4e5184815323cab8f555c00295daaa824002eaa30fabd66f51c52015582e603c",
+          "newBinding": "2341228b4830cbfa3797df10a45ec5db70fa42c1c2a5862fc7574a1460012fee",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_04_s",
+          "oldBinding": "95cba093e1d380c81d51b22b278daaa17035d9eb0a3ba89dfbef3eedafc4b209",
+          "newBinding": "bb7f44cfd84be557239cc9fb39d20f9fb7d1bcba603aacbb1d83e9e36aa52fc5",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_06_n",
+          "oldBinding": "2d1b3cbc4c1a1a854326de7f75211ef51c9d36e751925a3c2e713856f720396d",
+          "newBinding": "0a8b539454ae53d8179adf81fd7c698bfb5b24a3fe6c24f3b3a68f944f2c976d",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_06_ne",
+          "oldBinding": "707658edea8aafb481a10f47a659674a35c9379ee4ad6225b7dc5771f818236b",
+          "newBinding": "759bfc4403d1172c5fdbf7c768440603707a2fd2aca03b7fcf168f522789ef27",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_06_e",
+          "oldBinding": "985f3b9a4ba24168eb6069680852ce430dc374fa52ded57c30e0533f0aa57570",
+          "newBinding": "b0a380c758a591a029dad8d1df0a121d11c447af4c639d22901ed0479f391209",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_06_se",
+          "oldBinding": "c08895416010e9cfc3a2835ea7b72cfbfd52a2b4a8db0083ff51cdd7a0fae4d5",
+          "newBinding": "33b6de53385270e1c48976ee89170a9e8dcec7e6122dc386ff9d1ab0341dc917",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "class_huyen_but_skill_06_s",
+          "oldBinding": "ed1b09810261fbc7de6bac00ff3974601e3022a1b2e851cfca78b22a3add566f",
+          "newBinding": "6395b02e15c5b6989cc780ed72e72a35d98ad0f3dcbdffaeb854c5a95f151607",
+          "method": "CENTRAL_COOL_BOOT_BASELINE_XY"
+        },
+        {
+          "id": "sk_hb_02_frost_sustain_component",
+          "oldBinding": "88cd878239d82038539ed94d8b5d2d01ed2fcbeb612b8da84dba2c383f659f17",
+          "newBinding": "d860aae317b7ae5416c8683a84df3ac8d32ccecf29b649e71c7215fa6a54722b",
+          "method": "COMPLETE_SYMMETRIC_FOOTPRINT_CENTRE"
+        },
+        {
+          "id": "sk_hb_03_gain_component",
+          "oldBinding": "e0d8f1a40b02a18d131ae7b6eac46e037f66364e9f789793ee93c946db3ecd16",
+          "newBinding": "72fab5a30d2515fddd701d9345d8ac0d8243b72eb7ed04a982f48f124c5789d1",
+          "method": "PERSISTENT_BOTTOM_RIM_FROM_COMPLETED_LAST_ROW"
+        },
+        {
+          "id": "sk_hb_03_sustain_component",
+          "oldBinding": "f2d1613c39550faf1e4cc906d126590cff8ea3c899313317cce4a782a4e78fc2",
+          "newBinding": "00db48f9fd3f2a9d15d994ec3046b0e8fb24c85b97e0d9e246d01882c0d7d5c1",
+          "method": "COMPLETE_SYMMETRIC_FOOTPRINT_CENTRE"
+        },
+        {
+          "id": "sk_hb_03_expire_component",
+          "oldBinding": "6b85077d199458a9e5aa420e3a1a22fea935b063c4d092f3d79d789714981058",
+          "newBinding": "fb1920f0f001a6422bdbc0c7fee8b70afea865e04d789830d581ae3aeedf7f3f",
+          "method": "INITIAL_RIM_COLUMNS_AND_MEASURED_SOURCE_ROW_PITCH"
+        },
+        {
+          "id": "sk_hb_03_break_component",
+          "oldBinding": "e08499a72605948485715102ec2228ba160c78618f29c0a0eee61405dc96b422",
+          "newBinding": "03abfc9dfb86883baaae9353e88bb7377cead45f0111b72525c8d2db6ce75a10",
+          "method": "INITIAL_RIM_COLUMNS_AND_MEASURED_SOURCE_ROW_PITCH"
+        },
+        {
+          "id": "sk_hb_04_tell_component",
+          "oldBinding": "54e38ea6caf98490e5b0eb27c2ac2fa8b92833697eef3fd323e9aec6b2e933ab",
+          "newBinding": "3d7eb462d84a6f1e744e9a7ff710f3e2c7b593774252173ca9294d54327f1a0e",
+          "method": "PERSISTENT_BOTTOM_RIM_FROM_COMPLETED_LAST_ROW"
+        },
+        {
+          "id": "sk_hb_04_rain_component",
+          "oldBinding": "bc79a724241f317d8cb4ea0f4a465d89d79de29e5099e650a78826dd7b6221a4",
+          "newBinding": "52ad4337962134ccfe0e84bc001c9b6c0e5701cb7def08e3e209ede7ef4528b8",
+          "method": "MEASURED_PARTICLE_FIELD_COLUMN_AND_ROW_ORIGINS"
+        },
+        {
+          "id": "sk_hb_04_heal_tick_component",
+          "oldBinding": "8f67a6c8b496fda57cf1fcf98c57eaf74ef5cf054b685baa1e53dcb7867c0a87",
+          "newBinding": "c8867ce5e1ee79a7984224eeadc74e7508887a127f62bf3f82dfc112917e8cfa",
+          "method": "TWO_RIBBON_COLUMN_ORIGIN_AND_FIXED_LOW_BASELINE"
+        },
+        {
+          "id": "sk_hb_04_expire_component",
+          "oldBinding": "2488b48724b2f39ebd5fd1c0c60f3ae6c7b74c63933006beb8c4f1612bf4f46e",
+          "newBinding": "8584b74e97bd2caf2af60763241ca0f2e846f0206ddbb3f0cf45ec3e2095e813",
+          "method": "INITIAL_RIM_COLUMNS_AND_MEASURED_SOURCE_ROW_PITCH"
+        }
+      ]
+    },
+    {
+      "changed": [
+        {
+          "id": "class_huyen_but_skill_05_n",
+          "oldBinding": "552085d9148f8182144dcbc8cd73678d3f278ef89c312149c7876dd331c5c3b8",
+          "newBinding": "112f75870801431ffb8278e1c20f30af3e03f27ba17ebae8d47a14db2212826d",
+          "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+        },
+        {
+          "id": "class_huyen_but_skill_05_ne",
+          "oldBinding": "f558692be1bc85b6e92e4583ce76564f987487f152dc37df2f17dbd1903f74b4",
+          "newBinding": "e4675d88287d0386e9c739f7b1237484f1715c6fd3154525f845371a27245799",
+          "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+        },
+        {
+          "id": "class_huyen_but_skill_05_e",
+          "oldBinding": "7a5cb4d4abd874d252bb700c46a4f05c839a7c9d305fdda1252983c9e1a28f6c",
+          "newBinding": "dbb71018835815f10a97d5794418890ab3ebbff9a82e66f2230909c245ca5a98",
+          "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+        },
+        {
+          "id": "class_huyen_but_skill_05_se",
+          "oldBinding": "f556cdd63a16d522a21c97fa6dc1b8c0e3e74b539441d9144e58d01966eb7ef4",
+          "newBinding": "8bf99c999182632a7b90dc2de6ab9d3bd903ff627e9ca5173523f0ecbf8125a8",
+          "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+        },
+        {
+          "id": "class_huyen_but_skill_05_s",
+          "oldBinding": "482e98a71a28a21b3407a71625e8f650a62d24e7da90bc7691a95c47162bd020",
+          "newBinding": "6d6404f89ebc818c5ca522005345b60a6f70d11d459ce220fdddab2b5a7367c7",
+          "method": "NEUTRAL_HEAD_PROJECTION_X_COOL_BOOT_BASELINE_Y"
+        },
+        {
+          "id": "sk_hb_03_expire_component",
+          "oldBinding": "fb1920f0f001a6422bdbc0c7fee8b70afea865e04d789830d581ae3aeedf7f3f",
+          "newBinding": "74b31089cfb4802aba72e456f5bcb8e815748b0b0cf16e6a41fccc982749beef",
+          "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN"
+        },
+        {
+          "id": "sk_hb_03_break_component",
+          "oldBinding": "03abfc9dfb86883baaae9353e88bb7377cead45f0111b72525c8d2db6ce75a10",
+          "newBinding": "efa9a00726b6aa4f259d2a9d4296fc390db71364d8835cc645010b25ca846f41",
+          "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN"
+        }
+      ]
+    }
+  ],
+  "priorSourcePinsUnchanged": 301
+}

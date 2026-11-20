@@ -1,0 +1,13 @@
+{
+  "scope": "REGISTRATION_CHANGE_RECORD_NOT_PRIOR_METADATA_FILE_SNAPSHOT",
+  "id": "sk_mk_06_charge_component",
+  "source": "Sheets/sk_mk_06_charge_component_v1_20261113d.png",
+  "sourceSha256": "a3925f8252474bcc55996c0140f6c277101d18f0289f23b062ad050ade76cab7",
+  "previousPivotMode": "CELL_CENTER",
+  "selectedPivotMode": "SYMMETRIC_BOUNDS_CENTER",
+  "selectedBindingSha256": "2a4c4d27da8e12f8ed92843abf31dd000c0c814a4d591ef3cef9184a87bc6db0",
+  "sourcePixelsChanged": false,
+  "reason": "Native review showed phase-dependent drift from the cell center; the symmetric glint is now registered around its actual solid-alpha bounds center.",
+  "previousNativeEvidence": "Superseded_Charge_Registration/van_tuong_charge.mp4",
+  "selectedNativeEvidence": "van_tuong_charge.mp4"
+}

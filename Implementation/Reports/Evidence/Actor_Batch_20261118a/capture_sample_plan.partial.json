@@ -1,0 +1,50 @@
+[
+  {
+    "RenderedSourceFramesVerified": 16,
+    "NativeSampleIndices": [
+      1,
+      4,
+      7,
+      10,
+      13,
+      16,
+      19,
+      23,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      43,
+      45
+    ],
+    "SourceDurationMs": 800.0,
+    "Name": "raw_sk_lc_01_projectile_component",
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS"
+  },
+  {
+    "RenderedSourceFramesVerified": 16,
+    "NativeSampleIndices": [
+      1,
+      2,
+      3,
+      5,
+      7,
+      8,
+      9,
+      11,
+      13,
+      14,
+      16,
+      17,
+      18,
+      20,
+      21,
+      23
+    ],
+    "SourceDurationMs": 400.0,
+    "Name": "raw_sk_lc_01_leaf_dissipate_component",
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS"
+  }
+]

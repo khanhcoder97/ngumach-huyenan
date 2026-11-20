@@ -1,0 +1,65 @@
+{
+  "batch": "20261115h",
+  "manualReviewComplete": false,
+  "sourceApprovalsApplied": 0,
+  "selected": 3,
+  "persistedGeneratedVariants": 5,
+  "sourcePoses": 48,
+  "individualNativeSourcesInspected": 3,
+  "selectedVideos": 3,
+  "supersededVideos": 2,
+  "catalogueUnchanged": true,
+  "scope": "WORKING_OBSERVATIONS_NOT_APPROVAL_LEDGER",
+  "entries": [
+    {
+      "id": "class_huyen_but_interact_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_interact_ne_v1_20261115h.png",
+      "sourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
+      "reviewedSourceFrames": 16,
+      "individualNativeInspected": true,
+      "observation": "Inspected original and all16native poses. Prior obsolete hanging far hand is absent during extended-palm middle phases; far arm naturally occludes behind torso,one right brush retained. NE back plane and root remain readable. Mirror NW and cross-action transitions not yet inspected for this candidate.",
+      "status": "SINGLE_FACING_PROMISING_REQUIRES_DIRECTIONAL_TRANSITION_REVIEW",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.mp4": "d091098f7728a4b36ffa2811a8eaeb13b60f632505c2e120c2fc0974a588f4bd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.png": "487be53be00fea3c02619f550c2b170a2dd4500bd096041d621bfbfa0a648080",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_poses.png": "ba0175e959ef1a097397c42964ebb8887ed29f1dc85357c40e15ff78c8a03442",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_samples.png": "df233a9fbc0a5c330c0a3ae8ffe045a6aac76c89a0a5d63624208b2a5688d474",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_source_samples.png": "65d92e5983137ecfd2ce68c5b976dbbf82d6d311cc788f6e84802c6727bc6bba"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_run_e_v3_20261115h.png",
+      "sourceSha256": "2148bba61bd0964f72df39c541e4605a172ee49fe0bdf30d84208b6008ac7803",
+      "reviewedSourceFrames": 16,
+      "individualNativeInspected": true,
+      "observation": "Inspected v3original,all16native poses and newly regenerated actual14/15/0/1 wrap. v1 repeated arm/leg phase across halves; v2 separated arm counter-swing but popped at seam. v3 bottom-row wrist now returns back before0. Frame12still lacks an unambiguous held cream brush-tip/ferrule silhouette and must be redrawn or physically clarified. Do not approve from improved seam alone.",
+      "status": "NEEDS_REDRAW_FRAME12_BRUSH",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.mp4": "563ed2e756214110126c1d415a14f4e5309b61d9f55bfc8ac1376eb0a081662f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.png": "bd9efd4f0205e44d76ee44b55be43fcf62c7280c01d1ae1a427938c2cddc4b11",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_poses.png": "a64876ba4695ad7c9d3c3cc7469e6ec7dbbd624989b25e3629dcc2817245aa70",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_samples.png": "fc92ae63734a9f5f5f458bfa2eaf443275b297a1c3213a0a3301a49df2fbdfd7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_source_samples.png": "0fc44e94c2eddd3fac57406a60436accc9108056c875bc4d86a2a4e07e64b0bd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_loop_seam.png": "d2185e7d8653ecadc98836460f90f40921aa09869c8925187f68bbacf73c7b1a"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_run_n_v1_20261115h.png",
+      "sourceSha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9",
+      "reviewedSourceFrames": 16,
+      "individualNativeInspected": true,
+      "observation": "Inspected original and all16current native poses plus actual14/15/0/1 wrap. Opposite0/8 boot silhouettes now visible: right lower at0,left lower at8. Root remains registered,one right brush,no face shown in rear view. Single-source observation only; directional transitions and complete locomotion still need review.",
+      "status": "SINGLE_FACING_PROMISING_REQUIRES_DIRECTIONAL_TRANSITION_REVIEW",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.mp4": "00381819f1708aa4c20e6f29211cb9dc94966b05018bfff47774d99cfcc8d09a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.png": "27becb1e01970d070346fe391d777949c9f3881f215a47331a4faa102c402b61",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_poses.png": "5cabeb55dcddc8d16654f79918cf6c759ace9e29c03ce31675edd2e8cd7fa42e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_samples.png": "b0c8726f8b5b9a356da8dda318a0c1b06b733b8ea8c14731c30ec83514ea5c33",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_source_samples.png": "b0e06be5d0c4f7d7f759bd00cd1159ad873f164eb54e13e7355199989c1fffc7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_loop_seam.png": "7600014f235d939b6cfb3136ed386909e3fd1ac31083602c7dbf485db8081bbb"
+      }
+    }
+  ]
+}

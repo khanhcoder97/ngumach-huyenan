@@ -1,0 +1,33 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 2,
+  "id": "class_linh_cung_skill_02_n",
+  "direction": "N",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118b/class_linh_cung_skill_02_n_v1_20261118b.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_NORTH_BACKWARD_HAND_REPAIR_TARGET",
+  "prompt": "Precise pose correction of image 2, keeping its same original rear-facing Linh Cung, 4×4 atlas, pose timing and crisp pixel-art. In the six middle crouching frames the visible right hand incorrectly reaches BEHIND her toward the bottom of the image, with fingers below her feet. She faces NORTH, away from us. Redraw ONLY her right arm and its occlusion in phases 3 through 11 so she reaches FORWARD toward the top of the screen. From behind it is natural for most of her far reach to be occluded by head or cape; only the outward elbow and a small visible side sliver of the right bracer and open hand should appear near the upper right of her torso. For release phase 8 no finger appears BELOW the boot line and no hand touches the bottom/right side near the ground behind her. The fingertips sit visually at least 40 source pixels ABOVE her boot sole y-position. Keep the far forest-facing gesture subtle and physically credible. Keep the correctly positioned small recurved bow in left hand on the viewer's left, quiver on viewer's right, brown ponytail, two boots, kneeling depth, and the original camera. She lowers and rises on planted feet; no movement pose. No painted seed, line, arrow, trail, lettering or ground. Full isolation on clean transparent RGBA, 16 different complete cells and empty gutters."
+}

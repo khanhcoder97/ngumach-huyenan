@@ -1,0 +1,39 @@
+{
+  "batch": "20261119a",
+  "scope": "STUDIO_NATIVE_ART_REVIEW",
+  "productionApproved": false,
+  "nativeAuditSha256": "87e89e7491de848d7b9ae3be4829fc35c07fd941e062ca2fff1647d7d4d24c48",
+  "sourcePosesViewed": 176,
+  "nativeAssemblyFacingsReviewed": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "atlasGridOverrides": [
+    "E",
+    "SW",
+    "NW"
+  ],
+  "rejectedSourceRevisions": [
+    {
+      "id": "sk_lc_06_rain_impact_component",
+      "sha256": "81ecf1f0194714af7fe5f2202a834523cb7e287b1aa2fe0e49d15596a41c5e00",
+      "reason": "Standalone impact contains an intact arrow."
+    },
+    {
+      "id": "sk_lc_06_rain_arrow_component",
+      "sha256": "e0fb8d2db8cd2afce2096f7c2b6b0493d430dff27cbfdb9eb056649dd6c490c6",
+      "reason": "Soft background haze extends into the gutters."
+    }
+  ],
+  "notes": [
+    "The warning has a stable center, a thin outer ring and three separate inner sigils.",
+    "Four cohorts fall straight to the same registered ground area, with separate leaf contact layers.",
+    "All eight authored bodies raise and release the bow while holding the ground pivot."
+  ]
+}

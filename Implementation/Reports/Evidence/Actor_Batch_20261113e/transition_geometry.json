@@ -1,0 +1,116 @@
+{
+  "scope": "OPAQUE_TOP_VERTICAL_JOIN_SCREENING_NOT_FULL_SILHOUETTE_OR_GAMEPLAY_ACCEPTANCE",
+  "joins": [
+    {
+      "direction": "n",
+      "fromClip": "skill_04",
+      "toClip": "hurt",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.9649
+    },
+    {
+      "direction": "n",
+      "fromClip": "hurt",
+      "toClip": "dodge",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.9053
+    },
+    {
+      "direction": "n",
+      "fromClip": "dodge",
+      "toClip": "death",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.0816
+    },
+    {
+      "direction": "ne",
+      "fromClip": "skill_04",
+      "toClip": "hurt",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -3.4375
+    },
+    {
+      "direction": "ne",
+      "fromClip": "hurt",
+      "toClip": "dodge",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -1.7323
+    },
+    {
+      "direction": "ne",
+      "fromClip": "dodge",
+      "toClip": "death",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": 0.4603
+    },
+    {
+      "direction": "e",
+      "fromClip": "skill_04",
+      "toClip": "hurt",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -1.2791
+    },
+    {
+      "direction": "e",
+      "fromClip": "hurt",
+      "toClip": "dodge",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -3.3716
+    },
+    {
+      "direction": "e",
+      "fromClip": "dodge",
+      "toClip": "death",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -2.2537
+    },
+    {
+      "direction": "se",
+      "fromClip": "skill_04",
+      "toClip": "hurt",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.44
+    },
+    {
+      "direction": "se",
+      "fromClip": "hurt",
+      "toClip": "dodge",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": 4.1985
+    },
+    {
+      "direction": "se",
+      "fromClip": "dodge",
+      "toClip": "death",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -3.1818
+    },
+    {
+      "direction": "s",
+      "fromClip": "skill_04",
+      "toClip": "hurt",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.4701
+    },
+    {
+      "direction": "s",
+      "fromClip": "hurt",
+      "toClip": "dodge",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.9129
+    },
+    {
+      "direction": "s",
+      "fromClip": "dodge",
+      "toClip": "death",
+      "renderHeightPx": 110,
+      "opaqueTopDeltaPx": -0.9281
+    }
+  ],
+  "maxAbsTopDeltaPx": 4.1985,
+  "notes": [
+    "Fixed whole-clip neutral-height registration; no raster modification or per-frame scaling.",
+    "SE dodge neutralSourceFrame15 is fully standing. First dodge frame is intentionally soft-kneed; small start/join differences remain.",
+    "Legacy idle/walk are older unarmed sources. This review does not accept all armed/unarmed stance transitions."
+  ]
+}

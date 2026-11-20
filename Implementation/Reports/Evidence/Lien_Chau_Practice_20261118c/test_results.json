@@ -1,0 +1,42 @@
+{
+  "scenario": "LOCAL_BEN_MUA_LINH_CUNG_PRACTICE",
+  "godot": "4.7.2 stable mono",
+  "renderer": "OpenGL Compatibility / GeForce 820M",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fixedSimulationFramesPerSecond": 60,
+  "tests": {
+    "headless": [
+      "LINH_CUNG_PRACTICE PASS assertions=55 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=49 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=66 facings=8 authoringFrames=128"
+    ],
+    "native": [
+      "LINH_CUNG_PRACTICE PASS assertions=59 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=53 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=69 facings=8 authoringFrames=128"
+    ],
+    "camera": [
+      "CAMERA_SELF_TEST PASS assertions=48"
+    ],
+    "scene": [
+      "SCENE_SELF_TEST PASS assertions=9"
+    ]
+  },
+  "frames": [
+    {
+      "file": "practice_volley_ready.png",
+      "sha256": "e5a39326b52c6caf4dbceb4d07f0e598f81288d749884caad10a835d45f9b423"
+    },
+    {
+      "file": "practice_volley_flight.png",
+      "sha256": "cd4e955f1004f80409a8256cc63d8d06d5ff2e41584d1ed6fc49ebcaf69ce9e4"
+    },
+    {
+      "file": "practice_volley_result.png",
+      "sha256": "7e61a24c024f3326982547f92a36df567ebb834b14bd0c51a22edc655596bbf2"
+    }
+  ]
+}

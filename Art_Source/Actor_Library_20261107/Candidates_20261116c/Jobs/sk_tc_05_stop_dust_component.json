@@ -1,0 +1,35 @@
+{
+  "batch": "20261116c",
+  "id": "sk_tc_05_stop_dust_component",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "seconds": 0.32,
+  "timing": [
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20,
+    20
+  ],
+  "loop": false,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png"
+  ],
+  "prompt": "Use case: stylized-concept. Production standalone PIXEL-ART VFX COMPONENT for Thach Chuy earth/stone skills in Ngu Mach Huyen An. Input owner character is PALETTE/STYLE guidance only; draw NOcharacter,body,hand,weapon or UI frame. Refined crisp coherent pixel clusters,earth ochre/bronze,slate-grey/tan,pale cream readable cores,dark clean edges. No neon fire,lava,water,lightning,photorealism,painted fog or bloom blur.\nExact4columns4rows=16genuinely authored chronological animation drawings of ONE component. Fixed elevated top-down orthographic camera,ground circles are low projected ellipses,not isometric platforms. Complete effect inside central65%of each cell with broad fully transparent alpha0gutters and outerpadding. Actual RGBA alpha0background/corners: no floor,shadow,grey/white matte,checkerboard,grid,text,labels or contact shadows. Everyphase has a visible solid clean core;lastframe keeps a tiny readable cluster rather than empty frame. Do not duplicate8pose sequences or simply resize/translate one drawing. ONE activation/development/ending through16phases,not repeated pulses;preserve intentional changing shapes and coherent disappearance.\nCOMPONENT stop_dust;ATTACH CASTER_STOP_FOOT. Small non-damaging dust settling burst at an early dash stop,including blocked path. Low tan particles and a few dark grains,NO damage star,shockwave or target hit. One settle through16poses,transparent floor.\nMechanic source: Skill_VFX_Cards_v1_vi.md SK-TC-05 and Combat_Skills_VFX_Animation_Spec_vi.md. Only presentation artwork: no gameplay damage,state,collision,lifetime or server timing is implemented by the sheet. No invented extras.\nREADABILITY LOCK: A very SMALL low tan dust puff at feet, formed from a few coherent pixel dust clumps and tiny grains. Dust is opaque/pixel shaded where visible, alpha0elsewhere, no fog rectangle. No large rock chunks, raised stone pile, ring, explosion or terrain. Peak silhouette under45%cell width; settles close to a fixed baseline. Last phase2or3tiny tan grains.",
+  "layoutVerified": true,
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_05_stop_dust_component_v1_20261116c.png",
+  "sourceSha256": "c571170a8c55f20f87021b6c75ffd85a858d0892013aa2579203da3e63c1901b",
+  "state": "GENERATED_PENDING_REVIEW"
+}

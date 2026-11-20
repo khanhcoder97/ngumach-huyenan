@@ -1,0 +1,62 @@
+[
+  {
+    "id": "body_base_mf_v3",
+    "source": "Sheets/body_base_mf_v3.png",
+    "prompt": "Prompts/body_base_mf_v3.txt",
+    "references": [
+      "Art_Source/Modular_Characters_20261107/Concepts/modular_system_study_v1.png"
+    ],
+    "generator": "built-in image_gen",
+    "scope": "ILLUSTRATIVE_PIXEL_STYLE_MASTER",
+    "actors": [
+      "MALE",
+      "FEMALE"
+    ],
+    "direction": "S",
+    "posesPerActor": 1,
+    "animationReady": false,
+    "layerPackReady": false,
+    "nativeGridApproved": false,
+    "productionApproved": false
+  },
+  {
+    "id": "outfit_ivory_mf_v3",
+    "source": "Sheets/outfit_ivory_mf_v3.png",
+    "prompt": "Prompts/outfit_ivory_mf_v3.txt",
+    "references": [
+      "Art_Source/Restored_Pixel_Style_20261110/Sheets/body_base_mf_v3.png"
+    ],
+    "generator": "built-in image_gen",
+    "scope": "ILLUSTRATIVE_PIXEL_STYLE_MASTER",
+    "actors": [
+      "MALE",
+      "FEMALE"
+    ],
+    "direction": "S",
+    "posesPerActor": 1,
+    "animationReady": false,
+    "layerPackReady": false,
+    "nativeGridApproved": false,
+    "productionApproved": false
+  },
+  {
+    "id": "appearance_ivory_mf_v3",
+    "source": "Sheets/appearance_ivory_mf_v3.png",
+    "prompt": "Prompts/appearance_ivory_mf_v3.txt",
+    "references": [
+      "Art_Source/Restored_Pixel_Style_20261110/Sheets/outfit_ivory_mf_v3.png"
+    ],
+    "generator": "built-in image_gen",
+    "scope": "ILLUSTRATIVE_PIXEL_STYLE_MASTER",
+    "actors": [
+      "MALE",
+      "FEMALE"
+    ],
+    "direction": "S",
+    "posesPerActor": 1,
+    "animationReady": false,
+    "layerPackReady": false,
+    "nativeGridApproved": false,
+    "productionApproved": false
+  }
+]

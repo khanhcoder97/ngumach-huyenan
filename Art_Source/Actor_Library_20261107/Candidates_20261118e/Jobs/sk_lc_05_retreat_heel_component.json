@@ -1,0 +1,35 @@
+{
+  "batch": "20261118e",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_PHI_DIEP_EIGHT_AUTHORED_FACINGS_AND_RETREAT_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_05_retreat_heel_component",
+  "prompt": "Draw one grounded leaf footprint effect for Phi Diệp in a transparent 4x4 pixel animation sheet of exactly sixteen distinct poses. Reference is only muted moss, ivory gold and crisp pixel shape. The center of the stamp stays fixed in each cell. Face RIGHT in overhead view. One tight, low pair of overlapping small stepped leaves forms a thin heel-pointing wedge, a small visible footprint of a backward step. Keep exactly two main pale olive slivers very close together, short olive midrib, one tiny trailing gold pixel fleck only. Phase 0 clear short heel mark; 1-4 it widens and holds close to ground; 5-9 it fades and breaks into separated pointed pixels; 10-15 two tiny subdued fragments dissolve while retaining visible distinct coverage in every frame. The studio uses a separately spawned stamp to keep two marks on the ground. These are individual frames for a single ground footprint. No extra tracks, tall column, dust cloud, glow haze, ring, arrows, labels, backgrounds, crop, guides or checkerboard. Real RGBA transparency, roomy clear margins between cells.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118d/sk_lc_04_fan_fall_component_v1_20261118d.png"
+  ],
+  "seconds": 0.4,
+  "timing": [
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25
+  ],
+  "authoringUse": {
+    "role": "RETREAT_HEEL_MARK",
+    "facing": "E",
+    "instances": 2
+  }
+}

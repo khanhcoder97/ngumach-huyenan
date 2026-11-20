@@ -1,0 +1,323 @@
+{
+  "scope": "SOURCE_CLIPS_AND_VISUAL_COMPONENT_ONLY",
+  "batch": "20261112f",
+  "selectedSourcePages": 15,
+  "newSourceCells": 240,
+  "decisions": [
+    {
+      "id": "mob_waterroot_hurt_s",
+      "sourceSha256": "81a31c97498870cf3b9e5411e574607879f4d95887d403373c9a45ad69960239",
+      "bindingSha256": "6e67b35c6c90ad230e81955262b2e51fc56b09d6987ada514e470cf38305daa3",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_hurt_s_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single planted root-crown recoil, correct authored facing and front-seed occlusion; returns neutral. FOOT registration preserves visible recoil."
+    },
+    {
+      "id": "mob_waterroot_death_s",
+      "sourceSha256": "e5105cfddbf11c5d9eff20bb3ce64a15cab07071585d1e2204060fb2430430e2",
+      "bindingSha256": "c4ac954de66e2d86ec2bb8263ce28e7e3ca95b4702b2a0b2fe05bf17823f1bf2",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_death_s_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single nonhumanoid root collapse ending in recognisable low wood/moss heap; no upright reset. Neutral-height scaling retained through final corpse."
+    },
+    {
+      "id": "mob_waterroot_hurt_n",
+      "sourceSha256": "fe1a197dc7f629bb3bb7ac574baa7a50fb610c5e7452fde261cd97e24d7134c4",
+      "bindingSha256": "953a60470c563918dc3fc09ee795f20450f59dd83d17b15ee2fe8fd77b80500f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_hurt_n_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single planted root-crown recoil, correct authored facing and front-seed occlusion; returns neutral. FOOT registration preserves visible recoil."
+    },
+    {
+      "id": "mob_waterroot_death_n",
+      "sourceSha256": "6814695ac6a513f141194c5a1682587eaa5f1a24fe7e8f23771a27f1774c70fd",
+      "bindingSha256": "60bf885a415d20d57be0aea0dc035330692c792de034eab496dad5f0251a6fdf",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_death_n_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single nonhumanoid root collapse ending in recognisable low wood/moss heap; no upright reset. Neutral-height scaling retained through final corpse."
+    },
+    {
+      "id": "mob_waterroot_hurt_ne",
+      "sourceSha256": "1b50f48dc156772a5e51c351fb732f9008127a8b68dfeff8171b6a5cd3785047",
+      "bindingSha256": "753ff8b8920fbed4644bc922c0aade1e6e97de6c1ad9940a8ca60e1bd8dd1db3",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_hurt_ne_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single planted root-crown recoil, correct authored facing and front-seed occlusion; returns neutral. FOOT registration preserves visible recoil."
+    },
+    {
+      "id": "mob_waterroot_death_ne",
+      "sourceSha256": "9cc04e38d49e70b44a165faed68920846a16a75f713d7e485a180f54a59c98ee",
+      "bindingSha256": "6cc474b3c92a7211bb55d146470d826a4798c46e09a734257637ed32928a36c5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_death_ne_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single nonhumanoid root collapse ending in recognisable low wood/moss heap; no upright reset. Neutral-height scaling retained through final corpse."
+    },
+    {
+      "id": "mob_waterroot_hurt_e",
+      "sourceSha256": "07ef3bef949bf8341c2278cd58101da39864e151e0bdebf36b4145af4fe15899",
+      "bindingSha256": "11c035240a3830fe35f5edfe403c6f878a8ad941ee414918976f89e8448d7d06",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_hurt_e_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single planted root-crown recoil, correct authored facing and front-seed occlusion; returns neutral. FOOT registration preserves visible recoil."
+    },
+    {
+      "id": "mob_waterroot_death_e",
+      "sourceSha256": "85ff960e2ff7b73093a7f7fc5709c4a6853f94912dce41c5e4098082dd10ec90",
+      "bindingSha256": "d6c1eb50f11a376580cca45a511850bd194a43e22144f6dfd3a1c2141d6d2f52",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_death_e_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single nonhumanoid root collapse ending in recognisable low wood/moss heap; no upright reset. Neutral-height scaling retained through final corpse."
+    },
+    {
+      "id": "mob_waterroot_hurt_se",
+      "sourceSha256": "970a4ca5e51e1f448a1facf86c64c42028e33f915dab5fa59adb8598d495238d",
+      "bindingSha256": "de3e5c6710bf2ef167391b461978a41ec4d438029416bd6ed0fac5151016265c",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_hurt_se_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_hurt_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single planted root-crown recoil, correct authored facing and front-seed occlusion; returns neutral. FOOT registration preserves visible recoil."
+    },
+    {
+      "id": "mob_waterroot_death_se",
+      "sourceSha256": "c1cf02205407163e3c435f06983e727ab498ae2be414e8110a9c2aeb239b471c",
+      "bindingSha256": "7f9888c422aedaad55e7d9bea47b8da8bb7584b0e51b82ef112da08c734a4c36",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_death_se_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/waterroot_death_eight_angles_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Eight-direction88px library and N/SE combat comparison",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "componentOnly": false,
+      "notes": "Single nonhumanoid root collapse ending in recognisable low wood/moss heap; no upright reset. Neutral-height scaling retained through final corpse."
+    },
+    {
+      "id": "sk_mk_01_parry_component",
+      "sourceSha256": "e22d76fba1b62474e829840ff9cecd736afac894fb252c6e37b8d06fc6a44526",
+      "bindingSha256": "171e3a3d62c2668fb4fc2acfcace89def98186b03113888d0f8921b6985805f4",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_mk_01_parry_component.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_parry_component_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_mk_01_parry_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_mk_01_parry_component_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Studio160px effect extent",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_VISUAL_COMPONENT",
+      "componentOnly": true,
+      "notes": "Open gold angular guard assembles, pulses once and breaks into glints; no full-screen flash. Cell center sampled alpha0-1, native center remains visually open."
+    },
+    {
+      "id": "sk_ad_01_cut_component",
+      "sourceSha256": "7b80f3575923ba2e09c4c4510095e62ce66af4d52af84498bdfce5a0bb47690e",
+      "bindingSha256": "8eaef4ffdfaa76059047fe614ce53363c4493d61501c3082089884c09c71c9b0",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_ad_01_cut_component.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_cut_component_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_ad_01_cut_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_ad_01_cut_component_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Studio160px effect extent",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_VISUAL_COMPONENT",
+      "componentOnly": true,
+      "notes": "One dark crimson cut opens into a crescent, orange confined to cutting rim, then breaks and fades. No gore or HP-interface marks."
+    },
+    {
+      "id": "sk_hb_01_ink_hit_component",
+      "sourceSha256": "21ceb17538ada2b5862ebe161f81b977d2d4a382012232c438fd857c7ec2a84c",
+      "bindingSha256": "752a2db082287d2c845d6d5e2b2c342cbc9ca76004ad148a229bea97b5dd0b95",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_hb_01_ink_hit_component.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_ink_hit_component_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_hb_01_ink_hit_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_hb_01_ink_hit_component_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Studio160px effect extent",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_VISUAL_COMPONENT",
+      "componentOnly": true,
+      "notes": "Compact ragged navy/cyan brush-ink impact with broken flecks and sparse ending, not the full projectile/wave timeline."
+    },
+    {
+      "id": "sk_tc_01_dust_component",
+      "sourceSha256": "34dcda4a3600523800958d041d276f54eadf7434fd8e14a637fb48e4115512ee",
+      "bindingSha256": "cafda3ecb11c7aa842171defcec182345cca29f2eb78f8f4c20c487b1f14c362",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_tc_01_dust_component.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_tc_01_dust_component_v1_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_tc_01_dust_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_tc_01_dust_component_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Studio160px effect extent",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_VISUAL_COMPONENT",
+      "componentOnly": true,
+      "notes": "Low ochre-gray stone dust with small chips; floor registration reviewed after removing center-anchor drift. Not a crack decal, obstacle or full skill."
+    },
+    {
+      "id": "sk_lc_01_mark_component",
+      "sourceSha256": "7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05",
+      "bindingSha256": "76cbdbe7178f7f3d464f46429a059a395998038784fe030e95129aac678ca2ab",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_lc_01_mark_component.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_mark_component_v2_20261112f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_lc_01_mark_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112f/sk_lc_01_mark_component_native_samples.png"
+      ],
+      "method": "Reviewed original16-frame source and point-filtered native Godot captures/temporal samples. Native frame-clock/one-shot tests are separate. No source raster changes.",
+      "reviewScale": "Studio160px effect extent",
+      "batch": "20261112f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_VISUAL_COMPONENT",
+      "componentOnly": true,
+      "notes": "Selected v2 removes the second growth pulse in last row; leaf brackets relax near starting extent for loop wrap. v1 retained with native evidence. Presentation loop1s is not authoritative5s mark lifetime."
+    }
+  ],
+  "superseded": [
+    {
+      "id": "sk_lc_01_mark_component",
+      "source": "Sheets/sk_lc_01_mark_component_v1_20261112f.png",
+      "reason": "second growth pulse and loop closure size pop",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/Superseded_Registration_Or_Loop_v1/sk_lc_01_mark_component.mp4"
+    }
+  ],
+  "metadataRevisions": [
+    {
+      "id": "sk_tc_01_dust_component",
+      "reason": "CELL_CENTER put dust below ground anchor; FOOT selected after native review; PNG unchanged",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112f/Superseded_Registration_Or_Loop_v1/sk_tc_01_dust_component.mp4"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "batch": "20261114a",
+  "fullInspector": {
+    "passed": true,
+    "pages": 309,
+    "boundJobs": 79,
+    "pendingJobs": 949,
+    "sourceReviewedJobs": 51,
+    "visualHoldPages": 18
+  },
+  "python": {
+    "passed": 86,
+    "log": "python_tests.log"
+  },
+  "inventoriesChecked": 17,
+  "dotnet": {
+    "errors": 0,
+    "warnings": 0,
+    "log": "build.log"
+  },
+  "native": {
+    "library": 18120,
+    "studioAssertions": 91530,
+    "studioEntries": 383,
+    "minhKiemMobility": 9029,
+    "anhDaoMobility": 9029,
+    "minhKiemBase": 4367,
+    "anhDaoBase": 4367
+  },
+  "lfs": {
+    "stagedMediaPaths": 138,
+    "uniqueObjects": 118,
+    "allMatch": true
+  },
+  "fullGameComplete": false
+}
