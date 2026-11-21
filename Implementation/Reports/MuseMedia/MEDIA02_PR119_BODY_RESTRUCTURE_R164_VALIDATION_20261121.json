@@ -1,0 +1,88 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R163",
+ "validator": "check_pr119_restructure_r164_v1.py",
+ "checks": {
+  "total": 19,
+  "passed": 19
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == a23e090": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 826a7df": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha a23e090": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 517/2884": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R164 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R163 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R163 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..a23e090 == 517": {
+   "pass": true,
+   "detail": "517"
+  },
+  "git files cf17178..a23e090 == 2884": {
+   "pass": true,
+   "detail": "2884"
+  },
+  "git additions == 269440, deletions 0": {
+   "pass": true,
+   "detail": "2884 files changed, 269440 insertions(+)"
+  },
+  "merge-tree a23e090 vs integration exit 0, tree 9bc639d3": {
+   "pass": true,
+   "detail": "9bc639d3796f5f3fd213fd31f4b01eee0ad8dad8"
+  },
+  "body head line a23e090/517/2884": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R163 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R163": {
+   "pass": true,
+   "detail": "+ PR119 BODY RESTRUCTURE R162 + PR119 BODY RESTRUCTURE R163)"
+  },
+  "body title has full R93..R163 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R163 added"
+  },
+  "body index reference at a23e090": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R164 note + R142-R161 compacted (20 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 20, body chars: 104687"
+  }
+ },
+ "status": "PASS"
+}
