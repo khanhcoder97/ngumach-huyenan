@@ -1,0 +1,476 @@
+{
+  "id": "STANDARD720_MB_CP2_v1",
+  "checkpoint": "WO37 M-B CP2",
+  "status": "DRAFT_STANDARD_VERSIONS_NOT_IN_RUNTIME",
+  "method": "integer 2x nearest-neighbour upscale of the delivered 640x360 runtime masters; all committed picture sources are 640x360 native, so this is NOT a native 720p capture; H.264 crf26 (measured choice: crf16 cost 9.7x total bytes for no structural gain — see report); audio stream-copied bit-exact from the runtime MP4 (EMBEDDED_SOUNDTRACK_ONLY preserved)",
+  "baseline": "aa1cd978b98f86b574cd22704599336eb8e5eeca",
+  "entries": [
+    {
+      "sceneId": "CIN_000",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
+      "sourceSha256": "8804931743e31d21c46c269f86b3deb65800668e3ec9c3e7c38d6a73057c2806",
+      "sourceBytes": 12249759,
+      "sourceDuration": 87.367,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_000/CIN_000_1280x720_30fps.mp4",
+      "outSha256": "55df5da20bfccd8577a9cb2d43489277f64543063cd278f18f5be8b79ba88c70",
+      "outBytes": 33875842,
+      "outDuration": 87.367,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 87.367
+      }
+    },
+    {
+      "sceneId": "CIN_001",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+      "sourceSha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25",
+      "sourceBytes": 1224004,
+      "sourceDuration": 36.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_001/CIN_001_1280x720_30fps.mp4",
+      "outSha256": "9649566d791f906573d489ba14fed4123c23043dc3ef1a77cc81a0c1c7e8ab75",
+      "outBytes": 1484026,
+      "outDuration": 36.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 36.0
+      },
+      "ogvSample": {
+        "outPath": "Art_Source/Cinematics/Standard720/CIN_001/CIN_001_1280x720_30fps.ogv",
+        "outSha256": "68948b960410764b299543b29c2f219ad2a13a008a04f299bdec87f178fc2d39",
+        "outBytes": 7110206,
+        "outDuration": 36.010667,
+        "bytesPerSecond": 197447.21751474362,
+        "audioNote": "Vorbis re-encoded from the embedded AAC track; an adopted full set should be rendered from the mix WAV masters"
+      }
+    },
+    {
+      "sceneId": "CIN_002",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+      "sourceSha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7",
+      "sourceBytes": 603413,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_002/CIN_002_1280x720_30fps.mp4",
+      "outSha256": "df91056e87bc3ea89c0837ef694e53853a7bceac8f1fa6ee4dea0ccb60c2aa21",
+      "outBytes": 733937,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_003",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+      "sourceSha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75",
+      "sourceBytes": 1658233,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_003/CIN_003_1280x720_30fps.mp4",
+      "outSha256": "e51577a8fcf29ced19fd41169c01acffb100f3bde7c189a871b407b11091c006",
+      "outBytes": 6709336,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      },
+      "ogvSample": {
+        "outPath": "Art_Source/Cinematics/Standard720/CIN_003/CIN_003_1280x720_30fps.ogv",
+        "outSha256": "79366a239995c52dd486fd6e559d17ed3e093d72a8d30ae1630519082a3647c7",
+        "outBytes": 12386615,
+        "outDuration": 18.005333,
+        "bytesPerSecond": 687941.4560119493,
+        "audioNote": "Vorbis re-encoded from the embedded AAC track; an adopted full set should be rendered from the mix WAV masters"
+      }
+    },
+    {
+      "sceneId": "CIN_004",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+      "sourceSha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891",
+      "sourceBytes": 655887,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_004/CIN_004_1280x720_30fps.mp4",
+      "outSha256": "1b1a86648fb4dbd5d06cdcd14c602eb8fca3853401f1f98a40886c06f6e7eb1b",
+      "outBytes": 825017,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_005",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.mp4",
+      "sourceSha256": "223f5801032e50ad4d4a05cad2a39f3cb32f71d4f1ce3c6add5b71ceacd64210",
+      "sourceBytes": 2259124,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_005/CIN_005_1280x720_30fps.mp4",
+      "outSha256": "f09cd2125d03159bf665de271c3fdc349e9b7c546510cd6127ebeb5d8262b1f8",
+      "outBytes": 8555299,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_006",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+      "sourceSha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321",
+      "sourceBytes": 1934291,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_006/CIN_006_1280x720_30fps.mp4",
+      "outSha256": "ed0d7f8726d3039a3851813cc55e95d996822c2b183e5965c6216f6ad7588a87",
+      "outBytes": 7498383,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_007",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+      "sourceSha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125",
+      "sourceBytes": 1488744,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_007/CIN_007_1280x720_30fps.mp4",
+      "outSha256": "aebfb8a3db2e4c8831f78986fa22b5464d530d3111c8f0d6a9754b51dade3832",
+      "outBytes": 6014486,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_008",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+      "sourceSha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee",
+      "sourceBytes": 1406373,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_008/CIN_008_1280x720_30fps.mp4",
+      "outSha256": "f1ea573013062914a840b147e3766f2e4ea454aeea28c87b2ab14cb7786b5c26",
+      "outBytes": 5406160,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_009",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.mp4",
+      "sourceSha256": "51d6b590e412faeb0d0eabf1305aa9a33c928af05818b4a58a24d49e1b22e6e6",
+      "sourceBytes": 1950188,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_009/CIN_009_1280x720_30fps.mp4",
+      "outSha256": "237f146cbf56597fcf85943eb441448a5f192bd4a53c2377eb83321ab7c2cedc",
+      "outBytes": 7712074,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_010",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+      "sourceSha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56",
+      "sourceBytes": 1999645,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_010/CIN_010_1280x720_30fps.mp4",
+      "outSha256": "2d29377f0506fa1508e10c234a1c17b774b747b2a353a7f71466f904b3d4115c",
+      "outBytes": 7706106,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_011",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+      "sourceSha256": "cec9e96af68b4f654458455fa038446c5734ad4fe95bacf211891a43fdbf1b71",
+      "sourceBytes": 1879636,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_011/CIN_011_1280x720_30fps.mp4",
+      "outSha256": "6f523a7743af54e792cafd1058097b32eed2f30b9306e69159687c5c34ac61f4",
+      "outBytes": 7396926,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_012",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+      "sourceSha256": "aee3ef178b524d13c30fc927e7ad89cc01b9ede1a73a9b927c193baf65e67731",
+      "sourceBytes": 1552779,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_012/CIN_012_1280x720_30fps.mp4",
+      "outSha256": "1e2415b009b137482a8bf0da9c485b8854ace17e73a153b19f111ffe2cfd9950",
+      "outBytes": 5258730,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_013",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+      "sourceSha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f",
+      "sourceBytes": 1518104,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_013/CIN_013_1280x720_30fps.mp4",
+      "outSha256": "1b90c257bf143d46113e94ec1daa467448b9d072447ef1103845076290cfb123",
+      "outBytes": 5975116,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_014",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+      "sourceSha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48",
+      "sourceBytes": 1620294,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_014/CIN_014_1280x720_30fps.mp4",
+      "outSha256": "2ecdb125fcd01e781f227fb2a7df267a6f903c6076aa08cf057236e1b46c3e41",
+      "outBytes": 6507298,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_015",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+      "sourceSha256": "95a6b688aaa5d8e77103d0045edf2ac50a9a122d6d956b797f6c136857947f22",
+      "sourceBytes": 1529589,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_015/CIN_015_1280x720_30fps.mp4",
+      "outSha256": "9dae79da0b436d6c8da99b20fe089d35847c3865af3f736c553b12fd014fb16a",
+      "outBytes": 5499750,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_016",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+      "sourceSha256": "59caedc90f3c096b54aedc8d8c0a6848078af6a2e8afe62f10d47b305ee5921c",
+      "sourceBytes": 1272439,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_016/CIN_016_1280x720_30fps.mp4",
+      "outSha256": "41838fcede719244fe22f1cb455196cf52b7603fa72edcbe75d223f595d3d301",
+      "outBytes": 4758573,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_017",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+      "sourceSha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+      "sourceBytes": 1668417,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_017/CIN_017_1280x720_30fps.mp4",
+      "outSha256": "69a78cd1fcb5fc0af1deee49a26779509a14c25ea230f04e7b1d7badc632bc91",
+      "outBytes": 6020830,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_018",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+      "sourceSha256": "703d4641cdb179597fb414d90d7a037513937ba5a3a5701724b84c43ec2c1b35",
+      "sourceBytes": 1544257,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_018/CIN_018_1280x720_30fps.mp4",
+      "outSha256": "d544d40a06c3cf75d5bf09db54555871b21bc3d46ca9ab761e9c387bfe6dd835",
+      "outBytes": 5876734,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    },
+    {
+      "sceneId": "CIN_019",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+      "sourceSha256": "b33b48059417859a3c4f114dde2ebb1c8280d471c442280a5fc6a07e67e95eee",
+      "sourceBytes": 1768091,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_019/CIN_019_1280x720_30fps.mp4",
+      "outSha256": "6640180f0c2d064189aecf20d4547dfa036fe43318990855fa8087c8700d9f12",
+      "outBytes": 6775307,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      },
+      "ogvSample": {
+        "outPath": "Art_Source/Cinematics/Standard720/CIN_019/CIN_019_1280x720_30fps.ogv",
+        "outSha256": "238d00d455e33043a855db9199939e22822f4e1075da46a5b71fb0d0d9c1ff32",
+        "outBytes": 12684356,
+        "outDuration": 18.005333,
+        "bytesPerSecond": 704477.7233500764,
+        "audioNote": "Vorbis re-encoded from the embedded AAC track; an adopted full set should be rendered from the mix WAV masters"
+      }
+    },
+    {
+      "sceneId": "CIN_020",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+      "sourceSha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b",
+      "sourceBytes": 1903320,
+      "sourceDuration": 18.0,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_020/CIN_020_1280x720_30fps.mp4",
+      "outSha256": "95a76b05bde4e8f8944729b202f50ef003b81fdaca2336cf4670fb6c2e60f1ab",
+      "outBytes": 7404050,
+      "outDuration": 18.0,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "duration": 18.0
+      }
+    }
+  ],
+  "budget": {
+    "mp4Set": {
+      "files": 21,
+      "sourceBytes": 43686587,
+      "outBytes": 147993980,
+      "ratio": 3.388,
+      "totalDuration": 465.367
+    },
+    "ogvSamples": {
+      "files": 3,
+      "bytesPerSecondMin": 197447.2,
+      "bytesPerSecondMax": 704477.7,
+      "bytesPerSecondMean": 529955.5,
+      "fullSetProjectionBytes": 246623785,
+      "projectionNote": "mean bytes/second of the 3 samples x total duration of the 21 entries; estimate, not a render"
+    }
+  },
+  "runtimeTreeModified": false,
+  "notes": [
+    "CIN_000 subtitled variant (CIN_000_640x360_30fps_sub_vi.mp4) is not part of the playback set and has no standard version in this checkpoint.",
+    "P0 scenes carry the runtime A picture (panel-hold), same as the runtime package of record; candidate B keeps its own M38-A/B package.",
+    "Adoption into ClientGodot runtime (and any full 720p OGV set) is Codex's decision; projected OGV cost is in budget.ogvSamples."
+  ]
+}

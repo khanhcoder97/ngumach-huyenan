@@ -1,0 +1,150 @@
+{
+ "manifestId": "NGM_CAMPAIGN_MOTION_P2C_V1",
+ "checkpoint": "WO37 M-C checkpoint 3c - campaign motion, Ken Burns hold for CIN_020_S03 (1 shot)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "status": "DRAFT_KEN_BURNS_HOLD - storyboard-level hold draft; final picture still waits on character lock; B take is a review cut, runtime files are NOT replaced",
+ "sources": {
+  "mixes": "ClientGodot/assets/audio/mix/cin*_v1/*_mix_draft_v1.wav (draft v1 mixes)",
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "poseTakes": "Implementation/Content/Narrative/Deliveries/CAMPAIGN_MOTION_P2_v1.json (CP3a pose takes, SHA-verified on disk)",
+  "runtimeVideos": "ClientGodot/assets/cinematics/CIN_*/CIN_*_640x360_30fps.mp4 (Ken Burns animatic takes)",
+  "timingFiles": "Implementation/Content/Narrative/Deliveries/CIN_*/CIN_*_timing_v1.json"
+ },
+ "rules": {
+  "frameSize": [
+   640,
+   360
+  ],
+  "note": "Closes the remainder named in M-C checkpoint 3b: the 26th priority-3 shot, CIN_020_S03, is a ledger KEN_BURNS_HOLD shot (M-C CP5 reclassified it from ACTION in the continuity ledger without rebuilding the file) but still has only a CP3a pose take file. The hold slice is an exact 6 s cut of the runtime A video, re-encoded like the CP3a/CP3b holds. Character lock does not block a hold slice (it blocks final pose animation only). The scene B take is MIXED: S01/S02 keep their CP3a pose takes (verified by SHA), S03 uses the new hold slice; the AB video labels B accordingly (POSE + HOLD). The CP3a pose take file for S03 is retained on disk but no longer used by the scene B take. The CP3a manifest (CAMPAIGN_MOTION_P2_v1.json) is NOT edited: its CIN_020 B take / AB / contact entries are superseded by the P2C manifest, which is the current record for those three files.",
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "status": "DRAFT_KEN_BURNS_HOLD - storyboard-level hold draft; final picture still waits on character lock; B take is a review cut, runtime files are NOT replaced"
+ },
+ "shots": [
+  {
+   "shotId": "CIN_020_S03",
+   "sceneId": "CIN_020",
+   "route": "ken_burns_hold",
+   "startSeconds": 12.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S03.png",
+    "sha256": "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S03_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "bf00f3e3715e915c3831e72177a96e853f21d129b1ea7612998a2cfff133958c",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.552,
+    "3.0s": 1.628,
+    "5.0s": 1.687
+   },
+   "kenBurnsDriftFirstLast": 34.742,
+   "dialogueStagingNote": "Dialogue shot (LETTER_RECIPIENT, window 12.5-17.5 s scene). Timing file records onscreen=true with the M-C CP5 staging note: speaker is the voice-palette placeholder role LETTER_RECIPIENT (recipient identity/gender UNDECIDED; neutral placeholder voice, NOT a casting decision); the S03 keyframe shows the seated villager from behind (face not visible; appearance drifts across shots). The hold slice carries the picture as-is; no beat is rendered for a hold shot. Staging note, not a mix defect."
+  }
+ ],
+ "holdSlices": {
+  "CIN_020_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S03_hold_640x360_30fps.mp4",
+   "sha256": "bf00f3e3715e915c3831e72177a96e853f21d129b1ea7612998a2cfff133958c",
+   "sizeBytes": 708337,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.552,
+    "3.0s": 1.628,
+    "5.0s": 1.687
+   },
+   "kenBurnsDriftFirstLast": 34.742
+  }
+ },
+ "sceneTakes": {
+  "CIN_020": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_pose_640x360_30fps.mp4",
+   "sha256": "7745538e34d5df306c2537d5d1634b3ba808a01241fa8b6afdd70b1765bc8b13",
+   "sizeBytes": 1378310,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin020_v1/CIN_020_mix_draft_v1.wav",
+    "sourceMixSha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_020_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_020_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_020_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  }
+ },
+ "abVideos": {
+  "CIN_020": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_020_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "ec610764ca333742da370b9827c34c7216db31b2c0568c233af8987b0133d2f7",
+   "sizeBytes": 3537787,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+    "sha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_pose_640x360_30fps.mp4",
+    "sha256": "7745538e34d5df306c2537d5d1634b3ba808a01241fa8b6afdd70b1765bc8b13"
+   }
+  }
+ },
+ "contacts": {
+  "CIN_020_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_020_S03_contact.png",
+   "sha256": "a5ad54ad37a1a0ce510f4041a6a0ce1388c7af67040c275395d3d773c9dcf265"
+  }
+ },
+ "supersedes": {
+  "manifest": "Implementation/Content/Narrative/Deliveries/CAMPAIGN_MOTION_P2_v1.json",
+  "entries": {
+   "sceneTakes": {
+    "CIN_020": "7ae22522831bc8f70fdc3bda8184576f43cbc3da9d156dbc0714d8020e6106aa"
+   },
+   "abVideos": {
+    "CIN_020": "686a63020b2f9714bc0e583358466366bb16076f8358a1d7185919ea57550ccb"
+   },
+   "contacts": {
+    "CIN_020_S03": "59a3f34dafd9b3a84ae0396abd055d01dc66e12ba15ebb6dd807b236a3c741ba"
+   }
+  },
+  "note": "The CP3a manifest file itself is NOT edited (history intact). Its CIN_020 B take / AB / contact entries record the CP3a build, in which S03 was the pose take; this manifest is the current record for those three files."
+ },
+ "retainedPoseTake": {
+  "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S03_pose_640x360_30fps.mp4",
+  "sha256": "eaff4cc90baa5cc014ddbb0106520b5c1cc3ccc6e5666cdedc5ec643aaa5b78e",
+  "note": "CP3a pose take file retained on disk (archive of the CP3a build); no longer used by the scene B take. Its pose frames are a degenerate ping-pong (pose_01 = keyframe, pose_04 = pose_02, pose_05 = pose_01) — one reason M-C CP5 reclassified the shot to KEN_BURNS_HOLD."
+ },
+ "totals": {
+  "shots": 1,
+  "holdSlices": 1,
+  "scenes": 1,
+  "sceneShotSlots": 3,
+  "holdSegments": 1,
+  "poseSegments": 2,
+  "sceneDurations": {
+   "CIN_020": 18.0
+  },
+  "note": "After this pack, all 26 ledger Ken Burns hold shots have a hold slice file (19 CP3a + 6 CP3b + 1 CP3c: CIN_020_S03). All 20 campaign scenes have a scene B take; CIN_020 is the only scene whose B take mixes pose and hold segments."
+ }
+}

@@ -1,0 +1,825 @@
+{
+ "specId": "NGM_P0_MOTION_AB_SPEC_V1",
+ "checkpoint": "WO37 M-C checkpoint 2 - P0 motion/AB (12 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "sources": {
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "p0KeyframesManifest": "Art_Source/Cinematics/P0_Animatic/P0_keyframes_16x9_manifest_v1.json",
+  "cin001Timing": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json",
+  "cin002Timing": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_timing_v1.json",
+  "cin004Timing": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_timing_v1.json"
+ },
+ "mixes": {
+  "CIN_001": {
+   "file": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+   "sha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25"
+  },
+  "CIN_002": {
+   "file": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+   "sha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7"
+  },
+  "CIN_004": {
+   "file": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+   "sha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891"
+  }
+ },
+ "rules": {
+  "poseCount": 5,
+  "poseFps": 10,
+  "framesPerPose": 3,
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "frameSize": [
+   640,
+   360
+  ],
+  "poseFrameSize": [
+   640,
+   360
+  ],
+  "stripCellSize": [
+   320,
+   180
+  ],
+  "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+  "beatSeconds": 0.5,
+  "note": "5 poses per beat at 10 pose fps (0.5 s beat). The generated-strip route was abandoned after full-resolution verification: every generated strip is a panorama with the subject repeated, not 8 separate frames, so equal-width cuts hold fragments of adjacent repeats. All 12 shots are procedural (code-rendered from the storyboard keyframe); no generated pixels remain in the pack."
+ },
+ "shots": [
+  {
+   "shotId": "CIN_001_S01",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Rain falls on the pier; lanterns still; ripple rings spread on the water at the pier edge.",
+   "layers": [
+    {
+     "type": "rain",
+     "count": 90,
+     "seed": 101,
+     "dyPerPose": 7
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       480,
+       300,
+       8
+      ],
+      [
+       560,
+       250,
+       6
+      ],
+      [
+       400,
+       330,
+       10
+      ]
+     ],
+     "growth": 5
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S01.png",
+    "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_001_S02",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "The sealed parcel bobs on the water at the pier edge; ripple rings spread from its waterline; rain falls.",
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      348,
+      212,
+      478,
+      332
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       410,
+       305,
+       8
+      ],
+      [
+       520,
+       320,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 102,
+     "dyPerPose": 7
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S02.png",
+    "sha256": "b09dfb68f439b034ecbc102f5df6b52f4d8e6babe14b89fce38d1fd66dbf343e"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_001_S03",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Ripple rings expand on the water under the pier; a drip falls and breaks the bell reflection.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       320,
+       180,
+       10
+      ],
+      [
+       150,
+       200,
+       8
+      ],
+      [
+       480,
+       190,
+       8
+      ]
+     ],
+     "growth": 6
+    },
+    {
+     "type": "drip",
+     "x": 320,
+     "y0": 20,
+     "growth": 9
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S03.png",
+    "sha256": "c07ddc98665021894c4cd92099dd24faac3a6f18f10610d3d67f81d34f1467bb"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_001_S04",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Rain drops land on the sealed letter; drops bead and grow on the wax seal.",
+   "layers": [
+    {
+     "type": "drops",
+     "centers": [
+      [
+       300,
+       150
+      ],
+      [
+       380,
+       220
+      ],
+      [
+       250,
+       260
+      ]
+     ],
+     "r0": 2,
+     "growth": 2.0
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 104,
+     "dyPerPose": 7
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S04.png",
+    "sha256": "0722da26101620a15e622f9bf54237ad929f10cc65ddf0555447c582299aa741"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_001_S05",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    0.8,
+    1.3
+   ],
+   "action": "Ly An, crouching at the pier edge, pulls the sealed parcel toward her: the parcel slides left onto the pier, her arms extend toward it, ripple rings spread at the waterline; rain falls.",
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S05.png",
+    "sha256": "0d48a6283d82aec6b1e5b77051d80c0e0714b12b86c4ef48d153d129ba098656"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30,
+   "layers": [
+    {
+     "type": "pull",
+     "parcelBox": [
+      425,
+      225,
+      565,
+      335
+     ],
+     "parcelDx": [
+      0,
+      -2,
+      -4,
+      -6,
+      -8
+     ],
+     "armBox": [
+      270,
+      175,
+      420,
+      295
+     ],
+     "armDx": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       480,
+       310,
+       8
+      ],
+      [
+       540,
+       330,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 105,
+     "dyPerPose": 7
+    }
+   ],
+   "routeNote": "Generated route rejected after two attempts (v1 panorama, v2 tracking close-up); procedural pull keeps the framing exactly the keyframe."
+  },
+  {
+   "shotId": "CIN_001_S06",
+   "sceneId": "CIN_001",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Ly An stands on the pier, shifting her weight in a small idle sway, looking around.",
+   "layers": [
+    {
+     "type": "sway",
+     "box": [
+      170,
+      55,
+      330,
+      325
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S06.png",
+    "sha256": "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_002_S01",
+   "sceneId": "CIN_002",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Rain falls on the water; ripple rings drift and expand toward the submerged stone channel.",
+   "layers": [
+    {
+     "type": "rain",
+     "count": 90,
+     "seed": 201,
+     "dyPerPose": 7
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       140,
+       150,
+       10
+      ],
+      [
+       300,
+       120,
+       8
+      ],
+      [
+       420,
+       190,
+       10
+      ],
+      [
+       320,
+       270,
+       8
+      ]
+     ],
+     "growth": 6
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S01.png",
+    "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "sceneId": "CIN_002",
+   "route": "procedural",
+   "beatSeconds": [
+    1.0,
+    1.5
+   ],
+   "action": "Ta Van Khanh leans on the pier; his whole arm (upper arm + forearm + good hand) lowers 4 px toward the water and stops above it; bandaged forearm stays on the pier; rain falls.",
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S02.png",
+    "sha256": "4c5b7b3523c59efa4d7e4a081fc936b0781b21b0f9f16c595360430212c0cafa"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30,
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      300,
+      165,
+      470,
+      335
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 202,
+     "dyPerPose": 7
+    }
+   ],
+   "routeNote": "Generated route abandoned: the v3 strip is a panorama with the man repeated, not 8 frames; equal cuts hold fragments of adjacent repeats (pose 5 holds the dissolving figure). Procedural arm-lower keeps the framing exactly the keyframe; fingertips end 4 px lower, still above the water (guardrail)."
+  },
+  {
+   "shotId": "CIN_002_S03",
+   "sceneId": "CIN_002",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Reeds sway at the bank; ripples drift across the stone channel.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       215,
+       130,
+       360
+      ],
+      [
+       515,
+       195,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       320,
+       180,
+       10
+      ],
+      [
+       200,
+       250,
+       8
+      ]
+     ],
+     "growth": 5
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S03.png",
+    "sha256": "71d1a25239eb8c7720243e96e1be9195859b801409f97952d37cd037db39e3d6"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "sceneId": "CIN_004",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "The serpent Mang Cot rises: head + upper neck lift 8 px, lower jaw drops 4 px (mouth opens); rain falls.",
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S01.png",
+    "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30,
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      300,
+      150,
+      425,
+      210
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      280,
+      15,
+      430,
+      230
+     ],
+     "dy": [
+      0,
+      -2,
+      -4,
+      -6,
+      -8
+     ]
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 401,
+     "dyPerPose": 7
+    }
+   ],
+   "routeNote": "Generated route abandoned: the v2 strip is a panorama; pose 5 holds a second serpent neck at the right edge. Procedural jaw-drop (mouth interior fill) + head-rise keep the framing exactly the keyframe; horn canon kept."
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "sceneId": "CIN_004",
+   "route": "procedural",
+   "beatSeconds": [
+    1.5,
+    2.0
+   ],
+   "action": "The serpent thrashes: the whole coil sweeps 8 px left, splash streaks grow, wooden debris flies outward; rain falls.",
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S02.png",
+    "sha256": "fc0450bf902e9020dd2d1548168712653e20566ba1f437de80a9a26f09615cf5"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30,
+   "layers": [
+    {
+     "type": "maskSweep",
+     "seedPoints": [
+      [
+       300,
+       180
+      ],
+      [
+       200,
+       200
+      ],
+      [
+       250,
+       150
+      ],
+      [
+       350,
+       200
+      ],
+      [
+       450,
+       200
+      ],
+      [
+       500,
+       200
+      ]
+     ],
+     "region": [
+      0,
+      0,
+      640,
+      360
+     ],
+     "dx": [
+      0,
+      -2,
+      -4,
+      -6,
+      -8
+     ],
+     "dy": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "type": "splash",
+     "centers": [
+      [
+       250,
+       220
+      ],
+      [
+       400,
+       250
+      ],
+      [
+       520,
+       180
+      ]
+     ],
+     "seed": 402
+    },
+    {
+     "type": "debris",
+     "starts": [
+      [
+       520,
+       90,
+       8,
+       4,
+       -6,
+       -3
+      ],
+      [
+       560,
+       130,
+       6,
+       4,
+       -7,
+       -2
+      ],
+      [
+       140,
+       90,
+       8,
+       4,
+       6,
+       -3
+      ],
+      [
+       600,
+       210,
+       7,
+       4,
+       -6,
+       -4
+      ]
+     ]
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 403,
+     "dyPerPose": 7
+    }
+   ],
+   "routeNote": "Generated route abandoned: the v1 strip is a panorama; pose 5 is a different panorama slice (head cropped at the right edge). Procedural coil sweep uses the audited colour-mask translate (same technique as CIN_004_S03 advance)."
+  },
+  {
+   "shotId": "CIN_004_S03",
+   "sceneId": "CIN_004",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Top-down: the serpent slithers north along the stone channel; rain falls; ripple rings drift.",
+   "layers": [
+    {
+     "type": "advance",
+     "seed": [
+      320,
+      150
+     ],
+     "dy": [
+      0,
+      3,
+      6,
+      9,
+      12
+     ],
+     "region": [
+      190,
+      0,
+      450,
+      315
+     ],
+     "fillBelow": 16
+    },
+    {
+     "type": "rain",
+     "count": 70,
+     "seed": 403,
+     "dyPerPose": 7
+    },
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       250,
+       120,
+       8
+      ],
+      [
+       380,
+       220,
+       8
+      ]
+     ],
+     "growth": 5
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S03.png",
+    "sha256": "e7493991a21827df7dc5a5d4e115d3aa12ebf986c5301e6ea183bdea662cf59b"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  }
+ ],
+ "rejectedStrips": [
+  {
+   "shotId": "CIN_001_S05",
+   "attempt": "v1",
+   "webpSha256": "63797abf79cbf7664047026341187e204f14f808bff617c59c58d7f4d9181605",
+   "reason": "Panorama, not a strip: one continuous scene with the girl repeated 8 times; equal cutting gives background jumps (bamboo -> pier -> water)."
+  },
+  {
+   "shotId": "CIN_001_S05",
+   "attempt": "v2",
+   "webpSha256": "bbd6fa6b17e30dc7cf828451667f035b7615a8a643aaa2e166608d70a5d1904a",
+   "reason": "Tracking close-up: camera pans right across panels and the girl is much larger than the keyframe framing; beat would jump-cut at hold boundaries."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v1",
+   "webpSha256": "3765fbfd44f49a20b59d5f25d9f349f3eae92ae0369ff21ea5451fcd576afe24",
+   "reason": "Panels 6-8: face melts (eyes/nose smeared); panel 5 already touches the water with a contact ripple (guardrail violation, verified on 2x zoom)."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v2",
+   "webpSha256": "9d85271c98d6ed85cd7550f26f9e584d206be68d78afd33439de3f2f9b84eedd",
+   "reason": "Square 560x560 cells (not 16:9; cannot fit without heavy padding/crop); panels 7-8 hand touches the water."
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "attempt": "v1",
+   "webpSha256": "90f3f403e4bbc22567ad9cd2dff7a7a7233386d6ca54ff23be4959504864d129",
+   "reason": "Panel 1 starts with the head low (continuity jump from the keyframe); panels 6-8 head exits the right edge of frame."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v3 (used, then rejected)",
+   "webpSha256": "dd5b6a1cb1718100cbe610d3c8f35b87cae8217e0157c7effb201293d3e5ef1f",
+   "pngSha256": "6a3cc142ac3f04d98edf1e3349f0b582d5cdd0fcd15a6d036c9442ab6f225928",
+   "reason": "Panorama, not a strip: the man repeats along one continuous scene; equal 740 px cuts hold fragments of adjacent repeats (pose 5 holds the dissolving figure from the next repeat; verified at full resolution)."
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "attempt": "v2 (used, then rejected)",
+   "webpSha256": "9a9cadcc8dacc57fa2542ee87f52ab2f3748d6e82733bf5f6ba9592d806be564",
+   "pngSha256": "0424bcde9acdd23031f9936ffc15ce4a62a337230e373b4007572f2d951f005a",
+   "reason": "Panorama: pose 5 holds a second serpent neck at the right edge and the head in a different position (verified at full resolution)."
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "attempt": "v1 (used, then rejected)",
+   "webpSha256": "21befa44c08724a2c049d5ef07f96599fa4488a5a2df26f41f0c4774b217d9d7",
+   "pngSha256": "56d411a00e0b6958be40fbd07c2c2fa4433d30b9c3abd3a5f9375e9fb905931f",
+   "reason": "Panorama: pose 5 is a different panorama slice (head cropped at the right edge, coil in a different position; verified at full resolution)."
+  }
+ ]
+}

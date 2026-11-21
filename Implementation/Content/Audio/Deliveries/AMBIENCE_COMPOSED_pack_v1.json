@@ -1,0 +1,579 @@
+{
+ "packId": "NGM_AMBIENCE_COMPOSED_V1",
+ "checkpoint": "MEDIA-02 checkpoint 30 - original composed ambience (all 13 AMBIENCE/* cues)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: ambience beds and events authored as data in Tools/MediaProduction/Muse/build_composed_ambience.py and rendered by procedural synthesis. No external samples, no ported bytes, no voices. These 13 cues are NEW audio and are counted separately from the 541 ported PackV1 files of checkpoints 07/08, which keep their own provenance and are untouched.",
+ "counts": {
+  "ambience": 13,
+  "total": 13
+ },
+ "cues": [
+  {
+   "cueKey": "AMBIENCE/rain_light",
+   "nameVi": "Mưa nhẹ",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -27.48,
+    "structure": "Light rain: low-passed noise bed + 36 sparse droplet ticks.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/rain_light.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "2460ffba42cfb462bf59ef6d6f781ba4074989862b65b04bd82598b609f694c3",
+    "integratedLufs": -27.48,
+    "truePeakDbtp": -16.11
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/rain_light.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 265427,
+    "sha256": "0f1d0246a0e23ae6874ce1863993d731ee761cafe1d87b90429464ee77de125e",
+    "integratedLufs": -27.8,
+    "truePeakDbtp": -16.59
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.027993,
+    "tailRms": 0.007066,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.064621,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/rain_heavy",
+   "nameVi": "Mưa nặng hạt",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -27.47,
+    "structure": "Heavy rain: denser bed + low rumble + 110 droplet ticks.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/rain_heavy.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "7801456cd23faed810ed3a0731c914bbfc16cf6e069fead896be38f8f34854aa",
+    "integratedLufs": -27.46,
+    "truePeakDbtp": -16.81
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/rain_heavy.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 275343,
+    "sha256": "0216bddfdff8c222c185937fd5b3a23b30c43365a111079e0c9cb33f8d783a96",
+    "integratedLufs": -27.85,
+    "truePeakDbtp": -17.35
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.027262,
+    "tailRms": 0.005027,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.050852,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/river_shore",
+   "nameVi": "Nước ven bờ",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.53,
+    "structure": "River shore: low bed + lapping band noise + 5 soft lap swells.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/river_shore.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "6f49de4545a5b283f63ec093d55fba525d95e38b5322a58c7554a4e23f0a91b5",
+    "integratedLufs": -29.54,
+    "truePeakDbtp": -16.92
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 163971,
+    "sha256": "00f6af8830cb4a1232f11cf8980f0839972bd635028b3ae3135b1b951bec1c1b",
+    "integratedLufs": -29.69,
+    "truePeakDbtp": -17.08
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.029045,
+    "tailRms": 0.013487,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.130838,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/underwater",
+   "nameVi": "Dòng nước sâu",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -33.02,
+    "structure": "Underwater: heavy low-pass bed + faint 55 Hz pulse; quietest.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/underwater.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "127f6d18620d3b19c16e884fa148f56d74021a1e48ca0ebef2e8250865a67ac6",
+    "integratedLufs": -33.02,
+    "truePeakDbtp": -20.21
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 140826,
+    "sha256": "3ba6d29be6c832f4bf91e6f4ef36c6016b14cc2381fbe178800267eb4c0d753b",
+    "integratedLufs": -33.11,
+    "truePeakDbtp": -20.68
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.01995,
+    "tailRms": 0.002683,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.036428,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/waterfall",
+   "nameVi": "Thác nước",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.31,
+    "structure": "Waterfall: broad low-pass body + low-end weight + mist hiss.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/waterfall.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "1c9cb9649fa3b23b405e765652a2f2190273dacad62fc81a12bd770415c3975d",
+    "integratedLufs": -29.31,
+    "truePeakDbtp": -16.02
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/waterfall.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 316513,
+    "sha256": "1777af175035f87489258a21c0a8b1abf40c5067be7594239a477297da44e2ae",
+    "integratedLufs": -29.53,
+    "truePeakDbtp": -16.02
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.026423,
+    "tailRms": 0.001876,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.018953,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/wind_canopy",
+   "nameVi": "Gió qua tán cây",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.55,
+    "structure": "Wind through canopy: gusted band noise + leaf rustle at peaks.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/wind_canopy.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "7f9999134df2141874184591a630d710c98eaf8d1729488cd46a003ed1751fab",
+    "integratedLufs": -29.55,
+    "truePeakDbtp": -15.69
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 223109,
+    "sha256": "c1bdd50d176b72c938cfdde992970d9f38037254c1666596327248ba32e36933",
+    "integratedLufs": -29.7,
+    "truePeakDbtp": -16.06
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.026017,
+    "tailRms": 0.002926,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.024843,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/desert_wind",
+   "nameVi": "Gió Sa Hỏa",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.57,
+    "structure": "Desert wind: drier, thinner band + faster gusts + sand hiss.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/desert_wind.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "b1e820248275f234a21a617438f629fceea4593200091e57ecd74f8adc810439",
+    "integratedLufs": -29.57,
+    "truePeakDbtp": -17.85
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 186733,
+    "sha256": "ea99c01d7548c8e1b0a55572e0683bc1bf70a6230188cf06f4ee19c3e26fb671",
+    "integratedLufs": -29.93,
+    "truePeakDbtp": -17.26
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.020253,
+    "tailRms": 0.019283,
+    "wrapJump": 5e-06,
+    "wrapJumpRaw": 0.201266,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/mountain_wind",
+   "nameVi": "Gió tháp",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.56,
+    "structure": "Mountain wind: narrow low whistle + wandering sine partials.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/mountain_wind.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "5ede8ee648eb8322d314ba44ba56fd6cd0f0f70e9e593a09dae6842dca460dc7",
+    "integratedLufs": -29.56,
+    "truePeakDbtp": -16.19
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/mountain_wind.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 312505,
+    "sha256": "8e28aec28d87a43a0c5fd8875269015858a8ec67244967c4d1b488b0492c5608",
+    "integratedLufs": -29.55,
+    "truePeakDbtp": -16.18
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.028108,
+    "tailRms": 0.01532,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.156608,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/cave_drips",
+   "nameVi": "Hang nhỏ giọt",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.54,
+    "structure": "Cave drips: near-quiet bed + 9 droplets + one low stone tone.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/cave_drips.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "8287441fee58a3180eae4ec6abca2a061eb21ab0e1b98630bee9f70976540c19",
+    "integratedLufs": -29.54,
+    "truePeakDbtp": -13.01
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/cave_drips.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 122633,
+    "sha256": "717e823507cf9e2390ff153c795e40466e6f13345ffc6e66d04c5a541174fc7a",
+    "integratedLufs": -29.56,
+    "truePeakDbtp": -13.08
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.023096,
+    "tailRms": 0.011975,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.072681,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/forge",
+   "nameVi": "Lò rèn",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -29.5,
+    "structure": "Forge: fire rumble + 180 crackle ticks + 5 metallic clinks.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/forge.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "ffe15980dcb3fd2a1a4717b5b29738fd93efed0d440704ae1257f543e19ae1f1",
+    "integratedLufs": -29.51,
+    "truePeakDbtp": -15.77
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/forge.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 201706,
+    "sha256": "66882abe905473f0cf1f27ff6b3b66cbfe8a458765105836fae83c586461e654",
+    "integratedLufs": -29.49,
+    "truePeakDbtp": -15.85
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.035624,
+    "tailRms": 0.015265,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.127903,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/thang_long_crowd",
+   "nameVi": "Phố Thăng Long",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -30.34,
+    "structure": "Street crowd: filtered-noise murmur only (no voices, no words) + soft wooden knocks.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/thang_long_crowd.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "eff3991d420f1b336c654f5216d630830ef74e2f4323440ebf378aa6d58e8867",
+    "integratedLufs": -30.34,
+    "truePeakDbtp": -17.47
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 245560,
+    "sha256": "f137d6551d2ab5912d78b294ea3a539057ffb643988dbbad8425c0aeb8b9fe15",
+    "integratedLufs": -30.59,
+    "truePeakDbtp": -17.81
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.02067,
+    "tailRms": 0.003888,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.044936,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/city_night",
+   "nameVi": "Phố đêm",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -30.34,
+    "structure": "Night city: quiet murmur + distant 50 Hz hum + cricket triplets.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/city_night.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "87f3c1d99d84db43acaf33dee3aa0996ba3dfd5ac2fa47f44a4ae80af8596f8f",
+    "integratedLufs": -30.34,
+    "truePeakDbtp": -16.55
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/city_night.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 142873,
+    "sha256": "37c52c30e20dac66a3a36814ea1835cc85a7a0c2c612b66487e14ee850c361ec",
+    "integratedLufs": -30.4,
+    "truePeakDbtp": -16.66
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.029545,
+    "tailRms": 0.014404,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.156806,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "AMBIENCE/rift",
+   "nameVi": "Mạch nghịch",
+   "kind": "AMBIENCE",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "durationSeconds": 16.0,
+    "targetLufsPorted": -30.48,
+    "structure": "Rift: low D drone with beating detune + tritone shimmer.",
+    "rendering": "procedural synthesis (filtered-noise beds, slow gust/swell envelopes, sparse deterministic events), authored in build_composed_ambience.py; no external samples, no voices"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/ambience/rift.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 4608102,
+    "sha256": "092260b3fdc37bb2b983000d4f1c207b19d32f49c8ce1556f6edb629297761af",
+    "integratedLufs": -30.49,
+    "truePeakDbtp": -21.29
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/ambience/rift.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 16.0,
+    "sizeBytes": 117828,
+    "sha256": "b7083b0fcd40ef2f3562cffb62cf022eda3719c7835b5565bb7c4b1d6ed770d1",
+    "integratedLufs": -30.46,
+    "truePeakDbtp": -21.3
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.037313,
+    "tailRms": 0.008909,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.136555,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  }
+ ],
+ "notes": [
+  "Adoption is a presentation-adapter decision (Codex): the composed cues are delivered in parallel under ClientGodot/assets/audio/composed/ambience/ and do NOT replace the ported PackV1 files or their cue bindings.",
+  "Ambience cues loop by construction (1.5 s tail wrap); the seam block records the checkpoint-07 indicator, not a seamlessness PASS. No ear audition has been done; loudness/true-peak are measured from real bytes.",
+  "Loudness targets are the ported cues' measured integrated LUFS from checkpoint 07, so a composed bed sits at the same mix level the P0 draft mixes were designed around.",
+  "Crowd beds are filtered noise only: no voice, no words, no intelligible speech is possible by construction."
+ ]
+}

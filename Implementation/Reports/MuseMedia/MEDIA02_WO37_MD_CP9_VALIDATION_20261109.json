@@ -1,0 +1,21 @@
+{
+ "validator": "check_ear_audition_pack_cp9_v1",
+ "pack": "EAR_AUDITION_PACK_v1.json",
+ "status": "PASS",
+ "mismatches": [],
+ "itemsChecked": 196,
+ "filesHashed": 196,
+ "counts": {
+  "scoreMasters": 16,
+  "stingers": 4,
+  "transitions": 3,
+  "introOutro": 32,
+  "stems": 48,
+  "layers": 20,
+  "ambience": 13,
+  "mixes": 30,
+  "vo": 30
+ },
+ "priorityItems": 10,
+ "auditionStatus": "NOT_AUDITIONED"
+}

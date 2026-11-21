@@ -1,0 +1,168 @@
+{
+ "validator": "check_p0_soundtrack_ab_v1",
+ "manifest": "P0_SOUNDTRACK_AB_v1.json",
+ "checks": [
+  {
+   "check": "source_candidate_reel_sha",
+   "pass": true,
+   "detail": "a9ae424cd95d"
+  },
+  {
+   "check": "source_mix_master_sha_v1",
+   "pass": true,
+   "detail": "2a982b5f8e92"
+  },
+  {
+   "check": "source_mix_master_sha_v2",
+   "pass": true,
+   "detail": "4a1bc54e7c7f"
+  },
+  {
+   "check": "source_mix_master_sha_v3",
+   "pass": true,
+   "detail": "09f7cf8ecf30"
+  },
+  {
+   "check": "reel_sha_v1",
+   "pass": true,
+   "detail": "311d83c7625f"
+  },
+  {
+   "check": "reel_shape_v1",
+   "pass": true,
+   "detail": "640x360@30/1 aac 48000Hz dur=72.021"
+  },
+  {
+   "check": "reel_video_md5_v1",
+   "pass": true,
+   "detail": "1fec5523e481"
+  },
+  {
+   "check": "reel_loudness_v1",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.55, 'truePeakDBTP': -1.49}"
+  },
+  {
+   "check": "reel_sha_v2",
+   "pass": true,
+   "detail": "1cdac5293a09"
+  },
+  {
+   "check": "reel_shape_v2",
+   "pass": true,
+   "detail": "640x360@30/1 aac 48000Hz dur=72.021"
+  },
+  {
+   "check": "reel_video_md5_v2",
+   "pass": true,
+   "detail": "1fec5523e481"
+  },
+  {
+   "check": "reel_loudness_v2",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.65, 'truePeakDBTP': -1.52}"
+  },
+  {
+   "check": "reel_sha_v3",
+   "pass": true,
+   "detail": "f96c7811872e"
+  },
+  {
+   "check": "reel_shape_v3",
+   "pass": true,
+   "detail": "640x360@30/1 aac 48000Hz dur=72.021"
+  },
+  {
+   "check": "reel_video_md5_v3",
+   "pass": true,
+   "detail": "1fec5523e481"
+  },
+  {
+   "check": "reel_loudness_v3",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.39, 'truePeakDBTP': -1.65}"
+  },
+  {
+   "check": "scene_loudness_CIN_001_v1",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.3, 'truePeakDBTP': -1.49}"
+  },
+  {
+   "check": "scene_loudness_CIN_001_v2",
+   "pass": true,
+   "detail": "{'integratedLUFS': -21.07, 'truePeakDBTP': -1.52}"
+  },
+  {
+   "check": "scene_loudness_CIN_001_v3",
+   "pass": true,
+   "detail": "{'integratedLUFS': -21.04, 'truePeakDBTP': -1.65}"
+  },
+  {
+   "check": "scene_loudness_CIN_002_v1",
+   "pass": true,
+   "detail": "{'integratedLUFS': -21.21, 'truePeakDBTP': -3.95}"
+  },
+  {
+   "check": "scene_loudness_CIN_002_v2",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.72, 'truePeakDBTP': -4.27}"
+  },
+  {
+   "check": "scene_loudness_CIN_002_v3",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.5, 'truePeakDBTP': -4.26}"
+  },
+  {
+   "check": "scene_loudness_CIN_004_v1",
+   "pass": true,
+   "detail": "{'integratedLUFS': -25.52, 'truePeakDBTP': -7.94}"
+  },
+  {
+   "check": "scene_loudness_CIN_004_v2",
+   "pass": true,
+   "detail": "{'integratedLUFS': -26.62, 'truePeakDBTP': -8.34}"
+  },
+  {
+   "check": "scene_loudness_CIN_004_v3",
+   "pass": true,
+   "detail": "{'integratedLUFS': -26.79, 'truePeakDBTP': -8.27}"
+  },
+  {
+   "check": "vo_window_rms_v1",
+   "pass": true,
+   "detail": "{'rmsDbfs': -37.42, 'peakDbfs': -27.19}"
+  },
+  {
+   "check": "vo_window_rms_v2",
+   "pass": true,
+   "detail": "{'rmsDbfs': -38.67, 'peakDbfs': -28.62}"
+  },
+  {
+   "check": "vo_window_rms_v3",
+   "pass": true,
+   "detail": "{'rmsDbfs': -38.72, 'peakDbfs': -30.56}"
+  },
+  {
+   "check": "crosscheck_candidate_reel_loudness",
+   "pass": true,
+   "detail": "{'integratedLUFS': -22.47, 'truePeakDBTP': -1.65}"
+  },
+  {
+   "check": "wave_diff_table_shape",
+   "pass": true,
+   "detail": "21 rows, 3 pairs, 7 scopes"
+  },
+  {
+   "check": "playlist_resolves",
+   "pass": true,
+   "detail": "3 entries"
+  },
+  {
+   "check": "runtime_trees_unmodified",
+   "pass": true,
+   "detail": "0 changed lines"
+  }
+ ],
+ "pass": true,
+ "failures": []
+}

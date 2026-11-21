@@ -1,0 +1,170 @@
+{
+ "manifestId": "NGM_CIN000_MIX_V2",
+ "checkpoint": "MEDIA-02 WO37 M-F CP2",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "decisionRef": {
+  "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+  "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+  "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+  "checkpoint": "MEDIA-02 WO37 M-F CP2",
+  "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+  "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review."
+ },
+ "status": "DRAFT_NOT_FINAL",
+ "auditionStatus": "NOT_AUDITIONED",
+ "file": "CIN_000_mix_draft_v2.wav",
+ "sha256": "5d405505ab17a51d358f9bd5bc6af280f0441f3d0cb9667746d8dc1808e74868",
+ "sizeBytes": 16774542,
+ "durationSeconds": 87.367,
+ "integratedLufs": -21.75,
+ "truePeakDbtp": -1.98,
+ "peakTrimDb": 0.0,
+ "assetState": "DRAFT_MIX_NOT_FINAL",
+ "sourceMixV1": {
+  "file": "PROLOGUE_mix_v1.wav",
+  "dir": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT",
+  "sha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
+  "note": "CP27 mix, byte-unchanged; v2 re-derives the timeline from the same CP27 narration manifest and measures its segment levels from these bytes."
+ },
+ "paletteRemix": {
+  "checkpoint": "MEDIA-02 WO37 M-F CP2",
+  "palette": "M-F CP1 (side B)",
+  "narrationChanges": [
+   {
+    "segment": 1,
+    "takeKey": "CIN000_SEG01",
+    "previousVoice": "avocado_v2:MAI_03",
+    "paletteVoice": "avocado_v2:History",
+    "paletteVoiceLabel": "Learned Globe (fictional system voice)",
+    "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+    "paletteTakeSha256": "5ed2bea0b2f47ffbbfccd5680d6dc415ac4cb60958650c226c9a5495bd3ca20e",
+    "paletteTakeDurationSeconds": 13.008,
+    "paletteTakeIntegratedLufs": -30.13,
+    "cp27SegmentStartSeconds": 1.4,
+    "cp27SegmentDurationSeconds": 16.512,
+    "cp27MixSegmentIntegratedLufs": -19.67,
+    "appliedGainDb": 10.46,
+    "paletteEndSeconds": 14.408,
+    "paletteAudibleEndSeconds": 14.177,
+    "slotEndSeconds": 19.033,
+    "fileTailOverlapSeconds": 0.0
+   },
+   {
+    "segment": 2,
+    "takeKey": "CIN000_SEG02",
+    "previousVoice": "avocado_v2:MAI_03",
+    "paletteVoice": "avocado_v2:History",
+    "paletteVoiceLabel": "Learned Globe (fictional system voice)",
+    "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG02_NARRATOR_palette_v1.wav",
+    "paletteTakeSha256": "4920490fe457f8a01a7bb3a0eb694d3098c957c2f913422666bf7749975d67df",
+    "paletteTakeDurationSeconds": 16.752,
+    "paletteTakeIntegratedLufs": -28.79,
+    "cp27SegmentStartSeconds": 19.033,
+    "cp27SegmentDurationSeconds": 15.528,
+    "cp27MixSegmentIntegratedLufs": -23.6,
+    "appliedGainDb": 5.19,
+    "paletteEndSeconds": 35.785,
+    "paletteAudibleEndSeconds": 35.475,
+    "slotEndSeconds": 35.667,
+    "fileTailOverlapSeconds": 0.118
+   },
+   {
+    "segment": 3,
+    "takeKey": "CIN000_SEG03",
+    "previousVoice": "avocado_v2:MAI_03",
+    "paletteVoice": "avocado_v2:History",
+    "paletteVoiceLabel": "Learned Globe (fictional system voice)",
+    "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG03_NARRATOR_palette_v1.wav",
+    "paletteTakeSha256": "319cd6740072e2476bfecf51e14a34679cba589678fdd28181a42b70b282cce7",
+    "paletteTakeDurationSeconds": 16.248,
+    "paletteTakeIntegratedLufs": -29.21,
+    "cp27SegmentStartSeconds": 35.667,
+    "cp27SegmentDurationSeconds": 19.752,
+    "cp27MixSegmentIntegratedLufs": -21.19,
+    "appliedGainDb": 8.02,
+    "paletteEndSeconds": 51.915,
+    "paletteAudibleEndSeconds": 51.644,
+    "slotEndSeconds": 55.133,
+    "fileTailOverlapSeconds": 0.0
+   },
+   {
+    "segment": 4,
+    "takeKey": "CIN000_SEG04",
+    "previousVoice": "avocado_v2:MAI_03",
+    "paletteVoice": "avocado_v2:History",
+    "paletteVoiceLabel": "Learned Globe (fictional system voice)",
+    "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG04_NARRATOR_palette_v1.wav",
+    "paletteTakeSha256": "6441b1d31d297d388f208bd718bc8419e651393abbb0314a102d8d3103e0bd60",
+    "paletteTakeDurationSeconds": 12.768,
+    "paletteTakeIntegratedLufs": -27.77,
+    "cp27SegmentStartSeconds": 55.133,
+    "cp27SegmentDurationSeconds": 14.928,
+    "cp27MixSegmentIntegratedLufs": -20.54,
+    "appliedGainDb": 7.23,
+    "paletteEndSeconds": 67.901,
+    "paletteAudibleEndSeconds": 67.662,
+    "slotEndSeconds": 71.167,
+    "fileTailOverlapSeconds": 0.0
+   },
+   {
+    "segment": 5,
+    "takeKey": "CIN000_SEG05",
+    "previousVoice": "avocado_v2:MAI_03",
+    "paletteVoice": "avocado_v2:History",
+    "paletteVoiceLabel": "Learned Globe (fictional system voice)",
+    "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG05_NARRATOR_palette_v1.wav",
+    "paletteTakeSha256": "01356349f9ee79c1a587903c01cc69130811288f425a4f91a6a01e04df00f76d",
+    "paletteTakeDurationSeconds": 6.672,
+    "paletteTakeIntegratedLufs": -28.67,
+    "cp27SegmentStartSeconds": 71.167,
+    "cp27SegmentDurationSeconds": 8.04,
+    "cp27MixSegmentIntegratedLufs": -20.43,
+    "appliedGainDb": 8.24,
+    "paletteEndSeconds": 77.839,
+    "paletteAudibleEndSeconds": 77.576,
+    "slotEndSeconds": 80.907,
+    "fileTailOverlapSeconds": 0.0
+   }
+  ],
+  "finalLine": "UNCHANGED: Ly An's final line reuses the checkpoint-04 take (VO_CIN001_S05_LYAN_draft_v1.wav, sha 51fc65de...) at -5 dB, as in CP27; Ly An keeps her Aria voice and has no pickup.",
+  "gainMethod": "Per-segment compensation: (integrated LUFS of the segment span measured in the CP27 mix) - (integrated LUFS of the pickup file); no EQ, compression, limiting or re-synthesis."
+ },
+ "stems": [
+  {
+   "role": "narration",
+   "source": "M-F CP1 palette pickups (History), gain-compensated per segment",
+   "provenance": "NEW_DRAFT_VO_PALETTE"
+  },
+  {
+   "role": "final line",
+   "source": "VO_CIN001_S05_LYAN_draft_v1.wav (checkpoint 04 take, reused bytes)",
+   "provenance": "REUSED_CP04"
+  },
+  {
+   "role": "music bed",
+   "source": "MUSIC/ben_mua composed runtime OGG (checkpoint 26)",
+   "gainDb": -9.07,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  },
+  {
+   "role": "ambience",
+   "source": "AMBIENCE/rain_light + AMBIENCE/river_shore runtime OGGs (checkpoint 07 pack)",
+   "gainDb": [
+    -8.52,
+    -8.47
+   ],
+   "provenance": "PORTED_CODEX_PACKV1"
+  },
+  {
+   "role": "title stinger",
+   "source": "SFX/CINEMA/resolve composed runtime OGG (checkpoint 26)",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  }
+ ],
+ "ducking": "sidechaincompress on the music+ambience bed, keyed by the VO bus: threshold 0.03, ratio 4, attack 15 ms, release 350 ms (checkpoint 20 settled values); peak guard trims the whole mix only above -1.0 dBTP",
+ "notes": [
+  "DRAFT_NOT_FINAL, NOT_AUDITIONED: formula gain staging, no ear audition; the History narration is a deliberately different voice from the CP27 Helio draft -- that difference IS the palette decision, not a defect.",
+  "Timeline identical to CP27 (segment starts and total duration derived from the CP27 narration manifest); pickup durations differ from the Helio takes, so the silences between segments differ slightly; every pickup's audible content ends inside its CP27 slot (asserted at build). SEG02's pickup FILE is 0.118 s longer than its slot: only trailing padding silence below -50 dBFS crosses into SEG03's leading silence; the audible narration ends 0.193 s early (measured, recorded per segment in the manifest).",
+  "No video is built by this tool and the CP28 subtitled variant is untouched; the runtime still embeds the CP27 mix."
+ ]
+}

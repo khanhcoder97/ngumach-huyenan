@@ -1,0 +1,43 @@
+#EXTM3U
+# MEDIA-02 WO39 M39-A CP2 — composed SFX draft: 4 weapon identities
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve: this playlist
+# sits 4 levels deep (Implementation/Content/Audio/Deliveries)
+# so entries start with ../../../../ .
+# Measurements are loudness/codec/spectrum numbers, NOT a
+# listening PASS. Baselines at the end are the ported cues
+# these drafts must be told apart from.
+
+#EXTINF:0.45,SFX/COMBAT/dao_swing v01 — Vung đao (Ảnh Đao) (LUFS -23.55, TP -9.05 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav
+#EXTINF:0.45,SFX/COMBAT/dao_swing v02 — Vung đao (Ảnh Đao) (LUFS -23.45, TP -10.96 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav
+#EXTINF:0.45,SFX/COMBAT/dao_swing v03 — Vung đao (Ảnh Đao) (LUFS -23.45, TP -9.56 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav
+#EXTINF:0.55,SFX/COMBAT/brush_stroke v01 — Nét bút (Huyền Bút) (LUFS -23.95, TP -15.63 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav
+#EXTINF:0.55,SFX/COMBAT/brush_stroke v02 — Nét bút (Huyền Bút) (LUFS -24.05, TP -15.67 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav
+#EXTINF:0.55,SFX/COMBAT/brush_stroke v03 — Nét bút (Huyền Bút) (LUFS -23.99, TP -16.67 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav
+#EXTINF:0.5,SFX/COMBAT/mace_swing v01 — Vung chùy (Thạch Chùy) (LUFS -24.19, TP -8.0 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav
+#EXTINF:0.5,SFX/COMBAT/mace_swing v02 — Vung chùy (Thạch Chùy) (LUFS -23.51, TP -9.1 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav
+#EXTINF:0.5,SFX/COMBAT/mace_swing v03 — Vung chùy (Thạch Chùy) (LUFS -23.92, TP -8.0 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav
+#EXTINF:0.5,SFX/COMBAT/bow_string v01 — Bật dây (Linh Cung) (LUFS -23.5, TP -9.4 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav
+#EXTINF:0.5,SFX/COMBAT/bow_string v02 — Bật dây (Linh Cung) (LUFS -23.46, TP -9.56 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav
+#EXTINF:0.5,SFX/COMBAT/bow_string v03 — Bật dây (Linh Cung) (LUFS -23.54, TP -9.84 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav
+
+# --- baseline A/B (ported, for comparison only) ---
+#EXTINF:0.4632,SFX/SKILL/metal_parry v01 — confirmed counter (mace_swing must NOT sound like a parry ring)
+../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav
+#EXTINF:0.2026,SFX/COMBAT/basic_blade v01 — shared swing default (each weapon identity must sit in its own slot)
+../../../../ClientGodot/assets/audio/sfx/combat/basic_blade_v01.wav

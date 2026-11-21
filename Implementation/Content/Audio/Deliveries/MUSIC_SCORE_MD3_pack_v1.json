@@ -1,0 +1,2343 @@
+{
+ "packId": "NGM_MUSIC_SCORE_MD3_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 3 - intro/outro + stems + phase layers for the 9 checkpoint-26 score cues (Work Order 37 module M-D)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: intros, outros, stems and phase layers authored as data in Tools/MediaProduction/Muse/build_composed_score_md3.py (synthesis engine and checkpoint-26 arrangements reused from build_composed_music.py) and rendered by procedural synthesis. No external samples, no ported bytes. These 48 files are NEW audio, counted separately from the 541 ported PackV1 files and from the checkpoint-26, checkpoint-30, MD1 and MD2 packs, which keep their own provenance and are untouched.",
+ "counts": {
+  "intro": 9,
+  "outro": 9,
+  "stems": 27,
+  "layers": 3,
+  "total": 48
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/ben_mua_intro",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/ben_mua",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for ben_mua: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/ben_mua_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.6667,
+    "sizeBytes": 1920102,
+    "sha256": "f0fd95871376b58e3f6cc2295e7d9aa4a937500c790c7d35ff4529887becc609",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -15.04
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/ben_mua_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.6667,
+    "sizeBytes": 58258,
+    "sha256": "42ba95a9a7eccb40ebe3323d627f2a57d39b438ed520679455e4948743e9d26b",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -14.94
+   }
+  },
+  {
+   "cueKey": "MUSIC/ben_mua_outro",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/ben_mua",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for ben_mua: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/ben_mua_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.6667,
+    "sizeBytes": 1920102,
+    "sha256": "636742d6a95410420d69302ffc8db93c40197a1baea7a4507297fd2e4940e452",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -12.13
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/ben_mua_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.6667,
+    "sizeBytes": 60342,
+    "sha256": "b9581fc90805ec5e3b9e4b190069134172154d3c787fb3c4e58e6e05a8faabc2",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -12.08
+   }
+  },
+  {
+   "cueKey": "MUSIC/ben_mua_stem_lead",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/ben_mua",
+   "stemGroup": "ben_mua",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 17,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of ben_mua (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/ben_mua_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 16320102,
+    "sha256": "e70143209d2d96b2c49dbe855f1a2900828d69cc605d6ab36e75bc262aaa2166",
+    "integratedLufs": -21.62,
+    "truePeakDbtp": -13.36
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/ben_mua_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 439320,
+    "sha256": "abc6562a754c50728d7d2d8869b91c89af6a1d5cd6ec10e05543b778c07d6224",
+    "integratedLufs": -21.55,
+    "truePeakDbtp": -13.34
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.081134,
+    "tailRms": 0.019884,
+    "wrapJump": 5e-06,
+    "wrapJumpRaw": 0.182445,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/ben_mua_stem_padbass",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/ben_mua",
+   "stemGroup": "ben_mua",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 17,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of ben_mua (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/ben_mua_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 16320102,
+    "sha256": "8840ca8c4ff2faa97a5d4be60d054692aa6681502ac1eff079be6aa6ae5411dc",
+    "integratedLufs": -29.21,
+    "truePeakDbtp": -17.99
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/ben_mua_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 243572,
+    "sha256": "f76a9fb2c558bc8e8c71a8a04c685cb199606f1f11f5afb58da81b5431a86c83",
+    "integratedLufs": -29.19,
+    "truePeakDbtp": -17.93
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.059971,
+    "tailRms": 0.034973,
+    "wrapJump": 9e-06,
+    "wrapJumpRaw": 0.320909,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/ben_mua_stem_percussion",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/ben_mua",
+   "stemGroup": "ben_mua",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 17,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of ben_mua (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/ben_mua_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 16320102,
+    "sha256": "e492ebfbc8b13d562342f800a8102438f4392c1ec95ab501401f0b4db9df96ca",
+    "integratedLufs": -50.24,
+    "truePeakDbtp": -38.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/ben_mua_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 32382,
+    "sha256": "d8dc68045af19a6e59d495c9c7428308497ee393100f6d8ffe5f73b2a96872d5",
+    "integratedLufs": -50.22,
+    "truePeakDbtp": -38.28
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long_intro",
+   "nameVi": "Thăng Long · phố và dòng nước · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/thang_long",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for thang_long: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/thang_long_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.2174,
+    "sizeBytes": 1502712,
+    "sha256": "ba4aca0de67bebe976ca1107931f4eeb277d0aa9fe363ae3583db700c89eed9d",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -12.99
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/thang_long_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.2174,
+    "sizeBytes": 50184,
+    "sha256": "49c26e93ee5b201ea740358574a70e14f6e85511daf52be239f2114e8d0421ca",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -12.93
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long_outro",
+   "nameVi": "Thăng Long · phố và dòng nước · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/thang_long",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for thang_long: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade; outro uses the low pluck tail (thang_long precedent)",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/thang_long_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.2174,
+    "sizeBytes": 1502712,
+    "sha256": "e13a698e715f35f4fb0958e041d77d71ba1b26c97df173bf409d0481579d3891",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -9.21
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/thang_long_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.2174,
+    "sizeBytes": 43891,
+    "sha256": "819f6f4d4337773836352bf723aa75cfc870b66ad682613744249ab6dec234c9",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -9.28
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long_stem_lead",
+   "nameVi": "Thăng Long · phố và dòng nước · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/thang_long",
+   "stemGroup": "thang_long",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of thang_long (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/thang_long_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 12020970,
+    "sha256": "2c7ed2f4208200fcc707cf01c63d2cea02eea44ba44d7167ba49ba20fe37e1a9",
+    "integratedLufs": -23.67,
+    "truePeakDbtp": -12.22
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/thang_long_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 509401,
+    "sha256": "9eb935dd0afae46a34d9e4593ba9fd211e3bbb2458b0f85eb1a4db594c2ccf63",
+    "integratedLufs": -23.62,
+    "truePeakDbtp": -12.12
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.089947,
+    "tailRms": 0.004727,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.043855,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long_stem_padbass",
+   "nameVi": "Thăng Long · phố và dòng nước · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/thang_long",
+   "stemGroup": "thang_long",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of thang_long (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/thang_long_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 12020970,
+    "sha256": "cf8a8bd6b70947511fe82503eff8cd665ea8f389bd14c9822003b57ed7c2ee60",
+    "integratedLufs": -26.93,
+    "truePeakDbtp": -17.38
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/thang_long_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 186183,
+    "sha256": "63ac11a1c42d5923b2a1bf5aacbb39e03c648a2aaf7b7e5aab2966f8ace68fcb",
+    "integratedLufs": -26.9,
+    "truePeakDbtp": -17.34
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.032012,
+    "tailRms": 0.010936,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.101995,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long_stem_percussion",
+   "nameVi": "Thăng Long · phố và dòng nước · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/thang_long",
+   "stemGroup": "thang_long",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of thang_long (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/thang_long_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 12020970,
+    "sha256": "902cf89b381d6f511dbed8f32233a77eaa0c8cb24b6c2d2e72624efff9eaa0af",
+    "integratedLufs": -59.59,
+    "truePeakDbtp": -39.8
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/thang_long_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 335050,
+    "sha256": "a95d9394e5e0c3caf31d3d452b296bcaa90e2a12d964313fedc12a13070c4fb6",
+    "integratedLufs": -60.62,
+    "truePeakDbtp": -39.87
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 4e-06,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_intro",
+   "nameVi": "Mãng Cốt · áp lực dòng · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for boss_mang_cot: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade; minor-head pluck fragment (boss motif)",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/boss_mang_cot_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.2727,
+    "sizeBytes": 2094648,
+    "sha256": "ca0f6ef582fb0b11a1e127adb1384a5822782d52e31f91ad5d614a77f202926e",
+    "integratedLufs": -21.88,
+    "truePeakDbtp": -7.88
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/boss_mang_cot_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.2727,
+    "sizeBytes": 44771,
+    "sha256": "16ee48d842a8f4353172a09f4183337d149cd0b43f117bf1bc23f65b5fe57ed6",
+    "integratedLufs": -21.82,
+    "truePeakDbtp": -7.84
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_outro",
+   "nameVi": "Mãng Cốt · áp lực dòng · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for boss_mang_cot: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade; minor-head pluck fragment (boss motif)",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/boss_mang_cot_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.2727,
+    "sizeBytes": 2094648,
+    "sha256": "6444069a05523d2e131de1d968702e0ac3d72e2fd230c0f6eeafe3e50a3fe1f7",
+    "integratedLufs": -21.99,
+    "truePeakDbtp": -7.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/boss_mang_cot_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.2727,
+    "sizeBytes": 49440,
+    "sha256": "7a99d5da740647ba4c7bbd0170873c4ad2d4a22aa56fc637476b1e56f3431430",
+    "integratedLufs": -21.97,
+    "truePeakDbtp": -7.25
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_stem_lead",
+   "nameVi": "Mãng Cốt · áp lực dòng · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "stemGroup": "boss_mang_cot",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of boss_mang_cot (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/boss_mang_cot_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "217e16868cd0ddabd21a149e9ff06b9fc14d1b79df77319987554af2137241ff",
+    "integratedLufs": -20.54,
+    "truePeakDbtp": -10.08
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/boss_mang_cot_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 158290,
+    "sha256": "37c4ee4b010149373a2242dd184bf98a040c056264cc7d17340e98f72ee40c5a",
+    "integratedLufs": -20.47,
+    "truePeakDbtp": -10.09
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.018181,
+    "tailRms": 4e-06,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 2.2e-05,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_stem_padbass",
+   "nameVi": "Mãng Cốt · áp lực dòng · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "stemGroup": "boss_mang_cot",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of boss_mang_cot (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/boss_mang_cot_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "fe6af25c598210673441ebc867d687789d309b87e389c772fea1780901443e51",
+    "integratedLufs": -26.03,
+    "truePeakDbtp": -14.9
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/boss_mang_cot_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 136266,
+    "sha256": "945ed81373e7bd9aa8ffb20f03422e3822ff77b3bcac2ed9324217e5350f0546",
+    "integratedLufs": -26.05,
+    "truePeakDbtp": -14.82
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.071588,
+    "tailRms": 0.006131,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.032368,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_stem_percussion",
+   "nameVi": "Mãng Cốt · áp lực dòng · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "stemGroup": "boss_mang_cot",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of boss_mang_cot (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/boss_mang_cot_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "018b891b12410d0918afe7436d4d3166bcc244b52ed013595f7042f0380b3521",
+    "integratedLufs": -33.58,
+    "truePeakDbtp": -16.12
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/boss_mang_cot_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 165745,
+    "sha256": "03d64097a004c6a1cb664374238087d645224193a085f3723221241b20b244ee",
+    "integratedLufs": -33.52,
+    "truePeakDbtp": -16.09
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.042882,
+    "tailRms": 0.001332,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.007034,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_intro",
+   "nameVi": "Khoảng lặng khám phá · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for quiet_discovery: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/quiet_discovery_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 8.0,
+    "sizeBytes": 2304102,
+    "sha256": "4ebaf0df0b0dfc625f893cdfcfc5913bb272a61ba1b7fc06f63dfe33a3ec4ce2",
+    "integratedLufs": -22.01,
+    "truePeakDbtp": -14.49
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/quiet_discovery_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 8.0,
+    "sizeBytes": 68687,
+    "sha256": "fc966207e71ca3496a098195a542727433bf9abf76a5a8bba92765d60b26dbd9",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -14.38
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_outro",
+   "nameVi": "Khoảng lặng khám phá · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for quiet_discovery: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/quiet_discovery_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 8.0,
+    "sizeBytes": 2304102,
+    "sha256": "a9f016b91224a8fd8596114c1cc17b784bf65be3327d8e0fda0c62dcd09a7e60",
+    "integratedLufs": -22.1,
+    "truePeakDbtp": -12.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/quiet_discovery_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 8.0,
+    "sizeBytes": 71177,
+    "sha256": "f84bdf65286434c507936ec7a1a299a3e6a2312d796e22d005dc6d6e3a45633d",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -12.35
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_stem_lead",
+   "nameVi": "Khoảng lặng khám phá · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "stemGroup": "quiet_discovery",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of quiet_discovery (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/quiet_discovery_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 18432102,
+    "sha256": "da7b308bed16724cc2dfb0ab50ae5f7c8b43b1aa21ea7ca08f29da4eb080400a",
+    "integratedLufs": -19.21,
+    "truePeakDbtp": -15.39
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/quiet_discovery_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 237075,
+    "sha256": "57f7489f422d7716739e45c3e558e276578a089425b85fe817ac8207e05c5cac",
+    "integratedLufs": -19.14,
+    "truePeakDbtp": -15.26
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.069361,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_stem_padbass",
+   "nameVi": "Khoảng lặng khám phá · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "stemGroup": "quiet_discovery",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of quiet_discovery (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/quiet_discovery_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 18432102,
+    "sha256": "524aaedf021437a9ef2071653f7398986adf13a2ea6d06d91cecf2ffea96aca9",
+    "integratedLufs": -35.91,
+    "truePeakDbtp": -26.4
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/quiet_discovery_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 114958,
+    "sha256": "ce1bbc5428cbe69ea0e75a1acaafbdd644109c0defc91671c75a52f09e272ee9",
+    "integratedLufs": -35.87,
+    "truePeakDbtp": -26.21
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0153,
+    "tailRms": 0.013994,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.064427,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_stem_percussion",
+   "nameVi": "Khoảng lặng khám phá · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "stemGroup": "quiet_discovery",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of quiet_discovery (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/quiet_discovery_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 18432102,
+    "sha256": "b01b4def90f317786bdb3b738f03bb0ebc2daac3343d65d63aef6acc46643e46",
+    "integratedLufs": -43.21,
+    "truePeakDbtp": -31.23
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/quiet_discovery_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 127430,
+    "sha256": "4949c9c8e7d3d536f845ac6917cc986b5f7a3baff9b316a6d8223751afe224eb",
+    "integratedLufs": -43.17,
+    "truePeakDbtp": -31.2
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu_intro",
+   "nameVi": "Lâm Triều — Rừng nhớ tên · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/lam_trieu",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for lam_trieu: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/lam_trieu_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 1536102,
+    "sha256": "5e0e1ca0f6ed0535a97faf9a51eb133aafa14a676b9ddc3b7b953adae3c1521c",
+    "integratedLufs": -22.18,
+    "truePeakDbtp": -14.11
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/lam_trieu_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 55145,
+    "sha256": "9503be4029701b602c92aae9938c496234f0f096e4869547f9dc8341f6c04d7d",
+    "integratedLufs": -21.94,
+    "truePeakDbtp": -13.99
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu_outro",
+   "nameVi": "Lâm Triều — Rừng nhớ tên · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/lam_trieu",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for lam_trieu: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/lam_trieu_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 1536102,
+    "sha256": "728c612f82e781d83a2d1b979f083ac501bf8e8d93e450cc0e31037c229b199d",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -12.1
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/lam_trieu_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 53590,
+    "sha256": "e5ea8b7d8dfc11b7437d3b668e5d191c3ad193b6390a561bd771ebc6f2331628",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -12.01
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu_stem_lead",
+   "nameVi": "Lâm Triều — Rừng nhớ tên · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/lam_trieu",
+   "stemGroup": "lam_trieu",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of lam_trieu (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/lam_trieu_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 15360102,
+    "sha256": "e0200876bbd4e5a0ce43f6ae84b999bd9587806230d0b449593987cf94714156",
+    "integratedLufs": -19.44,
+    "truePeakDbtp": -15.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/lam_trieu_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 276043,
+    "sha256": "3e1a3471b73c2110c3d4a30c46aced27784e3a89fabe40de9888a33a88c9f231",
+    "integratedLufs": -19.37,
+    "truePeakDbtp": -15.22
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.062481,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu_stem_padbass",
+   "nameVi": "Lâm Triều — Rừng nhớ tên · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/lam_trieu",
+   "stemGroup": "lam_trieu",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of lam_trieu (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/lam_trieu_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 15360102,
+    "sha256": "9512c04706433e035adc51f4a4a53d84a7f8235ebacb2398c245a8250847b184",
+    "integratedLufs": -29.02,
+    "truePeakDbtp": -17.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/lam_trieu_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 206746,
+    "sha256": "57bd661825a4cadc2f27283518bdc181dce7207d281da3926a9c037f230d0bf8",
+    "integratedLufs": -29.02,
+    "truePeakDbtp": -17.36
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.050915,
+    "tailRms": 0.005785,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.043153,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu_stem_percussion",
+   "nameVi": "Lâm Triều — Rừng nhớ tên · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/lam_trieu",
+   "stemGroup": "lam_trieu",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of lam_trieu (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/lam_trieu_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 15360102,
+    "sha256": "d6cfa56281cd671e34b5f11e497b50746f47eab9a4bf2af2e763f1367ed845cb",
+    "integratedLufs": -55.2,
+    "truePeakDbtp": -39.07
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/lam_trieu_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 133878,
+    "sha256": "065daec96bbbddf501d215d9692d3e5e8e38868ada11fae5e1074e3dfb894179",
+    "integratedLufs": -55.63,
+    "truePeakDbtp": -38.88
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa_intro",
+   "nameVi": "Sa Hỏa — Lò và cát · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/sa_hoa",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for sa_hoa: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade; A-minor mapped motif head",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/sa_hoa_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.3636,
+    "sizeBytes": 1256832,
+    "sha256": "9326c01b2257a72c94a0ad7e7fad01dcb3342396bfd40e701947da8df1a05dbc",
+    "integratedLufs": -21.99,
+    "truePeakDbtp": -11.12
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/sa_hoa_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.3636,
+    "sizeBytes": 42812,
+    "sha256": "72ddf6ffed18b2bc3f2d3c1b3a0afa2504491f962a212e46e3c44fc8ca5bbe1c",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -11.27
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa_outro",
+   "nameVi": "Sa Hỏa — Lò và cát · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/sa_hoa",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for sa_hoa: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade; A-minor mapped motif head",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/sa_hoa_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.3636,
+    "sizeBytes": 1256832,
+    "sha256": "4fe2a3d956a416a0ef48c2de8efe82ce3e8aabd4f7595511744bd5d933d005f0",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -10.45
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/sa_hoa_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.3636,
+    "sizeBytes": 42436,
+    "sha256": "222fb8514bc3cd51da3930d13915bd92497ff1a5781d0abed42e4505331fdf43",
+    "integratedLufs": -21.97,
+    "truePeakDbtp": -10.27
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa_stem_lead",
+   "nameVi": "Sa Hỏa — Lò và cát · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/sa_hoa",
+   "stemGroup": "sa_hoa",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of sa_hoa (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/sa_hoa_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 12567372,
+    "sha256": "1d7e79a3972aa8472c28d2c10ad24311cff211431629d1a5695a06751f2b0e06",
+    "integratedLufs": -19.6,
+    "truePeakDbtp": -11.03
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/sa_hoa_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 149132,
+    "sha256": "8b3f6358e60c1f57277aa2a3bf2f6c43514d292303e0afbcf190e95aed3287c9",
+    "integratedLufs": -19.54,
+    "truePeakDbtp": -10.98
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.108257,
+    "tailRms": 0.000215,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.001225,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa_stem_padbass",
+   "nameVi": "Sa Hỏa — Lò và cát · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/sa_hoa",
+   "stemGroup": "sa_hoa",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of sa_hoa (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/sa_hoa_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 12567372,
+    "sha256": "f5dd261e4f89a32783109d200ba7811f5e0fa18661ec4a10e5e2a5009bb7ccce",
+    "integratedLufs": -24.54,
+    "truePeakDbtp": -14.34
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/sa_hoa_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 163720,
+    "sha256": "37ce9815bc93131571eb41e3bf3f733162a50b0f1f5762f4a13716068ff4eb4f",
+    "integratedLufs": -24.51,
+    "truePeakDbtp": -14.28
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.064249,
+    "tailRms": 0.001264,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.004513,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa_stem_percussion",
+   "nameVi": "Sa Hỏa — Lò và cát · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/sa_hoa",
+   "stemGroup": "sa_hoa",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of sa_hoa (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/sa_hoa_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 12567372,
+    "sha256": "42b53aa6e3dd08087bd60a3c534a3c7e5f6bdf945ef354479bb3327dc98f9771",
+    "integratedLufs": -41.9,
+    "truePeakDbtp": -28.24
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/sa_hoa_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 238937,
+    "sha256": "0d4ce975db46045c73dbdacbfa1b29d7916c479e7805505ddeddfe28f3e04d3f",
+    "integratedLufs": -41.5,
+    "truePeakDbtp": -28.08
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 2e-06,
+    "tailRms": 4e-06,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 2.2e-05,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_intro",
+   "nameVi": "Trấn Sơn — Người qua cửa · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/tran_son",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for tran_son: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/tran_son_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 1536102,
+    "sha256": "825b9ad926f205f6684400a8d4bfdeb9993d9058c393f4e2bbc84bbe854cd9e9",
+    "integratedLufs": -22.18,
+    "truePeakDbtp": -7.0
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/tran_son_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 45381,
+    "sha256": "7ddb9250bf59dd78d3d19d002c1cd1e34fa3bbdf9fd0a2583c7217d092ba8312",
+    "integratedLufs": -22.16,
+    "truePeakDbtp": -6.92
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_outro",
+   "nameVi": "Trấn Sơn — Người qua cửa · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/tran_son",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for tran_son: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/tran_son_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 1536102,
+    "sha256": "43bd4b2c61eee0d3e7d151806974df40e861fff70026f81c4132a689c1938c11",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -8.13
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/tran_son_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 5.3333,
+    "sizeBytes": 44773,
+    "sha256": "adf01a02866b2711bf8d165c38a9753404632f9d9992cd188223435e220f31f6",
+    "integratedLufs": -21.97,
+    "truePeakDbtp": -8.06
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_stem_lead",
+   "nameVi": "Trấn Sơn — Người qua cửa · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/tran_son",
+   "stemGroup": "tran_son",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of tran_son (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/tran_son_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "a7221a1da2a2bbed68202d30934ac810408aacf9c1701e0f3c6526fcb58f5d7f",
+    "integratedLufs": -21.27,
+    "truePeakDbtp": -13.34
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/tran_son_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 199987,
+    "sha256": "e67d9ab780414a738194db744a11ae06ab3e5729c186443214a834c323d127dc",
+    "integratedLufs": -21.19,
+    "truePeakDbtp": -13.26
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.084426,
+    "tailRms": 0.081644,
+    "wrapJump": 2e-05,
+    "wrapJumpRaw": 0.392246,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_stem_padbass",
+   "nameVi": "Trấn Sơn — Người qua cửa · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/tran_son",
+   "stemGroup": "tran_son",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of tran_son (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/tran_son_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "898e1f97e2da68f06c1c82c847b3a16685be36eadfb81000ffd57b12cd0f8495",
+    "integratedLufs": -25.67,
+    "truePeakDbtp": -15.05
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/tran_son_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 170731,
+    "sha256": "5285d0641ce1a1ea7d14eaa49cec6c705792794acc1b9142116c50b9cfc28e74",
+    "integratedLufs": -25.64,
+    "truePeakDbtp": -15.01
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.094654,
+    "tailRms": 0.002333,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.01121,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_stem_percussion",
+   "nameVi": "Trấn Sơn — Người qua cửa · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/tran_son",
+   "stemGroup": "tran_son",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of tran_son (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/tran_son_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "dc08c7b2d22347ad51b22b7784f50474335e581eeed7129d5b5d3a201abfc11e",
+    "integratedLufs": -36.74,
+    "truePeakDbtp": -24.0
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/tran_son_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 126731,
+    "sha256": "e372148051b0eb81dbd269ab582cc498a72b642664e8fed0e8fd2a9162b1a970",
+    "integratedLufs": -36.68,
+    "truePeakDbtp": -23.95
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.030542,
+    "tailRms": 0.000131,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.000631,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_intro",
+   "nameVi": "Bạch Uyên — Thành dưới triều · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for bach_uyen: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade; low-pass 850.0 Hz like the parent cue",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/bach_uyen_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.7419,
+    "sizeBytes": 2229780,
+    "sha256": "e8af580db0741994859ec2b86d77b6df987df95c4ab619a584dad2822295bab6",
+    "integratedLufs": -21.91,
+    "truePeakDbtp": -13.57
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/bach_uyen_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.7419,
+    "sizeBytes": 47955,
+    "sha256": "e391c6ce6cf7f550dba88696d106a6318c825194141bbe374c105b6dc0a76934",
+    "integratedLufs": -21.86,
+    "truePeakDbtp": -13.44
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_outro",
+   "nameVi": "Bạch Uyên — Thành dưới triều · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for bach_uyen: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade; low-pass 850.0 Hz like the parent cue",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/bach_uyen_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.7419,
+    "sizeBytes": 2229780,
+    "sha256": "f9536edd96fe6e3c40e97bc5b152fb2296b1f6d11dabeb80d7e00f51be4cac47",
+    "integratedLufs": -22.01,
+    "truePeakDbtp": -11.28
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/bach_uyen_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 7.7419,
+    "sizeBytes": 49881,
+    "sha256": "f96784b8751fdc5436b77124169f7d821206fa566b9529c5384f2cfcf8309f1d",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -11.19
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_stem_lead",
+   "nameVi": "Bạch Uyên — Thành dưới triều · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "stemGroup": "bach_uyen",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of bach_uyen (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/bach_uyen_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 16722684,
+    "sha256": "f3990f5348c0b5323899b1830ca69a75735310c30fcca4436fb101289edd56ba",
+    "integratedLufs": -20.27,
+    "truePeakDbtp": -16.8
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/bach_uyen_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 197072,
+    "sha256": "39e7994712afae952d8ca7934245ebee6836d6cad2b3df7e6a8884f2442edf52",
+    "integratedLufs": -20.19,
+    "truePeakDbtp": -16.64
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_stem_padbass",
+   "nameVi": "Bạch Uyên — Thành dưới triều · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "stemGroup": "bach_uyen",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of bach_uyen (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/bach_uyen_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 16722684,
+    "sha256": "63b91c7586e3832b6431ed475b3ea909c279fa5acc83173cfd514ebc28feb532",
+    "integratedLufs": -24.38,
+    "truePeakDbtp": -12.6
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/bach_uyen_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 228720,
+    "sha256": "0f6df7ed7359e195c48c106e627072128de43fc849fb8da4f37db5101db06b51",
+    "integratedLufs": -24.36,
+    "truePeakDbtp": -12.63
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.127217,
+    "tailRms": 0.052292,
+    "wrapJump": 1.3e-05,
+    "wrapJumpRaw": 0.295172,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_stem_percussion",
+   "nameVi": "Bạch Uyên — Thành dưới triều · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "stemGroup": "bach_uyen",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of bach_uyen (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/bach_uyen_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 16722684,
+    "sha256": "097d74c11392f1a1ac506222aeb716e856f2fef5778c02a5d13af9e492313b55",
+    "integratedLufs": -51.39,
+    "truePeakDbtp": -39.4
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/bach_uyen_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 24936,
+    "sha256": "aa45bab474bf1ef0d825926baf6ee38383369b4bb1d61e1be247e03a1bbc9530",
+    "integratedLufs": -51.34,
+    "truePeakDbtp": -39.31
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.0,
+    "tailRms": 0.0,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.0,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_intro",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy · Mở đầu",
+   "kind": "INTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/rift_finale",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Intro (2 bars) for rift_finale: pad of the first chord (7 beats, releases before the cut) + bell + motif head + bass root + handoff bell at 7.5 beats; 0.15 s end fade",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/intros/rift_finale_intro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.8,
+    "sizeBytes": 1382502,
+    "sha256": "955a2d44426ac966f5ef9a645601378e078056c344766440ef0cd71935c678e3",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -14.05
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/intros/rift_finale_intro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.8,
+    "sizeBytes": 44619,
+    "sha256": "690aeaed6608f67d0ea7b1e066039ba5d6dbc07d492218245e6221426115a18e",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -14.0
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_outro",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy · Kết thúc",
+   "kind": "OUTRO",
+   "loop": false,
+   "parentCueKey": "MUSIC/rift_finale",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 2,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Outro (2 bars) for rift_finale: tonic pad + motif head + bass root + tonic bell at bar 1; 0.5 s end fade; outro plays the full flute tail (the set's only full close)",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/outros/rift_finale_outro.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.8,
+    "sizeBytes": 1382502,
+    "sha256": "c4b4279e3e116a4d00374e33f48bb964d5b328b80e8dd1e98d5a972be1902f33",
+    "integratedLufs": -21.99,
+    "truePeakDbtp": -12.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/outros/rift_finale_outro.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 4.8,
+    "sizeBytes": 45070,
+    "sha256": "6e4a0c5a091e93f14bf80e03e12b86bb4fa781c41da35821e08d7cc295ee3751",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -12.19
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_stem_lead",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy · Stem giai điệu",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/rift_finale",
+   "stemGroup": "rift_finale",
+   "group": "lead",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "lead stem of rift_finale (checkpoint-26 arrangement, regrouped): flute + pluck melody + bells; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/rift_finale_stem_lead.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 11059302,
+    "sha256": "21b274cdbcb4a0f2e24fcb343e4272158d054dc1e8345d854e8e34616abc1c30",
+    "integratedLufs": -20.13,
+    "truePeakDbtp": -12.45
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/rift_finale_stem_lead.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 251677,
+    "sha256": "9f44b843fea61c53a786dd9ee42320a187e060f7c14908ae4646d231dd811546",
+    "integratedLufs": -20.06,
+    "truePeakDbtp": -12.43
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.07227,
+    "tailRms": 0.001421,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.011057,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_stem_padbass",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy · Stem nền/trầm",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/rift_finale",
+   "stemGroup": "rift_finale",
+   "group": "padbass",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "padbass stem of rift_finale (checkpoint-26 arrangement, regrouped): pad chords + bass line + drones; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/rift_finale_stem_padbass.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 11059302,
+    "sha256": "83fe41c983e70c0183c9d0fcb40540cc43e8d7af92274343198eb70e5c867f74",
+    "integratedLufs": -27.48,
+    "truePeakDbtp": -16.3
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/rift_finale_stem_padbass.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 166056,
+    "sha256": "ebbb5f1807fb928f27cf6000876b1684b9b3656e92ee12353956381de5f1bccc",
+    "integratedLufs": -27.46,
+    "truePeakDbtp": -16.33
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.058097,
+    "tailRms": 0.010423,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.081113,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_stem_percussion",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy · Stem bộ gõ",
+   "kind": "STEM",
+   "loop": true,
+   "parentCueKey": "MUSIC/rift_finale",
+   "stemGroup": "rift_finale",
+   "group": "percussion",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "percussion stem of rift_finale (checkpoint-26 arrangement, regrouped): drums + shaker + drops + noise wash; loop-processed like the master so the stem is loopable on its own",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/stems/rift_finale_stem_percussion.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 11059302,
+    "sha256": "4aea8f657b324c0604d8d875234bbcde196ee7b1568756405f263b808ca6638b",
+    "integratedLufs": -37.94,
+    "truePeakDbtp": -25.5
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/stems/rift_finale_stem_percussion.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 17880,
+    "sha256": "84ae8cef08d63ecd697dacf63b68e64cbf6c06224345c197fc68b00d44a4fc82",
+    "integratedLufs": -37.84,
+    "truePeakDbtp": -25.41
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 8.7e-05,
+    "tailRms": 0.000101,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.000786,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot_layer_phase3",
+   "nameVi": "Mãng Cốt · Lớp giai đoạn 3",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive phase-3 layer over boss_mang_cot (10 bars @ 66 bpm): drums on all four beats, sixteenth-note D1 bass pulse, cold F4 bell marks every bar, minor-head pluck fragments on bars 0 and 3 (the bars neither the base nor phase 2 uses). No pad, no flute -- those stay in the base cue. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/boss_mang_cot_layer_phase3.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "e2a39701429814243b2b905a7c44e5aa2dca6ee6935c06b5064127fd7c6156e4",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -7.87
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/boss_mang_cot_layer_phase3.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 284344,
+    "sha256": "2649f0f83407783f8265207ec43bc08c3e31ca079a82a676221d40d71c5ee162",
+    "integratedLufs": -24.95,
+    "truePeakDbtp": -7.93
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.120852,
+    "tailRms": 0.028595,
+    "wrapJump": 7e-06,
+    "wrapJumpRaw": 0.134114,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/boss_mang_cot",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.29,
+    "truePeakDbtp": -4.77
+   }
+  },
+  {
+   "cueKey": "MUSIC/tragedy_layer_intensity",
+   "nameVi": "Bi kịch · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/tragedy",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 56,
+    "bars": 12,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over tragedy (12 bars @ 56 bpm): low drums on beats 0 and 2, D2 quarter-note bass pedal, D4 bell toll every 2 bars, low pluck figure on bars 2/6/10. The base is sparse by design (no drums); this layer adds the pulse the base withholds. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/tragedy_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 51.4286,
+    "sizeBytes": 14811528,
+    "sha256": "ab1514e32d0975003e418c1d22df6934242ae572948002b4aa5355909e38477d",
+    "integratedLufs": -24.98,
+    "truePeakDbtp": -10.82
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/tragedy_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 51.4286,
+    "sizeBytes": 274967,
+    "sha256": "9a831d7a3568eb2ff335d7a84667752cc951c7577ef32dcfa587ed13229ce775",
+    "integratedLufs": -24.95,
+    "truePeakDbtp": -10.83
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.082204,
+    "tailRms": 0.049706,
+    "wrapJump": 1.2e-05,
+    "wrapJumpRaw": 0.261877,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/tragedy",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.21,
+    "truePeakDbtp": -6.4
+   }
+  },
+  {
+   "cueKey": "MUSIC/arena_layer_low",
+   "nameVi": "Đấu trường · Lớp trầm",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/arena",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 120,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive low-intensity layer over arena (16 bars @ 120 bpm): drum on beat 0 only, whole-note bass root per bar (the base's own root progression), D6 bell every 4 bars. The base is already dense; this is the sparse bed the adapter fades to for low-intensity moments. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md3.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/arena_layer_low.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 32.0,
+    "sizeBytes": 9216102,
+    "sha256": "8f9114d13053ccfdfeeae7b8a2c943ec8cd0f49c5bea43de1d6cbfe7beaab1f9",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -12.4
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/arena_layer_low.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 32.0,
+    "sizeBytes": 148066,
+    "sha256": "67b490197cdc63d86652f87aa93ea0db6aea3e04cf57935a4284d952566f3c87",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -12.41
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.097945,
+    "tailRms": 0.036232,
+    "wrapJump": 9e-06,
+    "wrapJumpRaw": 0.166814,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/arena",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -19.52,
+    "truePeakDbtp": -3.8
+   }
+  }
+ ],
+ "stemGroups": [
+  {
+   "parentCueKey": "MUSIC/ben_mua",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 3.5762786865234375e-07,
+   "rmsDiff": 9.608142530588626e-08,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/thang_long",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 3.5762786865234375e-07,
+   "rmsDiff": 1.3056592364736904e-07,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 1.324290022340934e-07,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 6.805812429719187e-08,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/lam_trieu",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 1.002404668783107e-07,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/sa_hoa",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 1.1613663454859203e-07,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/tran_son",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 1.266518933925928e-07,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/bach_uyen",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 8.369241361910583e-08,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  },
+  {
+   "parentCueKey": "MUSIC/rift_finale",
+   "method": "lead + padbass + percussion masters summed from real bytes vs the shipped checkpoint-26 master",
+   "maxAbsDiff": 2.384185791015625e-07,
+   "rmsDiff": 8.850291561044537e-08,
+   "threshold": 5e-07,
+   "note": "lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py"
+  }
+ ],
+ "referenceReproduction": [
+  {
+   "cueKey": "MUSIC/ben_mua",
+   "cp26MasterSha256": "3f8bceb6a7850ddf222779b6304d8c58625d91038969a089c61f0a795e034c68",
+   "reproducedSha256": "ebd38cf3e9a4763a594b694ea990ad9960a7668808dc74a0720cd062ce62ca2d",
+   "match": false,
+   "maxAbsDiff": 1.1898128608658215e-07,
+   "fittedGain": 0.16050922567019998,
+   "gainMethod": "least_squares_fit",
+   "priorRenders": [],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers do NOT reproduce the shipped master (the shipped master was gain-staged slightly differently, ~0.01 dB), so the gain was fitted by least squares against the shipped master -- the pre-gain track is bit-identical to the original's (residual at the 24-bit quantisation floor)"
+  },
+  {
+   "cueKey": "MUSIC/thang_long",
+   "cp26MasterSha256": "9c8f6f7f479c58e4f54ae606001be99c7d72819c44a00e73970494aabe9af2b5",
+   "reproducedSha256": "9c8f6f7f479c58e4f54ae606001be99c7d72819c44a00e73970494aabe9af2b5",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot",
+   "cp26MasterSha256": "5b2e80f2bfa7d6a5f41504bbd60a30643e933a526348f10c166a12ea9dc253d1",
+   "reproducedSha256": "5b2e80f2bfa7d6a5f41504bbd60a30643e933a526348f10c166a12ea9dc253d1",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [
+    "thang_long"
+   ],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery",
+   "cp26MasterSha256": "1c03fb000d8219d9c9fc7bebca7dcadb404781d7e95550b497f56bf05daa08d8",
+   "reproducedSha256": "1c03fb000d8219d9c9fc7bebca7dcadb404781d7e95550b497f56bf05daa08d8",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu",
+   "cp26MasterSha256": "1438471e24c27a613cdcd9e333a6ed505ae6d95ec17fa17f00edbe332667488c",
+   "reproducedSha256": "1438471e24c27a613cdcd9e333a6ed505ae6d95ec17fa17f00edbe332667488c",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [
+    "quiet_discovery"
+   ],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa",
+   "cp26MasterSha256": "3167a62680c9c7b5e93b3e3f61a25d69cbfd35a440b723743af57ee520491768",
+   "reproducedSha256": "3167a62680c9c7b5e93b3e3f61a25d69cbfd35a440b723743af57ee520491768",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/tran_son",
+   "cp26MasterSha256": "754607df88b17b19d6d4cb9adacfa0820e24c177e8c1e993c06fdc33933b1f52",
+   "reproducedSha256": "754607df88b17b19d6d4cb9adacfa0820e24c177e8c1e993c06fdc33933b1f52",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [
+    "sa_hoa"
+   ],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen",
+   "cp26MasterSha256": "7789389bc221f2afe122b2ee9b9794fb4915c9e753dacb9ab5518c8c8f7681b7",
+   "reproducedSha256": "7789389bc221f2afe122b2ee9b9794fb4915c9e753dacb9ab5518c8c8f7681b7",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  },
+  {
+   "cueKey": "MUSIC/rift_finale",
+   "cp26MasterSha256": "c1df18353355e31fea72118b6e431ca105eb19e4974df745452bb73f4e245d1f",
+   "reproducedSha256": "c1df18353355e31fea72118b6e431ca105eb19e4974df745452bb73f4e245d1f",
+   "match": true,
+   "maxAbsDiff": 0.0,
+   "fittedGain": null,
+   "gainMethod": "gain_stage",
+   "priorRenders": [
+    "ben_mua"
+   ],
+   "method": "re-rendered from the recovered RNG history (prior renders listed) with the checkpoint-26 pipeline; gain_stage's multipliers reproduce the shipped master bit-exact"
+  }
+ ],
+ "notes": [
+  "Stems regroup the checkpoint-26 arrangements: lead + padbass + percussion sum to the shipped checkpoint-26 master within 24-bit quantisation (max abs diff <= 5e-7, about 2 LSB); re-checked from real bytes by check_composed_score_md3_v1.py",
+  "Intros/outros are 2-bar one-shots at the parent cue's tempo (-22 LUFS target, same as the music); an intro ends on a handoff bell at the loop's first downbeat, an outro closes on the tonic pad + bell with a 0.5 s fade. The full flute tail stays reserved for the resolve stinger and rift_finale: only the rift_finale outro plays it (the set's only full close); the thang_long outro uses the low pluck tail, the thang_long precedent (the cue itself answers with the tail in low pluck at bars 10-11); the boss outro uses the minor-head pluck fragment and the sa_hoa outro its A-minor mapped head.",
+  "Phase layers are ADDITIVE loops at the parent cue's tempo/bars (-25 LUFS target): they play over the base cue, they do not replace it. Combined base+layer loudness/true-peak is measured from real bytes and recorded per layer.",
+  "Adoption is a presentation-adapter decision (Codex): the MD3 files are delivered in parallel under ClientGodot/assets/audio/composed/ and do NOT replace the ported PackV1 files, their cue bindings, or the checkpoint-26/30/MD1/MD2 cues.",
+  "No ear audition has been done; loudness/true-peak are measured from real bytes. Loop seams are recorded per looping cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it."
+ ]
+}

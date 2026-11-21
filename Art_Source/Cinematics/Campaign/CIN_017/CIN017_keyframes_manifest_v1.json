@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN017_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_017 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_017",
+ "title": "Lõi và dòng triều",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (BOSS_TIDE_SERPENT) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_017_S02, CIN_017_S03; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_017_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_017_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "71f35b2980c03426e55d26d7bdebb5e5e0ae309401f2390212b987adb8f18e4e",
+   "sourceStagingFile": "media-generation-keyframe-cin-017-s01-0-9ca6d155-db2c-4727-b686-cb97267969ef.webp",
+   "sourceStagingSha256": "75cd1ab052cc078d409c4906a62316f41bd56f383aa2292601c16f1147e856ff",
+   "sourceSnapshotId": "d929fce5-c250-4fed-92b3-e4ea71ec6402:e82t88",
+   "framing": "Wide shot of a teal mere ringed by four broken Cham-style stone arches: a pale turquoise water serpent with antlered head and diamond mirror scales lies coiled in concentric rings around a cluster of white-blue crystals rising from a stone islet.",
+   "knownDefects": "No material defect observed at storyboard level: no legible text, no rainbow aura (crystal glow stays white-blue), palette is restrained teal; the serpent's head carries small white antlers the prompt does not mention (minor, within the placeholder-design latitude since no boss lock exists)."
+  },
+  {
+   "shotId": "CIN_017_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_017_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "710c1941fb89b3b4ee01dd89bc1c070c22646000b0965272b26745865183a57d",
+   "sourceStagingFile": "media-generation-media-generation-keyframe-cin-0-173cd08f-ed9e-4ba5-bd2b-b65ad8edc1cf.webp",
+   "sourceStagingSha256": "667118daada8bd229c2a7364f236def98520f5995409f8914608dd6a276d2158",
+   "sourceSnapshotId": "e21d3ee4-a52e-4bf4-9f4f-c09c0a6286e0:omcg5k",
+   "framing": "Underwater teal scene: a glowing faceted white-blue crystal core at center, supported by three carved stone pressure channels (left arm, right arm and central column meeting at the core); a pale turquoise water serpent with diamond mirror scales coils around the core and the channels; bubbles and teal water plants at the edges.",
+   "knownDefects": "The three stone channels read as carved stone structures (culvert/stone bridge) more than distinct 'pressure channels'; the serpent's head/tail are not clearly distinguished; the serpent coils around the stone more than directly around the core (only one loop hugs the core); small light rays around the core. Serpent design remains a placeholder without a boss lock."
+  },
+  {
+   "shotId": "CIN_017_S03",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_017_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "fe4a603b1c5628baa5f375bc8d562e137872ef752df278116a1b631c70d6974e",
+   "sourceStagingFile": "media-generation-media-generation-keyframe-cin-0-3625b252-8da9-45ec-85aa-f2dffdd4d013.webp",
+   "sourceStagingSha256": "f3d1f1cd7211306b83191752b4a587d1b3851b3ec11abf0e38546c7485d858e7",
+   "sourceSnapshotId": "e4ca2305-2dda-4b9b-92da-fd9292936f44:ysgtmq",
+   "framing": "Misty river gorge in cold grey-blue tones: a dark S-curve serpent silhouette shadow runs down the middle of the river into the distance, dissolving into mist; bamboo-topped cliffs on both sides; broken bamboo pole, woven bamboo basket and stones in the left foreground.",
+   "knownDefects": "The serpent reads as a flat dark streak on the water rather than a submerged shadow with volume; the 'broken bamboo gear' reads as a woven fish trap basket + bamboo pole (plausible but vague); the palette carries less teal than S02. No person, no armed figure, no dotted glint rows on the water."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S02/S03: S02 now shows the white-blue crystal core supported by three stone pressure channels with the tide serpent coiled around it (no machine, no robed man); S03 is only the receding serpent silhouette (no armed figure, no dotted glints). S01 unchanged from checkpoint 25."
+ ]
+}

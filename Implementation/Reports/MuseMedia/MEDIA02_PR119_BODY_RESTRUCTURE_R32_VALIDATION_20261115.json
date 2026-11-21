@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R32",
+ "validator": "check_pr119_restructure_r32_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == eafa2dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 83f2592": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha eafa2dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 253/2488": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R31 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R31 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..eafa2dc == 253": {
+   "pass": true,
+   "detail": "253"
+  },
+  "git files cf17178..eafa2dc == 2488": {
+   "pass": true,
+   "detail": "2488"
+  },
+  "git additions == 231466, deletions 0": {
+   "pass": true,
+   "detail": "2488 files changed, 231466 insertions(+)"
+  },
+  "merge-tree eafa2dc vs integration exit 0": {
+   "pass": true,
+   "detail": "6f5856be0486362ad7f04998d6395918e6dc393d"
+  },
+  "body head line eafa2dc/253/2488": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R31 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R31": {
+   "pass": true,
+   "detail": ""
+  },
+  "body index reference at eafa2dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R31 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

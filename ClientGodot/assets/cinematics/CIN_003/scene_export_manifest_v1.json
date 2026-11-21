@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 37 - CIN_003 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_003",
+  "title": "Hai người, hai bóng",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_003_S01": "push-in centered",
+      "CIN_003_S02": "push-in centered",
+      "CIN_003_S03": "push-in centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+      "sha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75",
+      "sizeBytes": 1658233,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+        "sourceMixSha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+        "mixVersion": "v1_cin003_proposed",
+        "integratedLUFS": "-21.18",
+        "truePeakDBTP": "-4.67",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_003/CIN_003_640x360_30fps.ogv",
+      "sha256": "133ad2ddf14e942c54a209cb744aca6095c861ba3bacd6d0ebebf735c59c7b21",
+      "sizeBytes": 734469,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 502,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+        "sourceMixSha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+        "mixVersion": "v1_cin003_proposed",
+        "integratedLUFS": "-21.12",
+        "truePeakDBTP": "-4.52",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 502
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_003/CIN_003_poster.png",
+      "sha256": "aeffda939892e64c76c62b06a9af66b3a4e4cb1300cd26a6e34fc791085d8d39",
+      "sizeBytes": 420141,
+      "sourceKeyframe": "keyframe_CIN_003_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_003/CIN_003_timing_v1.json",
+      "sha256": "0e6452a072ec1e87205116e7b9de4ea51e1cb5046eb5bda9fa8b41d4d2baa726",
+      "sizeBytes": 2377
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_003/CIN_003_vi.srt",
+      "sha256": "c98244a4892e768bd73e676e1f0a74569957e869b704921813edc0969dc5c363",
+      "sizeBytes": 108,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_003_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 4.107,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 25.097,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 20.888,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_003_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 3.277,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 23.901,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 21.749,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_003_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 4.213,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 37.476,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 30.633,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_003_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_003_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_003_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_003_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_003_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_003_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_003 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (Ly An, CIN_003_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 4.032 s at natural speed (windowFit FITS, not sped up).",
+    "Recorded keyframe defects: S01's net reads intact rather than visibly torn and the back-turned fisher reads youthful; S02's water reads as a stream rather than a shallow puddle and its palette is dusk-dark against the daylight of S01/S03; S03's two fishers both wear conical hats and read older/heavier than S01's pair, and Ly An is staged front-facing rather than mid-gesture. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  ],
+  "hasAudioTrack": true
+}

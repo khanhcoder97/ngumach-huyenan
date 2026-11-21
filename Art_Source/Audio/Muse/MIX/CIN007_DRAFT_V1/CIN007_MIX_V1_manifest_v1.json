@@ -1,0 +1,149 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 39 - CIN_007 draft mix v1 (fourth scene mix after CIN_006 v1, CIN_003 v1 and CIN_005 v1, same recipe as P0 v3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVersion": "v1_cin007_proposed",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: fourth scene mix after CIN_006 v1, CIN_003 v1 and CIN_005 v1, built with the P0 v3 recipe (same gain targets, ducking params, peak guard, loop joins). Stem assignment is NEW and PROPOSED_CANDIDATE (the CP02 stem table assigns nothing to CIN_007; the scene timing manifest lists only the reveal stinger as a candidate stem). VO take is the CP17 draft; the take FITS its window (3.912 s, 12.5-16.412 s): no overrun, no tail trim at the scene edge. NOT a mix PASS: no ear audition, stem table not locked, stinger placement PROPOSED pending picture lock. Adoption is Codex's adapter decision.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_007; quiet_discovery music + wind_canopy ambience are the forest cues (composed, CP26/CP30) for this ancient rain-green forest scene (a shallow trickle reaches exposed bark, water follows four carved grooves that brighten as abstract name-like strokes, a leaf shadow passes; pack shot prompts, CIN_007 S01/S02), and the reveal stinger is the scene's only manifest-listed candidate stem (CIN_007_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_007 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1.",
+    "VO take runs 12.5-16.412 s: 3.912 s, ending 1.088 s BEFORE the 17.5 s window end -- the take FITS inside its window (no overrun, unlike CIN_005/CIN_006). The take ends 1.588 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full window is used because MUSIC/quiet_discovery is sparse by design: the first 2 s of this window measure -91 dB mean (near-silence), so a 2 s slice would show no measurable cut even though the compressor is engaged.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_007",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_007_S03_LYAN_draft_v1.wav",
+        "windowSeconds": [
+          12.5,
+          16.412
+        ],
+        "takeDurationSeconds": 3.912,
+        "takeEndSeconds": 16.412,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -1.088,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/quiet_discovery",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.72,
+          "remeasuredLUFS": -21.72,
+          "gainDb": -8.28,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.7,
+          "remeasuredLUFS": -29.7,
+          "gainDb": -6.3,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              16.412
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -9.43,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00458,
+              "bedP999Jump": 0.00598,
+              "ratioToP999": 0.765
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_007_mix_draft_v1.wav",
+        "sha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-18.05",
+        "truePeakDBTP": "-1.43",
+        "loudnessRangeLU": "12.70",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ]
+}

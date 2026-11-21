@@ -1,0 +1,84 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R115",
+ "validator": "check_pr119_restructure_r116_v1.py",
+ "checks": {
+  "total": 18,
+  "passed": 18
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == d99375a": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 9418a09": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha d99375a": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 421/2740": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R116 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R115 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..d99375a == 421": {
+   "pass": true,
+   "detail": "421"
+  },
+  "git files cf17178..d99375a == 2740": {
+   "pass": true,
+   "detail": "2740"
+  },
+  "git additions == 254453, deletions 0": {
+   "pass": true,
+   "detail": "2740 files changed, 254453 insertions(+)"
+  },
+  "merge-tree d99375a vs integration exit 0": {
+   "pass": true,
+   "detail": "bf62fcfae8f31c4413d3d418e51a19cb9fe1fb96"
+  },
+  "body head line d99375a/421/2740": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R115 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R115": {
+   "pass": true,
+   "detail": "+ PR119 BODY RESTRUCTURE R114 + PR119 BODY RESTRUCTURE R115)"
+  },
+  "body title has full R93..R115 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R115 added"
+  },
+  "body index reference at d99375a": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R116 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

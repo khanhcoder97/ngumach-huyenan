@@ -1,0 +1,65 @@
+{
+  "id": "STANDARD720_SUBTITLED_MB_CP3_v1",
+  "checkpoint": "WO37 M-B CP3",
+  "status": "DRAFT_STANDARD_VERSION_NOT_IN_RUNTIME",
+  "method": "integer 2x nearest-neighbour upscale of the delivered 640x360 subtitled viewing variant (CP28); NOT a native 720p capture; H.264 crf26 (CP2 measured choice); audio stream-copied bit-exact; embedded mov_text subtitle track stream-copied; no OGV sample (CP28: no OGV subtitled variant exists)",
+  "baseline": "c0caf221458da934800e4478711dfe3bf3a208d4",
+  "entries": [
+    {
+      "sceneId": "CIN_000_subtitled",
+      "sourcePath": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps_sub_vi.mp4",
+      "sourceSha256": "2aae25e418c5c264efc494ac117a1416c555e8bb09efe0f55a4fb63f9d0ba25b",
+      "sourceBytes": 11918592,
+      "sourceDuration": 87.381,
+      "sourceProbe": {
+        "width": 640,
+        "height": 360,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "subtitle": [
+          {
+            "codec": "mov_text",
+            "language": "vie"
+          }
+        ],
+        "duration": 87.381
+      },
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_000_subtitled/CIN_000_1280x720_30fps_sub_vi.mp4",
+      "outSha256": "a3c1f16d3cbb50b01c44bbc1ef082999457dcb70c229d3b257c24e3d78b8348b",
+      "outBytes": 32072843,
+      "outDuration": 87.381,
+      "outProbe": {
+        "width": 1280,
+        "height": 720,
+        "fps": "30/1",
+        "videoCodec": "h264",
+        "hasAudio": true,
+        "audioCodec": "aac",
+        "subtitle": [
+          {
+            "codec": "mov_text",
+            "language": "vie"
+          }
+        ],
+        "duration": 87.381
+      }
+    }
+  ],
+  "budget": {
+    "mp4Set": {
+      "files": 1,
+      "sourceBytes": 11918592,
+      "outBytes": 32072843,
+      "ratio": 2.691,
+      "totalDuration": 87.381
+    }
+  },
+  "runtimeTreeModified": false,
+  "notes": [
+    "Closes the gap named in the M-B CP2 report (subtitled variant had no standard version). Lives in its own CIN_000_subtitled folder so the CP2 playback set stays exactly 21 entries.",
+    "Source is the CP28 viewing variant: burned-in Vietnamese subtitles (26 readable chunks) + embedded mov_text track + narration +5.0 dB (-15.83 LUFS). Canonical CP27 files unchanged.",
+    "Adoption into ClientGodot runtime is Codex's decision."
+  ]
+}

@@ -1,0 +1,152 @@
+#EXTM3U
+# MEDIA-02 checkpoint 33 — Goi 31 item 3 A/B review shortlist
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve.
+# Measurements are loudness/codec numbers, NOT a listening PASS.
+#EXTINF:36,P0 MIX A/B — CIN_001 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_001_mix_draft_v1.wav
+#EXTINF:36,P0 MIX A/B — CIN_001 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_001_mix_draft_v2.wav
+#EXTINF:36,P0 MIX A/B — CIN_001 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_002_mix_draft_v1.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_002_mix_draft_v2.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_004_mix_draft_v1.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_004_mix_draft_v2.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/P0_mix_review_72s_draft_v1.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/P0_mix_review_72s_draft_v2.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/P0_mix_review_72s_draft_v3.wav
+#EXTINF:57,COMPOSED MUSIC — MUSIC/ben_mua (Bến Mưa · câu nhạc bỏ lửng)
+../../../ClientGodot/assets/audio/composed/music/ben_mua.ogg
+#EXTINF:42,COMPOSED MUSIC — MUSIC/thang_long (Thăng Long · phố và dòng nước)
+../../../ClientGodot/assets/audio/composed/music/thang_long.ogg
+#EXTINF:36,COMPOSED MUSIC — MUSIC/boss_mang_cot (Mãng Cốt · áp lực dòng)
+../../../ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg
+#EXTINF:64,COMPOSED MUSIC — MUSIC/quiet_discovery (Khoảng lặng khám phá)
+../../../ClientGodot/assets/audio/composed/music/quiet_discovery.ogg
+#EXTINF:53,COMPOSED MUSIC — MUSIC/lam_trieu (Lâm Triều — Rừng nhớ tên)
+../../../ClientGodot/assets/audio/composed/music/lam_trieu.ogg
+#EXTINF:44,COMPOSED MUSIC — MUSIC/sa_hoa (Sa Hỏa — Lò và cát)
+../../../ClientGodot/assets/audio/composed/music/sa_hoa.ogg
+#EXTINF:40,COMPOSED MUSIC — MUSIC/tran_son (Trấn Sơn — Người qua cửa)
+../../../ClientGodot/assets/audio/composed/music/tran_son.ogg
+#EXTINF:58,COMPOSED MUSIC — MUSIC/bach_uyen (Bạch Uyên — Thành dưới triều)
+../../../ClientGodot/assets/audio/composed/music/bach_uyen.ogg
+#EXTINF:38,COMPOSED MUSIC — MUSIC/rift_finale (Ngũ Mạch — Năm dòng cùng chảy)
+../../../ClientGodot/assets/audio/composed/music/rift_finale.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/reveal
+../../../ClientGodot/assets/audio/composed/cinema/reveal.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/tension
+../../../ClientGodot/assets/audio/composed/cinema/tension.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/resolve
+../../../ClientGodot/assets/audio/composed/cinema/resolve.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/transition
+../../../ClientGodot/assets/audio/composed/cinema/transition.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rain_light COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/rain_light.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rain_light PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/rain_light.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rain_heavy COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/rain_heavy.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rain_heavy PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/rain_heavy.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/river_shore COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/river_shore.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/river_shore PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/river_shore.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/underwater COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/underwater.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/underwater PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/underwater.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/waterfall COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/waterfall.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/waterfall PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/waterfall.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/wind_canopy COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/wind_canopy PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/wind_canopy.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/desert_wind COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/desert_wind.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/desert_wind PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/desert_wind.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/mountain_wind COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/mountain_wind.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/mountain_wind PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/mountain_wind.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/cave_drips COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/cave_drips.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/cave_drips PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/cave_drips.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/forge COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/forge.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/forge PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/forge.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/thang_long_crowd COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/thang_long_crowd PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/thang_long_crowd.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/city_night COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/city_night.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/city_night PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/city_night.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rift COMPOSED (CP30)
+../../../ClientGodot/assets/audio/composed/ambience/rift.ogg
+#EXTINF:16,AMBIENCE A/B — AMBIENCE/rift PORTED (CP07)
+../../../ClientGodot/assets/audio/ambience/rift.ogg
+#EXTINF:3,VO — CIN_001_S05 Ly An [FITS] — Đầu kia! Giữ giúp tôi đầu kia!
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN001_S05_LYAN_draft_v1.wav
+#EXTINF:4,VO — CIN_002_S02 Tạ Vân Khanh [FITS] — Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN002_S02_TAVANKHANH_draft_v1.wav
+#EXTINF:4,VO — CIN_003_S03 Ly An [FITS] — Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_003_S03_LYAN_draft_v1.wav
+#EXTINF:2,VO — CIN_004_S02 Ly An [FITS] — Nó cứ tránh chỗ nước ấy.
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav
+#EXTINF:5,VO — CIN_005_S03 Ly An [OVERRUN +0.16s] — Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_005_S03_LYAN_draft_v1.wav
+#EXTINF:6,VO — CIN_006_S03 Hạ Mặc [OVERRUN +0.52s] — Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì.
+../../../ClientGodot/assets/audio/vo/cin006/VO_CIN_006_S03_HAMAC_draft_v1.wav
+#EXTINF:4,VO — CIN_007_S03 Ly An [FITS] — Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_007_S03_LYAN_draft_v1.wav
+#EXTINF:4,VO — CIN_008_S03 Tạ Vân Khanh [FITS] — Không ai ép tay ta ký. Đó mới là điều khó nói.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_008_S03_TAVANKHANH_draft_v1.wav
+#EXTINF:4,VO — CIN_009_S03 Ly An [FITS] — Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_009_S03_LYAN_draft_v1.wav
+#EXTINF:3,VO — CIN_010_S03 Sầm Chủ Quỹ [FITS] — Đường ngắn thì đỡ khát. Nếu xe qua được.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav
+#EXTINF:6,VO — CIN_011_S03 Hạ Mặc [FITS] — Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_011_S03_HAMAC_draft_v1.wav
+#EXTINF:4,VO — CIN_012_S03 Hạ Mặc [FITS] — Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_012_S03_HAMAC_draft_v1.wav
+#EXTINF:2,VO — CIN_013_S03 Trưởng đoàn [FITS] — Chưa đóng cổng. Còn một người đi sau.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav
+#EXTINF:3,VO — CIN_014_S03 Tống Bành [FITS] — Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_014_S03_TONGBANH_draft_v1.wav
+#EXTINF:3,VO — CIN_015_S03 Đội trưởng thợ lặn [FITS] — Lần trước có người đã buộc dây này cho chúng ta.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_015_S03_DIVERLEAD_draft_v1.wav
+#EXTINF:2,VO — CIN_016_S03 Hạ Mặc [FITS] — Tôi có thể ghi lại phần ông muốn kể không?
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_016_S03_HAMAC_draft_v1.wav
+#EXTINF:3,VO — CIN_017_S03 Đội trưởng thợ lặn [FITS] — Mang lõi đi thì phải giữ đường nước còn lại.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_017_S03_DIVERLEAD_draft_v1.wav
+#EXTINF:3,VO — CIN_018_S02 Cơ Vô Tướng [FITS] — Ta không còn chấp nhận phần ta không biết.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S02_COVOTUONG_draft_v1.wav
+#EXTINF:5,VO — CIN_018_S03 Người chơi [OVERRUN +0.28s] — Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S03_PLAYER_draft_v1.wav
+#EXTINF:3,VO — CIN_019_S03 Ly An [FITS] — Lần này không ai giữ hết năm con đường.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_019_S03_LYAN_draft_v1.wav
+#EXTINF:3,VO — CIN_020_S03 Người nhận thư [FITS] — Chờ một chút. Tôi muốn gửi lại vài lời.
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav

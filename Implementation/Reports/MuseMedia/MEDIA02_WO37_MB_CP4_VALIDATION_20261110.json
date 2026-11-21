@@ -1,0 +1,14 @@
+{
+  "checker": "check_standard720_mb_cp4_v1",
+  "checkpoint": "MEDIA-02 WO37 M-B CP4",
+  "checksTotal": 271,
+  "checksPassed": 271,
+  "failures": [],
+  "status": "PASS",
+  "worstFrameDownscaleMeanAbsDiff": 4.215,
+  "worst2x2IntraBlockRange": 6.07,
+  "worstAudioCorr": 0.9998,
+  "worstAbsDeltaLUFS": 0.04,
+  "worstAbsDeltaTruePeakDBTP": 0.1,
+  "mp4SetOutBytes": 148002469
+}

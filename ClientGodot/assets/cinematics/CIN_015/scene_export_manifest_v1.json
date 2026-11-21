@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 49 - CIN_015 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "abcf254",
+  "sceneId": "CIN_015",
+  "title": "Thành phố dưới nước",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_015_S01": "push-in centered",
+      "CIN_015_S02": "push-in centered",
+      "CIN_015_S03": "zoom-out centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+      "sha256": "95a6b688aaa5d8e77103d0045edf2ac50a9a122d6d956b797f6c136857947f22",
+      "sizeBytes": 1529589,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN_015_mix_draft_v1.wav",
+        "sourceMixSha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee",
+        "mixVersion": "v1_cin015_proposed",
+        "integratedLUFS": "-25.30",
+        "truePeakDBTP": "-3.89",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
+      "sha256": "b413770aa74cb68e533fb7456d85ded766758e772ae8574cffb29ee83c096fe4",
+      "sizeBytes": 719240,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 511,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN_015_mix_draft_v1.wav",
+        "sourceMixSha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee",
+        "mixVersion": "v1_cin015_proposed",
+        "integratedLUFS": "-25.31",
+        "truePeakDBTP": "-3.91",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 511
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_015/CIN_015_poster.png",
+      "sha256": "6b067babad5b0adba570a85129cef0768f14098ecd56ef44a9b93dcf20034b29",
+      "sizeBytes": 355598,
+      "sourceKeyframe": "keyframe_CIN_015_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_015/CIN_015_timing_v1.json",
+      "sha256": "fabb7e50869d6288018866064be18ee7432f23cef96eac74abe6c7d3f3edb201",
+      "sizeBytes": 2405
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_015/CIN_015_vi.srt",
+      "sha256": "c12278572991353372b3a95d389b43afa574364ebe58552bf3ebaba20a3cf387",
+      "sizeBytes": 97,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_015_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 3.91,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 24.277,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 20.804,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_015_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 2.794,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 17.263,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 14.695,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_015_S03": {
+      "identitySeconds": 17.9667,
+      "identityMeanAbsChannelDiff": 4.695,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 12.0,
+      "motionMeanAbsChannelDiff": 17.032,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 15.024,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_015_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_015_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_015_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_015_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_015_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "TOPDOWN_MATCH",
+      "keyframe": "keyframe_CIN_015_S03.png",
+      "motion": "zoom-out centered"
+    }
+  ],
+  "notes": [
+    "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_015 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (the diver captain, CIN_015_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.880 s at natural speed (windowFit FITS, not sped up).",
+    "Checkpoint 32 (Goi 31 item 2) revises S01/S02/S03: S02 is now a fully submerged drowned ruin (dining bowl tied to a stone table, guide rope, bare diver hand, no mascot, no clay pot); S01 has no unscripted figure and restrained bubbles; S03 reads underwater with deep teal tint and bubbles."
+  ],
+  "hasAudioTrack": true
+}

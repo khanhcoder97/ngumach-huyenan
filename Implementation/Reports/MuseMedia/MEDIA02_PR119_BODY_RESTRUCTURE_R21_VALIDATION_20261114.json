@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R21",
+ "validator": "check_pr119_restructure_r21_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == dbc099d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 1349bfe": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha dbc099d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 231/2455": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R21 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R20 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..dbc099d == 231": {
+   "pass": true,
+   "detail": "231"
+  },
+  "git files cf17178..dbc099d == 2455": {
+   "pass": true,
+   "detail": "2455"
+  },
+  "git additions == 228775, deletions 0": {
+   "pass": true,
+   "detail": "2455 files changed, 228775 insertions(+)"
+  },
+  "merge-tree dbc099d vs integration exit 0": {
+   "pass": true,
+   "detail": "c485aeab451786fe89da2f2c9fd99819df4162b2"
+  },
+  "body head line dbc099d/231/2455": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R20 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R20": {
+   "pass": true,
+   "detail": ""
+  },
+  "body index reference at dbc099d": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R21 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

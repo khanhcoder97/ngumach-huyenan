@@ -1,0 +1,35 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 7 (phase layers: thang_long intensity, tran_son intensity, bach_uyen intensity, rift_finale intensity, quiet_discovery intensity; runtime audio manifest total 731 -> 736)",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "md7_cues": 5,
+  "md7_files_checked": 10,
+  "coverage_slots": 15
+ },
+ "mismatches": [],
+ "notes": [
+  "MD7 MUSIC/thang_long_layer_intensity: combined base+layer re-measured -21.65 LUFS / -10.55 dBTP",
+  "MD7 MUSIC/thang_long_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -15.20 dBTP)",
+  "MD7 MUSIC/thang_long_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.93 LUFS / -15.09 dBTP)",
+  "MD7 MUSIC/tran_son_layer_intensity: combined base+layer re-measured -20.51 LUFS / -8.07 dBTP",
+  "MD7 MUSIC/tran_son_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.01 LUFS / -9.73 dBTP)",
+  "MD7 MUSIC/tran_son_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.96 LUFS / -9.61 dBTP)",
+  "MD7 MUSIC/bach_uyen_layer_intensity: combined base+layer re-measured -20.59 LUFS / -9.54 dBTP",
+  "MD7 MUSIC/bach_uyen_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -10.95 dBTP)",
+  "MD7 MUSIC/bach_uyen_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.96 LUFS / -10.85 dBTP)",
+  "MD7 MUSIC/rift_finale_layer_intensity: combined base+layer re-measured -20.31 LUFS / -7.91 dBTP",
+  "MD7 MUSIC/rift_finale_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -8.97 dBTP)",
+  "MD7 MUSIC/rift_finale_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.95 LUFS / -9.08 dBTP)",
+  "MD7 MUSIC/quiet_discovery_layer_intensity: combined base+layer re-measured -22.48 LUFS / -9.28 dBTP",
+  "MD7 MUSIC/quiet_discovery_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -9.66 dBTP)",
+  "MD7 MUSIC/quiet_discovery_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.96 LUFS / -9.62 dBTP)",
+  "coverage verified: 15/15 slots covered, 0 gaps, md7 5 layers"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak are re-measured here from real bytes (ffmpeg loudnorm) and compared to the pack within +/-0.5; they are not a mix PASS.",
+  "Loop seams are recorded indicators (wrapJump after the disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it), not a seamlessness PASS.",
+  "No ear audition of the MD7 layers or their loop seams; audition status NOT_AUDITIONED."
+ ]
+}

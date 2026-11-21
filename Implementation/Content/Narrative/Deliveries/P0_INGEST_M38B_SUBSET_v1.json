@@ -1,0 +1,1150 @@
+{
+ "manifestId": "NGM_P0_INGEST_M38B_SUBSET_V1",
+ "workOrder": "WO38 M38-B (Goi 38, issue #116 comment 6733227370, PR #130) — selective P0 runtime ingest guide subset",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "parentHead": "67a9c744240349f1057774dc130cc91ac98bb74b",
+ "qaBaselineSha": "14b588c663a6d53295b34f1d632e84c48c7f5ca9",
+ "integrationSha": "9ac73dc",
+ "status": "DRAFT_FOR_CODEX_REVIEW — NOT_AUDITIONED, no mix PASS, no self-PASS; M38-B does NOT modify the runtime tree",
+ "scope": "P0 only: CIN_001 (36 s), CIN_002 (18 s), CIN_004 (18 s) — 72 s total",
+ "audioPathRule": {
+  "rule": "EXACTLY ONE audio path per playback. Recommended: EMBEDDED_SOUNDTRACK_ONLY (matches ClientGodot/assets/cinematics/PLAYBACK_METADATA_v1.json audioOwnershipPolicy).",
+  "embedded": "Play the video file's own audio stream (mix v3, fully composed). A and B embed the SAME mix v3, so adopting B changes picture only.",
+  "externalAlternative": "Only if the adapter deliberately chooses external audio: mute/ignore the embedded stream and play the standalone mix WAV/OGG as the single source. Never play embedded + standalone mix or VO takes simultaneously (double audio).",
+  "neverDo": "Do not layer palette pickups, VO takes or stems over the embedded soundtrack; they are alternates/components for review, not playback layers."
+ },
+ "subtitleRule": "External SRT (UTF-8, NFC, LF, no BOM), one cue per P0 scene, shown by the player; subtitles are NOT baked into candidate video — do not enable a second caption source.",
+ "seamNote": "Composed ambience/music runtime OGGs loop inside the mixes with a 1 s acrossfade join (CP31 recipe). loopSeamWrapJump per cue is the CP44 raw wrap discontinuity of the composed runtime file; all P0 cues are <= 0.002311 and none is ear-check flagged (the flagged cue MUSIC/sa_hoa is not in P0).",
+ "fallback": {
+  "videoFallback": "Current runtime A files (panel-hold video + embedded mix v3) stay in place until Codex adopts B; they are the fallback take. Poster is the static fallback frame.",
+  "formatFallback": "If the OGV fails to decode in a review context, use the candidate B MP4 (same picture, same mix as AAC). Runtime playback stays OGV per project standard.",
+  "audioFallback": "If embedded audio is rejected at review, the standalone mix v3 WAV (ClientGodot/assets/audio/mix/p0_v3/) is the single external source — see audioPathRule.externalAlternative. Mix v1/v2 remain review alternates, never simultaneous."
+ },
+ "provenanceLicense": {
+  "musicAmbienceStingers": "ORIGINAL_COMPOSED_BY_MUSE — procedural synthesis, no samples (CP26/CP30); 0 ported PackV1 files inside mix v3 or the candidate.",
+  "voice": "Fictional TTS draft voices (Ly An = avocado_v2 Aria; the CIN_002 male line still uses the shared male draft voice of CP04; M-F CP1 palette pickups are alternates NOT embedded in this candidate). No real-voice cloning.",
+  "picture": "Procedural pose animation rendered from storyboard keyframes (M-C CP2); keyframes derive from the Cinema Production Pack shot prompts. Draft picture — final picture still character-lock-blocked for 6 of 12 P0 shots."
+ },
+ "auditionStatus": "NOT_AUDITIONED — use the CP9 ear-audition pack (Implementation/Reports/MuseMedia/, EAR_AUDITION_PACK_v1.json) for the real listening pass; unlistened items carry no PASS from Muse.",
+ "deviceStatus": "No physical playback device is available to Muse in this environment and Muse performs no Godot playback (runtime side is Codex's). Prior evidence: Codex's Windows audit at 14b588c decoded the first 50 ms of all 21 embedded soundtracks PASS and verified the runtime subset byte/size/hash.",
+ "scenes": [
+  {
+   "sceneId": "CIN_001",
+   "durationSeconds": 36.0,
+   "dialogue": {
+    "speaker": "NPC_LY_AN (Ly An)",
+    "windowSeconds": [
+     24.8,
+     28.5
+    ],
+    "windowStatus": "DECIDED_DEC_MEDIA_P0 (version B, 24.8-28.5 s)",
+    "srtText": "Đầu kia! Giữ giúp tôi đầu kia!",
+    "voTakeInMix": "VO_CIN001_S05_LYAN_draft_v1.wav",
+    "voTakeEndSeconds": 27.368,
+    "srt": {
+     "windowSeconds": [
+      24.8,
+      28.5
+     ],
+     "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+     "encoding": {
+      "utf8": true,
+      "bom": false,
+      "nfc": true,
+      "crlf": false,
+      "cues": 1
+     }
+    }
+   },
+   "candidateVideo": {
+    "mp4": {
+     "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_pose_640x360_30fps.mp4",
+     "sha256": "e244b152f778051990752e18f462a94f54eb037ff65075fd356b6b08e62624f1",
+     "sizeBytes": 1393983,
+     "role": "candidate B video+audio (review MP4, H.264/AAC)",
+     "probe": {
+      "durationSeconds": 36.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192307
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_001_candidateB_640x360_30fps.ogv",
+     "sha256": "30f36b5dc7430e9092d03bb2e768c20666840f7670ec6d3e4aa7293767656957",
+     "sizeBytes": 3319028,
+     "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+     "probe": {
+      "durationSeconds": 36.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     },
+     "loudness": {
+      "integratedLUFS": -20.9,
+      "truePeakDBTP": -1.7
+     }
+    }
+   },
+   "runtimeCurrent": {
+    "mp4": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+     "sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25",
+     "sizeBytes": 1224004,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 36.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192307
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+     "sha256": "af60880a3776f0f3564a9bd167de912db8f9727697f460257fd1a28471609917",
+     "sizeBytes": 1483364,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 36.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     }
+    },
+    "poster": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_poster.png",
+     "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+     "sizeBytes": 368439,
+     "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+    },
+    "srt": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_vi.srt",
+     "sha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d",
+     "sizeBytes": 73,
+     "role": "runtime subtitle (external SRT) — unchanged by ingest"
+    },
+    "timing": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_timing_v1.json",
+     "sha256": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3",
+     "sizeBytes": 2503,
+     "role": "runtime timing — unchanged by ingest"
+    },
+    "sceneExportManifest": {
+     "path": "ClientGodot/assets/cinematics/CIN_001/scene_export_manifest_v1.json",
+     "sha256": "e338d0569b9515a61c9d9b282fbed6459cbc76ff1c2a32b6e7f9b5913f76593a",
+     "sizeBytes": 4317,
+     "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+    }
+   },
+   "embeddedSoundtrack": {
+    "mixVersion": "v3_fully_composed",
+    "sourceMixWav": {
+     "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+     "sha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+     "sizeBytes": 6912100,
+     "role": "embedded soundtrack source master (mix v3, fully composed)",
+     "loudness": {
+      "integratedLUFS": -21.06,
+      "truePeakDBTP": -1.66
+     }
+    },
+    "cues": [
+     {
+      "cue": "MUSIC/quiet_discovery",
+      "role": "music",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+      "segmentSceneSeconds": [
+       6.0,
+       30.0
+      ],
+      "targetLUFS": -30.0,
+      "duckedByVo": true,
+      "loopSeamWrapJump": 0.000194
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+      "segmentSceneSeconds": [
+       0.0,
+       36.0
+      ],
+      "targetLUFS": -36.0,
+      "duckedByVo": false,
+      "loopSeamWrapJump": 0.000188
+     },
+     {
+      "cue": "AMBIENCE/rain_light",
+      "role": "ambience",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+      "segmentSceneSeconds": [
+       0.0,
+       6.0
+      ],
+      "targetLUFS": -38.0,
+      "duckedByVo": false,
+      "loopSeamWrapJump": 0.000181
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+      "atSeconds": 30.0,
+      "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+     }
+    ]
+   },
+   "ingestAction": "REPLACE the video file with candidate B (MP4 for review contexts, OGV for the Godot runtime). KEEP poster, SRT and timing byte-identical. Audio needs no action: A and B embed the same mix v3."
+  },
+  {
+   "sceneId": "CIN_002",
+   "durationSeconds": 18.0,
+   "dialogue": {
+    "speaker": "NPC_TA_VAN_KHANH (Tạ Vân Khanh)",
+    "windowSeconds": [
+     7.0,
+     11.0
+    ],
+    "windowStatus": "PROPOSED_CANDIDATE (timing v1)",
+    "srtText": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+    "voTakeInMix": "VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+    "voTakeEndSeconds": 10.792,
+    "srt": {
+     "windowSeconds": [
+      7.0,
+      11.0
+     ],
+     "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+     "encoding": {
+      "utf8": true,
+      "bom": false,
+      "nfc": true,
+      "crlf": false,
+      "cues": 1
+     }
+    }
+   },
+   "candidateVideo": {
+    "mp4": {
+     "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_pose_640x360_30fps.mp4",
+     "sha256": "822a32d7a9291e520d42e122a2e690d61a9d7c2a93ade9361d8e4c6897b104be",
+     "sizeBytes": 700853,
+     "role": "candidate B video+audio (review MP4, H.264/AAC)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192213
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_002_candidateB_640x360_30fps.ogv",
+     "sha256": "d70d970e05ddfae9a34e154e9d1905da8ed09bbec6d32bc2598300e7b80a912c",
+     "sizeBytes": 1635327,
+     "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     },
+     "loudness": {
+      "integratedLUFS": -22.43,
+      "truePeakDBTP": -4.46
+     }
+    }
+   },
+   "runtimeCurrent": {
+    "mp4": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+     "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7",
+     "sizeBytes": 603413,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192213
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+     "sha256": "d4388b2f41ecaadc20d18613c259a57083790a69a7f8cd0e5966dcfaa47505bf",
+     "sizeBytes": 749277,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     }
+    },
+    "poster": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_poster.png",
+     "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+     "sizeBytes": 271088,
+     "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+    },
+    "srt": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_vi.srt",
+     "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+     "sizeBytes": 105,
+     "role": "runtime subtitle (external SRT) — unchanged by ingest"
+    },
+    "timing": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_timing_v1.json",
+     "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
+     "sizeBytes": 1708,
+     "role": "runtime timing — unchanged by ingest"
+    },
+    "sceneExportManifest": {
+     "path": "ClientGodot/assets/cinematics/CIN_002/scene_export_manifest_v1.json",
+     "sha256": "c79b77f3b1fb848564e9ebf76daf582fd0ced763cc0648c1ff607f229a1bbbd0",
+     "sizeBytes": 3912,
+     "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+    }
+   },
+   "embeddedSoundtrack": {
+    "mixVersion": "v3_fully_composed",
+    "sourceMixWav": {
+     "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+     "sha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+     "sizeBytes": 3456100,
+     "role": "embedded soundtrack source master (mix v3, fully composed)",
+     "loudness": {
+      "integratedLUFS": -22.67,
+      "truePeakDBTP": -4.25
+     }
+    },
+    "cues": [
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "targetLUFS": -36.0,
+      "duckedByVo": true,
+      "loopSeamWrapJump": 0.000188
+     },
+     {
+      "cue": "AMBIENCE/underwater",
+      "role": "ambience",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+      "segmentSceneSeconds": [
+       0.0,
+       6.0
+      ],
+      "targetLUFS": -38.0,
+      "duckedByVo": false,
+      "loopSeamWrapJump": 9e-06
+     },
+     {
+      "cue": "SFX/CINEMA/tension",
+      "role": "stinger",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+      "atSeconds": 6.0,
+      "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+     }
+    ]
+   },
+   "ingestAction": "REPLACE the video file with candidate B (MP4 for review contexts, OGV for the Godot runtime). KEEP poster, SRT and timing byte-identical. Audio needs no action: A and B embed the same mix v3."
+  },
+  {
+   "sceneId": "CIN_004",
+   "durationSeconds": 18.0,
+   "dialogue": {
+    "speaker": "NPC_LY_AN (Ly An, voice off-screen per DEC-MEDIA-P0 Q2)",
+    "windowSeconds": [
+     7.5,
+     9.5
+    ],
+    "windowStatus": "PROPOSED_CANDIDATE (timing v1)",
+    "srtText": "Nó cứ tránh chỗ nước ấy.",
+    "voTakeInMix": "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+    "voTakeEndSeconds": 9.252,
+    "srt": {
+     "windowSeconds": [
+      7.5,
+      9.5
+     ],
+     "text": "Nó cứ tránh chỗ nước ấy.",
+     "encoding": {
+      "utf8": true,
+      "bom": false,
+      "nfc": true,
+      "crlf": false,
+      "cues": 1
+     }
+    }
+   },
+   "candidateVideo": {
+    "mp4": {
+     "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_pose_640x360_30fps.mp4",
+     "sha256": "15e1b8d1d276b64660e019e75efe819ae34909bb210fa4b8830c4c8a79ef6fdd",
+     "sizeBytes": 897630,
+     "role": "candidate B video+audio (review MP4, H.264/AAC)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192110
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_004_candidateB_640x360_30fps.ogv",
+     "sha256": "4ca2374637c8b0f820698d4aefcdff3d56caef74556af7c054fa925c86c0d986",
+     "sizeBytes": 2538804,
+     "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     },
+     "loudness": {
+      "integratedLUFS": -26.73,
+      "truePeakDBTP": -8.29
+     }
+    }
+   },
+   "runtimeCurrent": {
+    "mp4": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+     "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891",
+     "sizeBytes": 655887,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "h264",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 192110
+       }
+      ]
+     }
+    },
+    "ogv": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+     "sha256": "457780fa7431719d9018257e0f0a132c603bb3b2aba542ad1ec42fb51b7de590",
+     "sizeBytes": 768058,
+     "role": "current runtime A file (panel-hold video + embedded mix v3)",
+     "probe": {
+      "durationSeconds": 18.0,
+      "streams": [
+       {
+        "codecType": "video",
+        "codec": "theora",
+        "width": 640,
+        "height": 360,
+        "fps": "30/1"
+       },
+       {
+        "codecType": "audio",
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateBps": 160000
+       }
+      ]
+     }
+    },
+    "poster": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_poster.png",
+     "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+     "sizeBytes": 384737,
+     "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+    },
+    "srt": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_vi.srt",
+     "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+     "sizeBytes": 68,
+     "role": "runtime subtitle (external SRT) — unchanged by ingest"
+    },
+    "timing": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+     "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+     "sizeBytes": 1783,
+     "role": "runtime timing — unchanged by ingest"
+    },
+    "sceneExportManifest": {
+     "path": "ClientGodot/assets/cinematics/CIN_004/scene_export_manifest_v1.json",
+     "sha256": "44c107c2b0bf4e584c06abfa382e801c21548da7153fe8b17c0213f9a889cebf",
+     "sizeBytes": 3943,
+     "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+    }
+   },
+   "embeddedSoundtrack": {
+    "mixVersion": "v3_fully_composed",
+    "sourceMixWav": {
+     "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+     "sha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+     "sizeBytes": 3456100,
+     "role": "embedded soundtrack source master (mix v3, fully composed)",
+     "loudness": {
+      "integratedLUFS": -26.78,
+      "truePeakDBTP": -8.27
+     }
+    },
+    "cues": [
+     {
+      "cue": "MUSIC/boss_mang_cot",
+      "role": "music",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+      "segmentSceneSeconds": [
+       0.0,
+       12.0
+      ],
+      "targetLUFS": -30.0,
+      "duckedByVo": true,
+      "loopSeamWrapJump": 0.002311
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "targetLUFS": -36.0,
+      "duckedByVo": false,
+      "loopSeamWrapJump": 0.000188
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+      "atSeconds": 6.0,
+      "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+     }
+    ]
+   },
+   "ingestAction": "REPLACE the video file with candidate B (MP4 for review contexts, OGV for the Godot runtime). KEEP poster, SRT and timing byte-identical. Audio needs no action: A and B embed the same mix v3."
+  }
+ ],
+ "reviewAssets": {
+  "combinedReel": {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_review_72s_640x360_30fps.mp4",
+   "sha256": "a9ae424cd95de09899dfd8bcff40a1ca572f571f7043d3259e10f14c0110780c",
+   "sizeBytes": 2989770,
+   "role": "combined 72 s review reel (M38-A)",
+   "probe": {
+    "durationSeconds": 72.021,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192348
+     }
+    ]
+   }
+  },
+  "contactSheetAll12": {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_contact_all12.png",
+   "sha256": "916dbeb4d8d660435f3ec91a4a24889acb1d878debbde7d837efed5358d68739",
+   "sizeBytes": 866130,
+   "role": "combined contact sheet, all 12 shots (M38-A)"
+  }
+ },
+ "files": [
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_pose_640x360_30fps.mp4",
+   "sha256": "e244b152f778051990752e18f462a94f54eb037ff65075fd356b6b08e62624f1",
+   "sizeBytes": 1393983,
+   "role": "candidate B video+audio (review MP4, H.264/AAC)",
+   "probe": {
+    "durationSeconds": 36.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192307
+     }
+    ]
+   }
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_001_candidateB_640x360_30fps.ogv",
+   "sha256": "30f36b5dc7430e9092d03bb2e768c20666840f7670ec6d3e4aa7293767656957",
+   "sizeBytes": 3319028,
+   "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+   "probe": {
+    "durationSeconds": 36.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   },
+   "loudness": {
+    "integratedLUFS": -20.9,
+    "truePeakDBTP": -1.7
+   }
+  },
+  {
+   "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+   "sha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+   "sizeBytes": 6912100,
+   "role": "embedded soundtrack source master (mix v3, fully composed)",
+   "loudness": {
+    "integratedLUFS": -21.06,
+    "truePeakDBTP": -1.66
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+   "sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25",
+   "sizeBytes": 1224004,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 36.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192307
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+   "sha256": "af60880a3776f0f3564a9bd167de912db8f9727697f460257fd1a28471609917",
+   "sizeBytes": 1483364,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 36.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_poster.png",
+   "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+   "sizeBytes": 368439,
+   "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_vi.srt",
+   "sha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d",
+   "sizeBytes": 73,
+   "role": "runtime subtitle (external SRT) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_timing_v1.json",
+   "sha256": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3",
+   "sizeBytes": 2503,
+   "role": "runtime timing — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_001/scene_export_manifest_v1.json",
+   "sha256": "e338d0569b9515a61c9d9b282fbed6459cbc76ff1c2a32b6e7f9b5913f76593a",
+   "sizeBytes": 4317,
+   "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_pose_640x360_30fps.mp4",
+   "sha256": "822a32d7a9291e520d42e122a2e690d61a9d7c2a93ade9361d8e4c6897b104be",
+   "sizeBytes": 700853,
+   "role": "candidate B video+audio (review MP4, H.264/AAC)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192213
+     }
+    ]
+   }
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_002_candidateB_640x360_30fps.ogv",
+   "sha256": "d70d970e05ddfae9a34e154e9d1905da8ed09bbec6d32bc2598300e7b80a912c",
+   "sizeBytes": 1635327,
+   "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   },
+   "loudness": {
+    "integratedLUFS": -22.43,
+    "truePeakDBTP": -4.46
+   }
+  },
+  {
+   "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+   "sha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+   "sizeBytes": 3456100,
+   "role": "embedded soundtrack source master (mix v3, fully composed)",
+   "loudness": {
+    "integratedLUFS": -22.67,
+    "truePeakDBTP": -4.25
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+   "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7",
+   "sizeBytes": 603413,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192213
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+   "sha256": "d4388b2f41ecaadc20d18613c259a57083790a69a7f8cd0e5966dcfaa47505bf",
+   "sizeBytes": 749277,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_poster.png",
+   "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+   "sizeBytes": 271088,
+   "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_vi.srt",
+   "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+   "sizeBytes": 105,
+   "role": "runtime subtitle (external SRT) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_timing_v1.json",
+   "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
+   "sizeBytes": 1708,
+   "role": "runtime timing — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_002/scene_export_manifest_v1.json",
+   "sha256": "c79b77f3b1fb848564e9ebf76daf582fd0ced763cc0648c1ff607f229a1bbbd0",
+   "sizeBytes": 3912,
+   "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_pose_640x360_30fps.mp4",
+   "sha256": "15e1b8d1d276b64660e019e75efe819ae34909bb210fa4b8830c4c8a79ef6fdd",
+   "sizeBytes": 897630,
+   "role": "candidate B video+audio (review MP4, H.264/AAC)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192110
+     }
+    ]
+   }
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_004_candidateB_640x360_30fps.ogv",
+   "sha256": "4ca2374637c8b0f820698d4aefcdff3d56caef74556af7c054fa925c86c0d986",
+   "sizeBytes": 2538804,
+   "role": "candidate B runtime-format file (Theora/Vorbis) — NEW in M38-B",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   },
+   "loudness": {
+    "integratedLUFS": -26.73,
+    "truePeakDBTP": -8.29
+   }
+  },
+  {
+   "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+   "sha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+   "sizeBytes": 3456100,
+   "role": "embedded soundtrack source master (mix v3, fully composed)",
+   "loudness": {
+    "integratedLUFS": -26.78,
+    "truePeakDBTP": -8.27
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+   "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891",
+   "sizeBytes": 655887,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192110
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+   "sha256": "457780fa7431719d9018257e0f0a132c603bb3b2aba542ad1ec42fb51b7de590",
+   "sizeBytes": 768058,
+   "role": "current runtime A file (panel-hold video + embedded mix v3)",
+   "probe": {
+    "durationSeconds": 18.0,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 160000
+     }
+    ]
+   }
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_poster.png",
+   "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+   "sizeBytes": 384737,
+   "role": "runtime poster (S01 keyframe) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_vi.srt",
+   "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+   "sizeBytes": 68,
+   "role": "runtime subtitle (external SRT) — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+   "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+   "sizeBytes": 1783,
+   "role": "runtime timing — unchanged by ingest"
+  },
+  {
+   "path": "ClientGodot/assets/cinematics/CIN_004/scene_export_manifest_v1.json",
+   "sha256": "44c107c2b0bf4e584c06abfa382e801c21548da7153fe8b17c0213f9a889cebf",
+   "sizeBytes": 3943,
+   "role": "runtime scene export manifest (CP34: A video + embedded mix v3)"
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_review_72s_640x360_30fps.mp4",
+   "sha256": "a9ae424cd95de09899dfd8bcff40a1ca572f571f7043d3259e10f14c0110780c",
+   "sizeBytes": 2989770,
+   "role": "combined 72 s review reel (M38-A)",
+   "probe": {
+    "durationSeconds": 72.021,
+    "streams": [
+     {
+      "codecType": "video",
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": "30/1"
+     },
+     {
+      "codecType": "audio",
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateBps": 192348
+     }
+    ]
+   }
+  },
+  {
+   "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_contact_all12.png",
+   "sha256": "916dbeb4d8d660435f3ec91a4a24889acb1d878debbde7d837efed5358d68739",
+   "sizeBytes": 866130,
+   "role": "combined contact sheet, all 12 shots (M38-A)"
+  }
+ ],
+ "fileCount": 29
+}
