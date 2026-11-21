@@ -1,0 +1,88 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R171",
+ "validator": "check_pr119_restructure_r172_v1.py",
+ "checks": {
+  "total": 19,
+  "passed": 19
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == a9e8475": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha a3c4e6a": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha a9e8475": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 533/2908": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R172 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R171 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R171 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..a9e8475 == 533": {
+   "pass": true,
+   "detail": "533"
+  },
+  "git files cf17178..a9e8475 == 2908": {
+   "pass": true,
+   "detail": "2908"
+  },
+  "git additions == 272324, deletions 0": {
+   "pass": true,
+   "detail": "2908 files changed, 272324 insertions(+)"
+  },
+  "merge-tree a9e8475 vs integration exit 0, tree eb841185": {
+   "pass": true,
+   "detail": "eb84118514fdcd1865ec79c0e02d51fba22cd367"
+  },
+  "body head line a9e8475/533/2908": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R171 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R171": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R170 + PR119 BODY RESTRUCTURE R171"
+  },
+  "body title has full R93..R171 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R171 added"
+  },
+  "body index reference at a9e8475": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R172 note + R135-R165 compacted (31 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 31, body chars: 104671"
+  }
+ },
+ "status": "PASS"
+}
