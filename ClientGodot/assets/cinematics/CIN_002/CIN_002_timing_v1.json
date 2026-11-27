@@ -1,0 +1,51 @@
+{
+  "sceneId": "CIN_002",
+  "questId": "P00-02",
+  "title": "Âm cuối dưới nước",
+  "durationSeconds": 18,
+  "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+  "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+  "charactersOnScreen": [
+    "NPC_TA_VAN_KHANH"
+  ],
+  "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+  "candidateStems": [
+    "AMBIENCE/underwater",
+    "AMBIENCE/river_shore",
+    "SFX/CINEMA/tension"
+  ],
+  "stemStatus": "CANDIDATE_POOL_NOT_LOCKED",
+  "shots": [
+    {
+      "shotId": "CIN_002_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "GROUND_DETAIL",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "MEDIUM_STATIC",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+      "dialogue": {
+        "speaker": "NPC_TA_VAN_KHANH",
+        "onscreen": true,
+        "windowSeconds": [
+          7.0,
+          11.0
+        ],
+        "status": "PROPOSED_ANIMATIC_PLACEMENT",
+        "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy."
+      }
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "TOPDOWN_MATCH",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    }
+  ]
+}

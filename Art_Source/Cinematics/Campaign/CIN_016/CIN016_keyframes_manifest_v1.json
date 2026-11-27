@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN016_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_016 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_016",
+ "title": "Quyền được kể lại",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_016_S01",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_016_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "0125c345f7bb73a4d4a476206071bd2f43a523aea9a356cb86f2eaf5b5b5ea82",
+   "sourceStagingFile": "media-generation-keyframe-cin-016-s01-0-64bd9279-6652-4adc-9587-e46a7db1e6de.webp",
+   "sourceStagingSha256": "6d35f11a4e467682a47e48692bae85e4a62e9827964b9e51327281c34b036b62",
+   "sourceSnapshotId": "0d9f2dc6-89aa-46b8-bb26-4de5e0307e30:dadpaf",
+   "framing": "Detail close-up of a recovered journal sheet spread on a wooden desk beneath a shaded hanging lamp, a pale scraped band crossing its middle where a line was removed, with ink pot and brush beside it.",
+   "knownDefects": "The scraped-away line renders as one broad pale horizontal band rather than a single line, and the page carries several hatched abstract clusters (illegible, as required); otherwise faithful to the prompt."
+  },
+  {
+   "shotId": "CIN_016_S02",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_016_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "37a48f86f6cad9d1e4e23bd53ee047290dc7c332698fbe31a88e615c1ca996ae",
+   "sourceStagingFile": "media-generation-keyframe-cin-016-s02-0-ff132ac0-850b-4744-9f87-7e14b30be261.webp",
+   "sourceStagingSha256": "8d46d8bf167f08bc72248bcf5c3e4f4cd899442581e63b6098366ca00fe56fce",
+   "sourceSnapshotId": "b8c5e122-b212-4b27-916d-a4535d149c84:kld6dc",
+   "framing": "Medium shot inside a bamboo hut: Ha Mac sits at the left of a wooden table with his pen laid flat before him, waiting, while the survivor sits opposite at frame right seen only from behind, face out of frame.",
+   "knownDefects": "The survivor wears a modern buckled backpack/rucksack — an anachronistic prop not in the prompt; the core staging (pen flat, survivor's face out of frame, no contact) matches."
+  },
+  {
+   "shotId": "CIN_016_S03",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_016_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "0f815f701aa2a6d2db8637aefe9e6ca15b63dc9dd3c2f7efcf336053c5946e7d",
+   "sourceStagingFile": "media-generation-keyframe-cin-016-s03-0-a394f721-4a11-470a-ad1a-19b0acfd4659.webp",
+   "sourceStagingSha256": "d9c3041ec0c7b92776f8c6806e3a03e0aca2a9fdcbce361fb28b88ed7b5b27aa",
+   "sourceSnapshotId": "e18baaf5-93a2-4548-af56-a5055cbd6d1e:9b7oe2",
+   "framing": "Medium two-shot at a wooden table in a bamboo-walled room: the traveler figure at left turns a journal page while already holding a brush pen aloft, and Ha Mac watches from frame right in profile.",
+   "knownDefects": "Renders as a medium two-shot rather than the DETAIL_LOCKED close view; the gesture beats are merged — the page-turning figure already holds the pen raised, instead of the survivor turning the page first and only then Ha Mac lifting the pen; Ha Mac's rendering is inconsistent with S02 (ponytail with blue band and an earring here vs topknot/bun in S02)."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S03 renders as a medium two-shot instead of the DETAIL_LOCKED close view and merges the gesture beats (the page-turning figure already holds the pen raised), and Ha Mac's rendering is inconsistent with S02 (ponytail with blue band and an earring vs topknot/bun); S02's survivor wears a modern buckled backpack — an anachronistic prop; S01's scraped-away line renders as one broad pale band rather than a single line. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

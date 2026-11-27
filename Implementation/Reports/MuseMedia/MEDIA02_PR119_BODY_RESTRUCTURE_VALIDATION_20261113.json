@@ -1,0 +1,70 @@
+{
+  "tool": "build_pr119_body_restructure_v1.py",
+  "generated_at_jst": "2026-11-12 19:53:26 UTC",
+  "head": "443d3e4",
+  "head_full": "443d3e4d0f9af7bbdbf4785bbd197ea513d454c0",
+  "base_integration": "f3db6b3",
+  "merge_base": "cf17178",
+  "commits": 187,
+  "files_changed": 2381,
+  "merge_tree": "11f94b94cc932c00cb191f85788180672fc687c3",
+  "body": {
+    "path": "Implementation/Reports/MuseMedia/MEDIA02_PR119_BODY_V2_20261113.md",
+    "bytes": 8454,
+    "chars": 7594,
+    "sha256": "97ca94e64e8fc02fd59c6964f21dfbbc7f4b86535c71e10774ad4ce2ee5b9b09"
+  },
+  "index": {
+    "path": "Implementation/Reports/MuseMedia/MEDIA02_PR119_DELIVERY_INDEX_20261113.md",
+    "rows": 100,
+    "commits_covered": 187
+  },
+  "checks": [
+    {
+      "name": "body_bytes_under_ceiling",
+      "pass": true,
+      "detail": "8454 bytes (ceiling 60000; connector argv ceiling 131072)"
+    },
+    {
+      "name": "body_head_matches",
+      "pass": true,
+      "detail": "head 443d3e4 present"
+    },
+    {
+      "name": "body_counts_match_git",
+      "pass": true,
+      "detail": "187 commits / 2381 files"
+    },
+    {
+      "name": "body_merge_tree_matches",
+      "pass": true,
+      "detail": "merge-tree 11f94b94cc932c00cb191f85788180672fc687c3"
+    },
+    {
+      "name": "body_blocks_in_index",
+      "pass": true,
+      "detail": "all 7 newest blocks in index"
+    },
+    {
+      "name": "body_identifiers_resolve",
+      "pass": true,
+      "detail": "classified={'git_commit': 18, 'git_tree': 1, 'known_file_sha': 1, 'known_github_id': 2}; unresolved=[]"
+    },
+    {
+      "name": "prologue_mix_sha_prefix",
+      "pass": true,
+      "detail": "manifest sha256 4f8224e108fd…, size 16774542 B"
+    },
+    {
+      "name": "index_covers_all_commits",
+      "pass": true,
+      "detail": "187 commits in 100 table rows"
+    },
+    {
+      "name": "merge_tree_clean",
+      "pass": true,
+      "detail": "tree 11f94b94cc932c00cb191f85788180672fc687c3 vs base f3db6b3"
+    }
+  ],
+  "verdict": "PASS"
+}

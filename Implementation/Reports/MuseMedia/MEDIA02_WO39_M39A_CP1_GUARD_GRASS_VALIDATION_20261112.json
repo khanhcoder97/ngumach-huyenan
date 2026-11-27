@@ -1,0 +1,1051 @@
+{
+ "validator": "check_composed_sfx_me_cp2b_guard_grass_v1.py",
+ "checkpoint": "MEDIA-02 WO39 M39-A CP1 - guard + grass SFX draft",
+ "decisionId": "DEC-MEDIA-SFX-DRAFT-20261112",
+ "branch": "muse/media-production-20261104",
+ "checksTotal": 186,
+ "checksPassed": 186,
+ "failures": [],
+ "pass": true,
+ "baselinesReMeasured": {
+  "metal_parry": {
+   "centroidHz": 764.13,
+   "band2500_5500": 0.01,
+   "band3000_8000": 0.0,
+   "lufsMean": -24.18,
+   "prominenceMax": 1491503.8,
+   "rmsMean": -25.0
+  },
+  "basic_blade": {
+   "centroidHz": 2701.87,
+   "band2500_5500": 0.45,
+   "band3000_8000": 0.43,
+   "lufsMean": -22.25,
+   "prominenceMax": 21.3,
+   "rmsMean": -25.18
+  },
+  "step_stone": {
+   "centroidHz": 1258.2,
+   "band2500_5500": 0.19,
+   "band3000_8000": 0.18,
+   "lufsMean": null,
+   "prominenceMax": 28.4,
+   "rmsMean": -25.0
+  },
+  "step_wood": {
+   "centroidHz": 503.53,
+   "band2500_5500": 0.07,
+   "band3000_8000": 0.05,
+   "lufsMean": null,
+   "prominenceMax": 125.4,
+   "rmsMean": -25.0
+  },
+  "step_mud": {
+   "centroidHz": 497.47,
+   "band2500_5500": 0.07,
+   "band3000_8000": 0.05,
+   "lufsMean": null,
+   "prominenceMax": 99.9,
+   "rmsMean": -25.0
+  }
+ },
+ "measured": {
+  "SFX/COMBAT/guard_expire v01": {
+   "lufs": -28.03,
+   "tp": -10.0,
+   "rms": -31.37,
+   "centroidHz": 1151.3,
+   "bandLt500": 0.0508,
+   "band2500_5500": 0.0003,
+   "band3000_8000": 0.0001,
+   "prominence400_2000": 25.3
+  },
+  "SFX/COMBAT/guard_expire v02": {
+   "lufs": -27.5,
+   "tp": -10.81,
+   "rms": -31.63,
+   "centroidHz": 1070.4,
+   "bandLt500": 0.0271,
+   "band2500_5500": 0.0002,
+   "band3000_8000": 0.0,
+   "prominence400_2000": 45.4
+  },
+  "SFX/COMBAT/guard_expire v03": {
+   "lufs": -27.76,
+   "tp": -10.0,
+   "rms": -30.56,
+   "centroidHz": 1173.1,
+   "bandLt500": 0.1235,
+   "band2500_5500": 0.0013,
+   "band3000_8000": 0.0002,
+   "prominence400_2000": 14.3
+  },
+  "SFX/WORLD/step_grass v01": {
+   "lufs": null,
+   "tp": -8.86,
+   "rms": -25.0,
+   "centroidHz": 2809.5,
+   "bandLt500": 0.0085,
+   "band2500_5500": 0.6333,
+   "band3000_8000": 0.4385,
+   "prominence400_2000": 1514.9
+  },
+  "SFX/WORLD/step_grass v02": {
+   "lufs": null,
+   "tp": -8.0,
+   "rms": -25.08,
+   "centroidHz": 2540.2,
+   "bandLt500": 0.0165,
+   "band2500_5500": 0.4968,
+   "band3000_8000": 0.2986,
+   "prominence400_2000": 468.3
+  },
+  "SFX/WORLD/step_grass v03": {
+   "lufs": null,
+   "tp": -9.17,
+   "rms": -25.0,
+   "centroidHz": 2867.6,
+   "bandLt500": 0.0072,
+   "band2500_5500": 0.6411,
+   "band3000_8000": 0.4186,
+   "prominence400_2000": 4847.2
+  }
+ },
+ "measurementNotes": [
+  "Baseline RMS is measured from a true mono decode (-ac 1): ffmpeg's mono->stereo upmix scales each channel by 0.707, so a -ac 2 decode under-reads a mono file by 3.01 dB. Grass RMS is the mono-fold (mean of channels) of a true stereo master -- the comparable figure for a cue played centred under an equal-power pan law.",
+  "Guard-vs-parry LUFS comparison is conservative: a stereo render measures ~+3 LU over the same mono content (BS.1770 channel sum), so the real gap between the stereo guard drafts and the mono metal_parry is wider than the headline LUFS numbers show.",
+  "Grass tonal prominence (400-2000 Hz) is recorded, not asserted: the cue's energy sits above 1800 Hz, so the median in 400-2000 Hz is near the noise floor and the ratio is not a tonality claim."
+ ],
+ "checks": [
+  {
+   "name": "manifest parses",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "decision id",
+   "pass": true,
+   "detail": "DEC-MEDIA-SFX-DRAFT-20261112"
+  },
+  {
+   "name": "approval ref names PR131/e4b3e4b",
+   "pass": true,
+   "detail": "Implementation/Content/DesignBaselines/media_sfx_draft_execution_20261112.json @ e4b3e4b (PR #131, Codex Gói 39, issue #116 comment 6815238814, 2026-11-12); approval is DRAFT production of 18 variants, not runtime adoption"
+  },
+  {
+   "name": "status DRAFT / NOT_AUDITIONED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "runtime not ingested, count 783",
+   "pass": true,
+   "detail": "{'ingested': False, 'runtimeAudioCountUnchanged': 783, 'note': 'SOURCE ONLY: no runtime file was written and no runtime manifest was touched. Runtime ingest is a Codex review decision (Gói 39 M39-C).'}"
+  },
+  {
+   "name": "counts 2 cues / 6 variants",
+   "pass": true,
+   "detail": "{'cues': 2, 'variants': 6}"
+  },
+  {
+   "name": "cue keys",
+   "pass": true,
+   "detail": "['SFX/COMBAT/guard_expire', 'SFX/WORLD/step_grass']"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/WORLD/step_grass provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline file exists metal_parry_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v01",
+   "pass": true,
+   "detail": "f039557ea520"
+  },
+  {
+   "name": "baseline file exists metal_parry_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v02",
+   "pass": true,
+   "detail": "8d3c9e3ffca8"
+  },
+  {
+   "name": "baseline file exists metal_parry_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v03",
+   "pass": true,
+   "detail": "2b0790322861"
+  },
+  {
+   "name": "baseline metal_parry RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "baseline file exists basic_blade_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v01",
+   "pass": true,
+   "detail": "f52294705081"
+  },
+  {
+   "name": "baseline file exists basic_blade_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v02",
+   "pass": true,
+   "detail": "ff7cb8e005e5"
+  },
+  {
+   "name": "baseline file exists basic_blade_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v03",
+   "pass": true,
+   "detail": "fdd2e9284084"
+  },
+  {
+   "name": "baseline basic_blade RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.18"
+  },
+  {
+   "name": "baseline file exists step_stone_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_stone_v01",
+   "pass": true,
+   "detail": "66320ed3807c"
+  },
+  {
+   "name": "baseline file exists step_stone_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_stone_v02",
+   "pass": true,
+   "detail": "d4c7d8c0a54f"
+  },
+  {
+   "name": "baseline file exists step_stone_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_stone_v03",
+   "pass": true,
+   "detail": "5b5e8b8a13bc"
+  },
+  {
+   "name": "baseline step_stone RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "baseline file exists step_wood_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_wood_v01",
+   "pass": true,
+   "detail": "7cefeb9b6e99"
+  },
+  {
+   "name": "baseline file exists step_wood_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_wood_v02",
+   "pass": true,
+   "detail": "dc725d375487"
+  },
+  {
+   "name": "baseline file exists step_wood_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_wood_v03",
+   "pass": true,
+   "detail": "a6e7e08ff584"
+  },
+  {
+   "name": "baseline step_wood RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "baseline file exists step_mud_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_mud_v01",
+   "pass": true,
+   "detail": "eeb83a8ed5e7"
+  },
+  {
+   "name": "baseline file exists step_mud_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_mud_v02",
+   "pass": true,
+   "detail": "83c46fe75a68"
+  },
+  {
+   "name": "baseline file exists step_mud_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack step_mud_v03",
+   "pass": true,
+   "detail": "7b46389cb4f6"
+  },
+  {
+   "name": "baseline step_mud RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 duration 0.50s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 LUFS -27.5 +/- 1.0",
+   "pass": true,
+   "detail": "-28.03"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 manifest LUFS matches",
+   "pass": true,
+   "detail": "-28.03"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 TP <= -9 dBTP",
+   "pass": true,
+   "detail": "-10.0"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 centroid 1000-1600 Hz",
+   "pass": true,
+   "detail": "1151.3"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 prominence < 200 (broadband, not a metallic ring)",
+   "pass": true,
+   "detail": "25.3"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 3-8k band < 0.10",
+   "pass": true,
+   "detail": "0.0001"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v01 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1151.3, 'bandEnergyLt500Hz': 0.0508, 'bandEnergy2500_5500Hz': 0.0003, 'bandEnergy3000_8000Hz': 0.0001, 'tonalProminence400_2000Hz': 25.3, 'tailEnergyFractionAfter030s': 0.004}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 duration 0.50s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 LUFS -27.5 +/- 1.0",
+   "pass": true,
+   "detail": "-27.5"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 manifest LUFS matches",
+   "pass": true,
+   "detail": "-27.5"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 TP <= -9 dBTP",
+   "pass": true,
+   "detail": "-10.81"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 centroid 1000-1600 Hz",
+   "pass": true,
+   "detail": "1070.4"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 prominence < 200 (broadband, not a metallic ring)",
+   "pass": true,
+   "detail": "45.4"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 3-8k band < 0.10",
+   "pass": true,
+   "detail": "0.0"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v02 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1070.4, 'bandEnergyLt500Hz': 0.0271, 'bandEnergy2500_5500Hz': 0.0002, 'bandEnergy3000_8000Hz': 0.0, 'tonalProminence400_2000Hz': 45.4, 'tailEnergyFractionAfter030s': 0.0097}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 duration 0.50s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 LUFS -27.5 +/- 1.0",
+   "pass": true,
+   "detail": "-27.76"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 manifest LUFS matches",
+   "pass": true,
+   "detail": "-27.76"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 TP <= -9 dBTP",
+   "pass": true,
+   "detail": "-10.0"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 centroid 1000-1600 Hz",
+   "pass": true,
+   "detail": "1173.1"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 prominence < 200 (broadband, not a metallic ring)",
+   "pass": true,
+   "detail": "14.3"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 3-8k band < 0.10",
+   "pass": true,
+   "detail": "0.0002"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire v03 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1173.1, 'bandEnergyLt500Hz': 0.1235, 'bandEnergy2500_5500Hz': 0.0013, 'bandEnergy3000_8000Hz': 0.0002, 'tonalProminence400_2000Hz': 14.3, 'tailEnergyFractionAfter030s': 0.0012}"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.2328"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.1478"
+  },
+  {
+   "name": "SFX/COMBAT/guard_expire diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.1525"
+  },
+  {
+   "name": "SFX/WORLD/step_grass has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 real WAV bytes",
+   "pass": true,
+   "detail": "60582"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 10080, 'duration': '0.210000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.210000', 'size': '60582', 'bit_rate': '2307885', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 duration 0.21s",
+   "pass": true,
+   "detail": "0.21"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 LUFS unmeasurable (short clip, CP08 note)",
+   "pass": true,
+   "detail": "None"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-8.86"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 RMS -25.0 +/- 0.75 dBFS",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 manifest RMS matches",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 centroid 1800-3000 Hz",
+   "pass": true,
+   "detail": "2809.5"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v01 2.5-5.5k band >= 0.35",
+   "pass": true,
+   "detail": "0.6333"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 real WAV bytes",
+   "pass": true,
+   "detail": "60582"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 10080, 'duration': '0.210000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.210000', 'size': '60582', 'bit_rate': '2307885', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 duration 0.21s",
+   "pass": true,
+   "detail": "0.21"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 LUFS unmeasurable (short clip, CP08 note)",
+   "pass": true,
+   "detail": "None"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-8.0"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 RMS -25.0 +/- 0.75 dBFS",
+   "pass": true,
+   "detail": "-25.08"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 manifest RMS matches",
+   "pass": true,
+   "detail": "-25.08"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 centroid 1800-3000 Hz",
+   "pass": true,
+   "detail": "2540.2"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v02 2.5-5.5k band >= 0.35",
+   "pass": true,
+   "detail": "0.4968"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 real WAV bytes",
+   "pass": true,
+   "detail": "60582"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 10080, 'duration': '0.210000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.210000', 'size': '60582', 'bit_rate': '2307885', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 duration 0.21s",
+   "pass": true,
+   "detail": "0.21"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 LUFS unmeasurable (short clip, CP08 note)",
+   "pass": true,
+   "detail": "None"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.17"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 RMS -25.0 +/- 0.75 dBFS",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 manifest RMS matches",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 centroid 1800-3000 Hz",
+   "pass": true,
+   "detail": "2867.6"
+  },
+  {
+   "name": "SFX/WORLD/step_grass v03 2.5-5.5k band >= 0.35",
+   "pass": true,
+   "detail": "0.6411"
+  },
+  {
+   "name": "SFX/WORLD/step_grass diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.4163"
+  },
+  {
+   "name": "SFX/WORLD/step_grass diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.4259"
+  },
+  {
+   "name": "SFX/WORLD/step_grass diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.3926"
+  },
+  {
+   "name": "guard v01 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1151.3"
+  },
+  {
+   "name": "guard v01 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "25.3"
+  },
+  {
+   "name": "guard v01 >=2 LU quieter than parry (-24.18 LUFS)",
+   "pass": true,
+   "detail": "-28.03"
+  },
+  {
+   "name": "guard v01 centroid >=1000 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1151.3"
+  },
+  {
+   "name": "grass v01 centroid >=400 Hz from step_stone (1258.2 Hz)",
+   "pass": true,
+   "detail": "2809.5"
+  },
+  {
+   "name": "grass v01 2.5-5.5k band >= stone + 0.10 (0.19)",
+   "pass": true,
+   "detail": "0.6333"
+  },
+  {
+   "name": "grass v01 centroid >=400 Hz from step_wood (503.53 Hz)",
+   "pass": true,
+   "detail": "2809.5"
+  },
+  {
+   "name": "grass v01 2.5-5.5k band >= wood + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.6333"
+  },
+  {
+   "name": "grass v01 centroid >=400 Hz from step_mud (497.47 Hz)",
+   "pass": true,
+   "detail": "2809.5"
+  },
+  {
+   "name": "grass v01 2.5-5.5k band >= mud + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.6333"
+  },
+  {
+   "name": "guard v02 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1070.4"
+  },
+  {
+   "name": "guard v02 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "45.4"
+  },
+  {
+   "name": "guard v02 >=2 LU quieter than parry (-24.18 LUFS)",
+   "pass": true,
+   "detail": "-27.5"
+  },
+  {
+   "name": "guard v02 centroid >=1000 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1070.4"
+  },
+  {
+   "name": "grass v02 centroid >=400 Hz from step_stone (1258.2 Hz)",
+   "pass": true,
+   "detail": "2540.2"
+  },
+  {
+   "name": "grass v02 2.5-5.5k band >= stone + 0.10 (0.19)",
+   "pass": true,
+   "detail": "0.4968"
+  },
+  {
+   "name": "grass v02 centroid >=400 Hz from step_wood (503.53 Hz)",
+   "pass": true,
+   "detail": "2540.2"
+  },
+  {
+   "name": "grass v02 2.5-5.5k band >= wood + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.4968"
+  },
+  {
+   "name": "grass v02 centroid >=400 Hz from step_mud (497.47 Hz)",
+   "pass": true,
+   "detail": "2540.2"
+  },
+  {
+   "name": "grass v02 2.5-5.5k band >= mud + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.4968"
+  },
+  {
+   "name": "guard v03 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1173.1"
+  },
+  {
+   "name": "guard v03 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "14.3"
+  },
+  {
+   "name": "guard v03 >=2 LU quieter than parry (-24.18 LUFS)",
+   "pass": true,
+   "detail": "-27.76"
+  },
+  {
+   "name": "guard v03 centroid >=1000 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1173.1"
+  },
+  {
+   "name": "grass v03 centroid >=400 Hz from step_stone (1258.2 Hz)",
+   "pass": true,
+   "detail": "2867.6"
+  },
+  {
+   "name": "grass v03 2.5-5.5k band >= stone + 0.10 (0.19)",
+   "pass": true,
+   "detail": "0.6411"
+  },
+  {
+   "name": "grass v03 centroid >=400 Hz from step_wood (503.53 Hz)",
+   "pass": true,
+   "detail": "2867.6"
+  },
+  {
+   "name": "grass v03 2.5-5.5k band >= wood + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.6411"
+  },
+  {
+   "name": "grass v03 centroid >=400 Hz from step_mud (497.47 Hz)",
+   "pass": true,
+   "detail": "2867.6"
+  },
+  {
+   "name": "grass v03 2.5-5.5k band >= mud + 0.10 (0.07)",
+   "pass": true,
+   "detail": "0.6411"
+  },
+  {
+   "name": "playlist is M3U text",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist says NOT_AUDITIONED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists 10 files (6 drafts + 4 baselines)",
+   "pass": true,
+   "detail": "10"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/world/step_stone_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/world/step_stone_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/world/step_wood_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/world/step_wood_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/world/step_mud_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/world/step_mud_v01.wav"
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "runtime tree untouched (git status ClientGodot/ empty)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "checkpoint paths in scope (0 violations)",
+   "pass": true,
+   "detail": "[]"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "checker": "check_fresh_delta_mg_cp9_v1",
+  "checkpoint": "MEDIA-02 WO37 M-G CP9",
+  "base": "7f461da15e8071bccde548ff998093c429f10541",
+  "head": "be9ccb8af8fea2ae5632952cc2b94ad4148d40fa",
+  "checksTotal": 126,
+  "checksPassed": 126,
+  "failures": [],
+  "status": "PASS",
+  "notes": {
+    "delta_files": 40,
+    "cumulative_head": 2375,
+    "cumulative_content_962b6df": 2373,
+    "cp4_set_bytes": 148002469,
+    "fixed_mix_lufs": -22.37,
+    "fixed_mix_tp": -3.11,
+    "worst_fixed_corr": 0.975,
+    "worst_broken_corr": 0.02,
+    "lfs_tracked": 2832,
+    "lfs_oids": 2135,
+    "cp4_rerun": "270/271"
+  }
+}

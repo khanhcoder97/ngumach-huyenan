@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 40 - CIN_008 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "abcf254",
+  "sceneId": "CIN_008",
+  "title": "Bàn tay đã ký",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_008_S01": "push-in centered",
+      "CIN_008_S02": "push-in centered",
+      "CIN_008_S03": "push-in centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+      "sha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee",
+      "sizeBytes": 1406373,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN_008_mix_draft_v1.wav",
+        "sourceMixSha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+        "mixVersion": "v1_cin008_proposed",
+        "integratedLUFS": "-24.58",
+        "truePeakDBTP": "-1.53",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
+      "sha256": "6b91357c270bb212c4d2909bf83c9a114a6adec1c7dce2dba97bee0c77d62478",
+      "sizeBytes": 735239,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 509,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN_008_mix_draft_v1.wav",
+        "sourceMixSha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+        "mixVersion": "v1_cin008_proposed",
+        "integratedLUFS": "-24.61",
+        "truePeakDBTP": "-1.85",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 509
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_008/CIN_008_poster.png",
+      "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+      "sizeBytes": 282993,
+      "sourceKeyframe": "keyframe_CIN_008_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_008/CIN_008_timing_v1.json",
+      "sha256": "3a8e90942678e78ad5614cbb5798b179ae91079382769f4e683d5cfef729a754",
+      "sizeBytes": 2380
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_008/CIN_008_vi.srt",
+      "sha256": "8f223c20a6dd532a6dbee3d32617b4bd403ae69bebddb6061d7f07f634cd86aa",
+      "sizeBytes": 92,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_008_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 2.979,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 23.454,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 18.041,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_008_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 2.977,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 20.926,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 18.012,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_008_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 3.668,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 32.029,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 26.891,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_008_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEMORY_DETAIL",
+      "keyframe": "keyframe_CIN_008_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_008_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "MEMORY_WIDE",
+      "keyframe": "keyframe_CIN_008_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_008_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_008_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_008 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (Ta Van Khanh, CIN_008_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 3.552 s at natural speed (windowFit FITS, not sped up).",
+    "Checkpoint 32 (Goi 31 item 2) revises S03: the bandage now wraps the LEFT forearm (outer side, away from the pool); the bandaged hand holds nothing. S01/S02 unchanged from checkpoint 25."
+  ],
+  "hasAudioTrack": true
+}

@@ -1,0 +1,557 @@
+{
+ "packId": "NGM_MUSIC_COMPOSED_V1",
+ "checkpoint": "MEDIA-02 checkpoint 26 - original composed music + cinema stingers (Goi 30 item 7)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: melodies, harmony and arrangements authored as data in Tools/MediaProduction/Muse/build_composed_music.py and rendered by procedural synthesis. No external samples, no ported bytes. These 13 cues are NEW audio and are counted separately from the 541 ported PackV1 files of checkpoints 07/08, which keep their own provenance and are untouched.",
+ "counts": {
+  "music": 9,
+  "cinemaStingers": 4,
+  "total": 13
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/ben_mua",
+   "nameVi": "Bến Mưa · câu nhạc bỏ lửng",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 72,
+    "bars": 17,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Theme statement: flute states the question phrase twice with a pluck echo an octave down; fragments; final bar leaves the hanging E over the tonic pad, so the loop itself never resolves.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/ben_mua.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 16320102,
+    "sha256": "3f8bceb6a7850ddf222779b6304d8c58625d91038969a089c61f0a795e034c68",
+    "integratedLufs": -21.98,
+    "truePeakDbtp": -10.43
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 56.6667,
+    "sizeBytes": 491473,
+    "sha256": "2fd558ec7de84b5bd7099afb6cee12f49624f60330168e08c8abd3e2dca097db",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -10.33
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.100143,
+    "tailRms": 0.01509,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.138464,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/thang_long",
+   "nameVi": "Thăng Long · phố và dòng nước",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Street arrangement of the theme: bell on every bar line, pluck arpeggios, shaker; the hanging phrase is answered casually by the tail in low pluck at bars 10-11.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/thang_long.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 12020970,
+    "sha256": "9c8f6f7f479c58e4f54ae606001be99c7d72819c44a00e73970494aabe9af2b5",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -10.68
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 550827,
+    "sha256": "8df21008d70a9e372656b1eb5edd11099079cdeb67fa19ccac826104768ea468",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -10.55
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.095547,
+    "tailRms": 0.015642,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.14585,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot",
+   "nameVi": "Mãng Cốt · áp lực dòng",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "D minor transformation: motif reduced to a minor head fragment in low pluck over a heartbeat drum and D1 drone; one foreign F# bell at bar 8; the tail never comes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/boss_mang_cot.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "5b2e80f2bfa7d6a5f41504bbd60a30643e933a526348f10c166a12ea9dc253d1",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -7.46
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 225999,
+    "sha256": "2762bc371f34ef46727002e1a4f0a963d0930b98f6b9437b1f9a185f65e116d1",
+    "integratedLufs": -21.98,
+    "truePeakDbtp": -7.35
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.086253,
+    "tailRms": 0.007459,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.039379,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery",
+   "nameVi": "Khoảng lặng khám phá",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Exploration silence per the direction doc: solo flute fragments and single bells separated by long near-silences, water drops; the second half of the question is heard once, still hanging.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/quiet_discovery.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 18432102,
+    "sha256": "1c03fb000d8219d9c9fc7bebca7dcadb404781d7e95550b497f56bf05daa08d8",
+    "integratedLufs": -21.87,
+    "truePeakDbtp": -13.15
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 370729,
+    "sha256": "3499555be5bbd30fe3bbee42ba092d3cb347a62e8501d1c129185a413066e2d3",
+    "integratedLufs": -21.72,
+    "truePeakDbtp": -13.09
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.070985,
+    "tailRms": 0.013994,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.064427,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu",
+   "nameVi": "Lâm Triều — Rừng nhớ tên",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Theme transposed to G major pentatonic; an ornamented flute restatement with neighbor-note pickups; leaf-tick shaker and sparse drops under a G/C/Em pad cycle.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/lam_trieu.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 15360102,
+    "sha256": "1438471e24c27a613cdcd9e333a6ed505ae6d95ec17fa17f00edbe332667488c",
+    "integratedLufs": -21.99,
+    "truePeakDbtp": -10.99
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/lam_trieu.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 53.3333,
+    "sizeBytes": 408105,
+    "sha256": "2684e3d094c28060e6bdbc1274b1dfcdc05e5eec7c0bfe236e788dfb8a426a1e",
+    "integratedLufs": -21.93,
+    "truePeakDbtp": -10.98
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.080374,
+    "tailRms": 0.005785,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.043153,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa",
+   "nameVi": "Sa Hỏa — Lò và cát",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 110,
+    "bars": 20,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Theme mapped to A minor pentatonic, dry bright plucks, pad only on even bars, syncopated restatement (offset +0.5 beat), drum and shaker kept dry and sparse.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/sa_hoa.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 12567372,
+    "sha256": "3167a62680c9c7b5e93b3e3f61a25d69cbfd35a440b723743af57ee520491768",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -8.63
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 43.6364,
+    "sizeBytes": 316877,
+    "sha256": "7934d01c93b460854900fded9cb29c75f28e77c730ef38eae446d1c2d407a402",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -8.58
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.126109,
+    "tailRms": 0.0014,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.005716,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son",
+   "nameVi": "Trấn Sơn — Người qua cửa",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Bell-led stately form: the bell states the motif, a low flute answers, a drum marks every bar line; the final bar leaves a soft hanging E under the gate bell.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/tran_son.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "754607df88b17b19d6d4cb9adacfa0820e24c177e8c1e993c06fdc33933b1f52",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -8.36
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/tran_son.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 279754,
+    "sha256": "6b53bae4acef0ac7000069b2376d4d8f125f212d325bf037c94835785836fe78",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -8.32
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.130858,
+    "tailRms": 0.084108,
+    "wrapJump": 2.1e-05,
+    "wrapJumpRaw": 0.404087,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen",
+   "nameVi": "Bạch Uyên — Thành dưới triều",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Theme underwater: motif an octave down at half density over Bm/Em pads, whole mix low-passed at 850 Hz, slow bell marks and deep drops.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/bach_uyen.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 16722684,
+    "sha256": "7789389bc221f2afe122b2ee9b9794fb4915c9e753dacb9ab5518c8c8f7681b7",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -10.74
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 293003,
+    "sha256": "9497cb062d19e136d377dcd49614f4ce354d9a69ca1867ad9aff3531628fd64f",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -10.77
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.127217,
+    "tailRms": 0.052292,
+    "wrapJump": 1.3e-05,
+    "wrapJumpRaw": 0.295172,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale",
+   "nameVi": "Ngũ Mạch — Năm dòng cùng chảy",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Five streams: the motif head rises through five registers (low pluck, mid pluck, flute, bell), full question at bars 11-12, then the withheld tail is played and the set's only full D-major close lands at bar 15.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/rift_finale.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 11059302,
+    "sha256": "c1df18353355e31fea72118b6e431ca105eb19e4974df745452bb73f4e245d1f",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -10.16
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/rift_finale.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 292096,
+    "sha256": "5821084dd017558ac3751f000b3fcee1ba12e32b827d46618795b0075965f436",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -9.91
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.10423,
+    "tailRms": 0.011743,
+    "wrapJump": 3e-06,
+    "wrapJumpRaw": 0.091384,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "SFX/CINEMA/reveal",
+   "nameVi": "Vén một điều lạ",
+   "kind": "CINEMA_STINGER",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "motif": "derived from the Ben Mua leitmotif (see pack notes)",
+    "rendering": "procedural synthesis, authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/cinema/reveal.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 864102,
+    "sha256": "f256226df0927fcb1f1849b2448e904893739bd2a8b7d714e1ebdc0b55186ece",
+    "integratedLufs": -24.99,
+    "truePeakDbtp": -15.62
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 34817,
+    "sha256": "8e02d990c58ecbc8c7603177ac15fd80a931ddec6130fb5a3fd70bb922684091",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -15.5
+   }
+  },
+  {
+   "cueKey": "SFX/CINEMA/tension",
+   "nameVi": "Mạch chưa khép",
+   "kind": "CINEMA_STINGER",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "motif": "derived from the Ben Mua leitmotif (see pack notes)",
+    "rendering": "procedural synthesis, authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/cinema/tension.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 864102,
+    "sha256": "63564bd645e52bbf99f8282d837cc376b9673bbdb0e69f8796143c47c00c9338",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -16.78
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/cinema/tension.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 33412,
+    "sha256": "ebb976e0a01065224f7f3b7b8fb302b39b22d48b1f79dcf881850957fe22423f",
+    "integratedLufs": -24.93,
+    "truePeakDbtp": -17.04
+   }
+  },
+  {
+   "cueKey": "SFX/CINEMA/resolve",
+   "nameVi": "Điều đã đối chiếu",
+   "kind": "CINEMA_STINGER",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "motif": "derived from the Ben Mua leitmotif (see pack notes)",
+    "rendering": "procedural synthesis, authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/cinema/resolve.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 864102,
+    "sha256": "aa50d05e553556f23a119da8c0854fa8c0659811436954d9e4aec356adf55c4c",
+    "integratedLufs": -24.99,
+    "truePeakDbtp": -18.47
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/cinema/resolve.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 38323,
+    "sha256": "6c0040f357185a4b94fa6826224d4481c43ac5dcdc175f43df693a04d08c7660",
+    "integratedLufs": -24.93,
+    "truePeakDbtp": -18.3
+   }
+  },
+  {
+   "cueKey": "SFX/CINEMA/transition",
+   "nameVi": "Qua một miền nước",
+   "kind": "CINEMA_STINGER",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "motif": "derived from the Ben Mua leitmotif (see pack notes)",
+    "rendering": "procedural synthesis, authored in build_composed_music.py; no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/cinema/transition.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 864102,
+    "sha256": "46de34297edec72a12c797132e5a68a617bd27c50622b893b7f5f53f80128d03",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -16.11
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/cinema/transition.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 3.0,
+    "sizeBytes": 48230,
+    "sha256": "bea1975fcedbc243c782dc54c986673922c6c65e5fe6f589defff5c0fb4334fe",
+    "integratedLufs": -24.97,
+    "truePeakDbtp": -16.16
+   }
+  }
+ ],
+ "notes": [
+  "Adoption is a presentation-adapter decision (Codex): the composed cues are delivered in parallel under ClientGodot/assets/audio/composed/ and do NOT replace the ported PackV1 files or their cue bindings.",
+  "Music cues loop by construction (1.5 s tail wrap); the seam block records the checkpoint-07 indicator, not a seamlessness PASS. No ear audition has been done; loudness/true-peak are measured from real bytes.",
+  "The composition concept follows the audio direction doc: Ben Mua's theme is a phrase left hanging ('cau nhac bo lung'); the answering tail is withheld everywhere except the resolve stinger and rift_finale."
+ ]
+}

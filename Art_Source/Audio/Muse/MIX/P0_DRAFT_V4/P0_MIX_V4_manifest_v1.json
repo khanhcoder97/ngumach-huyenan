@@ -1,0 +1,218 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - P0 draft mix v4: CIN_002 palette re-mix only (Ta Van Khanh pickup); CIN_001/CIN_004 not rebuilt, their v3 mixes stand",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (CIN_002 mix v4, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact P0 v3 recipe (fully composed stems, same gain targets, ducking params, peak guard, loop joins); the ONLY change vs v3 is the VO take -- Ta Van Khanh is now the M-F CP1 palette pickup (VO_CIN002_S02_TAVANKHANH_palette_v1.wav; Polished Coin (fictional system voice), avocado_v2:conor) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (7.0-10.312 s inside 7.0-11.0 s, slack 0.688 s), measured from the real pickup bytes. CIN_001 / CIN_004 were NOT rebuilt: their lines are Ly An's and v3 stands. NOT a mix PASS: no ear audition; adoption is Codex's adapter decision. The runtime still embeds the v3 mix (candidate B picture + v3 audio).",
+  "mixVersion": "v4_palette_cin002",
+  "supersedes": "For CIN_002 only: supersedes the v3 CIN_002 mix as the current palette candidate. The CIN_001 and CIN_004 v3 mixes are NOT superseded -- they are not rebuilt here because Ly An has no palette pickup.",
+  "v1MixUntouched": "The checkpoint-20 v1 mixes, the checkpoint-29 v2 mixes and the checkpoint-31 v3 mixes (Art_Source and runtime copies) are byte-identical to before; v4 adds MIX/P0_DRAFT_V4/ with the CIN_002 palette re-mix only. The runtime is NOT modified by M-F CP2.",
+  "substitutionTable": {
+    "MUSIC/quiet_discovery": {
+      "v2": "composed quiet_discovery.ogg (-21.72 LUFS, CP26)",
+      "v3": "UNCHANGED from v2"
+    },
+    "MUSIC/boss_mang_cot": {
+      "v2": "composed boss_mang_cot.ogg (-21.98 LUFS, CP26)",
+      "v3": "UNCHANGED from v2"
+    },
+    "SFX/CINEMA/reveal": {
+      "v2": "composed reveal.ogg (-24.96 LUFS, CP26, stereo)",
+      "v3": "UNCHANGED from v2"
+    },
+    "SFX/CINEMA/tension": {
+      "v2": "composed tension.ogg (-24.93 LUFS, CP26, stereo)",
+      "v3": "UNCHANGED from v2"
+    },
+    "AMBIENCE/rain_light": {
+      "v2": "ported PackV1 rain_light.ogg (-27.48 LUFS)",
+      "v3": "composed rain_light.ogg (-27.80 LUFS, CP30)"
+    },
+    "AMBIENCE/river_shore": {
+      "v2": "ported PackV1 river_shore.ogg (-29.53 LUFS)",
+      "v3": "composed river_shore.ogg (-29.69 LUFS, CP30)"
+    },
+    "AMBIENCE/underwater": {
+      "v2": "ported PackV1 underwater.ogg (-33.02 LUFS)",
+      "v3": "composed underwater.ogg (-33.11 LUFS, CP30)"
+    }
+  },
+  "stemTableSource": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_02_P0_STEMS_20261105.json (per-shot table, PROPOSED_CANDIDATE)",
+  "stemBytes": "Runtime stem copies in ClientGodot/assets/audio/ (the delivered runtime bytes), not the FLAC masters.",
+  "gainStaging": {
+    "vo": "unity (anchor; takes as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "ambienceSecondaryTargetLUFS": -38.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "Gains are formula targets from CP02 integrated-LUFS measurements; loudness inside a stem segment varies, so the realised balance is a draft balance, verified only by the whole-scene measurements in this manifest.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS in the first 2 s of the VO window vs a 2 s reference before the window).",
+    "Ambience loop joins use 1 s acrossfades; loopQA reports the max sample jump at each join against the bed's own 99.9th-percentile jump (ratio near or below ~2 reads as no click; an ear check is still outstanding).",
+    "When a scene has two ambience beds they are summed on a sub-bus that carries the standard 0.3 s scene-edge fades before the final mix; inaudible at bed levels, recorded here for honesty.",
+    "ben_mua and rain_heavy stay unassigned in P0, as in CP02; resolve/transition stingers are inter-scene and unused.",
+    "v3 changes ONLY the ambience stem bytes (composed instead of ported); music, stingers, VO takes, placements, gain targets, ducking params and peak guard are identical to v2, so any loudness/balance delta between v2 and v3 is attributable to the ambience swap alone.",
+    "Composed stingers are stereo OGGs: placed without the mono-to-stereo pan the v1 ported mono WAV stingers needed.",
+    "Composed ambience beds are the checkpoint-30 masters (16.0 s, 0.25 s end-landing loop construction); the P0 mixer still extends them with its own 1 s acrossfade joins, as for the ported beds in v1/v2 -- loop QA in this manifest is measured on the mixer output, not the cue seam.",
+    "VO windows: CIN_001 DECIDED 24.8-28.5 s; CIN_002 and CIN_004 PROPOSED (D1 draft approval only)."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_002",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN002_S02_TAVANKHANH_palette_v1.wav",
+        "windowSeconds": [
+          7.0,
+          10.312
+        ],
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "cp02MeasuredLUFS": -29.69,
+          "gainDb": -6.31,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            6.0
+          ],
+          "targetLUFS": -38.0,
+          "cp02MeasuredLUFS": -33.11,
+          "gainDb": -4.89,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/tension",
+          "source": "ClientGodot/assets/audio/composed/cinema/tension.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "cp02MeasuredLUFS": -24.93,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "ambience",
+            "windowSeconds": [
+              7.0,
+              10.312
+            ],
+            "referenceSeconds": [
+              4.5,
+              6.5
+            ],
+            "depthInWindowDb": -5.05,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/tension",
+        "source": "ClientGodot/assets/audio/composed/cinema/tension.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "cp02MeasuredLUFS": -24.93,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": []
+        }
+      ],
+      "mix": {
+        "file": "CIN_002_mix_draft_v4.wav",
+        "sha256": "27d4259f4a458dab8340aa6e7e6a2d2cf9cf353160706ebd6e6de270dbfee2f0",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-26.28",
+        "truePeakDBTP": "-2.93",
+        "loudnessRangeLU": "16.10",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN002_S02",
+        "shotId": "CIN_002_S02",
+        "role": "NPC_TA_VAN_KHANH",
+        "speakerDisplay": "Tạ Vân Khanh",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:conor",
+        "paletteVoiceLabel": "Polished Coin (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN002_S02_TAVANKHANH_palette_v1.wav",
+        "paletteTakeSha256": "dd57e95704aaa76994a4f970e10a74e280e368c770bc075b6b216dd6b6d12002",
+        "paletteTakeDurationSeconds": 3.312,
+        "windowSeconds": [
+          7.0,
+          11.0
+        ],
+        "takeStartSeconds": 7.0,
+        "takeEndSeconds": 10.312,
+        "slackSeconds": 0.688,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

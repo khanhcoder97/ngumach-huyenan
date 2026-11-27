@@ -1,0 +1,58 @@
+# MEDIA-02 — PR #119 Body Restructure R274 (2026-11-27)
+
+## Tóm tắt
+
+- Khối: body restructure R274 — gọn ĐƠN R181 (gọn đơn thứ MƯỜI BỐN; gọn đơn bắt đầu ở R168); index + body v2 + checker đồng bộ tới head `a7c0ae5` (737 commit / 3214 file / +383574 từ merge-base `cf17178`); merge-tree tại `a7c0ae5` vs integration `f3db6b3` exit 0, tree `54400889…`.
+- SỰ KIỆN ĐĂNG GIỮA HAI VÒNG: không có — payload R273 CHƯA ĐĂNG, live body vẫn R263 (94.825 ký tự, sha `07316552`); payload R273 sẵn sàng trình từ vòng trước, bị R274 supersede trước khi đăng.
+- Vòng này chạy MỘT PHA (~06:41–07:03 JST): fetch ~06:41 JST, đọc live, áp edit index + body v2, dựng chuỗi checker tới `check_pr119_restructure_r274_v1.py` + fill SHA-hits, checker chạy sạch **PASS 155/155** ngay lần đầu, scope audit block **3 path / 0 violation**, commit nội dung `56926f3` + push (ls-remote xác minh), đọc live post-push (2 lần), viết báo cáo này + payload R274.
+- Đọc live post-push (~07:01 + ~07:02 JST, connector, 2 lần): PR head `56926f3`, 738 commit / 3215 file / +384979 — khớp đếm git tại commit nội dung; mergeable **null / state unstable** tại head mới (CI đang chạy — cả 2 lần đọc); live body vẫn R263 (94.825 ký tự, sha `07316552`, 0 U+FFFD), tiêu đề kết thúc "+ R263", updated_at 2026-11-26T22:00:58Z (đổi do push R274 cập nhật head, body không đổi). Issue #116: **34 comment**, updated_at 2026-11-13T19:24:49Z, mới nhất ACK `6862732081`, **không chỉ đạo mới kể từ Gói 39 (`6815238814`)**.
+- Body v2: **94.657 ký tự** (net +133 so với R273), headroom **10.343** so với 105.000; head line 1.228 ký tự (không đổi — lần thứ tám liên tiếp); R181 gọn 415 → 214 (gọn đơn thứ mười bốn); đoạn R273 đúng 270 ký tự (theo checker).
+- Commit nội dung `56926f3` (~07:00 JST): 3 file, 1416 insertions, 11 deletions; scope audit block (`a7c0ae5..56926f3`) **3 path / 0 violation**; cumulative tại `56926f3` = 3215 path / 1 violation — artifact `.gitattributes` ở merge-base đã biết.
+- Payload R274 chuẩn bị sau push (dựng từ body v2 + đoạn Head làm tươi theo head sau push): body 94.550 ký tự, sha `c241a8ef` (xem mục Payload), **SẴN SÀNG TRÌNH** — lượt chạy bắt đầu ~06:40 JST, kết thúc ~07:03 JST trong giờ làm việc; chưa đăng — cần thẻ duyệt của chủ dự án. Lưu ý: mergeable_state trong payload là **unstable** (CI đang chạy lúc đọc post-push) — luồng chính làm tươi Head lúc trình nếu CI đã xong (bài học 39).
+
+## Đọc live
+
+- Lượt này, đọc trước push (connector): live body R263 (94.825 ký tự, sha `07316552`, byte-exact với file JSON R263 trên đĩa, 0 U+FFFD — một lần đọc sạch, không cần đọc lại); mergeable_state clean tại `a7c0ae5` (mergeable không có trong trả lời — khóa vắng, như ở R272/R273; state clean là giá trị vận hành); tiêu đề kết thúc "+ R263"; updated_at 2026-11-26T21:00:14Z. Issue read: connector (call-read-tool, method get, `issue_number`, ~06:42 JST): 34 comment, updated_at 2026-11-13T19:24:49Z — không chỉ đạo mới. Không thử call-tool get_comments lượt này (count + updated_at không đổi so với lần get_comments đã xác minh ở R265).
+- Sau push (~07:01 JST + ~07:02 JST, connector, 2 lần đọc): API — head `56926f3`, 738/3215, mergeable null, mergeable_state **unstable** (CI đang chạy), live body R263 (94.825 ký tự, sha `07316552`, 0 U+FFFD), tiêu đề 765 ký tự kết thúc "+ R263", updated_at 2026-11-26T22:00:58Z; issue #116 không đọc lại sau push (ghi rõ trong head line của payload).
+- Suy ra từ git tại `56926f3`: rev-list `cf17178..56926f3` = 738; diff `--name-only` = 3215 file; `--shortstat` = 384979 insertions, 0 deletions — khớp đọc API; merge-tree `56926f3` vs `f3db6b3` exit 0, tree `5cd04dac…`; tại `a7c0ae5`: 737/3214/+383574 (khớp dòng cumulative của index R274).
+- PR read base.sha `f3832338` là stale cache (ancestor của tip integration `f3db6b3` — merge PR #118 ngày 2026-11-05); ls-remote xác minh tip integration vẫn `f3db6b3`, không đổi; merge-tree chạy với `f3db6b3` như mọi vòng.
+
+## Mốc giờ
+
+- Fetch lượt này chạy đúng giờ hẹn: lần fetch đầu ~06:41 JST (lượt chạy bắt đầu 06:40:16 JST; `.git/FETCH_HEAD` mtime 06:40:55 JST); các số đếm git (737/3214/+383574) đo ~06:42 JST.
+- Đọc PR chạy ~06:42 JST (file `pr119_read_r274.json` mtime 06:42:21 JST); đọc issue chạy ~06:42 JST (file `issue116_read_r274.json` mtime 06:42:32 JST — truyền `issue_number` ngay lần đầu, không lỗi).
+- Transform/edit chạy 06:50 JST (mtime file: transform 06:50:32, edit 06:50:36). Shift checker chạy sạch 62/62 cặp ngay lần đầu (mtime shift 06:54:40, checker 06:58:59 sau fill); fill ~06:59 (validation JSON 06:59:38); commit nội dung 07:00:21 JST; push xong ~07:00 JST. Đọc post-push 07:01:20 + 07:02:07 JST; payload ~07:03 JST.
+
+## R274 đóng khoảng trống
+
+- Delivery index: tiêu đề head → `a7c0ae5`; dòng milestone → 737/3214/383574; delta `5dc1302..a7c0ae5`: 2 path, 686 insertions, 0 deletions; một dòng được thêm — R273 (`5dc1302`/`a7c0ae5`), ghi payload R273 (94.417 ký tự, sha `092f8ef5`, CHƯA ĐĂNG — bị R274 supersede) + đính chính lesson (42) của checker R273 + row-convention (dòng R272 = 3212) + sửa dòng Ghi chú + sửa câu "lượt cập nhật này" (chính R273); không có ACK riêng cho R273. Index bao quát mọi khối tới `a7c0ae5`; 2 commit của R274 gộp vào ở R275.
+- Body v2: head line đồng bộ tới `a7c0ae5` · 737 · 3214 (additions 383574, Gói 39 ID 6815238814, tree `54400889…`, mergeable_state clean tại `a7c0ae5` theo đọc lượt này), cộng đoạn R273 và ghi chú R274. Gọn: đoạn R181 (415 → 214) — gọn ĐƠN thứ mười bốn. Body 94.657 ký tự — net +133 so với R273 (−201 R181 + 271 đoạn mới + 28 trail + 30 tiêu đề + 5 Ghi-chú list "/R273" + 0 Ghi-chú range "R3–R180"→"R3–R181" + 0 head line — các thành phần theo projection của chuỗi edit; tổng net +133 đo trực tiếp từ đĩa: 94.524 → 94.657).
+- Checker `check_pr119_restructure_r274_v1.py`: PASS **155/155** ngay lần đầu (`--out` ghi validation JSON của vòng này; trường "checkpoint" trong JSON mang nhãn vòng trước "PR119 BODY RESTRUCTURE R273" — quy ước đặt tên mang sang của chuỗi shift, không phải lỗi số liệu; checks 155/155, failures []). 155 = 154 + đúng 1 check row-convention mới (tuple R272), khớp bài học vòng R264 mục 6 ("mỗi vòng chỉ thêm đúng 1 check row-convention").
+- Fill SHA-hits: `fill_sha_hits_r274.py` đã chạy thành công — đoạn SHA-hits 119 dòng / 96 entry đã điền đầy vào checker. Entry set: 94 entry của R273 + 2 entry mới `a7c0ae5` (cover) + `5dc1302` (nội dung R273) lên đầu (96 entry — KHÔNG trừ `daf9540`). Extra-token khớp hoàn toàn với R273 (43 token, cùng số lần xuất hiện). daf9540 giữ 15 lần ngoài đoạn (lesson 43 — không nhắc sha theo nghĩa đen nên số lần không đổi).
+
+## Kiểm chứng sau commit nội dung
+
+- Commit nội dung `56926f33e8debb13f25104dbf57da98ba976c27a` (~07:00 JST): 3 file (body v2, delivery index, checker.py), 1416 insertions, 11 deletions; scope audit block (`a7c0ae5..56926f3`): **3 path / 0 violation**; cumulative tại `56926f3`: 3215 path / 1 violation — artifact `.gitattributes` đã biết (byte-identical với integration `f3db6b3`, sha256 `23352e4c…`; khác merge-base `cf17178` sha256 `54ee7996…` — đúng bản chất artifact merge-base, không phải lệch thật; cả hai sha đo lại từ git lượt này).
+- Đếm tại `56926f3`: **738 commit / 3215 file / +384979** — khớp đọc API post-push. Dòng R273 trong index ghi cumulative 3215 — đã xác minh sau commit (diff tại `56926f3` = 3215, gồm 3214 tại `a7c0ae5` + 1 checker mới).
+- Merge-tree tại `56926f3` vs `f3db6b3`: exit 0, tree `5cd04dac…`.
+- Push: `a7c0ae5..56926f3` lên `muse/media-production-20261104` (deploy key, không force-push); ls-remote xác minh remote head = `56926f33e8debb13f25104dbf57da98ba976c27a`.
+- Working tree sau commit nội dung: sạch (chỉ còn báo cáo + validation JSON của vòng này, commit ở commit báo cáo).
+- Không có execution-risk flag lượt này; không có hành động nào của vòng bị chặn.
+- Cảnh báo SyntaxWarning `invalid escape sequence '\`'` khi chạy checker: ĐÃ CÓ từ checker R265 — không phải khuyết điểm vòng này, không ảnh hưởng PASS.
+- Transform edit: chạy sạch ngay lần đầu (không assertion nào bắt lỗi — quy tắc anchor/identifier bài học (41) đã giữ); shift checker chạy sạch 62/62 cặp ngay lần đầu; fill chạy sạch ngay lần đầu (119 dòng / 96 entry; extra-token 43 khớp R273). ĐÍNH CHÍNH NHỎ trong chuỗi fill: bản nháp `build_fill274.py` dùng replace toàn cục `c272`→`c273` làm lệch vòng so sánh extra-token (gán trùng `c273`, assert thành hằng đúng) — assertion cuối của chính script bắt trước khi ghi (lỗi hiển thị là "R272 còn sót" do hai label-pattern hợp lệ nhắc R272); đã sửa bằng replace tường minh khối vòng lặp (c274/c273) + assertion đếm đúng (R272 = 2) rồi chạy lại sạch (bài học 67).
+
+## Payload R274
+
+- Dựng bởi vòng này sau push (script `r274_payload.py` trong goal hidden_files) từ body v2 của vòng + đoạn Head làm tươi DUY NHẤT sang head sau push: head `56926f3` · 738 · 3215, additions 384979, mergeable **null / unstable** tại `56926f3` (đọc API tươi post-push ~07:01 + ~07:02 JST — CI đang chạy trên head mới; luồng chính làm tươi Head lúc trình nếu CI đã xong), live body R263 (94.825 ký tự, sha `07316552`, updated_at 2026-11-26T22:00:58Z), merge-tree tree `5cd04dac…`, issue #116 34 comment (đọc trước push lượt này ~06:42 JST, không đọc lại sau push — ghi rõ trong head line).
+- Body **94.550 ký tự, sha `c241a8ef`**; JSON 105.567 byte < trần 131.072 (còn 25.505 byte); tiêu đề 765 ký tự kết thúc "+ R274" (hậu tố THAY, không nối — bài học R120); envelope đủ (owner `khanhcoder97`, repo `ngumach-huyenan`, pullNumber 119); file `~/workspace/godot-prototype/pr_comments/pr119_update_body_v2_r274.json` + `.bak` byte-identical (sha256 `dc3fe056`) + bản sao byte-identical trong `.bak-prepost-20261124/` và `.bak-prepost-20261126/`.
+- **CHƯA ĐĂNG** — cần thẻ duyệt của chủ dự án; **SẴN SÀNG TRÌNH** (lượt chạy bắt đầu ~06:40 JST, kết thúc ~07:03 JST trong giờ làm việc). Lưu ý: thẻ duyệt hết hạn sau ~30 phút chờ (đã 10 lần) — nên bấm khi còn ngồi máy. Lưu ý thêm: payload R273 nay ĐÃ LỖI THỜI (head đã sang `56926f3`) — KHÔNG bấm widget R273.
+
+## Cảnh báo headroom
+
+Body v2 hiện 94.657 ký tự, headroom 10.343. Gọn ĐƠN tiếp theo là R182 ở vòng R275. Đoạn đầy đủ còn lại R182..R273 = 92 đoạn; khối gọn R2–R181 = 180 dòng. Ước tính net mỗi vòng gọn đơn ≈ −100..−250 — nhưng vòng này net +133 vì đoạn R181 ngắn (415 ký tự thay vì ~472); headroom vẫn an toàn dài hạn. Lưu ý: độ dài đoạn đầy đủ không cố định (~415–472 đã thấy) — không giả định net +76 cho vòng sau; đo từ đĩa mỗi vòng.
+
+## Bài học
+
+Lessons carried: toàn bộ danh sách bài học (1)–(66) trong báo cáo R262 + R263 + R264 + R265 + R266 + R267 + R268 + R269 + R270 + R271 + R272 + R273 cùng thư mục giữ nguyên hiệu lực. Mới vòng này:
+
+(67) NEW THIS ROUND (R274) — ba điều: (a) BUILD_FILL REPLACE TOÀN CỤC LÀM LỆCH VÒNG SO SÁNH: bản nháp `build_fill274.py` dùng replace toàn cục `c272`→`c273` cho khối so sánh extra-token — biến đếm vòng trước thành `c273` trùng tên biến đếm vòng này (gán trùng, assert thành hằng đúng, in sai nhãn vòng) — assertion cuối của chính script bắt trước khi ghi file (lỗi hiển thị là "R272 còn sót" do hai label-pattern hợp lệ nhắc R272, nhưng khi sửa assertion mới lộ ra vòng lặp đã lệch). Quy tắc: biến đếm có cặp vòng (cNNN/cNNN-1) phải replace bằng khối tường minh cả vòng lặp, không replace toàn cục theo tên biến; assertion cuối phải đếm đúng số lần xuất hiện hợp lệ của tên vòng cũ (R272 = 2, hai label-pattern), không khẳng định vắng tuyệt đối. (b) R181 NGẮN HƠN CHUẨN: đoạn đầy đủ R181 chỉ 415 ký tự (các đoạn trước ~434–472) nên gọn đơn vòng này chỉ −201, net body +133 thay vì +76 — độ dài đoạn không cố định, phải đo từ đĩa mỗi vòng, không mang net vòng trước sang. (c) ISSUE_READ ĐÚNG NGAY LẦN ĐẦU: lượt này truyền `issue_number` ngay từ đầu, không lỗi (bài học 66 đã ngấm).

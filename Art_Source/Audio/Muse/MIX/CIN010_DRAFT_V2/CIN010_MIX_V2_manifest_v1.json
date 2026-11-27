@@ -1,0 +1,189 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_010 draft mix v2 (palette re-mix of the checkpoint 42 v1 mix; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Sầm Chủ Quỹ is now the M-F CP1 palette pickup (VO_CIN_010_S03_SAMCHUQUY_palette_v1.wav; Loud Gravel (fictional system voice), avocado_v2:hubert) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (12.5-15.86 s inside 12.5-17.5 s, slack 1.64 s), measured from the real pickup bytes. NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_010; sa_hoa music + desert_wind ambience are the desert cues (composed, CP26/CP30) for this desert-caravan scene (S01: a desert caravan halted under a tattered cloth canopy, the big wooden cart wheel and the nearly-empty communal water barrel in the foreground, ash-gold dunes and rock mesas behind, WIDE_STATIC; S02: Sam Chu Quy pouring a thin stream from his clay flask into the lidded communal barrel, DETAIL_LOCKED; S03: Sam crouching to set the flask on a map cloth spread on the sand, route cords across it, MEDIUM_STATIC; keyframes CIN_010 S01/S02/S03). sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat', kiln and sand: A minor pentatonic, dry bright plucks, pad only on even bars, 110 BPM) -- the dry heat of the scene title 'Binh nuoc cuoi xe' (the last water flask on the cart); desert_wind is the desert wind bed ('Gio Sa Hoa': drier, thinner band, faster gusts, sand hiss) for the dunes running through all three shots. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_010_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_010 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1.",
+    "VO take runs 12.5-15.308 s: 2.808 s, ending 2.192 s BEFORE the 17.5 s window end -- the take FITS inside its window (no overrun, unlike CIN_005/CIN_006). The take ends 2.692 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -22.01 LUFS (checkpoint 17, re-verified from real bytes this run, vs -23.10 LUFS for the CIN_008 take and -17.23 LUFS for the CIN_009 take). VO is kept at unity per the recipe, not normalized.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_010",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_010_S03_SAMCHUQUY_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.86
+        ],
+        "takeDurationSeconds": 3.36,
+        "takeEndSeconds": 15.86,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -1.64,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/sa_hoa",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.96,
+          "remeasuredLUFS": -21.96,
+          "gainDb": -8.04,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/desert_wind",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.93,
+          "remeasuredLUFS": -29.93,
+          "gainDb": -6.07,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.86
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -3.26,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/desert_wind",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.0029,
+              "bedP999Jump": 0.00481,
+              "ratioToP999": 0.603
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_010_mix_draft_v2.wav",
+        "sha256": "5db32b7ca714acf246d1be27d0fe05d423667b3503947410a283e22d4a016a03",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-26.20",
+        "truePeakDBTP": "-8.70",
+        "loudnessRangeLU": "4.30",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN010_S03",
+        "shotId": "CIN_010_S03",
+        "role": "NPC_SAM_CHU_QUY",
+        "speakerDisplay": "Sầm Chủ Quỹ",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:hubert",
+        "paletteVoiceLabel": "Loud Gravel (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_010_S03_SAMCHUQUY_palette_v1.wav",
+        "paletteTakeSha256": "684b9708770b188b749364ab029bde8672aa729886656c75c7df47e4899e372e",
+        "paletteTakeDurationSeconds": 3.36,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 15.86,
+        "slackSeconds": 1.64,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

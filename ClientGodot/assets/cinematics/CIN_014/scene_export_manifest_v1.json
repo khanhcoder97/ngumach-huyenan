@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 48 - CIN_014 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_014",
+  "title": "Dấu lệnh đặt xuống",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_014_S01": "push-in centered",
+      "CIN_014_S02": "push-in centered",
+      "CIN_014_S03": "push-in centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+      "sha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48",
+      "sizeBytes": 1620294,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN_014_mix_draft_v1.wav",
+        "sourceMixSha256": "b63e51bf69383a57aad504f5b3aad0108f657027621e7455f1f55950ea6cb0f1",
+        "mixVersion": "v1_cin014_proposed",
+        "integratedLUFS": "-24.43",
+        "truePeakDBTP": "-1.94",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_014/CIN_014_640x360_30fps.ogv",
+      "sha256": "21921079da49d3645afc9ff25c98ed0b137fc4a2d3a4d4f903b847a101d0a6df",
+      "sizeBytes": 745694,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 508,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN_014_mix_draft_v1.wav",
+        "sourceMixSha256": "b63e51bf69383a57aad504f5b3aad0108f657027621e7455f1f55950ea6cb0f1",
+        "mixVersion": "v1_cin014_proposed",
+        "integratedLUFS": "-24.44",
+        "truePeakDBTP": "-2.14",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 508
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_014/CIN_014_poster.png",
+      "sha256": "7b86ccd06052602eced18ae642a281f500090fa1418fc1073ac13b3766f7772b",
+      "sizeBytes": 448148,
+      "sourceKeyframe": "keyframe_CIN_014_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_014/CIN_014_timing_v1.json",
+      "sha256": "4e3d3ca2c5484b0d4234579c0e21b172c3460986f5d1625a839a41bed2d32ff9",
+      "sizeBytes": 2381
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_014/CIN_014_vi.srt",
+      "sha256": "90e98813bd52a39df38a0ff2c8f4d511396a86864b5b892221aceff6c81fd044",
+      "sizeBytes": 92,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_014_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 4.233,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 33.52,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 28.3,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_014_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 3.248,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 27.886,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 23.165,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_014_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 3.627,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 29.43,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 26.022,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_014_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_014_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_014_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_014_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_014_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_014_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_014 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (Tong Banh, CIN_014_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 3.072 s at natural speed (windowFit FITS, not sped up).",
+    "Recorded keyframe defects: Tong Banh's rendering is inconsistent across all three shots (bronze lamellar with headband in S01; woven hat, dark cloak and teal armor in S02; not identifiable at all in S03, where two unarmored candidates stand apart and neither matches his armor), so the intended foreground separation in S03 is ambiguous; S02 is a medium shot instead of the tight detail close-up and its seal reads as a flat plaque; S03's palette shifts to dusk blue against the daylight of S01/S02. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  ],
+  "hasAudioTrack": true
+}

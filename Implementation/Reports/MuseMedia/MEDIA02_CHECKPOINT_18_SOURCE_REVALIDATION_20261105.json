@@ -1,0 +1,55 @@
+{
+ "checkpoint": "MEDIA-02 checkpoint 18 (per-scene clip export: CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only, runtime delivery revised, re-baseline integration f0859d0)",
+ "base_integration": "f0859d0",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "audio_files_checked": 1093,
+  "audio_music_ambience_cues": 22,
+  "audio_sfx_ui_cues": 173,
+  "p0_stem_pool_files": 11,
+  "timing_scenes_checked": 20,
+  "timing_dialogues": 21,
+  "srt_cues": 21,
+  "runtime_cine_scenes_checked": 20,
+  "runtime_dialogue_cues_total": 21,
+  "animatic_panels_checked": 12,
+  "animatic_panels_listed": 12,
+  "vo_takes_checked": 3,
+  "keyframes_checked": 12,
+  "vo_campaign_takes_checked": 17,
+  "vo_campaign_fits": 15,
+  "vo_campaign_overruns": 2,
+  "scene_clips_checked": 4,
+  "scene_clips_with_video": 3
+ },
+ "windowFit": {
+  "fits": 15,
+  "overruns": [
+   {
+    "shotId": "CIN_005_S03",
+    "slackSeconds": -0.16
+   },
+   {
+    "shotId": "CIN_018_S03",
+    "slackSeconds": -0.28
+   }
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  "P0 stem pool cues validated as files: ['AMBIENCE/rain_heavy', 'AMBIENCE/rain_light', 'AMBIENCE/river_shore', 'AMBIENCE/underwater', 'MUSIC/ben_mua', 'MUSIC/boss_mang_cot', 'MUSIC/quiet_discovery', 'SFX/CINEMA/resolve_v01', 'SFX/CINEMA/reveal_v01', 'SFX/CINEMA/tension_v01', 'SFX/CINEMA/transition_v01']",
+  "Runtime cinematics dialogue cues cross-checked: 20 scenes, 21 cues (timing == SRT == runtime manifest)",
+  "ANIMATIC P0_animatic_640x360_30fps.ogv: avg_frame_rate 0/0 (expected 30/1)",
+  "Keyframes 16:9 checked: 12/12 (S02 generated checkpoint 16; 4 checkpoint-13 panels; 7 v1 sheet crops re-verified for framing)",
+  "Campaign VO checked: 17/17 takes, 15 FITS, 2 OVERRUN (['CIN_005_S03', 'CIN_018_S03']); overruns are director findings (D1: no voice speed-up to fit), not byte mismatches",
+  "Per-scene clips checked: 4/4 (3 with video, CIN_006 timing/SRT only); reel tiled 0-72 exactly"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17, measured from real bytes.",
+  "No ear audition of loop seams or VO takes in this validation.",
+  "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
+  "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
+  "CIN_006 has no per-scene video clip yet (no storyboard panels); its export is timing + SRT only, and the validator accepts that state explicitly."
+ ]
+}

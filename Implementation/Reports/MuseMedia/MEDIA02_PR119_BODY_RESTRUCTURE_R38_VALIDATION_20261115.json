@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R37",
+ "validator": "check_pr119_restructure_r38_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == ce36d36": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 9d45aae": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha ce36d36": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 265/2506": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R37 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R37 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..ce36d36 == 265": {
+   "pass": true,
+   "detail": "265"
+  },
+  "git files cf17178..ce36d36 == 2506": {
+   "pass": true,
+   "detail": "2506"
+  },
+  "git additions == 232986, deletions 0": {
+   "pass": true,
+   "detail": "2506 files changed, 232986 insertions(+)"
+  },
+  "merge-tree ce36d36 vs integration exit 0": {
+   "pass": true,
+   "detail": "86e9002523c548f78bb5fc2867f2d3a3eaaa05b4"
+  },
+  "body head line ce36d36/265/2506": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R37 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R33 and R37": {
+   "pass": true,
+   "detail": "5 + PR119 BODY RESTRUCTURE R36 + PR119 BODY RESTRUCTURE R37)"
+  },
+  "body index reference at ce36d36": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R37 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

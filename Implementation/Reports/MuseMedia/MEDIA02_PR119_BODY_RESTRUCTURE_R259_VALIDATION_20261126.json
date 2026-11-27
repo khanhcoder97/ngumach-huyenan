@@ -1,0 +1,572 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R258",
+ "validator": "check_pr119_restructure_r259_v1.py",
+ "checks": {
+  "total": 140,
+  "passed": 140
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 713b3dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 134ebaa": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 713b3dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 707/3169": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R259 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R258 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R258 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196-defect repairs (milestone 6 lines, heading, R167 ascending, R258 note)": {
+   "pass": true,
+   "detail": "milestone6=True heading=True r196clean=True r167ascending=True r258note=True"
+  },
+  "index R198 row carries ĐÍNH CHÍNH R200 (.bak claim corrected)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R205 row cumulative == 3011 (ĐÍNH CHÍNH R207)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R207 row cumulative == 3017 (3016 at d37a385 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R208 row cumulative == 3020 (3019 at 6cac9da + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R209 row cumulative == 3023 (3022 at e7eacae + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R210 row cumulative == 3026 (3025 at 48a1cd8 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R211 row cumulative == 3029 (3028 at 3a4c8f8 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R212 row cumulative == 3032 (3031 at 381865f + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R213 row cumulative == 3035 (3034 at 1afb41e + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R214 row cumulative == 3038 (3037 at 3de99c9 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R215 row cumulative == 3041 (3040 at 1e564a2 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R216 row cumulative == 3044 (3043 at 0de54fb + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R217 row cumulative == 3047 (3046 at 0a4d05a + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R218 row cumulative == 3050 (3049 at a74e9f4 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R219 row cumulative == 3053 (3052 at 8f8b504 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R220 row cumulative == 3056 (3055 at c38a4dc + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R221 row cumulative == 3059 (3058 at a38b714 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R221 row carries ĐÍNH CHÍNH R223 (payload v3 sha 04eee785)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R222 row cumulative == 3062 (3061 at 37ea7ad + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R223 row cumulative == 3065 (3064 at e07fe1e + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R224 row cumulative == 3068 (3067 at 1700859 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R225 row cumulative == 3071 (3070 at 2861100 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R226 row cumulative == 3074 (3073 at 556d3ec + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R227 row cumulative == 3077 (3076 at dbee5c5 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R228 row cumulative == 3080 (3079 at 9890c75 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R229 row cumulative == 3083 (3082 at 8310e5d + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R230 row cumulative == 3086 (3085 at 9861875 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R231 row cumulative == 3089 (3088 at 29727d4 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R232 row cumulative == 3092 (3092 at 233f0b5)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R233 row cumulative == 3095 (3094 at 33962fd + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R234 row cumulative == 3098 (3097 at 19e8f7c + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R235 row cumulative == 3101 (3100 at d5f1db3 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R236 row cumulative == 3104 (3103 at 6db62e0 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R237 row cumulative == 3107 (3106 at 7bf9212 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R238 row cumulative == 3110 (3109 at 10eebd3 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R239 row cumulative == 3113 (3112 at 3c076bf + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R240 row cumulative == 3116 (3115 at 66cea79 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R241 row cumulative == 3119 (3118 at f021c08 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R242 row cumulative == 3122 (3121 at 26c0cc1 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R243 row cumulative == 3125 (3124 at 214eb99 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R244 row cumulative == 3128 (3127 at bbddba5 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R245 row cumulative == 3131 (3130 at 4fc20b6 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R246 row cumulative == 3134 (3133 at 1240497 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R247 row cumulative == 3137 (3136 at cd4f7b0 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R248 row cumulative == 3140 (3139 at 24037b7 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R249 row cumulative == 3143 (3142 at 4ad9429 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R250 row cumulative == 3146 (3145 at 1281cde + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R251 row cumulative == 3149 (3148 at 7ca1f05 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R252 row cumulative == 3152 (3151 at 8e4d8ac + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R253 row cumulative == 3155 (3154 at 041c185 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R254 row cumulative == 3158 (3157 at 0877855 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R255 row cumulative == 3161 (3160 at 855d6f0 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R256 row cumulative == 3164 (3163 at 46fde45 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R257 row cumulative == 3167 (3166 at 34ed40f + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R258 row cumulative == 3170 (3169 at 713b3dc + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R241 row carries ĐÍNH CHÍNH R242 (payload refresh sha 83d221b8)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R239 row carries ĐÍNH CHÍNH R241 (payload refresh sha 1e38e781)": {
+   "pass": true,
+   "detail": ""
+  },
+  "row-convention R201 cumulative 2999 == diff at e50ba30": {
+   "pass": true,
+   "detail": "2999"
+  },
+  "row-convention R202 cumulative 3002 == diff at 549b8b0": {
+   "pass": true,
+   "detail": "3002"
+  },
+  "row-convention R203 cumulative 3005 == diff at 818f027": {
+   "pass": true,
+   "detail": "3005"
+  },
+  "row-convention R204 cumulative 3008 == diff at df30756": {
+   "pass": true,
+   "detail": "3008"
+  },
+  "row-convention R205 cumulative 3011 == diff at 004cf47": {
+   "pass": true,
+   "detail": "3011"
+  },
+  "row-convention R206 cumulative 3014 == diff at 0db08af": {
+   "pass": true,
+   "detail": "3014"
+  },
+  "row-convention R207 cumulative 3017 == diff at a89a1cf": {
+   "pass": true,
+   "detail": "3017"
+  },
+  "row-convention R208 cumulative 3020 == diff at c663140": {
+   "pass": true,
+   "detail": "3020"
+  },
+  "row-convention R209 cumulative 3023 == diff at a10f9f5": {
+   "pass": true,
+   "detail": "3023"
+  },
+  "row-convention R210 cumulative 3026 == diff at a96f796": {
+   "pass": true,
+   "detail": "3026"
+  },
+  "row-convention R211 cumulative 3029 == diff at dd853fe": {
+   "pass": true,
+   "detail": "3029"
+  },
+  "row-convention R212 cumulative 3032 == diff at c77587a": {
+   "pass": true,
+   "detail": "3032"
+  },
+  "row-convention R213 cumulative 3035 == diff at 2ce013b": {
+   "pass": true,
+   "detail": "3035"
+  },
+  "row-convention R214 cumulative 3038 == diff at 6127a16": {
+   "pass": true,
+   "detail": "3038"
+  },
+  "row-convention R215 cumulative 3041 == diff at dd19bba": {
+   "pass": true,
+   "detail": "3041"
+  },
+  "row-convention R216 cumulative 3044 == diff at af6e949": {
+   "pass": true,
+   "detail": "3044"
+  },
+  "row-convention R217 cumulative 3047 == diff at a24895e": {
+   "pass": true,
+   "detail": "3047"
+  },
+  "row-convention R218 cumulative 3050 == diff at a82ca70": {
+   "pass": true,
+   "detail": "3050"
+  },
+  "row-convention R219 cumulative 3053 == diff at f0051bd": {
+   "pass": true,
+   "detail": "3053"
+  },
+  "row-convention R220 cumulative 3056 == diff at a19018c": {
+   "pass": true,
+   "detail": "3056"
+  },
+  "row-convention R221 cumulative 3059 == diff at 110aa76": {
+   "pass": true,
+   "detail": "3059"
+  },
+  "row-convention R222 cumulative 3062 == diff at 25f18d0": {
+   "pass": true,
+   "detail": "3062"
+  },
+  "row-convention R223 cumulative 3065 == diff at e14c586": {
+   "pass": true,
+   "detail": "3065"
+  },
+  "row-convention R224 cumulative 3068 == diff at 8678714": {
+   "pass": true,
+   "detail": "3068"
+  },
+  "row-convention R225 cumulative 3071 == diff at 8a5f422": {
+   "pass": true,
+   "detail": "3071"
+  },
+  "row-convention R226 cumulative 3074 == diff at ba9e702": {
+   "pass": true,
+   "detail": "3074"
+  },
+  "row-convention R227 cumulative 3077 == diff at 2938722": {
+   "pass": true,
+   "detail": "3077"
+  },
+  "row-convention R228 cumulative 3080 == diff at 7aa25a8": {
+   "pass": true,
+   "detail": "3080"
+  },
+  "row-convention R229 cumulative 3083 == diff at 644d4ab": {
+   "pass": true,
+   "detail": "3083"
+  },
+  "row-convention R230 cumulative 3086 == diff at 9482f4d": {
+   "pass": true,
+   "detail": "3086"
+  },
+  "row-convention R231 cumulative 3089 == diff at c3a4eec": {
+   "pass": true,
+   "detail": "3089"
+  },
+  "row-convention R232 cumulative 3092 == diff at 233f0b5": {
+   "pass": true,
+   "detail": "3092"
+  },
+  "row-convention R233 cumulative 3095 == diff at b50891a": {
+   "pass": true,
+   "detail": "3095"
+  },
+  "row-convention R234 cumulative 3098 == diff at db681a3": {
+   "pass": true,
+   "detail": "3098"
+  },
+  "row-convention R235 cumulative 3101 == diff at 539feb0": {
+   "pass": true,
+   "detail": "3101"
+  },
+  "row-convention R236 cumulative 3104 == diff at 5b80666": {
+   "pass": true,
+   "detail": "3104"
+  },
+  "row-convention R237 cumulative 3107 == diff at e79db7b": {
+   "pass": true,
+   "detail": "3107"
+  },
+  "row-convention R238 cumulative 3110 == diff at 08dd58b": {
+   "pass": true,
+   "detail": "3110"
+  },
+  "row-convention R239 cumulative 3113 == diff at 928a525": {
+   "pass": true,
+   "detail": "3113"
+  },
+  "row-convention R240 cumulative 3116 == diff at dc9331a": {
+   "pass": true,
+   "detail": "3116"
+  },
+  "row-convention R241 cumulative 3119 == diff at 91a543e": {
+   "pass": true,
+   "detail": "3119"
+  },
+  "row-convention R242 cumulative 3122 == diff at e61a658": {
+   "pass": true,
+   "detail": "3122"
+  },
+  "row-convention R243 cumulative 3125 == diff at 44f1017": {
+   "pass": true,
+   "detail": "3125"
+  },
+  "row-convention R244 cumulative 3128 == diff at ff7f373": {
+   "pass": true,
+   "detail": "3128"
+  },
+  "row-convention R245 cumulative 3131 == diff at 6869aa1": {
+   "pass": true,
+   "detail": "3131"
+  },
+  "row-convention R246 cumulative 3134 == diff at c919f88": {
+   "pass": true,
+   "detail": "3134"
+  },
+  "row-convention R247 cumulative 3137 == diff at cf24619": {
+   "pass": true,
+   "detail": "3137"
+  },
+  "row-convention R248 cumulative 3140 == diff at aa0eef6": {
+   "pass": true,
+   "detail": "3140"
+  },
+  "row-convention R249 cumulative 3143 == diff at 8bebd8a": {
+   "pass": true,
+   "detail": "3143"
+  },
+  "row-convention R250 cumulative 3146 == diff at a6319ed": {
+   "pass": true,
+   "detail": "3146"
+  },
+  "row-convention R251 cumulative 3149 == diff at fa41682": {
+   "pass": true,
+   "detail": "3149"
+  },
+  "row-convention R252 cumulative 3152 == diff at cec686f": {
+   "pass": true,
+   "detail": "3152"
+  },
+  "row-convention R253 cumulative 3155 == diff at a8fb12d": {
+   "pass": true,
+   "detail": "3155"
+  },
+  "row-convention R254 cumulative 3158 == diff at c15258e": {
+   "pass": true,
+   "detail": "3158"
+  },
+  "row-convention R255 cumulative 3161 == diff at e53b835": {
+   "pass": true,
+   "detail": "3161"
+  },
+  "row-convention R256 cumulative 3164 == diff at e41cfda": {
+   "pass": true,
+   "detail": "3164"
+  },
+  "row-convention R257 cumulative 3167 == diff at 134ebaa": {
+   "pass": true,
+   "detail": "3167"
+  },
+  "git commits cf17178..713b3dc == 707": {
+   "pass": true,
+   "detail": "707"
+  },
+  "git files cf17178..713b3dc == 3169": {
+   "pass": true,
+   "detail": "3169"
+  },
+  "git additions == 353619, deletions 0": {
+   "pass": true,
+   "detail": "3169 files changed, 353619 insertions(+)"
+  },
+  "merge-tree 713b3dc vs integration exit 0, tree c498d705": {
+   "pass": true,
+   "detail": "c498d70515952c9d8888dcce251e559929791000"
+  },
+  "body head line 713b3dc/707/3169": {
+   "pass": true,
+   "detail": ""
+  },
+  "body head line additions 353619 + Gói 39 ID 6815238814 (lesson 36)": {
+   "pass": true,
+   "detail": "**Head: `713b3dc` · 707 commit · 3169 file** (đếm bằng diff "
+  },
+  "body has R258 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R258": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R257 + PR119 BODY RESTRUCTURE R258"
+  },
+  "body title has full R93..R258 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R258 added"
+  },
+  "body index reference at 713b3dc": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R259 update note": {
+   "pass": true,
+   "detail": ""
+  },
+  "body 'lượt cập nhật này' sentence corrected (chính R259, no chính R257/R258)": {
+   "pass": true,
+   "detail": ""
+  },
+  "body Ghi-chú line corrected (R162/R259, R3-R165, list complete)": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R259 note + R2-R165 compacted (164 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 164, body chars: 96303"
+  },
+  "body R36 compact line restored (content 386216b, head 9ec1fd9)": {
+   "pass": true,
+   "detail": ""
+  },
+  "git status shows only index + body + this checker": {
+   "pass": true,
+   "detail": " M Implementation/Reports/MuseMedia/MEDIA02_PR119_BODY_V2_20261113.md;  M Implementation/Reports/MuseMedia/MEDIA02_PR119_DELIVERY_INDEX_20261113.md; ?? Tools/MediaProduction/Muse/check_pr119_restructure_r259_v1.py"
+  }
+ },
+ "status": "PASS"
+}

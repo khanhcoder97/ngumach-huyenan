@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_004",
+  "title": "Vết đau của linh thú",
+  "durationSeconds": 18,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+      "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891",
+      "sizeBytes": 655887,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+        "sourceMixSha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+        "mixVersion": "v3_fully_composed",
+        "integratedLUFS": "-26.79",
+        "truePeakDBTP": "-8.28",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+      "sha256": "457780fa7431719d9018257e0f0a132c603bb3b2aba542ad1ec42fb51b7de590",
+      "sizeBytes": 768058,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 45,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+        "sourceMixSha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+        "mixVersion": "v3_fully_composed",
+        "integratedLUFS": "-26.73",
+        "truePeakDBTP": "-8.29",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 45
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_004/CIN_004_poster.png",
+      "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+      "sizeBytes": 384737,
+      "sourcePanel": "panel_CIN_004_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+      "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+      "sizeBytes": 1783
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_004/CIN_004_vi.srt",
+      "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+      "sizeBytes": 68,
+      "status": "DRAFT"
+    }
+  },
+  "notes": [
+    "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
+    "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6)."
+  ],
+  "reelOffsetSeconds": {
+    "start": 54.0,
+    "end": 72.0
+  },
+  "reelTotalSeconds": 72.0,
+  "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+  "frameCheck": {
+    "first": {
+      "panel": "panel_CIN_004_S01.png",
+      "meanAbsChannelDiff": 2.833,
+      "maxAllowed": 10.0
+    },
+    "last": {
+      "panel": "panel_CIN_004_S03.png",
+      "meanAbsChannelDiff": 2.782,
+      "maxAllowed": 10.0
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_004_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "panel": "panel_CIN_004_S01.png"
+    },
+    {
+      "shotId": "CIN_004_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "panel": "panel_CIN_004_S02.png"
+    },
+    {
+      "shotId": "CIN_004_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "panel": "panel_CIN_004_S03.png"
+    }
+  ],
+  "hasAudioTrack": true
+}

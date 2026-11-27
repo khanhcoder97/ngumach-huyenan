@@ -1,0 +1,371 @@
+{
+ "manifestId": "NGM_CAMPAIGN_MOTION_P2B_V1",
+ "checkpoint": "WO37 M-C checkpoint 3b - campaign motion, Ken Burns holds for CIN_014/CIN_017 (6 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "status": "DRAFT_KEN_BURNS_HOLD - storyboard-level hold draft; final picture still waits on character lock; B take is a review cut, runtime files are NOT replaced",
+ "sources": {
+  "mixes": "ClientGodot/assets/audio/mix/cin*_v1/*_mix_draft_v1.wav (draft v1 mixes)",
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "runtimeVideos": "ClientGodot/assets/cinematics/CIN_*/CIN_*_640x360_30fps.mp4 (Ken Burns animatic takes)",
+  "timingFiles": "Implementation/Content/Narrative/Deliveries/CIN_*/CIN_*_timing_v1.json"
+ },
+ "rules": {
+  "frameSize": [
+   640,
+   360
+  ],
+  "note": "Closes the remainder named in M-C checkpoint 3a: the 6 priority-3 shots of CIN_014/CIN_017 belong to scenes with no priority-2 shot, so CP3a built no scene B take for them; they stay Ken Burns hold per ledger rule R4. All 19 CP3a hold slices were cut for lock-required shots, so character lock does not block a hold slice (it blocks final pose animation only). No pose is rendered here: each shot is an exact 6 s cut of the runtime A video, re-encoded like the CP3a holds. The scene B take is the 3 hold slices concatenated with the draft v1 mix; the AB video stacks runtime A over the B take with corrected labels (B is a hold re-cut, not pose animation) as a fidelity proof: A vs B must differ only by re-encode noise.",
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "status": "DRAFT_KEN_BURNS_HOLD - storyboard-level hold draft; final picture still waits on character lock; B take is a review cut, runtime files are NOT replaced"
+ },
+ "shots": [
+  {
+   "shotId": "CIN_014_S01",
+   "sceneId": "CIN_014",
+   "route": "ken_burns_hold",
+   "startSeconds": 0.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S01.png",
+    "sha256": "7b86ccd06052602eced18ae642a281f500090fa1418fc1073ac13b3766f7772b"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S01_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "472dfce32746b976bc30e7fb0f267cf1d12926509bfe3bf76bf64b8f518dfbd0",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.851,
+    "3.0s": 1.595,
+    "5.0s": 1.543
+   },
+   "kenBurnsDriftFirstLast": 33.079
+  },
+  {
+   "shotId": "CIN_014_S02",
+   "sceneId": "CIN_014",
+   "route": "ken_burns_hold",
+   "startSeconds": 6.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S02.png",
+    "sha256": "71df6b897fe8b15262fdf535e948cdea185f0fc1b0e23ca21a619b157149c203"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S02_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "9ec53d513af7125f7f8394e60937bd3198c2f28db5c75c20b0e14e8963a2c208",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.798,
+    "3.0s": 1.451,
+    "5.0s": 1.481
+   },
+   "kenBurnsDriftFirstLast": 27.699
+  },
+  {
+   "shotId": "CIN_014_S03",
+   "sceneId": "CIN_014",
+   "route": "ken_burns_hold",
+   "startSeconds": 12.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S03.png",
+    "sha256": "1646f8adccbc206b6ebd4cc799354720aa454eb791000ec8244ad04a2dd27dd2"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S03_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "afc9a3f7e8142c0d930028bcf9451640d4868637044598ab0f6a61d8d4cd2e8f",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.385,
+    "3.0s": 1.501,
+    "5.0s": 1.536
+   },
+   "kenBurnsDriftFirstLast": 29.212,
+   "dialogueStagingNote": "Dialogue shot (NPC_TONG_BANH, window 12.5-17.5 s scene). Ledger records speakerIdentifiabilityDefect: Tong Banh is not identifiable in the S03 keyframe. The hold slice carries the picture as-is; no beat is rendered for a hold shot. Staging note, not a mix defect."
+  },
+  {
+   "shotId": "CIN_017_S01",
+   "sceneId": "CIN_017",
+   "route": "ken_burns_hold",
+   "startSeconds": 0.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S01.png",
+    "sha256": "71f35b2980c03426e55d26d7bdebb5e5e0ae309401f2390212b987adb8f18e4e"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S01_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "f6851f1b3ae27d21e567b61f2a478b79a9910ab9bea34321e3826bbdd6e010e2",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.399,
+    "3.0s": 1.59,
+    "5.0s": 1.498
+   },
+   "kenBurnsDriftFirstLast": 31.734
+  },
+  {
+   "shotId": "CIN_017_S02",
+   "sceneId": "CIN_017",
+   "route": "ken_burns_hold",
+   "startSeconds": 6.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S02.png",
+    "sha256": "710c1941fb89b3b4ee01dd89bc1c070c22646000b0965272b26745865183a57d"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S02_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "beab800b7ecaf57d0e65d66f4016f59896ac18d568eb3ff2df63af81c57d502e",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.867,
+    "3.0s": 1.23,
+    "5.0s": 1.171
+   },
+   "kenBurnsDriftFirstLast": 35.614
+  },
+  {
+   "shotId": "CIN_017_S03",
+   "sceneId": "CIN_017",
+   "route": "ken_burns_hold",
+   "startSeconds": 12.0,
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S03.png",
+    "sha256": "fe4a603b1c5628baa5f375bc8d562e137872ef752df278116a1b631c70d6974e"
+   },
+   "holdSlice": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S03_hold_640x360_30fps.mp4",
+   "holdSliceSha256": "b7541c58340b53b9ad96efac579ca7da0f833f99bb30dfa5b257fc07fcb6d22c",
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.067,
+    "3.0s": 1.122,
+    "5.0s": 1.189
+   },
+   "kenBurnsDriftFirstLast": 14.437,
+   "dialogueStagingNote": "Dialogue shot (NPC_DIVER_LEAD, window 12.5-17.5 s scene). Timing file records onscreen=false with the M-C CP5 staging note: no diver figure anywhere in the S03 keyframe; the CP51 mix already delivers the line off-screen. The hold slice carries the picture as-is; no beat is rendered for a hold shot. Staging note, not a mix defect."
+  }
+ ],
+ "holdSlices": {
+  "CIN_014_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S01_hold_640x360_30fps.mp4",
+   "sha256": "472dfce32746b976bc30e7fb0f267cf1d12926509bfe3bf76bf64b8f518dfbd0",
+   "sizeBytes": 660499,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48",
+   "sourceStartSeconds": 0.0,
+   "sourceEndSeconds": 6.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.851,
+    "3.0s": 1.595,
+    "5.0s": 1.543
+   },
+   "kenBurnsDriftFirstLast": 33.079
+  },
+  "CIN_014_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S02_hold_640x360_30fps.mp4",
+   "sha256": "9ec53d513af7125f7f8394e60937bd3198c2f28db5c75c20b0e14e8963a2c208",
+   "sizeBytes": 508965,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.798,
+    "3.0s": 1.451,
+    "5.0s": 1.481
+   },
+   "kenBurnsDriftFirstLast": 27.699
+  },
+  "CIN_014_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_S03_hold_640x360_30fps.mp4",
+   "sha256": "afc9a3f7e8142c0d930028bcf9451640d4868637044598ab0f6a61d8d4cd2e8f",
+   "sizeBytes": 524829,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.385,
+    "3.0s": 1.501,
+    "5.0s": 1.536
+   },
+   "kenBurnsDriftFirstLast": 29.212
+  },
+  "CIN_017_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S01_hold_640x360_30fps.mp4",
+   "sha256": "f6851f1b3ae27d21e567b61f2a478b79a9910ab9bea34321e3826bbdd6e010e2",
+   "sizeBytes": 654527,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+   "sourceStartSeconds": 0.0,
+   "sourceEndSeconds": 6.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.399,
+    "3.0s": 1.59,
+    "5.0s": 1.498
+   },
+   "kenBurnsDriftFirstLast": 31.734
+  },
+  "CIN_017_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S02_hold_640x360_30fps.mp4",
+   "sha256": "beab800b7ecaf57d0e65d66f4016f59896ac18d568eb3ff2df63af81c57d502e",
+   "sizeBytes": 565832,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.867,
+    "3.0s": 1.23,
+    "5.0s": 1.171
+   },
+   "kenBurnsDriftFirstLast": 35.614
+  },
+  "CIN_017_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_S03_hold_640x360_30fps.mp4",
+   "sha256": "b7541c58340b53b9ad96efac579ca7da0f833f99bb30dfa5b257fc07fcb6d22c",
+   "sizeBytes": 395120,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0,
+   "vsRuntimeMeanAbsDiff": {
+    "1.0s": 1.067,
+    "3.0s": 1.122,
+    "5.0s": 1.189
+   },
+   "kenBurnsDriftFirstLast": 14.437
+  }
+ },
+ "sceneTakes": {
+  "CIN_014": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_pose_640x360_30fps.mp4",
+   "sha256": "d1e6d4a1f5c4f319dafb7d14e2d65256111fea07a6a7d89943abdee2a218c4aa",
+   "sizeBytes": 2139995,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin014_v1/CIN_014_mix_draft_v1.wav",
+    "sourceMixSha256": "b63e51bf69383a57aad504f5b3aad0108f657027621e7455f1f55950ea6cb0f1"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_014_S01",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_014_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_014_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_017": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_pose_640x360_30fps.mp4",
+   "sha256": "2aa3082bc9233ada040b6fb743bdd8c3c98114b35fd3da4acf0e68b8dc7126d7",
+   "sizeBytes": 2061199,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin017_v1/CIN_017_mix_draft_v1.wav",
+    "sourceMixSha256": "c62771d9b9a23575fd871f2591406cc5fbb4c0316c23788cd7f74fef79cf185e"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_017_S01",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_017_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_017_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  }
+ },
+ "abVideos": {
+  "CIN_014": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_014_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "d7b468ba5b31d78716bfaaf0c48aca4c84b944e71546317a182c8df4b138290d",
+   "sizeBytes": 4143395,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+    "sha256": "802c21f09fb719adb0ab4e80ea8605d30a23444575022e6065622cdd228bcc48"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_014_pose_640x360_30fps.mp4",
+    "sha256": "d1e6d4a1f5c4f319dafb7d14e2d65256111fea07a6a7d89943abdee2a218c4aa"
+   }
+  },
+  "CIN_017": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_017_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "4e93339df2f3225a1d04daa47e620fb50e9ccfd178d0355029f1d8970b63aec2",
+   "sizeBytes": 3872884,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+    "sha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_017_pose_640x360_30fps.mp4",
+    "sha256": "2aa3082bc9233ada040b6fb743bdd8c3c98114b35fd3da4acf0e68b8dc7126d7"
+   }
+  }
+ },
+ "contacts": {
+  "CIN_014_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_014_S01_contact.png",
+   "sha256": "6496aecdc784870ca7a00b7fa5554b2825dc431506a5f5ff7900eb02cd2d7a8a"
+  },
+  "CIN_014_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_014_S02_contact.png",
+   "sha256": "eab642b0c43e6335932e24eee233c7ddde60652c149de02c6737e1035196a20b"
+  },
+  "CIN_014_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_014_S03_contact.png",
+   "sha256": "13443caaf82cf9aa05053c3433cce191e79be9483643fc126f0a9d37be14c3ea"
+  },
+  "CIN_017_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_017_S01_contact.png",
+   "sha256": "45fa777b59644493911e53223e9210e3fa7b8957bf5bfb7318a4dbfdf0876290"
+  },
+  "CIN_017_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_017_S02_contact.png",
+   "sha256": "dbbbc711e4577647b305df5e01d26a0e3df55d809e4524808f1b74917b056cfb"
+  },
+  "CIN_017_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_017_S03_contact.png",
+   "sha256": "d84409509eabeba823acd0b548fd840c0159f5088127a6d9f334e6601d3a54c0"
+  }
+ },
+ "totals": {
+  "shots": 6,
+  "holdSlices": 6,
+  "scenes": 2,
+  "sceneShotSlots": 6,
+  "holdSegments": 6,
+  "sceneDurations": {
+   "CIN_014": 18.0,
+   "CIN_017": 18.0
+  },
+  "note": "After this pack, all 20 campaign scenes have a scene B take and all 25 ledger Ken Burns hold shots have a hold slice file (19 CP3a + 6 CP3b). The 26th priority-3 shot, CIN_020_S03, keeps its CP3a pose take file; M-C CP5 reclassified its motion to KEN_BURNS_HOLD in the continuity ledger without rebuilding the file."
+ }
+}

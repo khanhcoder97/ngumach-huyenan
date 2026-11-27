@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 47 - CIN_013 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_013",
+  "title": "Qua cổng, còn người đợi",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_013_S01": "push-in centered",
+      "CIN_013_S02": "push-in centered",
+      "CIN_013_S03": "push-in centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+      "sha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f",
+      "sizeBytes": 1518104,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN_013_mix_draft_v1.wav",
+        "sourceMixSha256": "9851c8e350615e9af9a965c9ecb85b1377c862fa8a8ab5c5033863cc04b50067",
+        "mixVersion": "v1_cin013_proposed",
+        "integratedLUFS": "-25.88",
+        "truePeakDBTP": "-5.29",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_013/CIN_013_640x360_30fps.ogv",
+      "sha256": "bd5f98782ef2e146a5253970723e2caf2b70664764628912e2b98eace26ae313",
+      "sizeBytes": 795596,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 513,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN_013_mix_draft_v1.wav",
+        "sourceMixSha256": "9851c8e350615e9af9a965c9ecb85b1377c862fa8a8ab5c5033863cc04b50067",
+        "mixVersion": "v1_cin013_proposed",
+        "integratedLUFS": "-25.86",
+        "truePeakDBTP": "-5.07",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 513
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_013/CIN_013_poster.png",
+      "sha256": "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd",
+      "sizeBytes": 378465,
+      "sourceKeyframe": "keyframe_CIN_013_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_013/CIN_013_timing_v1.json",
+      "sha256": "faed8f4a1736159cc223cb2185b6bd8e5eb41b9c0d6e054a8d2e2540a7338c88",
+      "sizeBytes": 2406
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_013/CIN_013_vi.srt",
+      "sha256": "3fb6f94ed2eec13cff377b5123c0bd31c56468b64fa4ea11234b103a243bdb12",
+      "sizeBytes": 82,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_013_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 4.181,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 29.204,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 24.609,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_013_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 2.81,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 24.657,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 20.557,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_013_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 3.279,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 33.276,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 26.703,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_013_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_013_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_013_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_013_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_013_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_013_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_013 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (the refugee leader, CIN_013_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.472 s at natural speed (windowFit FITS, not sped up).",
+    "Recorded keyframe defects: the gate design changes across the scene (blue stone refuge gate with gatehouse in S01 vs rustic wooden village gate in S03) and S02 reads as dusk against S01's afternoon, with a thatched-village background instead of the refuge gate; S01's repaired bowl reads as a small wooden box and its figures read young/chibi-proportioned for adults. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  ],
+  "hasAudioTrack": true
+}

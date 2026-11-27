@@ -1,0 +1,342 @@
+{
+  "audio": {
+    "note": "Audio stays separate by design. Stem plan per shot comes from MEDIA-02 checkpoint 02 (PROPOSED_CANDIDATE table); SRT drafts are the checkpoint 01 files listed per shot. VO audio itself is NOT in this checkpoint — it is block (c), next. No mix PASS is claimed.",
+    "srtFiles": {
+      "CIN_001": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_vi.srt",
+      "CIN_002": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_vi.srt",
+      "CIN_004": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_vi.srt"
+    },
+    "videoAudioTracks": 0
+  },
+  "baseSha": "cf171786baebb10c3f17d3060d47429faf3e4026",
+  "branch": "muse/media-production-20261104",
+  "checkpoint": "MEDIA-02 checkpoint 03 - P0 storyboard/animatic 72s/12 shots",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "delivery": "low 640x360, 30 fps, panel hold (pack pose cadence 8-12 fps applies to animated takes, not to this panel-hold animatic)",
+  "direction": "GitHub issue #116, owner comment 6, 2026-11-05 08:35 JST (comment id 6645214148): P0 cinema unblocked; produce the P0 storyboard/animatic 72s/12 shots with separate VO/SRT/ambience/stems now, then continue M3-M8. DEC-MEDIA-P0 itself is unchanged by that comment.",
+  "outputsManifest": "Art_Source/Cinematics/P0_Animatic/P0_animatic_outputs_v1.json",
+  "panelMethod": "Crop from sheet box with 3 px inset (drops the sheet border), center-crop to 16:9, resize to 640x360. No panel is a crop of a Codex atlas: the BenMua concept atlases were used as composition/colour reference only, per their README.",
+  "panelsDir": "Art_Source/Cinematics/P0_Animatic/panels",
+  "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+  "runtimeDir": "ClientGodot/assets/cinematics",
+  "schemaVersion": 1,
+  "shots": [
+    {
+      "camera": "WIDE_STATIC",
+      "content": "Rainy riverside settlement at dawn; wooden landing, wet bamboo baskets, extinguished paper lamps; ripples; open center walkway; no people.",
+      "dialogue": null,
+      "endSeconds": 6.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        36,
+        30,
+        619,
+        332
+      ],
+      "shotId": "CIN_001_S01",
+      "startSeconds": 0.0,
+      "stemPlan": [
+        "AMBIENCE/rain_light",
+        "AMBIENCE/river_shore"
+      ]
+    },
+    {
+      "camera": "DETAIL_LOCKED",
+      "content": "Frayed rope slides along a wet wooden landing; small parcel presses against the edge; rope catches on a bamboo peg; no human hands.",
+      "dialogue": null,
+      "endSeconds": 12.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        673,
+        30,
+        1295,
+        332
+      ],
+      "shotId": "CIN_001_S02",
+      "startSeconds": 6.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore",
+        "MUSIC/quiet_discovery (low)"
+      ]
+    },
+    {
+      "camera": "DETAIL_LOCKED",
+      "content": "Rain-wet bronze bell shape visible only in the water reflection beneath a wooden pier; no bell above the water; one ripple interrupts the shape.",
+      "dialogue": null,
+      "endSeconds": 18.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "panelDefect": "Storyboard panel draws the bell SOLID under the pier with a reflection below, against the pack (reflection only, no bell above water). Final picture must fix this; the defect is kept visible here, not silently corrected.",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        1347,
+        30,
+        1868,
+        332
+      ],
+      "shotId": "CIN_001_S03",
+      "startSeconds": 12.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore",
+        "MUSIC/quiet_discovery (low)"
+      ]
+    },
+    {
+      "camera": "DETAIL_LOCKED",
+      "content": "Five-groove seal on a closed rain-dark envelope in the courier's open satchel; one drop runs across the wax; seal intact; letter content not shown.",
+      "dialogue": null,
+      "endSeconds": 24.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        35,
+        359,
+        475,
+        640
+      ],
+      "shotId": "CIN_001_S04",
+      "startSeconds": 18.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore",
+        "MUSIC/quiet_discovery (low)"
+      ]
+    },
+    {
+      "camera": "MEDIUM_STATIC",
+      "content": "Ly An kneels to stop a small wooden parcel sliding toward water; looks toward an offscreen helper, not at camera.",
+      "dialogue": {
+        "onscreen": true,
+        "shotLocalSeconds": [
+          0.8,
+          4.5
+        ],
+        "speaker": "NPC_LYAN",
+        "status": "DECIDED_DEC_MEDIA_P0",
+        "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+        "windowSeconds": [
+          24.8,
+          28.5
+        ],
+        "windowSecondsAnimaticTimeline": [
+          24.8,
+          28.5
+        ]
+      },
+      "endSeconds": 30.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        506,
+        359,
+        1074,
+        640
+      ],
+      "shotId": "CIN_001_S05",
+      "startSeconds": 24.0,
+      "stemPlan": [
+        "MUSIC/quiet_discovery ducked under VO",
+        "AMBIENCE/river_shore"
+      ]
+    },
+    {
+      "camera": "TOPDOWN_MATCH",
+      "content": "Top-down rainy landing matching Ben Mua entry composition; small parcel secured beside the wooden post; Ly An stands just north of the safe player arrival space; last second motionless for handoff; no player avatar.",
+      "dialogue": null,
+      "endSeconds": 36.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "panelDefect": "Storyboard figure reads as the warden (topknot, dark robe) rather than Ly An. Final picture must draw Ly An here per the questkit reference.",
+      "sceneId": "CIN_001",
+      "sheetBox": [
+        1107,
+        359,
+        1869,
+        640
+      ],
+      "shotId": "CIN_001_S06",
+      "startSeconds": 30.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore (calm)",
+        "MUSIC/quiet_discovery out",
+        "SFX/CINEMA/reveal as scene-level stinger, position pending picture lock"
+      ]
+    },
+    {
+      "camera": "GROUND_DETAIL",
+      "content": "Three concentric ripple patterns drift toward the same submerged stone channel; small reed leaf turns upstream; rain falls normally; camera still at water level.",
+      "dialogue": null,
+      "endSeconds": 42.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_002",
+      "sheetBox": [
+        34,
+        668,
+        475,
+        933
+      ],
+      "shotId": "CIN_002_S01",
+      "startSeconds": 36.0,
+      "stemPlan": [
+        "AMBIENCE/underwater",
+        "AMBIENCE/river_shore"
+      ]
+    },
+    {
+      "camera": "MEDIUM_STATIC",
+      "content": "Ta Van Khanh lowers his good hand toward water and stops before touching it; bandaged arm, broken sword on his back; no flashback image.",
+      "dialogue": {
+        "onscreen": true,
+        "sceneNote": "Window is scene-local (CIN_002 runs 0-18s in its own timeline); shot-local 1.0-5.0s.",
+        "shotLocalSeconds": [
+          1.0,
+          5.0
+        ],
+        "speaker": "NPC_TA_VAN_KHANH",
+        "status": "PROPOSED_ANIMATIC_PLACEMENT",
+        "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+        "windowSeconds": [
+          7.0,
+          11.0
+        ],
+        "windowSecondsAnimaticTimeline": [
+          43.0,
+          47.0
+        ]
+      },
+      "endSeconds": 48.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_002",
+      "sheetBox": [
+        506,
+        668,
+        1416,
+        933
+      ],
+      "shotId": "CIN_002_S02",
+      "startSeconds": 42.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore ducked under VO",
+        "SFX/CINEMA/tension as undercurrent (proposed)"
+      ]
+    },
+    {
+      "camera": "TOPDOWN_MATCH",
+      "content": "Strict top-down view of the same reed bank and stone channel; ripples stop at a hairline crack; readable calm surface for the gameplay transition.",
+      "dialogue": null,
+      "endSeconds": 54.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_002",
+      "sheetBox": [
+        1444,
+        668,
+        1870,
+        933
+      ],
+      "shotId": "CIN_002_S03",
+      "startSeconds": 48.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore only",
+        "SFX/CINEMA/tension out"
+      ]
+    },
+    {
+      "camera": "WIDE_STATIC",
+      "content": "Bone-scaled swamp serpent Mang Cot raises its broken-horned head beside a blocked stone watercourse; rain-blue moss on its segmented neck; pained, heavy movement.",
+      "dialogue": null,
+      "endSeconds": 60.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "panelDefect": "Broken-horn detail is not clearly readable in the storyboard panel; final picture must show exactly one broken horn per canon.",
+      "sceneId": "CIN_004",
+      "sheetBox": [
+        33,
+        959,
+        476,
+        1251
+      ],
+      "shotId": "CIN_004_S01",
+      "startSeconds": 54.0,
+      "stemPlan": [
+        "MUSIC/boss_mang_cot",
+        "AMBIENCE/river_shore"
+      ]
+    },
+    {
+      "camera": "DETAIL_LOCKED",
+      "content": "Distorted current presses against the serpent ribs; pale reed fragments travel the wrong way; serpent recoils from the current, not from an unseen sword.",
+      "dialogue": {
+        "onscreen": false,
+        "sceneNote": "Window is scene-local (CIN_004 runs 0-18s in its own timeline); shot-local 1.5-3.5s. Off-screen status is DECIDED; placement is PROPOSED.",
+        "shotLocalSeconds": [
+          1.5,
+          3.5
+        ],
+        "speaker": "NPC_LYAN",
+        "status": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+        "text": "Nó cứ tránh chỗ nước ấy.",
+        "windowSeconds": [
+          7.5,
+          9.5
+        ],
+        "windowSecondsAnimaticTimeline": [
+          61.5,
+          63.5
+        ]
+      },
+      "endSeconds": 66.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "sceneId": "CIN_004",
+      "sheetBox": [
+        973,
+        959,
+        1416,
+        1251
+      ],
+      "shotId": "CIN_004_S02",
+      "startSeconds": 60.0,
+      "stemPlan": [
+        "MUSIC/boss_mang_cot ducked under off-screen VO",
+        "AMBIENCE/river_shore",
+        "SFX/CINEMA/reveal proposed at the current beat, position pending picture lock"
+      ]
+    },
+    {
+      "camera": "TOPDOWN_MATCH",
+      "content": "Strict top-down arena wide shot; serpent withdraws into the northern pool; southern arrival area unobstructed; no attacks, damage numbers or fake gameplay telegraphs; ends on a stable gameplay camera frame.",
+      "dialogue": null,
+      "endSeconds": 72.0,
+      "finalPictureStatus": "STORYBOARD_ONLY",
+      "panelDefect": "Storyboard framing is angled rather than strict top-down; final picture must return to a strict top-down arena frame.",
+      "sceneId": "CIN_004",
+      "sheetBox": [
+        1445,
+        959,
+        1871,
+        1251
+      ],
+      "shotId": "CIN_004_S03",
+      "startSeconds": 66.0,
+      "stemPlan": [
+        "AMBIENCE/river_shore (calm)",
+        "MUSIC/boss_mang_cot out"
+      ]
+    }
+  ],
+  "sources": {
+    "Cinema_Production_Pack_v1.json": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+    "characterReference": {
+      "branch": "codex/benmua-combat-visuals-20261105 (PR #118, READ-ONLY reference; NOT merged into the media branch, NOT edited)",
+      "environmentReference": "Art_Source/BenMua_Concept_Rebuild_20261105 (composition/colour/architecture reference only)",
+      "fetchedHead": "a75b53840c0b2fb4bbfa5a84c5bfa80914bffe9b",
+      "file": "Art_Source/Combat_Visuals_20261105/Characters/ben_mua_questkit_v1.png",
+      "fileSha256": "cff1157896050a93947d3573424f1af1547265604e3d0e97599c053b91ba5f32",
+      "use": "Top row left = Ly An (rain-blue cloak, earth-yellow trim, cross-body satchel); top row middle = Ta Van Khanh (dark blue-black robe, bandaged forearm, scabbard). Full figures extend to y608; feet were not cut at 512."
+    },
+    "timingManifest": "Implementation/Content/Narrative/Deliveries/P0_timing_manifest_v1.json"
+  },
+  "status": "STORYBOARD_ANIMATIC",
+  "statusNote": "This is a timed storyboard animatic, NOT final picture. Each shot holds one storyboard panel for its full 6 seconds at 30 fps (180 frames); there is no animated take, no optical-flow morph, no baked subtitle, and no audio track in the review files. Final takes still go to Codex review. Character panels follow the Codex questkit reference below at storyboard level; they do not claim a final character lock.",
+  "storyboardSheet": "Art_Source/Cinematics/P0_Animatic/P0_storyboard_sheet_v1.png",
+  "storyboardSheetNote": "Single generated sheet, 1920x1280, 13 drawn panels. 12 panels form the animatic timeline (see shots[].sheetBox). The 13th panel (row 4, column 2, coiled serpent, box [506, 959, 947, 1251]) is an unused alternate study for CIN_004_S02; it is visible in the sheet but NOT in the MP4/OGV timeline.",
+  "storyboardSheetSha256": "0c82c2bdf8c9befa6e18e0ae126573261800e197f2625bd737ed2fffd7e1bee7",
+  "timelinesNote": "startSeconds/endSeconds are animatic-timeline seconds (CIN_001 0-36, CIN_002 36-54, CIN_004 54-72). Dialogue windowSeconds are scene-local per checkpoint 01 timing JSONs; windowSecondsAnimaticTimeline gives the same window on the 72s animatic timeline."
+}

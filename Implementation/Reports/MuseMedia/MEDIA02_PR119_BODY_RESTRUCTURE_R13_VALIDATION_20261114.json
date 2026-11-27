@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R13",
+ "validator": "check_pr119_restructure_r13_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == db71acb": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha ae5d57b": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha db71acb": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 215/2431": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R13 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R12 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..db71acb == 215": {
+   "pass": true,
+   "detail": "215"
+  },
+  "git files cf17178..db71acb == 2431": {
+   "pass": true,
+   "detail": "2431"
+  },
+  "git additions == 226922, deletions 0": {
+   "pass": true,
+   "detail": "2431 files changed, 226922 insertions(+)"
+  },
+  "merge-tree db71acb vs integration exit 0": {
+   "pass": true,
+   "detail": "cb44daa8c3cc5ccaba1eeb1474f0722197c371a1"
+  },
+  "body head line db71acb/215/2431": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R12 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R12": {
+   "pass": true,
+   "detail": ""
+  },
+  "body index reference at db71acb": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R13 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

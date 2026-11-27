@@ -1,0 +1,391 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 20 - P0 draft mix (Goi 30 item 7)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: first mixed P0, built from the CP02 PROPOSED_CANDIDATE stem table and CP04 draft VO. NOT a mix PASS: no ear audition, stem table not locked, stinger placements PROPOSED pending picture lock.",
+  "stemTableSource": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_02_P0_STEMS_20261105.json (per-shot table, PROPOSED_CANDIDATE)",
+  "stemBytes": "Runtime stem copies in ClientGodot/assets/audio/ (the delivered runtime bytes), not the FLAC masters.",
+  "gainStaging": {
+    "vo": "unity (anchor; takes as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "ambienceSecondaryTargetLUFS": -38.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "Gains are formula targets from CP02 integrated-LUFS measurements; loudness inside a stem segment varies, so the realised balance is a draft balance, verified only by the whole-scene measurements in this manifest.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS in the first 2 s of the VO window vs a 2 s reference before the window).",
+    "Ambience loop joins use 1 s acrossfades; loopQA reports the max sample jump at each join against the bed's own 99.9th-percentile jump (ratio near or below ~2 reads as no click; an ear check is still outstanding).",
+    "When a scene has two ambience beds they are summed on a sub-bus that carries the standard 0.3 s scene-edge fades before the final mix; inaudible at bed levels, recorded here for honesty.",
+    "ben_mua and rain_heavy stay unassigned in P0, as in CP02; resolve/transition stingers are inter-scene and unused.",
+    "VO windows: CIN_001 DECIDED 24.8-28.5 s; CIN_002 and CIN_004 PROPOSED (D1 draft approval only)."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_001",
+      "seconds": 36.0,
+      "vo": {
+        "take": "VO_CIN001_S05_LYAN_draft_v1.wav",
+        "windowSeconds": [
+          24.8,
+          27.368
+        ],
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/quiet_discovery",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/music/quiet_discovery.ogg",
+          "segmentSceneSeconds": [
+            6.0,
+            30.0
+          ],
+          "targetLUFS": -30.0,
+          "cp02MeasuredLUFS": -21.58,
+          "gainDb": -8.42,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/ambience/river_shore.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            36.0
+          ],
+          "targetLUFS": -36.0,
+          "cp02MeasuredLUFS": -29.53,
+          "gainDb": -6.47,
+          "duckedByVo": false
+        },
+        {
+          "cue": "AMBIENCE/rain_light",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/ambience/rain_light.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            6.0
+          ],
+          "targetLUFS": -38.0,
+          "cp02MeasuredLUFS": -27.48,
+          "gainDb": -10.52,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal_v01",
+          "source": "ClientGodot/assets/audio/sfx/cinema/reveal_v01.wav",
+          "atSeconds": 30.0,
+          "gainDb": 0.0,
+          "cp02MeasuredLUFS": -25.69,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              24.8,
+              27.368
+            ],
+            "referenceSeconds": [
+              22.3,
+              24.3
+            ],
+            "depthInWindowDb": -14.32,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal_v01",
+        "source": "ClientGodot/assets/audio/sfx/cinema/reveal_v01.wav",
+        "atSeconds": 30.0,
+        "gainDb": 0.0,
+        "cp02MeasuredLUFS": -25.69,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            },
+            {
+              "atSeconds": 30.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/rain_light",
+          "joins": []
+        }
+      ],
+      "mix": {
+        "file": "CIN_001_mix_draft_v1.wav",
+        "sha256": "7815e3e06bc747d5c51314a1377e8b251860e00a0c098260b3d933d0dd1ece57",
+        "durationSeconds": 36.0,
+        "integratedLUFS": "-22.46",
+        "truePeakDBTP": "-1.46",
+        "loudnessRangeLU": "18.30",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 6912100
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_002",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+        "windowSeconds": [
+          7.0,
+          10.792
+        ],
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/ambience/river_shore.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "cp02MeasuredLUFS": -29.53,
+          "gainDb": -6.47,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/ambience/underwater.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            6.0
+          ],
+          "targetLUFS": -38.0,
+          "cp02MeasuredLUFS": -33.02,
+          "gainDb": -4.98,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/tension_v01",
+          "source": "ClientGodot/assets/audio/sfx/cinema/tension_v01.wav",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "cp02MeasuredLUFS": -25.67,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "ambience",
+            "windowSeconds": [
+              7.0,
+              10.792
+            ],
+            "referenceSeconds": [
+              4.5,
+              6.5
+            ],
+            "depthInWindowDb": -6.48,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/tension_v01",
+        "source": "ClientGodot/assets/audio/sfx/cinema/tension_v01.wav",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "cp02MeasuredLUFS": -25.67,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": []
+        }
+      ],
+      "mix": {
+        "file": "CIN_002_mix_draft_v1.wav",
+        "sha256": "c67a2cff7f680b51a780609758697490ecc0d94ca0d092275b9032a4601b68d9",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-21.55",
+        "truePeakDBTP": "-3.98",
+        "loudnessRangeLU": "17.60",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_004",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+        "windowSeconds": [
+          7.5,
+          9.252
+        ],
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/boss_mang_cot",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/music/boss_mang_cot.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            12.0
+          ],
+          "targetLUFS": -30.0,
+          "cp02MeasuredLUFS": -23.34,
+          "gainDb": -6.66,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/ambience/river_shore.ogg",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "cp02MeasuredLUFS": -29.53,
+          "gainDb": -6.47,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal_v01",
+          "source": "ClientGodot/assets/audio/sfx/cinema/reveal_v01.wav",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "cp02MeasuredLUFS": -25.69,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              7.5,
+              9.252
+            ],
+            "referenceSeconds": [
+              5.0,
+              7.0
+            ],
+            "depthInWindowDb": -4.99,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal_v01",
+        "source": "ClientGodot/assets/audio/sfx/cinema/reveal_v01.wav",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "cp02MeasuredLUFS": -25.69,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_004_mix_draft_v1.wav",
+        "sha256": "e0d477690734164cedd06d474ce8c2eef65fb55bad2693ef83685171e616f894",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-25.51",
+        "truePeakDBTP": "-7.94",
+        "loudnessRangeLU": "16.10",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "reviewMix": {
+    "file": "P0_mix_review_72s_draft_v1.wav",
+    "sha256": "2a982b5f8e92bebd2f1b2e637f9c3e8cad550c4fbf989566f6c257afc40ded81",
+    "durationSeconds": 72.0,
+    "integratedLUFS": "-22.66",
+    "truePeakDBTP": "-1.46",
+    "sceneOrder": [
+      "CIN_001",
+      "CIN_002",
+      "CIN_004"
+    ],
+    "note": "Concatenation of the three scene mixes in reel order; the 72 s reel remains review/gallery only, NOT an auto-run opening (Goi 30 item 6)."
+  }
+}

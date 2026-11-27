@@ -1,0 +1,16 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-F CP1",
+ "validator": "check_vo_palette_mf_cp1_v1.py",
+ "verdict": "PASS",
+ "mismatches": 0,
+ "errors": [],
+ "notes": [
+  "review pack: 5 spoken rows, 12 unspoken names, 10-entry A-B playlist",
+  "palette validated: 11 roles / 11 distinct voices, 20 pickups re-measured from real bytes, 40 source files re-hashed, runtime 757 files with 20 palette alternates"
+ ],
+ "counts": {
+  "palette_roles": 11,
+  "pickup_files_checked": 40,
+  "runtime_palette_entries": 20
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R196",
+ "validator": "check_pr119_restructure_r197_v1.py",
+ "checks": {
+  "total": 20,
+  "passed": 20
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == eb54d4d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 218f0fa": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha eb54d4d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 583/2983": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R197 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196-defect repairs (milestone 6 lines, heading, R167 ascending, R196 note)": {
+   "pass": true,
+   "detail": "milestone6=True heading=True r195clean=True r167ascending=True r196note=True"
+  },
+  "git commits cf17178..eb54d4d == 583": {
+   "pass": true,
+   "detail": "583"
+  },
+  "git files cf17178..eb54d4d == 2983": {
+   "pass": true,
+   "detail": "2983"
+  },
+  "git additions == 282033, deletions 0": {
+   "pass": true,
+   "detail": "2983 files changed, 282033 insertions(+)"
+  },
+  "merge-tree eb54d4d vs integration exit 0, tree 131a24b0": {
+   "pass": true,
+   "detail": "131a24b0b88dbf418a9da3d8674c3ec3f6715e67"
+  },
+  "body head line eb54d4d/583/2983": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R196 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R196": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R195 + PR119 BODY RESTRUCTURE R196"
+  },
+  "body title has full R93..R196 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R196 added"
+  },
+  "body index reference at eb54d4d": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R197 note + R109-R165 compacted (57 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 57, body chars: 104944"
+  }
+ },
+ "status": "PASS"
+}

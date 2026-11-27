@@ -1,0 +1,84 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R136",
+ "validator": "check_pr119_restructure_r137_v1.py",
+ "checks": {
+  "total": 18,
+  "passed": 18
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == a630d7c": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 71ad713": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha a630d7c": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 463/2803": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R137 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R136 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..a630d7c == 463": {
+   "pass": true,
+   "detail": "463"
+  },
+  "git files cf17178..a630d7c == 2803": {
+   "pass": true,
+   "detail": "2803"
+  },
+  "git additions == 260622, deletions 0": {
+   "pass": true,
+   "detail": "2803 files changed, 260622 insertions(+)"
+  },
+  "merge-tree a630d7c vs integration exit 0": {
+   "pass": true,
+   "detail": "4b9dd2d6bb238f1c1421104b161d21886b30597b"
+  },
+  "body head line a630d7c/463/2803": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R136 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R136": {
+   "pass": true,
+   "detail": "+ PR119 BODY RESTRUCTURE R135 + PR119 BODY RESTRUCTURE R136)"
+  },
+  "body title has full R93..R136 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R136 added"
+  },
+  "body index reference at a630d7c": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R137 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

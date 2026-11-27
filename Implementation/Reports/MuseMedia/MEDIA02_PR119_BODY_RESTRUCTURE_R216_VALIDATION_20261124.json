@@ -1,0 +1,204 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R215",
+ "validator": "check_pr119_restructure_r216_v1.py",
+ "checks": {
+  "total": 48,
+  "passed": 48
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 1e564a2": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 6127a16": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 1e564a2": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 621/3040": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R216 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R215 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R215 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196-defect repairs (milestone 6 lines, heading, R167 ascending, R215 note)": {
+   "pass": true,
+   "detail": "milestone6=True heading=True r196clean=True r167ascending=True r215note=True"
+  },
+  "index R198 row carries ĐÍNH CHÍNH R200 (.bak claim corrected)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R205 row cumulative == 3011 (ĐÍNH CHÍNH R207)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R207 row cumulative == 3017 (3016 at d37a385 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R208 row cumulative == 3020 (3019 at 6cac9da + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R209 row cumulative == 3023 (3022 at e7eacae + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R210 row cumulative == 3026 (3025 at 48a1cd8 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R211 row cumulative == 3029 (3028 at 3a4c8f8 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R212 row cumulative == 3032 (3031 at 381865f + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R213 row cumulative == 3035 (3034 at 1afb41e + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R214 row cumulative == 3038 (3037 at 3de99c9 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R215 row cumulative == 3041 (3040 at 1e564a2 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "row-convention R201 cumulative 2999 == diff at e50ba30": {
+   "pass": true,
+   "detail": "2999"
+  },
+  "row-convention R202 cumulative 3002 == diff at 549b8b0": {
+   "pass": true,
+   "detail": "3002"
+  },
+  "row-convention R203 cumulative 3005 == diff at 818f027": {
+   "pass": true,
+   "detail": "3005"
+  },
+  "row-convention R204 cumulative 3008 == diff at df30756": {
+   "pass": true,
+   "detail": "3008"
+  },
+  "row-convention R205 cumulative 3011 == diff at 004cf47": {
+   "pass": true,
+   "detail": "3011"
+  },
+  "row-convention R206 cumulative 3014 == diff at 0db08af": {
+   "pass": true,
+   "detail": "3014"
+  },
+  "row-convention R207 cumulative 3017 == diff at a89a1cf": {
+   "pass": true,
+   "detail": "3017"
+  },
+  "row-convention R208 cumulative 3020 == diff at c663140": {
+   "pass": true,
+   "detail": "3020"
+  },
+  "row-convention R209 cumulative 3023 == diff at a10f9f5": {
+   "pass": true,
+   "detail": "3023"
+  },
+  "row-convention R210 cumulative 3026 == diff at a96f796": {
+   "pass": true,
+   "detail": "3026"
+  },
+  "row-convention R211 cumulative 3029 == diff at dd853fe": {
+   "pass": true,
+   "detail": "3029"
+  },
+  "row-convention R212 cumulative 3032 == diff at c77587a": {
+   "pass": true,
+   "detail": "3032"
+  },
+  "row-convention R213 cumulative 3035 == diff at 2ce013b": {
+   "pass": true,
+   "detail": "3035"
+  },
+  "row-convention R214 cumulative 3038 == diff at 6127a16": {
+   "pass": true,
+   "detail": "3038"
+  },
+  "git commits cf17178..1e564a2 == 621": {
+   "pass": true,
+   "detail": "621"
+  },
+  "git files cf17178..1e564a2 == 3040": {
+   "pass": true,
+   "detail": "3040"
+  },
+  "git additions == 293232, deletions 0": {
+   "pass": true,
+   "detail": "3040 files changed, 293232 insertions(+)"
+  },
+  "merge-tree 1e564a2 vs integration exit 0, tree 4e13aa58": {
+   "pass": true,
+   "detail": "4e13aa581328aec95c77b4f9621934801a284380"
+  },
+  "body head line 1e564a2/621/3040": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R215 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R215": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R214 + PR119 BODY RESTRUCTURE R215"
+  },
+  "body title has full R93..R215 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R215 added"
+  },
+  "body index reference at 1e564a2": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R216 update note": {
+   "pass": true,
+   "detail": ""
+  },
+  "body Ghi-chú line corrected (R158/R215, R88-R165, list complete)": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R216 note + R88-R165 compacted (78 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 78, body chars: 104794"
+  },
+  "git status shows only index + body + this checker": {
+   "pass": true,
+   "detail": " M Implementation/Reports/MuseMedia/MEDIA02_PR119_BODY_V2_20261113.md;  M Implementation/Reports/MuseMedia/MEDIA02_PR119_DELIVERY_INDEX_20261113.md; ?? Tools/MediaProduction/Muse/check_pr119_restructure_r216_v1.py"
+  }
+ },
+ "status": "PASS"
+}

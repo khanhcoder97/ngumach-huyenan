@@ -1,0 +1,536 @@
+{
+ "manifestId": "NGM_P0_SOUNDTRACK_AB_V1",
+ "checkpoint": "WO37 M-B CP1",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "status": "DRAFT_REVIEW_PACKAGE_NOT_FINAL / NOT_AUDITIONED",
+ "purpose": "Remainder of WO37 big checkpoint 2: soundtrack A/B for P0 (v1 vs v2 vs v3). Same candidate-B picture in all three reels; only the soundtrack differs. Codex/director picks the winner; no version is adopted by this checkpoint.",
+ "picture": {
+  "source": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_review_72s_640x360_30fps.mp4",
+  "role": "M38-A candidate reel (B pose-animation takes, 12 shots, 640x360 30fps)",
+  "sha256": "a9ae424cd95de09899dfd8bcff40a1ca572f571f7043d3259e10f14c0110780c",
+  "videoStreamMd5": "1fec5523e481d2279d3a8dc8a2957e2c",
+  "durationSeconds": 72.021
+ },
+ "substitutionSummary": {
+  "v1-vs-v2": "MUSIC/quiet_discovery + MUSIC/boss_mang_cot + SFX/CINEMA/reveal + tension: ported PackV1 -> composed (CP26). Ambience unchanged (ported).",
+  "v2-vs-v3": "AMBIENCE/rain_light + river_shore + underwater: ported PackV1 -> composed (CP30). Music/stingers unchanged from v2.",
+  "vo": "Identical in all three versions: same CP04 draft VO takes, same windows, same gains/ducking (per v2/v3 mix verdicts)."
+ },
+ "audioMasters": {
+  "v1": {
+   "file": "Art_Source/Audio/Muse/MIX/P0_DRAFT/P0_mix_review_72s_draft_v1.wav",
+   "sha256": "2a982b5f8e92bebd2f1b2e637f9c3e8cad550c4fbf989566f6c257afc40ded81",
+   "cp9Loudness": {
+    "lufs": -22.66,
+    "truePeakDbtp": -1.46
+   }
+  },
+  "v2": {
+   "file": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/P0_mix_review_72s_draft_v2.wav",
+   "sha256": "4a1bc54e7c7f998b85685de73b2b475d9fad731e5730a506cba28c055ed81ced",
+   "cp9Loudness": {
+    "lufs": -22.72,
+    "truePeakDbtp": -1.51
+   }
+  },
+  "v3": {
+   "file": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_mix_review_72s_draft_v3.wav",
+   "sha256": "09f7cf8ecf302a8b8b73d8d18064e9159c4014b984457a688783d1db938d8b6a",
+   "cp9Loudness": {
+    "lufs": -22.49,
+    "truePeakDbtp": -1.66
+   }
+  }
+ },
+ "reels": [
+  {
+   "version": "v1",
+   "label": "ported PackV1 stems (checkpoint 20)",
+   "file": "Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v1_72s_640x360_30fps.mp4",
+   "bytes": 2996738,
+   "sha256": "311d83c7625fe2600cde5f3349a7b96ba72432b7e0bb92ce0764423fc0f2c6ea",
+   "durationSeconds": 72.021,
+   "video": {
+    "codec": "h264",
+    "width": 640,
+    "height": 360,
+    "fps": "30/1",
+    "streamMd5": "1fec5523e481d2279d3a8dc8a2957e2c"
+   },
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "bitRateBps": 193075
+   },
+   "masterLoudness": {
+    "integratedLUFS": -22.66,
+    "truePeakDBTP": -1.46
+   },
+   "reelLoudness": {
+    "integratedLUFS": -22.55,
+    "truePeakDBTP": -1.49
+   }
+  },
+  {
+   "version": "v2",
+   "label": "composed music + stingers, ported ambience (checkpoint 29)",
+   "file": "Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v2_72s_640x360_30fps.mp4",
+   "bytes": 2996180,
+   "sha256": "1cdac5293a0983f7a6c6542428904c528b63d8114867d3e9d96c58af6862d7eb",
+   "durationSeconds": 72.021,
+   "video": {
+    "codec": "h264",
+    "width": 640,
+    "height": 360,
+    "fps": "30/1",
+    "streamMd5": "1fec5523e481d2279d3a8dc8a2957e2c"
+   },
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "bitRateBps": 193013
+   },
+   "masterLoudness": {
+    "integratedLUFS": -22.72,
+    "truePeakDBTP": -1.51
+   },
+   "reelLoudness": {
+    "integratedLUFS": -22.65,
+    "truePeakDBTP": -1.52
+   }
+  },
+  {
+   "version": "v3",
+   "label": "fully composed music + stingers + ambience (checkpoint 31)",
+   "file": "Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v3_72s_640x360_30fps.mp4",
+   "bytes": 2990234,
+   "sha256": "f96c7811872ee90961fba4b483a0f5f0f6d031ca17ac059a18801c465ec3d7ff",
+   "durationSeconds": 72.021,
+   "video": {
+    "codec": "h264",
+    "width": 640,
+    "height": 360,
+    "fps": "30/1",
+    "streamMd5": "1fec5523e481d2279d3a8dc8a2957e2c"
+   },
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "bitRateBps": 192353
+   },
+   "masterLoudness": {
+    "integratedLUFS": -22.49,
+    "truePeakDBTP": -1.66
+   },
+   "reelLoudness": {
+    "integratedLUFS": -22.39,
+    "truePeakDBTP": -1.65
+   }
+  }
+ ],
+ "comparison": {
+  "perSceneLoudness": [
+   {
+    "sceneId": "CIN_001",
+    "reelSeconds": [
+     0.0,
+     36.0
+    ],
+    "v1": {
+     "integratedLUFS": -22.3,
+     "truePeakDBTP": -1.49
+    },
+    "v2": {
+     "integratedLUFS": -21.07,
+     "truePeakDBTP": -1.52
+    },
+    "v3": {
+     "integratedLUFS": -21.04,
+     "truePeakDBTP": -1.65
+    }
+   },
+   {
+    "sceneId": "CIN_002",
+    "reelSeconds": [
+     36.0,
+     54.0
+    ],
+    "v1": {
+     "integratedLUFS": -21.21,
+     "truePeakDBTP": -3.95
+    },
+    "v2": {
+     "integratedLUFS": -22.72,
+     "truePeakDBTP": -4.27
+    },
+    "v3": {
+     "integratedLUFS": -22.5,
+     "truePeakDBTP": -4.26
+    }
+   },
+   {
+    "sceneId": "CIN_004",
+    "reelSeconds": [
+     54.0,
+     72.0
+    ],
+    "v1": {
+     "integratedLUFS": -25.52,
+     "truePeakDBTP": -7.94
+    },
+    "v2": {
+     "integratedLUFS": -26.62,
+     "truePeakDBTP": -8.34
+    },
+    "v3": {
+     "integratedLUFS": -26.79,
+     "truePeakDBTP": -8.27
+    }
+   }
+  ],
+  "voWindowStats": [
+   {
+    "shotId": "CIN_001_S05",
+    "speaker": "Ly An",
+    "windowSceneSeconds": [
+     24.8,
+     28.5
+    ],
+    "windowReelSeconds": [
+     24.8,
+     28.5
+    ],
+    "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+    "v1": {
+     "rmsDbfs": -37.42,
+     "peakDbfs": -27.19
+    },
+    "v2": {
+     "rmsDbfs": -38.67,
+     "peakDbfs": -28.62
+    },
+    "v3": {
+     "rmsDbfs": -38.72,
+     "peakDbfs": -30.56
+    }
+   },
+   {
+    "shotId": "CIN_002_S02",
+    "speaker": "Tạ Vân Khanh",
+    "windowSceneSeconds": [
+     7.0,
+     11.0
+    ],
+    "windowReelSeconds": [
+     43.0,
+     47.0
+    ],
+    "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+    "v1": {
+     "rmsDbfs": -39.71,
+     "peakDbfs": -31.52
+    },
+    "v2": {
+     "rmsDbfs": -39.72,
+     "peakDbfs": -31.52
+    },
+    "v3": {
+     "rmsDbfs": -37.04,
+     "peakDbfs": -32.01
+    }
+   },
+   {
+    "shotId": "CIN_004_S02",
+    "speaker": "Ly An (off-screen)",
+    "windowSceneSeconds": [
+     7.5,
+     9.5
+    ],
+    "windowReelSeconds": [
+     61.5,
+     63.5
+    ],
+    "text": "Nó cứ tránh chỗ nước ấy.",
+    "v1": {
+     "rmsDbfs": -29.52,
+     "peakDbfs": -23.02
+    },
+    "v2": {
+     "rmsDbfs": -29.79,
+     "peakDbfs": -21.74
+    },
+    "v3": {
+     "rmsDbfs": -28.96,
+     "peakDbfs": -20.98
+    }
+   }
+  ],
+  "waveformDiffMasters": [
+   {
+    "pair": "v1-vs-v2",
+    "scope": "full72s",
+    "seconds": [
+     0.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.6706,
+    "correlation": 0.761
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_001",
+    "seconds": [
+     0.0,
+     36.0
+    ],
+    "diffRmsRatio": 0.5907,
+    "correlation": 0.8149
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_002",
+    "seconds": [
+     36.0,
+     54.0
+    ],
+    "diffRmsRatio": 0.6109,
+    "correlation": 0.8061
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_004",
+    "seconds": [
+     54.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.9063,
+    "correlation": 0.548
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_001_S05",
+    "seconds": [
+     24.8,
+     28.5
+    ],
+    "diffRmsRatio": 0.0667,
+    "correlation": 0.9978
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_002_S02",
+    "seconds": [
+     43.0,
+     47.0
+    ],
+    "diffRmsRatio": 0.4753,
+    "correlation": 0.8879
+   },
+   {
+    "pair": "v1-vs-v2",
+    "scope": "CIN_004_S02",
+    "seconds": [
+     61.5,
+     63.5
+    ],
+    "diffRmsRatio": 0.5185,
+    "correlation": 0.8644
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "full72s",
+    "seconds": [
+     0.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.7324,
+    "correlation": 0.7134
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_001",
+    "seconds": [
+     0.0,
+     36.0
+    ],
+    "diffRmsRatio": 0.655,
+    "correlation": 0.7712
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_002",
+    "seconds": [
+     36.0,
+     54.0
+    ],
+    "diffRmsRatio": 0.6817,
+    "correlation": 0.757
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_004",
+    "seconds": [
+     54.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.9591,
+    "correlation": 0.4924
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_001_S05",
+    "seconds": [
+     24.8,
+     28.5
+    ],
+    "diffRmsRatio": 0.1227,
+    "correlation": 0.9924
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_002_S02",
+    "seconds": [
+     43.0,
+     47.0
+    ],
+    "diffRmsRatio": 0.4805,
+    "correlation": 0.8855
+   },
+   {
+    "pair": "v1-vs-v3",
+    "scope": "CIN_004_S02",
+    "seconds": [
+     61.5,
+     63.5
+    ],
+    "diffRmsRatio": 0.5356,
+    "correlation": 0.8555
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "full72s",
+    "seconds": [
+     0.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.3177,
+    "correlation": 0.9493
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_001",
+    "seconds": [
+     0.0,
+     36.0
+    ],
+    "diffRmsRatio": 0.305,
+    "correlation": 0.9533
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_002",
+    "seconds": [
+     36.0,
+     54.0
+    ],
+    "diffRmsRatio": 0.3137,
+    "correlation": 0.9505
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_004",
+    "seconds": [
+     54.0,
+     72.0
+    ],
+    "diffRmsRatio": 0.3572,
+    "correlation": 0.9361
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_001_S05",
+    "seconds": [
+     24.8,
+     28.5
+    ],
+    "diffRmsRatio": 0.1033,
+    "correlation": 0.9947
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_002_S02",
+    "seconds": [
+     43.0,
+     47.0
+    ],
+    "diffRmsRatio": 0.0683,
+    "correlation": 0.9977
+   },
+   {
+    "pair": "v2-vs-v3",
+    "scope": "CIN_004_S02",
+    "seconds": [
+     61.5,
+     63.5
+    ],
+    "diffRmsRatio": 0.1536,
+    "correlation": 0.9882
+   }
+  ],
+  "v3CrossCheckVsCandidateReel": {
+   "candidateReelLoudness": {
+    "integratedLUFS": -22.47,
+    "truePeakDBTP": -1.65
+   },
+   "abV3ReelLoudness": {
+    "integratedLUFS": -22.39,
+    "truePeakDBTP": -1.65
+   },
+   "integratedLufsDiff": 0.08,
+   "truePeakDiffDb": 0.0,
+   "note": "Same v3 WAV master, same AAC 192k/48kHz stereo settings; small diff = encoder run variance vs the CP2/M38-A encode."
+  }
+ },
+ "listeningQuestions": [
+  {
+   "version": "v1",
+   "question": "Baseline ported: does the PackV1 music bed sit under the VO without masking it? Rain/river beds: present or washed out?"
+  },
+  {
+   "version": "v2",
+   "question": "Composed score: does the composed quiet_discovery / boss_mang_cot change the scene feel vs ported? VO clarity in the three locked windows vs v1?"
+  },
+  {
+   "version": "v3",
+   "question": "Fully composed: do the composed ambience beds (rain_light / river_shore / underwater) hold the rain/river/underwater scenes? Any bed that reads thinner or thicker than ported?"
+  },
+  {
+   "version": "all",
+   "question": "Ducking: is the VO clearly on top of the bed in all three windows in every version? Stinger hits (reveal/tension): too hot, too soft, or right — and does the composed stinger change the hit vs ported?"
+  }
+ ],
+ "sourceClosure": {
+  "candidateReelSha256": "a9ae424cd95de09899dfd8bcff40a1ca572f571f7043d3259e10f14c0110780c",
+  "mixMasterSha256": {
+   "v1": "2a982b5f8e92bebd2f1b2e637f9c3e8cad550c4fbf989566f6c257afc40ded81",
+   "v2": "4a1bc54e7c7f998b85685de73b2b475d9fad731e5730a506cba28c055ed81ced",
+   "v3": "09f7cf8ecf302a8b8b73d8d18064e9159c4014b984457a688783d1db938d8b6a"
+  },
+  "voWindowsSource": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json, CIN_002/CIN_002_timing_v1.json, CIN_004/CIN_004_timing_v1.json (locked windows; CIN_001_S05 DECIDED_DEC_MEDIA_P0)",
+  "substitutionSource": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/P0_MIX_V2_manifest_v1.json + P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json substitutionTable",
+  "encode": "video stream copied from candidate reel; audio AAC 192k 48kHz stereo from the 72s WAV masters; apad + -t 72.021333 so the 2160-frame video stays whole (masters are 72.000 s, candidate audio 72.021333 s via AAC priming; the 21 ms tail is digital silence)"
+ },
+ "runtimeUnchangedProof": {
+  "clientGodotClean": true,
+  "note": "Builder asserts ClientGodot/ clean before building; no file under ClientGodot/ is written by this checkpoint."
+ },
+ "provenance": {
+  "vo": "Draft VO (CP04), fictional voices, no real-person cloning, no unlicensed samples.",
+  "musicAmbience": "v1 ported PackV1 (Codex pack); v2/v3 composed originals (CP26/CP30).",
+  "statusNote": "COMPOSED_CANDIDATE / DRAFT_NOT_FINAL / NOT_AUDITIONED. Loudness/RMS/diff figures are measurements, not a listening PASS."
+ }
+}
