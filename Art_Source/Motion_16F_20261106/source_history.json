@@ -1,0 +1,18 @@
+{
+  "generator": "built-in image_gen",
+  "discarded": [
+    {
+      "file": "attack_n.png",
+      "reason": "Blade touched atlas edge; replaced by attack_n_v2.png"
+    },
+    {
+      "file": "idle_ne.png",
+      "reason": "Nonzero background alpha; replaced by idle_ne_v2.png"
+    },
+    {
+      "file": "walk_ne.png",
+      "reason": "Nonzero background alpha; replaced by walk_ne_v2.png"
+    }
+  ],
+  "runtimeRule": "Only generation_records.json sources are accepted; original edit targets kept for reproducibility. No bitmap postprocessing."
+}

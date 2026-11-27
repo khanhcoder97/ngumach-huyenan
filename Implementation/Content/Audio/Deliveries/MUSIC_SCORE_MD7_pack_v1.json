@@ -1,0 +1,283 @@
+{
+ "packId": "NGM_MUSIC_SCORE_MD7_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 7 - phase layers (thang_long intensity, tran_son intensity, bach_uyen intensity, rift_finale intensity, quiet_discovery intensity; Work Order 37 module M-D)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: phase layers authored as data in Tools/MediaProduction/Muse/build_composed_score_md7.py (synthesis engine and checkpoint-26 arrangements reused from build_composed_music.py) and rendered by procedural synthesis. No external samples, no ported bytes. These 5 files are NEW audio, counted separately from the 541 ported PackV1 files and from the checkpoint-26, checkpoint-30, MD1, MD2, MD3, MD4, MD5 and MD6 packs, which keep their own provenance and are untouched.",
+ "counts": {
+  "intro": 0,
+  "outro": 0,
+  "stems": 0,
+  "layers": 5,
+  "total": 5
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/thang_long_layer_intensity",
+   "nameVi": "Thăng Long · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/thang_long",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 92,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over thang_long (16 bars @ 92 bpm): soft drum on the bar line and on beat 2 (the two-beat city pulse; the base has no drums at all) and a low pluck echo of the motif head on bars 4 and 12 (bars where the base has no melody; the arpeggio is texture, not melody). The base has pads on every bar, a bell of the chord tonic on every bar line, bass on all four beats, pluck arpeggios on every bar and shaker on every offbeat; this layer adds the pulse the street arrangement withholds. No bells, no shaker, no bass fill, no pad, no flute. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md7.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/thang_long_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 12020970,
+    "sha256": "e1332cf1c1eb61eeb34967c1283c8ccd1eb79524c9a84c4888e9aabeb5e57105",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -15.2
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/thang_long_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.7391,
+    "sizeBytes": 218745,
+    "sha256": "58c9de9e3d0cb11082a7efb072d78960d26cf97b7e45a7f6bbc1ed5a692a3a04",
+    "integratedLufs": -24.93,
+    "truePeakDbtp": -15.09
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.013507,
+    "tailRms": 0.000293,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.002137,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/thang_long",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -21.65,
+    "truePeakDbtp": -10.55
+   }
+  },
+  {
+   "cueKey": "MUSIC/tran_son_layer_intensity",
+   "nameVi": "Trấn Sơn · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/tran_son",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 90,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over tran_son (15 bars @ 90 bpm): soft drum on beat 2 (the base drum is bar line only, so the two-beat pulse is now complete), bass fill on beats 1 and 3 on the bar's own root, shaker on the offbeats, and a low pluck echo of the motif head on bars 3 and 11 (bars where the base has no melody). The base has pads on every bar, bass on beat 0 only, the bell stating the motif at bars 0/9 and a low flute answer at bar 5; this layer adds the gate pulse. No bells (the bell is the voice). -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md7.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/tran_son_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "9d218eff2f3fbbbf315b1bab21bdb3f2f2e4ffb0e1f754ce4d680e3af85fd517",
+    "integratedLufs": -25.01,
+    "truePeakDbtp": -9.73
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/tran_son_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 379040,
+    "sha256": "c7843598147a2a26ca0904e08eecc2254aee41b5c0e11048a4af093ee79ea368",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -9.61
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.041611,
+    "tailRms": 0.025529,
+    "wrapJump": 6e-06,
+    "wrapJumpRaw": 0.125192,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/tran_son",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.51,
+    "truePeakDbtp": -8.07
+   }
+  },
+  {
+   "cueKey": "MUSIC/bach_uyen_layer_intensity",
+   "nameVi": "Bạch Uyên · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/bach_uyen",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 62,
+    "bars": 15,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over bach_uyen (15 bars @ 62 bpm): soft drum on the bar line, bass fill on beats 1 and 3 on the bar's own root, shaker on the offbeats (muffled by the same 850 Hz low-pass as the parent, so it reads as soft underwater ticks), a low pluck echo of the motif head on bars 6 and 13 (bars where the base has no melody), and a D5 bell toll on bar 14 (the tonic bell on the final bar; the base has no bell there). The base has pads on every bar, bass on beats 0/2 only, the motif an octave down in flute at bars 1/9 and slow bell marks at bars 5/12; this layer adds the deep current the city withholds. Whole layer low-passed at 850 Hz like its parent, BEFORE the gain stage. No flute, no drops, no pad. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md7.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/bach_uyen_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 16722684,
+    "sha256": "e3d35383960d29145782880129f6eab52e296df6ab72a72918f6c458ce2e43fe",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -10.95
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/bach_uyen_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.0645,
+    "sizeBytes": 330861,
+    "sha256": "08119f9ee47fa2e8f20e33b17bc0a7350c36d92014f03e607a053511a6e0694d",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -10.85
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.024106,
+    "tailRms": 0.003781,
+    "wrapJump": 1e-06,
+    "wrapJumpRaw": 0.017025,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/bach_uyen",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.59,
+    "truePeakDbtp": -9.54
+   }
+  },
+  {
+   "cueKey": "MUSIC/rift_finale_layer_intensity",
+   "nameVi": "Ngũ Mạch · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/rift_finale",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 100,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over rift_finale (16 bars @ 100 bpm): soft drum on the bar lines of bars 0-14 (bar 15 already has the closing drum, so it is left alone), bass fill on beats 1 and 3 on the bar's own root, shaker on the offbeats, and a low pluck echo of the motif head on bars 5 and 13 (bars where the base has no melody). The base passes the motif across five registers and lands the set's only full D-major close at bar 15; this layer adds the resolve pulse. No bells, no flute. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md7.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/rift_finale_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 11059302,
+    "sha256": "caab7c0ef0d60e81eca931bf1fb9d41935506c821cd1f821cab32297806a8a4e",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -8.97
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/rift_finale_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 38.4,
+    "sizeBytes": 353924,
+    "sha256": "98bf9e0253fddc51827b725bc2554de6a7852b6f3a1b48ddce5a5eaba3c48cce",
+    "integratedLufs": -24.95,
+    "truePeakDbtp": -9.08
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.052311,
+    "tailRms": 0.001347,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.005044,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/rift_finale",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.31,
+    "truePeakDbtp": -7.91
+   }
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery_layer_intensity",
+   "nameVi": "Khoảng lặng khám phá · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/quiet_discovery",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 60,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over quiet_discovery (16 bars @ 60 bpm): gentle bass on beats 0 and 2 (the first bass the cue ever carries; D bars 0-9, G bars 10-13, D bars 14-15), shaker on the offbeats ONLY in the second half (bars 8-15; the discovery deepens), and a low pluck echo of the motif head on bars 2 and 10 (bars where the base has no melody). The base is exploration silence -- sparse chords, solo flute fragments, single bells; this layer adds the depth the silence withholds. NO drums, deliberately: a bar-line drum would fight the cue's identity. No bells, no pad. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md7.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 arrangements (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/quiet_discovery_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 18432102,
+    "sha256": "81d636add66bdb1719088f6dcd315735701edce4b7006cd548896d89b7afe9a7",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -9.66
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/quiet_discovery_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 64.0,
+    "sizeBytes": 352888,
+    "sha256": "f9775f3dd62bbd8548ed70c70e305ddb12c1a453d41b3ce0d99b46979709c0c6",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -9.62
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.067682,
+    "tailRms": 0.02921,
+    "wrapJump": 7e-06,
+    "wrapJumpRaw": 0.131574,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/quiet_discovery",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -22.48,
+    "truePeakDbtp": -9.28
+   }
+  }
+ ],
+ "notes": [
+  "Phase layers are ADDITIVE loops at the parent cue's tempo/bars (-25 LUFS target): they play over the base cue, they do not replace it. Combined base+layer loudness/true-peak is measured from real bytes and recorded per layer.",
+  "Each MD7 layer adds only what its base and the earlier layers do not already do: thang_long intensity adds the two-beat city drum pulse the busy street arrangement withholds (no drums at all in the base) plus a low pluck echo on melody-free bars; tran_son intensity completes the two-beat drum pulse, fills the bass on beats 1/3 and adds the offbeat shaker the bell-led form withholds; bach_uyen intensity adds the deep current (bar-line drum, bass fill, offbeat shaker, motif echo, final-bar D5 bell), low-passed at 850 Hz like its parent; rift_finale intensity adds the resolve pulse (drums on bars 0-14, bass fill, offbeat shaker, motif echo) and leaves bar 15 alone, where the base already lands its only full close; quiet_discovery intensity adds the depth the silence withholds (first bass the cue ever carries, late shaker in the second half, motif echo) and deliberately carries NO drums, so the pulse never fights the cue's identity.",
+  "Adoption is a presentation-adapter decision (Codex): the MD7 files are delivered in parallel under ClientGodot/assets/audio/composed/layers/ and do NOT replace the ported PackV1 files, their cue bindings, or the checkpoint-26/30/MD1/MD2/MD3/MD4/MD5/MD6 cues.",
+  "No ear audition has been done; loudness/true-peak are measured from real bytes. Loop seams are recorded per looping cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it."
+ ]
+}

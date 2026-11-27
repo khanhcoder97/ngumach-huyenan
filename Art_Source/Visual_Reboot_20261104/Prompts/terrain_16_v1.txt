@@ -1,0 +1,9 @@
+Use case: stylized-concept. Asset type: production-candidate pixel-art TERRAIN TILE ATLAS for a top-down Vietnamese fantasy RPG, no scene and no UI.
+Reference image is ONLY palette/material/style reference. Draw fresh tiles; never crop the reference.
+Output a precisely edge-to-edge 4 by 4 grid, 16 equally sized SQUARE tiles, square canvas1024x1024 preferred. NO padding, NO gutters, NO dividers, NO frames, NO labels. Each cell completely filled. Each tile should represent a simple native16x16pixel terrain tile enlarged uniformly, with large clean square color clusters, not noisy detailed painting. Crisp nearest-neighbor pixel design, limited3-4 shades/material, same upper-left light. Colors: rice-green grass, warm ochre earth, ivory-grey stone, deep jade river, weathered warm brown wood. Zero cast shadows or props.
+Tile positions left-to-right:
+row1: plain green grass; subtle alternate grass; packed ochre dirt path; worn light stone paving.
+row2: calm deep jade water; lighter jade river ripple water; horizontal wooden pier planks; muted sandy bank.
+row3: shoreline with grass across TOP half and water BOTTOM; shoreline grass RIGHT half and water LEFT; shoreline grass BOTTOM half water TOP; shoreline grass LEFT half water RIGHT.
+row4: corner shore with grass in TOP-RIGHT quarter and water elsewhere; grass BOTTOM-RIGHT quarter/water elsewhere; grass BOTTOM-LEFT quarter/water elsewhere; grass TOP-LEFT quarter/water elsewhere.
+Straight shorelines must connect cleanly to corners and have quiet1-2native-pixel pale bank edges. Grass and water colors must match plain grass/water tiles exactly. Main grass/path/water/planks tiles tile seamlessly on every edge when repeated, no perimeter outline. Water small sparse pixel ripples, not a painted sea. No diagonal/isometric perspective, no objects, no trees, no flowers, no big stones, no 3D bevels, no blur, no bloom, no gradient. This is technical tile data artwork, not a decorative collage.

@@ -1,0 +1,28 @@
+name: Muse media scope
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches: [main, codex/story-gameplay-integration-20261031]
+permissions:
+  contents: read
+jobs:
+  muse-media-scope:
+    if: startsWith(github.event.pull_request.head.ref, 'muse/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Check paths against base policy without executing head code
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git fetch --no-tags origin "$HEAD_SHA"
+          python Tools/Coordination/check_agent_scope.py --base "$BASE_SHA" --head "$HEAD_SHA" --branch "$HEAD_BRANCH"

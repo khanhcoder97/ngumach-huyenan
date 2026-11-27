@@ -1,0 +1,1649 @@
+{
+ "specId": "NGM_CAMPAIGN_MOTION_P2_SPEC_V1",
+ "checkpoint": "WO37 M-C checkpoint 3a - campaign motion, priority-2 (26 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "sources": {
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "timingFiles": "Implementation/Content/Narrative/Deliveries/CIN_*/CIN_*_timing_v1.json",
+  "mixes": "ClientGodot/assets/audio/mix/cin*_v1/*_mix_draft_v1.wav (draft v1 mixes)",
+  "runtimeVideos": "ClientGodot/assets/cinematics/CIN_*/CIN_*_640x360_30fps.mp4 (Ken Burns animatic takes)"
+ },
+ "mixes": {
+  "CIN_003": {
+   "file": "ClientGodot/assets/audio/mix/cin003_v1/CIN_003_mix_draft_v1.wav",
+   "sha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75"
+  },
+  "CIN_005": {
+   "file": "ClientGodot/assets/audio/mix/cin005_v1/CIN_005_mix_draft_v1.wav",
+   "sha256": "40db6c4b41ad1a3da697c9dba18a2dbf0d358edaf11a8324178349fcfb2e0988",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "223f5801032e50ad4d4a05cad2a39f3cb32f71d4f1ce3c6add5b71ceacd64210"
+  },
+  "CIN_006": {
+   "file": "ClientGodot/assets/audio/mix/cin006_v1/CIN_006_mix_draft_v1.wav",
+   "sha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321"
+  },
+  "CIN_007": {
+   "file": "ClientGodot/assets/audio/mix/cin007_v1/CIN_007_mix_draft_v1.wav",
+   "sha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125"
+  },
+  "CIN_008": {
+   "file": "ClientGodot/assets/audio/mix/cin008_v1/CIN_008_mix_draft_v1.wav",
+   "sha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee"
+  },
+  "CIN_009": {
+   "file": "ClientGodot/assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
+   "sha256": "196994e8162b41e9964cf1e2ddc4ad7bf94efd938f153b15c9ab5fe1f76809e4",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "51d6b590e412faeb0d0eabf1305aa9a33c928af05818b4a58a24d49e1b22e6e6"
+  },
+  "CIN_010": {
+   "file": "ClientGodot/assets/audio/mix/cin010_v1/CIN_010_mix_draft_v1.wav",
+   "sha256": "6a3f9d21bd61bb2c43d2f55356f0ca743006931ffbac53568e7f17c0ff6b4bb2",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56"
+  },
+  "CIN_011": {
+   "file": "ClientGodot/assets/audio/mix/cin011_v1/CIN_011_mix_draft_v1.wav",
+   "sha256": "aa89602b48cf2e2ac0ae2b5a3d4a7c872fc7c386c7989c5c46d32df074232fa1",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "cec9e96af68b4f654458455fa038446c5734ad4fe95bacf211891a43fdbf1b71"
+  },
+  "CIN_012": {
+   "file": "ClientGodot/assets/audio/mix/cin012_v1/CIN_012_mix_draft_v1.wav",
+   "sha256": "63073ea64e623aedfb9767e90a8efc8e3ab8a6e1d0cbb6b14c9d2aeb56d719ef",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "aee3ef178b524d13c30fc927e7ad89cc01b9ede1a73a9b927c193baf65e67731"
+  },
+  "CIN_013": {
+   "file": "ClientGodot/assets/audio/mix/cin013_v1/CIN_013_mix_draft_v1.wav",
+   "sha256": "9851c8e350615e9af9a965c9ecb85b1377c862fa8a8ab5c5033863cc04b50067",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f"
+  },
+  "CIN_015": {
+   "file": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
+   "sha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "95a6b688aaa5d8e77103d0045edf2ac50a9a122d6d956b797f6c136857947f22"
+  },
+  "CIN_016": {
+   "file": "ClientGodot/assets/audio/mix/cin016_v1/CIN_016_mix_draft_v1.wav",
+   "sha256": "5560346034e91a261718bc0a38e89681c9e25191a8be3cb2d8803b797668c5a0",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "59caedc90f3c096b54aedc8d8c0a6848078af6a2e8afe62f10d47b305ee5921c"
+  },
+  "CIN_018": {
+   "file": "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav",
+   "sha256": "25796b3d494716fddd419b3069101b8595a26f6ce663c4a5da774b00431bfd00",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "703d4641cdb179597fb414d90d7a037513937ba5a3a5701724b84c43ec2c1b35"
+  },
+  "CIN_019": {
+   "file": "ClientGodot/assets/audio/mix/cin019_v1/CIN_019_mix_draft_v1.wav",
+   "sha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "b33b48059417859a3c4f114dde2ebb1c8280d471c442280a5fc6a07e67e95eee"
+  },
+  "CIN_020": {
+   "file": "ClientGodot/assets/audio/mix/cin020_v1/CIN_020_mix_draft_v1.wav",
+   "sha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f",
+   "runtimeMp4": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+   "runtimeMp4Sha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b"
+  }
+ },
+ "rules": {
+  "poseCount": 5,
+  "poseFps": 10,
+  "framesPerPose": 3,
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "frameSize": [
+   640,
+   360
+  ],
+  "poseFrameSize": [
+   640,
+   360
+  ],
+  "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+  "beatSeconds": 0.5,
+  "note": "Same model as M-C checkpoint 2 (P0): 5 poses per beat at 10 pose fps (0.5 s beat); keyframe hold before the beat, last pose held after; 6 s per shot. All 26 shots procedural (code-rendered from the storyboard keyframe); no generated pixels. Dialogue-shot beats start exactly at the dialogue window start. Scenes mix pose-animated shots with Ken Burns hold slices (priority-3 shots from the ledger) in the scene B take, so the B take stays a full-scene review cut."
+ },
+ "shots": [
+  {
+   "shotId": "CIN_003_S01",
+   "sceneId": "CIN_003",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Hai ngư dân bên bờ nước; gợn sóng lan từ mặt nước, mưa nhẹ, lau sậy lay.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       330,
+       250,
+       8
+      ],
+      [
+       430,
+       280,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "rain",
+     "count": 40,
+     "seed": 301,
+     "dyPerPose": 7
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       210,
+       55,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_003/keyframes_16x9/keyframe_CIN_003_S01.png",
+    "sha256": "aeffda939892e64c76c62b06a9af66b3a4e4cb1300cd26a6e34fc791085d8d39"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_003_S02",
+   "sceneId": "CIN_003",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Mặt ao tối phản chiếu bóng người; gợn sóng, lau hai bờ lay.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       320,
+       250,
+       10
+      ],
+      [
+       200,
+       290,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       150,
+       90,
+       360
+      ],
+      [
+       560,
+       140,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_003/keyframes_16x9/keyframe_CIN_003_S02.png",
+    "sha256": "8ab2b85b34316a7f1acb0fdccbfced27a8aebcd4c8bed57efbf6e66c4fae9f07"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_005_S01",
+   "sceneId": "CIN_005",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Phố chợ mái đỏ; mái hiên và đèn lồng lay nhẹ.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       350,
+       130,
+       470,
+       190
+      ],
+      [
+       560,
+       60,
+       640,
+       140
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S01.png",
+    "sha256": "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_005_S02",
+   "sceneId": "CIN_005",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Sân trong, cờ hiệu lay; cây bên trái lay.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       480,
+       100,
+       540,
+       160
+      ],
+      [
+       560,
+       110,
+       620,
+       170
+      ],
+      [
+       0,
+       60,
+       120,
+       300
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S02.png",
+    "sha256": "7c47e5c88f1bdcc5d82a80d6b2d0f26f1c2851fade762747e1d26ee4b4d3db48"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_005_S03",
+   "sceneId": "CIN_005",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "action": "Quảng trường nhìn từ trên; cây bụi bốn góc lay theo thoại Ly An.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       60,
+       90,
+       160
+      ],
+      [
+       0,
+       220,
+       100,
+       360
+      ],
+      [
+       540,
+       200,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S03.png",
+    "sha256": "f2db67721c4cbb19650485d4a991b02eae4a0b1cf8cac66f328f5262f9699d35"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_006_S02",
+   "sceneId": "CIN_006",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Con dấu ấn xuống giấy; bút lông lay nhẹ.",
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      175,
+      135,
+      235,
+      195
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       130,
+       60,
+       170,
+       120
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/keyframe_CIN_006_S02.png",
+    "sha256": "ef1a9a09e83d2e7d5d2757dc6755c98a554c7e7c9cd31c88f3e757382f250ac0"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_007_S01",
+   "sceneId": "CIN_007",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Suối rừng, đường nấm; gợn sóng, tán lá hai bờ lay.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       330,
+       300,
+       8
+      ],
+      [
+       420,
+       320,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       100,
+       140,
+       360
+      ],
+      [
+       520,
+       120,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_007/keyframes_16x9/keyframe_CIN_007_S01.png",
+    "sha256": "9d3233d4c0c93495ba27e61de37b85785f28b768782cadfa1e8587128e566efd"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_008_S01",
+   "sceneId": "CIN_008",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Bàn tay cầm bút viết; nét bút dịch phải, con dấu nhấp nhẹ.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       280,
+       50,
+       520,
+       220
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      270,
+      220,
+      350,
+      290
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_008/keyframes_16x9/keyframe_CIN_008_S01.png",
+    "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_008_S02",
+   "sceneId": "CIN_008",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Người ôm bát trước cửa gỗ; bát nhấp, đèn lồng lay.",
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      60,
+      200,
+      110,
+      250
+     ],
+     "dy": [
+      0,
+      2,
+      4,
+      2,
+      0
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       430,
+       60,
+       470,
+       120
+      ]
+     ],
+     "dx": [
+      0,
+      2,
+      4,
+      2,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_008/keyframes_16x9/keyframe_CIN_008_S02.png",
+    "sha256": "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_009_S01",
+   "sceneId": "CIN_009",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Khe suối giữa rễ cây; gợn sóng, tre và rễ lay.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       320,
+       300,
+       10
+      ],
+      [
+       400,
+       250,
+       8
+      ],
+      [
+       250,
+       320,
+       6
+      ]
+     ],
+     "growth": 6
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       80,
+       120,
+       360
+      ],
+      [
+       480,
+       60,
+       640,
+       300
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S01.png",
+    "sha256": "5d64d3e203105788591923c9e416e50f876e3ec4e8896ac602ca3212b29080d7"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_009_S02",
+   "sceneId": "CIN_009",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Ba người thợ trên đường rừng; tán cây lay, đốm sáng trôi.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       420,
+       0,
+       640,
+       220
+      ],
+      [
+       0,
+       150,
+       150,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "drops",
+     "centers": [
+      [
+       200,
+       150
+      ],
+      [
+       350,
+       200
+      ]
+     ],
+     "r0": 2,
+     "growth": 1.5
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S02.png",
+    "sha256": "fd0051fc7904de9c9f26c33c0f97cd4029f06ba72009459c258ac152d3d46581"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_009_S03",
+   "sceneId": "CIN_009",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "action": "Sông nhìn từ trên; gợn sóng dọc sông, cây hai bờ lay theo thoại Ly An.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       330,
+       120,
+       8
+      ],
+      [
+       340,
+       250,
+       8
+      ],
+      [
+       320,
+       320,
+       6
+      ]
+     ],
+     "growth": 6
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       100,
+       110,
+       300
+      ],
+      [
+       520,
+       80,
+       640,
+       320
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S03.png",
+    "sha256": "d3abc86cd30bc7f4f30fefb9cae467e5e3e1e85bb3dfbc861b800885d3851966"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_010_S01",
+   "sceneId": "CIN_010",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Xe hàng sa mạc; mái lều lay, thùng nước nhấp, bụi trôi.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       60,
+       60,
+       300,
+       140
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      20,
+      230,
+      140,
+      340
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "drops",
+     "centers": [
+      [
+       320,
+       280
+      ],
+      [
+       480,
+       300
+      ]
+     ],
+     "r0": 2,
+     "growth": 1.5
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_010/keyframes_16x9/keyframe_CIN_010_S01.png",
+    "sha256": "cc6cda9f2d27aaaba61e554b92163fd5ba623d37283689eaee55153b1da5cc9b"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_011_S01",
+   "sceneId": "CIN_011",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Mảnh đồng trên bàn thợ; ánh lấp lánh, vải phủ lay.",
+   "layers": [
+    {
+     "type": "drops",
+     "centers": [
+      [
+       260,
+       180
+      ],
+      [
+       360,
+       220
+      ]
+     ],
+     "r0": 2,
+     "growth": 2
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       520,
+       180,
+       640,
+       300
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_011/keyframes_16x9/keyframe_CIN_011_S01.png",
+    "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_011_S02",
+   "sceneId": "CIN_011",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Hai người trao chén; chén nhấp, đèn và thảo mộc treo lay.",
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      300,
+      150,
+      360,
+      210
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       430,
+       40,
+       480,
+       110
+      ],
+      [
+       180,
+       40,
+       260,
+       140
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_011/keyframes_16x9/keyframe_CIN_011_S02.png",
+    "sha256": "be6468eb522a6e6c2a24d379cf2572074ed699bbfe2e648b1e54c975eef24771"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_012_S01",
+   "sceneId": "CIN_012",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Lò rèn rực lửa; tàn lửa sáng dần, giỏ treo lay.",
+   "layers": [
+    {
+     "type": "drops",
+     "centers": [
+      [
+       320,
+       130
+      ],
+      [
+       280,
+       160
+      ]
+     ],
+     "r0": 3,
+     "growth": 2.5
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       60,
+       90,
+       200
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_012/keyframes_16x9/keyframe_CIN_012_S01.png",
+    "sha256": "489eb56b85cd3480628ae8ab0265b69086df0bcb562d8ff4e15f98bfd8982cb2"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_013_S01",
+   "sceneId": "CIN_013",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Cổng thành đá; cờ trên cổng và cây hai bên lay.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       280,
+       60,
+       360,
+       120
+      ],
+      [
+       0,
+       150,
+       110,
+       360
+      ],
+      [
+       540,
+       140,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_013/keyframes_16x9/keyframe_CIN_013_S01.png",
+    "sha256": "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_015_S01",
+   "sceneId": "CIN_015",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Thành phố chìm dưới nước; cột bọt khí dâng, rong lay.",
+   "layers": [
+    {
+     "type": "bubbles",
+     "columns": [
+      [
+       120,
+       250,
+       4,
+       6
+      ],
+      [
+       300,
+       200,
+       5,
+       7
+      ],
+      [
+       480,
+       180,
+       4,
+       6
+      ]
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       200,
+       120,
+       360
+      ],
+      [
+       520,
+       220,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_015/keyframes_16x9/keyframe_CIN_015_S01.png",
+    "sha256": "6b067babad5b0adba570a85129cef0768f14098ecd56ef44a9b93dcf20034b29"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_015_S02",
+   "sceneId": "CIN_015",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Thợ lặn dưới nước; bọt khí dâng, bát trên bàn nhấp, rong lay.",
+   "layers": [
+    {
+     "type": "bubbles",
+     "columns": [
+      [
+       200,
+       150,
+       4,
+       6
+      ],
+      [
+       350,
+       100,
+       5,
+       7
+      ]
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       280,
+       200,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      180,
+      180,
+      260,
+      240
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_015/keyframes_16x9/keyframe_CIN_015_S02.png",
+    "sha256": "11847adf7efeb5dc44af008e7a5f3e9f84c191772c376e8dd8d03603d4edc4f7"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_016_S01",
+   "sceneId": "CIN_016",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Bàn làm việc, đèn treo; đèn lay, bút nhấp.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       250,
+       20,
+       400,
+       110
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      430,
+      180,
+      480,
+      230
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_016/keyframes_16x9/keyframe_CIN_016_S01.png",
+    "sha256": "0125c345f7bb73a4d4a476206071bd2f43a523aea9a356cb86f2eaf5b5b5ea82"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_018_S01",
+   "sceneId": "CIN_018",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Hai người chia nước ngoài đồng; bình nhấp, tre hai bên lay.",
+   "layers": [
+    {
+     "type": "bob",
+     "box": [
+      230,
+      200,
+      300,
+      280
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       520,
+       40,
+       640,
+       300
+      ],
+      [
+       0,
+       60,
+       110,
+       300
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_018/keyframes_16x9/keyframe_CIN_018_S01.png",
+    "sha256": "cd345c964e8cc5d3641cf23bb74629df726474ca3bbd2ce483d8bdfd426dab9f"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_019_S01",
+   "sceneId": "CIN_019",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Vòng năm trụ nguyên tố; trụ sáng nhấp, cây hai bên lay.",
+   "layers": [
+    {
+     "type": "drops",
+     "centers": [
+      [
+       150,
+       180
+      ],
+      [
+       480,
+       170
+      ]
+     ],
+     "r0": 3,
+     "growth": 2.5
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       120,
+       110,
+       360
+      ],
+      [
+       540,
+       100,
+       640,
+       360
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_019/keyframes_16x9/keyframe_CIN_019_S01.png",
+    "sha256": "95d4ee945f24a7fdccdfd2286edb5f1a4b9b033c4ca26c6a6cf891847fa92fbd"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_019_S02",
+   "sceneId": "CIN_019",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Xưởng cơ khí, cần gạt kẹt; tia lửa, đèn treo và cần gạt lay.",
+   "layers": [
+    {
+     "type": "drops",
+     "centers": [
+      [
+       250,
+       150
+      ],
+      [
+       300,
+       200
+      ]
+     ],
+     "r0": 2,
+     "growth": 3
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       300,
+       20,
+       360,
+       90
+      ],
+      [
+       180,
+       140,
+       240,
+       240
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_019/keyframes_16x9/keyframe_CIN_019_S02.png",
+    "sha256": "f7683d11f17783495863c91e851cf404f75891a6a97806fe038a493b046664e5"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_020_S01",
+   "sceneId": "CIN_020",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Bàn bên sông; thư nhấp, gợn sóng, lau sậy lay.",
+   "layers": [
+    {
+     "type": "ripples",
+     "centers": [
+      [
+       380,
+       280,
+       8
+      ],
+      [
+       480,
+       300,
+       6
+      ]
+     ],
+     "growth": 5
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       220,
+       90,
+       360
+      ],
+      [
+       560,
+       200,
+       640,
+       340
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      330,
+      200,
+      390,
+      250
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S01.png",
+    "sha256": "f8a2b44714e87ccdfce2e0aa81039c2d46b04399f5c87c3b96ecee8997af6d1a"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_020_S02",
+   "sceneId": "CIN_020",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "action": "Người viết thư trong nhà; nét bút dịch phải, ớt khô treo lay.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       330,
+       180,
+       450,
+       280
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    },
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       480,
+       60,
+       540,
+       180
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S02.png",
+    "sha256": "9fe69c5a14b0b2ac31fe7b7016b0f8a9812451bf348511718ce5c76de001bff6"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  },
+  {
+   "shotId": "CIN_020_S03",
+   "sceneId": "CIN_020",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "action": "Sân nhà nhìn từ trên; cây bụi lay, bát trên bàn nhấp theo thoại người nhận thư.",
+   "layers": [
+    {
+     "type": "swayX",
+     "boxes": [
+      [
+       0,
+       180,
+       110,
+       360
+      ],
+      [
+       520,
+       150,
+       640,
+       330
+      ]
+     ],
+     "dx": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "type": "bob",
+     "box": [
+      150,
+      220,
+      210,
+      270
+     ],
+     "dy": [
+      0,
+      1,
+      2,
+      1,
+      0
+     ]
+    }
+   ],
+   "keyframe": {
+    "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S03.png",
+    "sha256": "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705"
+   },
+   "poseCount": 5,
+   "poseFps": 10,
+   "shotDurationSeconds": 6.0,
+   "outputFps": 30
+  }
+ ],
+ "rejectedStrips": []
+}

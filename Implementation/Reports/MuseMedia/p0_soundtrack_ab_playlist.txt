@@ -1,0 +1,13 @@
+#EXTM3U
+# MEDIA-02 WO37 M-B CP1 — P0 soundtrack A/B (v1 vs v2 vs v3)
+# AUDITION STATUS: NOT_AUDITIONED (prepared for a human listener)
+# Same candidate-B picture in all three reels; only the soundtrack differs.
+# M3U content under a .txt name (.m3u is not a policy extension);
+# rename a copy to .m3u to open it directly in a player.
+# Paths are relative to Implementation/Reports/MuseMedia/.
+#EXTINF:72.0,P0 soundtrack v1 — ported PackV1 stems (checkpoint 20)
+../../../Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v1_72s_640x360_30fps.mp4
+#EXTINF:72.0,P0 soundtrack v2 — composed music + stingers, ported ambience (checkpoint 29)
+../../../Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v2_72s_640x360_30fps.mp4
+#EXTINF:72.0,P0 soundtrack v3 — fully composed music + stingers + ambience (checkpoint 31)
+../../../Art_Source/Cinematics/P0_Motion/soundtrack_ab/P0_soundtrack_v3_72s_640x360_30fps.mp4

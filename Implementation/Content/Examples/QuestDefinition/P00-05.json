@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-05",
+  "titleKey": "QUEST.P00-05.TITLE",
+  "graphId": "GRAPH_P00_05",
+  "questType": "MAIN",
+  "activation": "BLOCKED",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [
+    "P00-04"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_05_BOSS",
+      "type": "BOSS",
+      "targetIds": [
+        "BOSS_MANG_COT"
+      ],
+      "count": 1,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_05_CLASS_CONFIRM",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_CLASS_TRIAL"
+      ],
+      "count": 1,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "blockedSteps": [
+    {
+      "designStep": "P00_05_BOSS_DATA",
+      "missingField": "bossStats",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (hạ Mãng Cốt) — combat_mob_stats_v1.json marks BOSS_MANG_COT BOSSDATA_BLOCKED"
+    },
+    {
+      "designStep": "P00_05_FRAGMENT",
+      "missingField": "objectiveTargets",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (tương tác mảnh ấn) — World_Spawn_Gathering_Manifest_vi.csv has no fragment interactable record"
+    },
+    {
+      "designStep": "P00_05_TURN_IN_NPC",
+      "missingField": "turnInNpcId",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 — the start NPC is pinned to Đầm Chuông but the report hand-in is not named"
+    },
+    {
+      "designStep": "P00_05_CHAPTER_UNLOCK",
+      "missingField": "unlockQuestIds",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mở Thanh Lạc/Chương I) — C1-01 has no runtime quest record yet"
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [
+      "EQ-MK-WEAPON-T1-R-COMMON"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-05"
+}

@@ -89,3 +89,8 @@ The Unity client uses URP's built-in Pixel Perfect Camera (URP 17.3); do not add
 ## Documentation
 
 For detailed design and implementation information, refer to `docs/production` folder.
+
+
+## Narrative workshop — Bến Mưa
+
+Write, revise and play branching Vietnamese screenplay without Unity. Start at [the narrative workshop](docs/narrative/workshop/README.md) and [tool setup](Tools/NarrativeWorkshop/README.md). The pilot contains 18 story scenes and 8 simulated checkpoints for P00-01–P00-05, with a source-pinned voice/review skill set and 15 cinematic shot notes. It is an authoring candidate; runtime rewards, quests and media triggers remain unchanged.

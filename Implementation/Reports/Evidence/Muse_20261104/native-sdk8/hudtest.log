@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+  PASS hp frac 0.37
+  PASS mp frac 0.40
+  PASS cd start ok
+  PASS cd restart refused while running
+  PASS cd half after 4s
+  PASS cd frac 0.5
+  PASS cd finished
+  PASS joy east = (1,0)
+  PASS joy south half
+  PASS joy active alpha > 0.9
+  PASS joy released = zero
+  PASS minimap spawn origin (0,0)
+  PASS minimap window 1120x960
+  PASS minimap mid origin x 3040
+  PASS minimap far corner clamped
+HUDTEST: 15 passed, 0 failed
+HUDTEST RESULT: PASS

@@ -1,0 +1,58 @@
+{
+  "tool": "verify_fresh_checkout_item5.py",
+  "tool_version": "1.0.0",
+  "checkout": ".",
+  "checkout_head": "ea1a3eec34bd5a23cb75c86c0afcab0788fca44d",
+  "checked_at_utc": "2026-11-06T04:45:18.175456+00:00",
+  "policy_source": "integration codex/story-gameplay-integration-20261031 @ 6f2b465",
+  "attributes_file_present": true,
+  "checks": {
+    "policy_ogv_lfs": {
+      "passed": false,
+      "expected": "*.ogv filter=lfs diff=lfs merge=lfs -text",
+      "present": false
+    },
+    "policy_lf_rules": {
+      "passed": false,
+      "expected_count": 7,
+      "missing": [
+        "Art_Source/Cinematics/**/*.json text eol=lf",
+        "Art_Source/Audio/Muse/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.json text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.srt text eol=lf",
+        "ClientGodot/assets/audio/**/*.json text eol=lf"
+      ]
+    },
+    "ogv_real_bytes": {
+      "passed": true,
+      "real_bytes": 22,
+      "lfs_pointers": 0,
+      "other": [],
+      "pointer_files": []
+    },
+    "text_lf_endings": {
+      "passed": true,
+      "files_checked": 254,
+      "files_with_cr": [],
+      "note": "Linux-only evidence: a Linux checkout keeps LF even without the policy; the LF rules matter for Windows checkouts. A PASS here never proves the policy is present."
+    },
+    "policy_matches_reference": {
+      "passed": false,
+      "reference": "/tmp/item5_reference_gitattributes_6f2b465.txt",
+      "reference_rules": 27,
+      "missing": [
+        "*.ogv filter=lfs diff=lfs merge=lfs -text",
+        "Art_Source/Cinematics/**/*.json text eol=lf",
+        "Art_Source/Audio/Muse/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.json text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.srt text eol=lf",
+        "ClientGodot/assets/audio/**/*.json text eol=lf"
+      ]
+    }
+  },
+  "verdict": "FAIL"
+}

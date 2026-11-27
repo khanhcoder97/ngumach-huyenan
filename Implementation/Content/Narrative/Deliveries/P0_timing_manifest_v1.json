@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 01 - P0 animatic timing + SRT draft",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "cf171786baebb10c3f17d3060d47429faf3e4026",
+  "sourceHashes": {
+    "Cinema_Production_Pack_v1.json": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+    "media_p0_decisions_20261105.json": "35dbb70d68fe054483b72dc17353f505a9ff0d60daa0f58b4c499387bfc9a52f",
+    "game_audio_v1.json": "39e9ff6574650c385344e32271ccb6430618cdab21d07e3df86682754693efd9"
+  },
+  "inventoryRebaselined": {
+    "scenes": 20,
+    "shots": 63,
+    "seconds": 378
+  },
+  "scenes": [
+    {
+      "sceneId": "CIN_001",
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_vi.srt",
+      "srtSha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "DECIDED_DEC_MEDIA_P0",
+      "charsPerSecond": 8.11
+    },
+    {
+      "sceneId": "CIN_002",
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_vi.srt",
+      "srtSha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "charsPerSecond": 12.75
+    },
+    {
+      "sceneId": "CIN_004",
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_vi.srt",
+      "srtSha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+      "charsPerSecond": 12.0
+    }
+  ]
+}

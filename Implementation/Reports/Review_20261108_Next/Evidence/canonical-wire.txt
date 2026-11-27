@@ -1,0 +1,4 @@
+talk input=CANONICAL_QODER_SUCCESS_EXAMPLE success=True code= state=NeedsResync pending=False
+talk input=DETERMINISTIC_422_OUT_OF_RANGE success=False code=out_of_range state=Ready pending=False
+portal input=CANONICAL_QODER_SUCCESS_EXAMPLE success=True code= state=NeedsResync pending=False
+portal input=DETERMINISTIC_422_OUT_OF_RANGE success=False code=out_of_range state=Ready pending=False

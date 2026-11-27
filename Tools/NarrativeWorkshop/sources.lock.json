@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-31",
+  "skills": [
+    {
+      "repository": "haowjy/creative-writing-skills",
+      "commit": "1cb520f9c61e79ce2b1c56dba18601b2d6873433",
+      "path": "skills/writing-principles",
+      "adaptation": "Only unsupported model-invocable frontmatter removed. Original retained at references/upstream-SKILL.md.",
+      "name": "writing-principles",
+      "upstreamSkillSha256": "ec58cf9d95e1de63125908c408e3e066ff33e7b4a2f25f9b746fa78f7f4ba608"
+    },
+    {
+      "repository": "haowjy/creative-writing-skills",
+      "commit": "1cb520f9c61e79ce2b1c56dba18601b2d6873433",
+      "path": "skills/creative-writing-craft",
+      "adaptation": "Only unsupported model-invocable frontmatter removed. Original retained at references/upstream-SKILL.md.",
+      "name": "creative-writing-craft",
+      "upstreamSkillSha256": "70e505eb0210e2ceeb31a5ba9e2ac8c65f133937438714ed769e291b386d80cb"
+    },
+    {
+      "repository": "haowjy/creative-writing-skills",
+      "commit": "1cb520f9c61e79ce2b1c56dba18601b2d6873433",
+      "path": "skills/story-review",
+      "adaptation": "Only unsupported model-invocable frontmatter removed. Original retained at references/upstream-SKILL.md.",
+      "name": "story-review",
+      "upstreamSkillSha256": "495217aaaa444a72b4a17fa86257754961a757a22e63aeeffd9669ae78b9275e"
+    },
+    {
+      "repository": "jwynia/agent-skills",
+      "commit": "e02ec7e226a6e4f8419fd3b88a1d8e472d421b32",
+      "path": "skills/creative/fiction/character/dialogue",
+      "adaptation": "Only unsupported model-invocable frontmatter removed. Original retained at references/upstream-SKILL.md.",
+      "name": "dialogue",
+      "upstreamSkillSha256": "3b6c94942a79179318be5dcd22c13c581b64779af372a7ad924f3c20e3e4cbd8"
+    }
+  ],
+  "tools": [
+    {
+      "repository": "inkle/ink",
+      "tag": "v1.2.1",
+      "asset": "inklecate_windows.zip",
+      "sha256": "96bc130f57d134faf3d52019f36ce0879ea015fa7e84d280ccc1a9c8d376843f"
+    },
+    {
+      "repository": "inkle/inky",
+      "tag": "0.15.2",
+      "asset": "Inky_windows_64.zip",
+      "sha256": "c6cf8cf567d63ff322e8a41dfda453200b02d94403ef403cbd43778147f8411c"
+    }
+  ]
+}

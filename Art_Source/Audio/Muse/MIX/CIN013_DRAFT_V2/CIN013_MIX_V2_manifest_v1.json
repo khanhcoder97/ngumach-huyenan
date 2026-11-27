@@ -1,0 +1,190 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_013 draft mix v2 (palette re-mix of the checkpoint 47 v1 mix; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Trưởng đoàn is now the M-F CP1 palette pickup (VO_CIN_013_S03_REFUGEELEADER_palette_v1.wav; Boomy Mountain (fictional system voice), avocado_v2:magnus) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (12.5-15.092 s inside 12.5-17.5 s, slack 2.408 s), measured from the real pickup bytes. NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_013; lam_trieu music + mountain_wind ambience are the road-and-gate cues (composed, CP26/CP30) for this scene (S01: a stone gatehouse with a tiled roof over an open gate in a stone wall, refugees with packs and bundles passing through, baskets and bundles on the ground, mountains behind, WIDE_STATIC; S02: the refugee leader in a patched robe and headscarf, holding a folded map and raising one finger, at a village edge with thatched huts, bamboo, baskets and mountains, MEDIUM_STATIC; S03: Ly An in a blue robe with a conical hat on her back, standing at an open wooden gate looking out over rice paddies and a village road, a white ribbon tied to the gate post, MEDIUM_STATIC; keyframes CIN_013 S01/S02/S03). lam_trieu is the composed set's G-major transposition with ornamented flute ('Lam Trieu', forest tide) -- a pastoral flute voice for the village road, the paddies and the waiting line ('Chua dong cong. Con mot nguoi di sau.'); mountain_wind is the wind bed for the mountain gate, the open pass and the paddies of all three shots. tran_son ('Tran Son — Nguoi qua cua', the bell-led gate form) was passed over: it is the gate cue by name, but it was just used for CIN_012, the immediately preceding scene, and for CIN_008 -- a third use in a row would blur two consecutive scenes. bach_uyen is the underwater low-passed form (wrong setting); rift_finale is the set's only full close (finale material, wrong for a mid-campaign waiting beat); boss_mang_cot is boss material. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_013_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_013 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s (37 chars at 7.40 chars/s); it was NOT widened.",
+    "VO take runs 12.5-14.972 s: 2.472 s, ending 2.528 s BEFORE the 17.5 s window end -- the take FITS inside its window by 2528 ms (no overrun, unlike CIN_005/CIN_006). The take ends 3.028 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -22.51 LUFS (checkpoint 17, re-verified from real bytes this run, vs -25.38 LUFS for the CIN_012 take). VO is kept at unity per the recipe, not normalized.",
+    "Staging question (not a mix defect): the timing manifest marks the S03 dialogue onscreen: true for the refugee leader, but the S03 keyframe and the runtime clip at 15 s show only Ly An at the open gate; the leader is on screen in S02, not S03. The line therefore plays over a shot of Ly An waiting at the gate. Whether that reads as voice-over or a staging mismatch is a director/Codex call; the mix does not move the VO to hide it.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_013",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_013_S03_REFUGEELEADER_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.092
+        ],
+        "takeDurationSeconds": 2.592,
+        "takeEndSeconds": 15.092,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -2.408,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/lam_trieu",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/lam_trieu.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.93,
+          "remeasuredLUFS": -21.93,
+          "gainDb": -8.07,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/mountain_wind",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/mountain_wind.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.55,
+          "remeasuredLUFS": -29.55,
+          "gainDb": -6.45,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.092
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -5.03,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/mountain_wind",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00192,
+              "bedP999Jump": 0.00262,
+              "ratioToP999": 0.733
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_013_mix_draft_v2.wav",
+        "sha256": "51f4eefba4898a76195bc494ef3fe7fce5d4f438206bd8db62dd93c362226828",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-24.51",
+        "truePeakDBTP": "-3.68",
+        "loudnessRangeLU": "13.30",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN013_S03",
+        "shotId": "CIN_013_S03",
+        "role": "NPC_REFUGEE_LEADER",
+        "speakerDisplay": "Trưởng đoàn",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:magnus",
+        "paletteVoiceLabel": "Boomy Mountain (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_013_S03_REFUGEELEADER_palette_v1.wav",
+        "paletteTakeSha256": "0ed6becc7527b0490c4cc6a6d72f98f17e4022f240488ad9ae10dfac398f804f",
+        "paletteTakeDurationSeconds": 2.592,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 15.092,
+        "slackSeconds": 2.408,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

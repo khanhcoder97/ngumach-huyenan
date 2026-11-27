@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-30",
+  "serverCommit": "514c3f20c077175c7752706d845d11d78d464eda",
+  "serverAssemblySha256": "b6d9276dc814c59cda4619f4db27961648a131bd16670e799ad7d618b8d6e0c1",
+  "httpChecks": [
+    {
+      "mode": "--http-v2-default",
+      "exitCode": 0,
+      "output": "PASS default v2 HTTP assertions: 4",
+      "error": ""
+    },
+    {
+      "mode": "--http-v2-tick",
+      "exitCode": 0,
+      "output": "PASS DEV v2 two-client HTTP assertions: 104 (tick damage/death verified; synthetic nav/in-memory; boss/save not accepted)",
+      "error": ""
+    }
+  ],
+  "clientBaseCommit": "4e7ea30d567b5cf93276a044fb4ac76a7a97a670",
+  "sourceState": "Client working tree recorded below, subsequently committed; server exact commit. File hashes are actual local bytes, not cross-OS Git normalization.",
+  "clientSourceFingerprints": {
+    ".github/workflows/client-core-validation.yml": "ec1b7e0407474ca904406a22e225e2f713a4c5a245a24cfb90526dca0340594f",
+    "Client/Assets/Resources/client-config.json": "f13be976bf541a1e1a178523316b4c93d0fd73fb136808ec6a5d9ca6cd3a1e09",
+    "Client/Assets/Resources/Localization/p1_vi.json": "e8addf93fdd27b7a0ea8b23e016b8e99dcde4172109a37391e109327f09f1c9b",
+    "Client/Assets/Scripts/Bootstrap/TitleBootstrap.cs": "54a95046b76605d4d90e511588d14bd42aba7536e3284d8c3fa165b314c84bbf",
+    "Client/Assets/Scripts/Online/Core/P1Audio.cs": "7110c51b84ead91fafdb2eccbf1854b2eb03b214eacb8668b3d9c962dcc50038",
+    "Client/Assets/Scripts/Online/Core/P1AudioNotice.cs": "39ce0594b6d879e2ef9337e1a7afdec8d7f88c5fc67f93e112659ddc30203783",
+    "Client/Assets/Scripts/Online/Core/P1Client.cs": "c4e04e7f8f2777e65f43af2fc2fa49c6b92e057f46e142ec7bbac79f90ba2d84",
+    "Client/Assets/Scripts/Online/Core/P1ClientV2.cs": "9c6f137e4e216a292e3003e25fc82759ff9665edb78d15d861bb49e91c156488",
+    "Client/Assets/Scripts/Online/Core/P1GameplayInputGate.cs": "4a786109e24358d3857de01124653c39414e70a0c2fdf515e872c7f8ffd41c2e",
+    "Client/Assets/Scripts/Online/Core/P1Models.cs": "90f7e7ba6f3b6baabd1f0737555e7a588a0d7342cf95b1def0a58994f60da9ae",
+    "Client/Assets/Scripts/Online/Core/P1ModelsV2.cs": "590326762ad8f1d30aecabfc4a3610c00db1ff328a206b8b250e72b737efac3b",
+    "Client/Assets/Scripts/Online/Core/P1Wire.cs": "9fae265a0bf3fd758484e8a1509d0ece0f05f3a5e51b42ca9e2e8ea6712e3295",
+    "Client/Assets/Scripts/Online/Editor/P1AudioCatalogBuilder.cs": "027733e6870c0b86d7ea0f132a94bfe41dd264027253ff8cc358c58e80aeb234",
+    "Client/Assets/Scripts/Online/Unity/P1ActorPresenter.cs": "fc7065e84366cc491fb8c4bdd75b21ae3405c2da11c7774a55bb101b8dd1cd10",
+    "Client/Assets/Scripts/Online/Unity/P1AudioCueAsset.cs": "49082fe8915052d48f5f5a7b64391257e5544f9b02552d6000be5630e27ca6b6",
+    "Client/Assets/Scripts/Online/Unity/P1AudioPlayer.cs": "b9d5b8e127d087bcb254a41e75f6d848d835792d9d9fa59a6d33ecc4bd25e0c5",
+    "Client/Assets/Scripts/Online/Unity/P1Copy.cs": "7a80f384460313173febbe308c319e00654f1303ac1cfb1574acd224fcbfe6d7",
+    "Client/Assets/Scripts/Online/Unity/P1OnlinePanel.cs": "3ea2760c0194611444af0a09cd046247dbcff6a61f5acb2a47db7b2f67da8d36",
+    "Client/Assets/Scripts/Online/Unity/P1UnityTransport.cs": "fe0dbbdce15415a39f25c0df57479406dc7f6e5350ec90cae09c826fe99dcb9e",
+    "Client/Tests/P1CoreChecks/AudioChecks.cs": "8b1868442fba92ae4d2624bd722145f44ec4d3243610381e969f09facb9aa672",
+    "Client/Tests/P1CoreChecks/InputGateChecks.cs": "b6acd73c63654afcee08d5b0dd1190687d136a3d12931781bffb1616963db81d",
+    "Client/Tests/P1CoreChecks/P1CoreChecks.csproj": "88ba9ce643507251743af11a77604174a708dbcb2bf1b9d54a674f0694e05722",
+    "Client/Tests/P1CoreChecks/Program.cs": "08358bd060506fed77018590927b23d4adf64c9b500d3440eb92271aefdec8ad",
+    "Client/Tests/P1CoreChecks/V2Checks.cs": "ccb2382b2665186697c6710bf1cadf79554d201317200721eb51634441a6ac88",
+    "Client/Tests/P1CoreChecks/V2HttpChecks.cs": "d4078f4e83551f9396d510a211aef9eec71b49f1731253effc290f7b8e04d139",
+    "Client/Tests/UnitySyntaxCheck/Program.cs": "88d3fce21c1c103d7aeaddbd6f40e442bb950caf05fbdb58b98b52a0353d3eff",
+    "Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj": "4edec848f18865043710fc245bfc2b43297bc443a46546946d265c08e82101d1"
+  },
+  "coreChecks": {
+    "legacyCoreAssertions": 55,
+    "audioPolicyAssertions": 43,
+    "inputGateAssertions": 15,
+    "v2AndRewardFaultAssertions": 46,
+    "result": "PASS"
+  },
+  "unitySyntax": {
+    "sourceFiles": 19,
+    "symbolProfiles": 3,
+    "languageVersion": "CSharp9",
+    "errors": 0,
+    "result": "PASS_SYNTAX_ONLY",
+    "engineCompile": "UNVERIFIED",
+    "deviceQa": "UNVERIFIED"
+  },
+  "serverChecks": {
+    "sourceCommit": "514c3f20c077175c7752706d845d11d78d464eda",
+    "pullRequest": 76,
+    "selfCheckPassed": 258,
+    "selfCheckFailed": 0,
+    "httpSmokeObservedBeforeFinalAliveGuard": 448,
+    "devE2e": 176,
+    "defaultE2e": 9,
+    "githubChecks": {
+      "passed": 6,
+      "total": 6
+    },
+    "scope": "DEV subset; self-check and exact-head CI include actor-alive guard. Historical local HTTP counts are not relabelled as a new run."
+  },
+  "behaviourProven": [
+    "Two distinct HTTP sessions and actors",
+    "Independent three-package collection",
+    "Far NPC accept and turn-in rejected",
+    "Lost reward response with immutable retry and one grant",
+    "Authoritative 20 coins / one chest per actor",
+    "Basic attack and MK03 hit indices 0/1/2",
+    "Server-owned target HP, damage and one mob death",
+    "No reschedule/effect/damage from replay after END",
+    "Silent event-gap reconciliation and pending-state fault checks"
+  ],
+  "readiness": {
+    "P1_ONLINE_ACCEPTED": false,
+    "CONTENT_LOCKED": false,
+    "SHIP_APPROVED": false,
+    "missing": [
+      "P00-02 through P00-05 and boss full loop",
+      "Guard/dash and complete mob AI/group respawn",
+      "Equipment/XP/portal full runtime flow",
+      "Durable auth/database/restart/relogin",
+      "Other-player avatar AOI and presentation",
+      "Reviewed navigation and map placements",
+      "Unity type compilation/import and real PC/mobile playtest"
+    ]
+  },
+  "notes": [
+    "Fixture HP100/MP50 and reference-level-5 mob stats are not full production balance.",
+    "Runtime HTTP assertion count varies with random hit/crit results and number of basic attacks; the recorded output is the actual run.",
+    "The client does not simulate reward, HP damage or missing boss mechanics.",
+    "No user browser save or root Qoder checkout changed."
+  ]
+}

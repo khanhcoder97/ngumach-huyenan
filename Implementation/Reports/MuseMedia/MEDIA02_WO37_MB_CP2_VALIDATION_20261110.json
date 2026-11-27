@@ -1,0 +1,29 @@
+{
+  "checkpoint": "WO37 M-B CP2",
+  "validator": "Tools/MediaProduction/Muse/check_standard720_mb_cp2_v1.py",
+  "baseline": "aa1cd978b98f86b574cd22704599336eb8e5eeca",
+  "checksPassed": 237,
+  "checksFailed": 0,
+  "failures": [],
+  "worstFrameDownscaleMeanAbsDiff": 4.215,
+  "worstIntraBlockRange": 6.08,
+  "entries": 21,
+  "budget": {
+    "mp4Set": {
+      "files": 21,
+      "sourceBytes": 43686587,
+      "outBytes": 147993980,
+      "ratio": 3.388,
+      "totalDuration": 465.367
+    },
+    "ogvSamples": {
+      "files": 3,
+      "bytesPerSecondMin": 197447.2,
+      "bytesPerSecondMax": 704477.7,
+      "bytesPerSecondMean": 529955.5,
+      "fullSetProjectionBytes": 246623785,
+      "projectionNote": "mean bytes/second of the 3 samples x total duration of the 21 entries; estimate, not a render"
+    }
+  },
+  "result": "PASS"
+}

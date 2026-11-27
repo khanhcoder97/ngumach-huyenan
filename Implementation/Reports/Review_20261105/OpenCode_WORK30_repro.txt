@@ -1,0 +1,10 @@
+IGNORING_CT_TIMEOUT elapsedMs=62 status=0 key=key
+UI_DISPOSE elapsedMs=0 readOutcome=Stale
+DEATH_AFTER_DISPOSE innerTokenCanceled=True success=False hp=0 receiptApplied= postDisposeWorldReads=0
+QUEUED_EVENT_AFTER_DISPOSE accepted=True deliveredAfterDispose=0
+ALPHA_CANONICAL actualHttpSends=1 result=feature_unavailable
+ALPHA_UNLISTED actualHttpSends=0 result=invalid_target
+ALPHA_WORLD_6 success=True code= count=6 idsPreserved=True
+QUEUED_DEATH_DISPOSE result=stale_session oldHp=50 currentHp=50 pendingRetained=False lateWorldReads=1 transientReceiptObserved=True newEpochTickBefore= currentTickAfter=
+QUEUED_DEATH_RELOGIN result=stale_session oldHp=50 currentHp=50 pendingRetained=False lateWorldReads=1 transientReceiptObserved=True newEpochTickBefore=2900 currentTickAfter=
+QUEUED_EVENT_FAILED_RELOGIN loginSuccess=False oldGeneration=1 currentGeneration=1 activeSession=NONE deliveredAfterEpochEnded=1

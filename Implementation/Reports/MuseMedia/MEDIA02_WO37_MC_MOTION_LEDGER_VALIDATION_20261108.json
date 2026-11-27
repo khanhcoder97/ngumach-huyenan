@@ -1,0 +1,18 @@
+{
+  "validator": "check_motion_ledger.py",
+  "ledger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "verdict": "PASS",
+  "mismatches": [],
+  "checked": {
+    "shots": 63,
+    "dialogueShots": 21,
+    "keyframesShaVerifiedOnDisk": 63,
+    "cp32FixedShotsVerified": 14,
+    "campaignTotals": {
+      "scenes": 20,
+      "shots": 63,
+      "seconds": 378,
+      "dialogueCues": 21
+    }
+  }
+}

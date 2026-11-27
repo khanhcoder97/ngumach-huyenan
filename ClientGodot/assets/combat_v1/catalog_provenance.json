@@ -1,0 +1,43 @@
+{
+  "hashNormalization": "UTF8 original bytes with CRLF normalized to LF",
+  "sources": [
+    {
+      "path": "docs/production/Item_Master_Catalog_vi.csv",
+      "sha256": "77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c"
+    },
+    {
+      "path": "docs/production/Item_Rarity_Variant_Catalog_vi.csv",
+      "sha256": "7979ba05bd06403b02190d7f51698891549d886ef27957f9d5e079070627b27c"
+    },
+    {
+      "path": "Client/Assets/Resources/Narrative/dialogue_vi.json",
+      "sha256": "53ca0a5ec0faa9e8c61cffc3cffecc68281ebc4a562f6cdbe3cfe7930d1966e1"
+    },
+    {
+      "path": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+      "sha256": "7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457"
+    },
+    {
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-01.json",
+      "sha256": "b9547e99959b00bf7a4990ab1dc4daba888dddb3848931c3cfe438a322ff878c"
+    },
+    {
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-02.json",
+      "sha256": "363b04d2a3312d9857aedf9078c452df2db00f4255c90ea8e8ff1ae921d2621b"
+    },
+    {
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-03.json",
+      "sha256": "9cbadf19a8de4921db8c8b4b4c16f2b022182be637300e40e8c78aa069b5928f"
+    },
+    {
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-04.json",
+      "sha256": "a71fa8084919f543f1f7454768bdd9e2da461d240a8dcc66bb299f90e3a84706"
+    },
+    {
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-05.json",
+      "sha256": "5484f64de5f9baa07ffa4e95ee40fa77a78946af6ca34218e285249f3a812646"
+    }
+  ],
+  "items": 2656,
+  "entities": 24
+}

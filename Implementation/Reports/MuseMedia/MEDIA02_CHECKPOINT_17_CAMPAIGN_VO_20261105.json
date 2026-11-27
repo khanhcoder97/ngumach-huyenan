@@ -1,0 +1,88 @@
+{
+ "baseIntegration": "f0859d0",
+ "branch": "muse/media-production-20261104",
+ "campaignVo": {
+  "fits": 15,
+  "loudnessLUFSRange": [
+   -25.52,
+   -17.23
+  ],
+  "manifest": "Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/CAMPAIGN_VO_manifest_v1.json",
+  "overruns": [
+   {
+    "durationSeconds": 5.16,
+    "shotId": "CIN_005_S03",
+    "slackSeconds": -0.16,
+    "speaker": "NPC_LYAN",
+    "windowSeconds": 5.0
+   },
+   {
+    "durationSeconds": 5.28,
+    "note": "PLAYER take is a timing-only placeholder voice (VOICE_GUIDE assigns the player no spoken voice).",
+    "shotId": "CIN_018_S03",
+    "slackSeconds": -0.28,
+    "speaker": "PLAYER",
+    "windowSeconds": 5.0
+   }
+  ],
+  "runtimeDir": "ClientGodot/assets/audio/vo/campaign/",
+  "sourceDir": "Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/",
+  "takes": 17,
+  "tightFit": [
+   {
+    "durationSeconds": 5.592,
+    "shotId": "CIN_011_S03",
+    "slackSeconds": 0.008,
+    "windowSeconds": 5.6
+   }
+  ],
+  "timeline": {
+   "durationSeconds": 378.0,
+   "file": "CAMPAIGN_VO_timeline_draft_v1.wav",
+   "sha256": "7221d12d058e6fc680e4e54b8246c6e31fa5cd674f8b86502b58cd2313f0fe57"
+  },
+  "truePeakMaxDBTP": -1.38,
+  "voices": {
+   "CIN_020": "avocado_v2:MAI_01 (Aria, role VOICE_LETTER_RECIPIENT)",
+   "NPC_LYAN": "avocado_v2:MAI_01 (Aria)",
+   "NPC_TA_VAN_KHANH": "avocado_v2:MAI_03 (Helio)",
+   "PLAYER": "avocado_v2:MAI_03 (Helio, VOICE_PLACEHOLDER_ONLY)",
+   "otherMaleSpeakers": "avocado_v2:MAI_03 (Helio, shared - not voice-distinct in this draft)"
+  }
+ },
+ "checkpoint": "MEDIA-02 checkpoint 17 (campaign VO drafts: 17 takes + 378 s timeline)",
+ "d1Approval": "D1 APPROVED draft VO production only for the 21 dialogue windows; no canon changes, no voice speed-up to fit.",
+ "dateJST": "2026-11-05",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "limits": [
+  "2 takes OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 -0.28 s); director decides whether to widen the window or trim the line. No speed-up applied per D1.",
+  "CIN_011_S03 fits by only +0.008 s.",
+  "All male characters share one Helio voice in this draft; distinct casting is a director decision.",
+  "PLAYER take is a timing-only placeholder; CIN_020 uses placeholder role voice VOICE_LETTER_RECIPIENT.",
+  "Per-take loudness only, NOT a mix PASS; no ear audition.",
+  "All 17 campaign windows remain PROPOSED_ANIMATIC_PLACEMENT.",
+  "CIN_006 VO (1 cue) not yet done; not part of the CP06 17-cue pack."
+ ],
+ "nextBlock": [
+  "Per-scene clip exports (Goi 30 item 6) + PR #119 description rewrite (item 8, needs owner approval card).",
+  "CIN_006 VO (1 remaining cue) + campaign video animated takes.",
+  "Director decisions for the 2 OVERRUN takes, the PLAYER placeholder take, and distinct male voice casting."
+ ],
+ "pushedSha": "37da3b1f24572c72c98dd813f92108c3b58ab623",
+ "scopeAudit": {
+  "base": "f0859d0",
+  "changedPaths": 729,
+  "violations": 0
+ },
+ "status": "DRAFT_NOT_FINAL_VO",
+ "validation": {
+  "runtimeAudioFiles": 563,
+  "runtimeMismatches": 0,
+  "runtimeReverify": "MEDIA02_CHECKPOINT_17_RUNTIME_REVERIFY_20261105.json",
+  "runtimeVerdict": "PASS",
+  "runtimeVoFiles": 22,
+  "sourceMismatches": 0,
+  "sourceRevalidation": "MEDIA02_CHECKPOINT_17_SOURCE_REVALIDATION_20261105.json",
+  "sourceVerdict": "PASS"
+ }
+}

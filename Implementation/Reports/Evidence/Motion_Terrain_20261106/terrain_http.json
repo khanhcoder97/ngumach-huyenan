@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checks": 22,
+  "assertions": [
+    "real session created",
+    "server rejects movement through terrain: (422, {'schemaVersion': 1, 'requestId': '66c26111e9b2421eaa4233dcc1a7578e', 'serverTimeUtc': '2026-11-05T20:22:22Z', 'revision': 48, 'error': {'code': 'movement_blocked', 'messageKey': 'P1.ERROR.MOVEMENT_BLOCKED', 'retryable': False, 'fieldErrors': ['payload'], 'correlationId': '186c70a9-c786-4daa-8550-cf5669564525'}})",
+    "rejected move does not change position",
+    "house foundation blocks northward walk",
+    "real session created",
+    "server rejects movement through terrain: (422, {'schemaVersion': 1, 'requestId': '5b5129e6197f464ba7e18256d1c13d3d', 'serverTimeUtc': '2026-11-05T20:22:31Z', 'revision': 123, 'error': {'code': 'movement_blocked', 'messageKey': 'P1.ERROR.MOVEMENT_BLOCKED', 'retryable': False, 'fieldErrors': ['payload'], 'correlationId': '6fb60f03-09b3-4ad5-ae73-efd0a26a676c'}})",
+    "rejected move does not change position",
+    "river bank blocks water walking",
+    "real session created",
+    "real server allows connected dock deck",
+    "server rejects movement through terrain: (422, {'schemaVersion': 1, 'requestId': 'e875f87d87914f4ba6569dd7be644111', 'serverTimeUtc': '2026-11-05T20:22:40Z', 'revision': 137, 'error': {'code': 'movement_blocked', 'messageKey': 'P1.ERROR.MOVEMENT_BLOCKED', 'retryable': False, 'fieldErrors': ['payload'], 'correlationId': 'a8de8ac9-179c-45a8-b628-34965da4269e'}})",
+    "rejected move does not change position",
+    "dock side prevents walking on water",
+    "server rejects movement through terrain: (422, {'schemaVersion': 1, 'requestId': 'bb5f3b1b78274765b7e5d0c513b8416d', 'serverTimeUtc': '2026-11-05T20:22:40Z', 'revision': 142, 'error': {'code': 'movement_blocked', 'messageKey': 'P1.ERROR.MOVEMENT_BLOCKED', 'retryable': False, 'fieldErrors': ['payload'], 'correlationId': '7dbdbb09-86b4-448a-b229-f9960ef20dbb'}})",
+    "rejected move does not change position",
+    "dock end respects full actor footprint",
+    "real session created",
+    "self guard with null target is accepted once",
+    "accepted skill supplies presentation start event",
+    "guard acceptance does not invent a counter hit",
+    "duplicate fresh cast gets explicit cooldown rejection",
+    "rejected cooldown cast consumes no extra MP"
+  ],
+  "baseUrl": "http://127.0.0.1:63794",
+  "serverPid": 10984,
+  "scope": "real private HTTP movement/terrain/guard; no production sessions or fake grants"
+}

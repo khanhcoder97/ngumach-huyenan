@@ -1,0 +1,4 @@
+HTTP /p1/quests/talk status=422 body={"schemaVersion":1,"requestId":"f4dc9ff07c0d41129ef9899812c3994d","sessionId":"f19ef7567aa4494d8b98db393d8d57ba","serverTimeUtc":"2026-11-07T21:44:15Z","error":{"code":"out_of_range","messageKey":"P1.ERROR.OUT_OF_RANGE","retryable":true,"fieldErrors":[],"correlationId":"fd0f95aa0b86401795db3dfccc5317dd"}}
+talk input=PAIRED_HEAD_HTTP success=False code=mutation_outcome_unknown state=UncertainMutation pending=True
+HTTP /p1/world/portal status=422 body={"schemaVersion":1,"requestId":"2eaea1ada4c24799b63e390568506ded","sessionId":"461fbcccf0f3450b87f331de6d15c6b9","serverTimeUtc":"2026-11-07T21:44:15Z","error":{"code":"out_of_range","messageKey":"P1.ERROR.OUT_OF_RANGE","retryable":true,"fieldErrors":[],"correlationId":"a93914e0c21b477a9f9f1e3a1248d3d4"}}
+portal input=PAIRED_HEAD_HTTP success=False code=mutation_outcome_unknown state=UncertainMutation pending=True

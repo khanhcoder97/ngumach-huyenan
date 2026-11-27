@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "generator": "built-in image_gen",
+  "source": "minh_kiem_portrait_v1.png",
+  "runtime": "minh_kiem_portrait.png",
+  "prompt": "Prompts/portrait.txt",
+  "reference": "Art_Source/Visual_Reboot_20261104/Characters/MinhKiem/idle_body_8dir_candidate_v2.png (existing fictional character identity)",
+  "size": [
+    1254,
+    1254
+  ],
+  "sha256": "f4a827a308df7005f4c3f0fdd5b08c9d3a452106852ed25fb254ff8ed2be0ecc",
+  "note": "Original generated portrait; no bitmap postprocessing. HUD circle mask and crop run in Godot."
+}

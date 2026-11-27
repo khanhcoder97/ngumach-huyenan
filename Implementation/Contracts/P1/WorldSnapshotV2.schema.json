@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/WorldSnapshotV2.schema.json",
+  "title": "P1 v2 world snapshot payload (audience-filtered entity read model)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mapId",
+    "mapInstanceId",
+    "floorId",
+    "phase",
+    "serverTick",
+    "revision",
+    "serverTimeUtc",
+    "audience",
+    "self",
+    "entities"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 2
+    },
+    "mapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "mapInstanceId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+#[0-9]+$"
+    },
+    "floorId": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "phase": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "serverTick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "serverTimeUtc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aoiEnterWu",
+        "aoiLeaveWu"
+      ],
+      "properties": {
+        "aoiEnterWu": {
+          "type": "number",
+          "const": 40
+        },
+        "aoiLeaveWu": {
+          "type": "number",
+          "const": 48
+        }
+      }
+    },
+    "self": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "characterId",
+        "classId",
+        "x",
+        "y",
+        "hp",
+        "maxHp",
+        "mp",
+        "maxMp",
+        "swordIntent"
+      ],
+      "properties": {
+        "characterId": {
+          "type": "string",
+          "pattern": "^CHR_[A-Z0-9_]+$"
+        },
+        "classId": {
+          "type": "string",
+          "pattern": "^CLASS_[A-Z0-9_]+$"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "hp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxHp": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxMp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "swordIntent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entityId",
+          "kind",
+          "mapInstanceId",
+          "floorId",
+          "phase",
+          "x",
+          "y",
+          "state",
+          "healthState",
+          "targetable",
+          "hp",
+          "maxHp",
+          "revision",
+          "lifeId"
+        ],
+        "properties": {
+          "entityId": {
+            "type": "string",
+            "pattern": "^ENT_[A-Z0-9_]+$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "MOB",
+              "BOSS",
+              "NPC",
+              "GATHER_NODE",
+              "INTERACTABLE"
+            ]
+          },
+          "mapInstanceId": {
+            "type": "string",
+            "pattern": "^MAP_[A-Z0-9_]+#[0-9]+$"
+          },
+          "floorId": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "phase": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "IDLE",
+              "AGGRO",
+              "CHASE",
+              "TELEGRAPH",
+              "ATTACK",
+              "RECOVER",
+              "RETURN",
+              "DEAD",
+              "ACTIVE",
+              "AVAILABLE",
+              "DEPLETED"
+            ]
+          },
+          "healthState": {
+            "type": "string",
+            "enum": [
+              "ALIVE",
+              "DEAD",
+              "INVULNERABLE",
+              "BLOCKED"
+            ]
+          },
+          "targetable": {
+            "type": "boolean"
+          },
+          "availability": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "COOLDOWN"
+            ]
+          },
+          "hp": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "maxHp": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lifeId": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-E CP1",
+ "validator": "check_composed_ambience_variants_me_cp1_v1.py",
+ "verdict": "PASS",
+ "mismatches": 0,
+ "errors": [],
+ "notes": [
+  "26 new variant files re-hashed + re-measured from real bytes (13 cues x v02/v03, master + runtime); 13 v01 cross-refs re-hashed against the checkpoint-30 pack; all 39 master SHAs and all 39 runtime SHAs distinct; diff-vs-v01 RMS ratios recomputed from decoded bytes; seam indicators recomputed from decoded masters.",
+  "runtime manifest total 783 files (counts {'music_ambience': 22, 'sfx_ui_variants': 519, 'vo': 50, 'mix': 30, 'composed': 162}); 26/26 variant entries found with matching sha/size/duration."
+ ],
+ "counts": {
+  "cues": 13,
+  "new_variants_checked": 26,
+  "variant_files_checked": 52,
+  "v01_crossref_cues": 13,
+  "distinct_master_shas": 39,
+  "distinct_runtime_shas": 39
+ }
+}

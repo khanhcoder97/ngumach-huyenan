@@ -1,0 +1,7 @@
+Use case: identity-preserve
+Asset type: production sword ATTACK animation spriteatlas of SAME original hero.
+Landscape1536x1024, EXACT4COLUMNS x8ROWS; cell384wide x128high. Four framesperdirection, eight directionalROWS. This widecelllayout is ESSENTIAL tokeep swords awayfrom neighbors.
+Row1N(back),row2NE(backright),row3E(rightprofile),row4SE(frontright),row5S(front),row6SW(frontleft),row7W(leftprofile),row8NW(backleft).
+Columns1anticipation lowguard,2shortswing,3forwardimpactlunge,4recovery. Four visiblydifferent poses, sameface/clothes/scale. Wholeperson92pixels high, bootgroundliney114within each128row, rootx192within each384cell. No part reaches thetop/bottomrowboundary;12pxclearverticalgutter. All swords stay belowtopofhead and at least64pxaway fromcellleft/rightedges. A personplusblade maximum220pixelswide. Compact shortjian, neverhugeblade.
+Sameblacktopknothair/brassring/ivorytunic/darktealshoulderarmor/splitcape/charcoalboots asreference. Highangle top-down RPGcamera. One silverstraightjian in anatomicalRIGHT hand: facingSscreenleft,facingNscreenright; grip stayscorrect8directions. Left handemptybalancing. Bothbootscomplete, no floatingblade/bodypart.
+Crisp simple pixelclusters, no blurryhandpaint, no heavyanti-alias, readable at36pixelbodyheight. Genuinealpha0 background, no coloredbackdrop/shadow/floor/effect/text/grid. Thirtytwo wholebody poses, no overlapbetween ANYrow orcolumn. Nevercrosscell.

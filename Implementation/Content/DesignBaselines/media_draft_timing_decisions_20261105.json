@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-MEDIA-DRAFT-WINDOWS-20261105",
+  "authority": "Codex project coordination under the user instruction to continue production",
+  "sourcePr": 119,
+  "sourceCommit": "3f34f0de1de33f1d6ff97f19251165949a40a716",
+  "status": "APPROVED_FOR_DRAFT_VO_ONLY",
+  "sourceHashNormalization": "UTF8 LF",
+  "finalPictureApproved": false,
+  "finalMixApproved": false,
+  "runtimeAutoplayApproved": false,
+  "canonicalTextChanged": false,
+  "requiresNewApprovalForTextChanges": true,
+  "conditions": [
+    "Preserve canonical text, identity and offscreen staging.",
+    "No unapproved speech speed-up to force fit.",
+    "Deliver separate takes and pronunciation/actual audition report.",
+    "Keep the 72-second multi-scene review reel out of opening autoplay.",
+    "Fix the five picture defects, cue counts, SHA and LFS before media acceptance.",
+    "CIN_020 uses VOICE_LETTER_RECIPIENT for the canonical unnamed letter recipient, not a new persistent NPC or an existing named story character."
+  ],
+  "windows": [
+    {
+      "sceneId": "CIN_001",
+      "shotId": "CIN_001_S05",
+      "speaker": "NPC_LYAN",
+      "onscreen": true,
+      "windowSeconds": [
+        24.8,
+        28.5
+      ],
+      "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json",
+      "sourceSha256LF": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3"
+    },
+    {
+      "sceneId": "CIN_002",
+      "shotId": "CIN_002_S02",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "onscreen": true,
+      "windowSeconds": [
+        7,
+        11
+      ],
+      "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_timing_v1.json",
+      "sourceSha256LF": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c"
+    },
+    {
+      "sceneId": "CIN_003",
+      "shotId": "CIN_003_S03",
+      "speaker": "NPC_LYAN",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_003/CIN_003_timing_v1.json",
+      "sourceSha256LF": "0e6452a072ec1e87205116e7b9de4ea51e1cb5046eb5bda9fa8b41d4d2baa726"
+    },
+    {
+      "sceneId": "CIN_004",
+      "shotId": "CIN_004_S02",
+      "speaker": "NPC_LYAN",
+      "onscreen": false,
+      "windowSeconds": [
+        7.5,
+        9.5
+      ],
+      "text": "Nó cứ tránh chỗ nước ấy.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_timing_v1.json",
+      "sourceSha256LF": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97"
+    },
+    {
+      "sceneId": "CIN_005",
+      "shotId": "CIN_005_S03",
+      "speaker": "NPC_LYAN",
+      "onscreen": null,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_005/CIN_005_timing_v1.json",
+      "sourceSha256LF": "b82b2582f238abf1dd0da3b241258dd08f9a6664bc3cc3996042d5b028e0f618"
+    },
+    {
+      "sceneId": "CIN_006",
+      "shotId": "CIN_006_S03",
+      "speaker": "NPC_HA_MAC",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_006/CIN_006_timing_v1.json",
+      "sourceSha256LF": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955"
+    },
+    {
+      "sceneId": "CIN_007",
+      "shotId": "CIN_007_S03",
+      "speaker": "NPC_LYAN",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_007/CIN_007_timing_v1.json",
+      "sourceSha256LF": "df7827c416ffe61f83f2a081a5b503d19789d2739e630d32b11d1c93bb298bfd"
+    },
+    {
+      "sceneId": "CIN_008",
+      "shotId": "CIN_008_S03",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Không ai ép tay ta ký. Đó mới là điều khó nói.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_008/CIN_008_timing_v1.json",
+      "sourceSha256LF": "3a8e90942678e78ad5614cbb5798b179ae91079382769f4e683d5cfef729a754"
+    },
+    {
+      "sceneId": "CIN_009",
+      "shotId": "CIN_009_S03",
+      "speaker": "NPC_LYAN",
+      "onscreen": null,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_009/CIN_009_timing_v1.json",
+      "sourceSha256LF": "0f49fc20b67ff947823701a8cbeece79b20ad6951d1f64f6743cfb20c34ddca9"
+    },
+    {
+      "sceneId": "CIN_010",
+      "shotId": "CIN_010_S03",
+      "speaker": "NPC_SAM_CHU_QUY",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Đường ngắn thì đỡ khát. Nếu xe qua được.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_010/CIN_010_timing_v1.json",
+      "sourceSha256LF": "05b194a3b2119721a535a9f60d0c34159164b9857ee075b9144cbd163fc5fef1"
+    },
+    {
+      "sceneId": "CIN_011",
+      "shotId": "CIN_011_S03",
+      "speaker": "NPC_HA_MAC",
+      "onscreen": true,
+      "windowSeconds": [
+        12.2,
+        17.8
+      ],
+      "text": "Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_011/CIN_011_timing_v1.json",
+      "sourceSha256LF": "db01ab3b17aed17159f6dd1afeacefef7ed5522c955a81e889430d946b5be324"
+    },
+    {
+      "sceneId": "CIN_012",
+      "shotId": "CIN_012_S03",
+      "speaker": "NPC_HA_MAC",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_012/CIN_012_timing_v1.json",
+      "sourceSha256LF": "803902a6a0ee23ec8f14b7e383fa91d94e65c47a158b55745ccf48c20e24f06b"
+    },
+    {
+      "sceneId": "CIN_013",
+      "shotId": "CIN_013_S03",
+      "speaker": "NPC_REFUGEE_LEADER",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Chưa đóng cổng. Còn một người đi sau.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_013/CIN_013_timing_v1.json",
+      "sourceSha256LF": "faed8f4a1736159cc223cb2185b6bd8e5eb41b9c0d6e054a8d2e2540a7338c88"
+    },
+    {
+      "sceneId": "CIN_014",
+      "shotId": "CIN_014_S03",
+      "speaker": "NPC_TONG_BANH",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_014/CIN_014_timing_v1.json",
+      "sourceSha256LF": "4e3d3ca2c5484b0d4234579c0e21b172c3460986f5d1625a839a41bed2d32ff9"
+    },
+    {
+      "sceneId": "CIN_015",
+      "shotId": "CIN_015_S03",
+      "speaker": "NPC_DIVER_LEAD",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Lần trước có người đã buộc dây này cho chúng ta.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_015/CIN_015_timing_v1.json",
+      "sourceSha256LF": "fabb7e50869d6288018866064be18ee7432f23cef96eac74abe6c7d3f3edb201"
+    },
+    {
+      "sceneId": "CIN_016",
+      "shotId": "CIN_016_S03",
+      "speaker": "NPC_HA_MAC",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Tôi có thể ghi lại phần ông muốn kể không?",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_016/CIN_016_timing_v1.json",
+      "sourceSha256LF": "0064f447bfdb2d3b40776623fc40d60a2d724d812659aa8ad506ce5331a5e405"
+    },
+    {
+      "sceneId": "CIN_017",
+      "shotId": "CIN_017_S03",
+      "speaker": "NPC_DIVER_LEAD",
+      "onscreen": null,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Mang lõi đi thì phải giữ đường nước còn lại.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_017/CIN_017_timing_v1.json",
+      "sourceSha256LF": "64a630bd18ba5a9437ed3ad3cc17a0322fb64d0abba558652f447d797bf15499"
+    },
+    {
+      "sceneId": "CIN_018",
+      "shotId": "CIN_018_S02",
+      "speaker": "NPC_CO_VO_TUONG",
+      "onscreen": true,
+      "windowSeconds": [
+        6.5,
+        11.5
+      ],
+      "text": "Ta không còn chấp nhận phần ta không biết.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_018/CIN_018_timing_v1.json",
+      "sourceSha256LF": "85f66a106fe7ac07e943448477f9c4eca74cc116ce0a0ef9cba7fe443fccebb6"
+    },
+    {
+      "sceneId": "CIN_018",
+      "shotId": "CIN_018_S03",
+      "speaker": "PLAYER",
+      "onscreen": null,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_018/CIN_018_timing_v1.json",
+      "sourceSha256LF": "85f66a106fe7ac07e943448477f9c4eca74cc116ce0a0ef9cba7fe443fccebb6"
+    },
+    {
+      "sceneId": "CIN_019",
+      "shotId": "CIN_019_S03",
+      "speaker": "NPC_LYAN",
+      "onscreen": true,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Lần này không ai giữ hết năm con đường.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_019/CIN_019_timing_v1.json",
+      "sourceSha256LF": "46c634b3643b4f32c1527b2fefc7be4e1bfad09366147f452dd22742768625cd"
+    },
+    {
+      "sceneId": "CIN_020",
+      "shotId": "CIN_020_S03",
+      "speaker": "VOICE_LETTER_RECIPIENT",
+      "onscreen": null,
+      "windowSeconds": [
+        12.5,
+        17.5
+      ],
+      "text": "Chờ một chút. Tôi muốn gửi lại vài lời.",
+      "sourcePath": "Implementation/Content/Narrative/Deliveries/CIN_020/CIN_020_timing_v1.json",
+      "sourceSha256LF": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
+      "sourceSpeaker": null,
+      "canonicalSpeakerLabel": "Người nhận thư",
+      "roleScope": "CINEMATIC_VOICE_ONLY_NOT_WORLD_NPC"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+[
+  {
+    "suite": "SELFTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "--",
+      "--selftest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 4.04,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 8,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\selftest.log"
+  },
+  {
+    "suite": "TILEMTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "TilemapTest.tscn",
+      "--",
+      "--tilemtest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 5.38,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\tilemtest.log"
+  },
+  {
+    "suite": "FULLTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "FullMapTest.tscn",
+      "--",
+      "--fulltest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 16.46,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\fulltest.log"
+  },
+  {
+    "suite": "HUDTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "HudTest.tscn",
+      "--",
+      "--hudtest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 1.73,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\hudtest.log"
+  },
+  {
+    "suite": "ANIMTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "AnimTest.tscn",
+      "--",
+      "--animtest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 5.23,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\animtest.log"
+  },
+  {
+    "suite": "DETAILTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "DetailTest.tscn",
+      "--",
+      "--detailtest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 2.67,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\detailtest.log"
+  },
+  {
+    "suite": "CLASSTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "ClassTest.tscn",
+      "--",
+      "--classtest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 10.29,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\classtest.log"
+  },
+  {
+    "suite": "SELECTTEST",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "OnlineTest.tscn",
+      "--",
+      "--selecttest"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 3.26,
+    "markers": [
+      "PASS"
+    ],
+    "pass": true,
+    "runtime_errors": 0,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\selecttest.log"
+  }
+]

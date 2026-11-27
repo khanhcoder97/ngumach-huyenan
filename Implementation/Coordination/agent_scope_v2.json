@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "decisionId": "OWNER-MUSE-MEDIA-ONLY-20261104",
+  "authority": "Explicit user instruction withdrawing Muse graphics/runtime ownership and assigning a complete visual rebuild to Codex",
+  "owners": {
+    "gameVisualsAndGodotRuntime": "Codex",
+    "portableClientCore": "OpenCode",
+    "gameplayAndContracts": "Qoder local",
+    "persistence": "Qoder remote",
+    "videoCinematicAudio": "Muse"
+  },
+  "muse": {
+    "newBranchPrefix": "muse/media-",
+    "frozenBranches": ["muse/unity-minh-kiem-full-anim", "muse/ben-mua-playable-alpha-20261103", "muse/engine-dec-024", "muse/godot-progress-report-20261103"],
+    "allowedMediaRoots": ["Art_Source/Cinematics/", "Art_Source/Audio/Muse/", "ClientGodot/assets/cinematics/", "ClientGodot/assets/audio/", "Implementation/Content/Narrative/Deliveries/", "Implementation/Content/Audio/Deliveries/", "Implementation/Reports/MuseMedia/"],
+    "allowedToolRoot": "Tools/MediaProduction/Muse/",
+    "mediaExtensions": [".ogv", ".mp4", ".mov", ".mkv", ".webm", ".wav", ".flac", ".ogg", ".mp3", ".aiff", ".png", ".jpg", ".jpeg", ".srt", ".vtt", ".json", ".csv", ".md", ".txt", ".blend", ".aup3", ".rpp", ".mid", ".midi"],
+    "toolExtensions": [".py", ".ps1", ".sh", ".md", ".txt", ".json"],
+    "forbiddenRuntimeExtensions": [".cs", ".csproj", ".sln", ".gd", ".tscn", ".tres", ".godot", ".gdshader", ".import", ".yml", ".yaml"],
+    "runtimeCodeAndArtAreForbidden": true
+  },
+  "technicalLimit": "All current collaborators use the same repository admin account. This scope policy and CI audit do not revoke credentials or provide per-agent account isolation. Codex review controls acceptance."
+}

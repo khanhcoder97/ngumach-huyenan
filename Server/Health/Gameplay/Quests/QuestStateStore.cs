@@ -33,6 +33,12 @@ public sealed class PlayerQuestState
     public string State { get; set; }
     public string StepId { get; set; }
     public Dictionary<string, int> ObjectiveCounters { get; } = new(StringComparer.Ordinal);
+
+    // Internal dedupe keys for server-verified progress. Distinct-record rules use
+    // "R:{recordId}", kill-style per-event rules use "E:{eventId}". Not exposed on
+    // the wire; progress is read back through ObjectiveCounters.
+    public HashSet<string> Contributions { get; } = new(StringComparer.Ordinal);
+
     public long Revision { get; set; }
     public DateTimeOffset UpdatedAtUtc { get; set; }
 

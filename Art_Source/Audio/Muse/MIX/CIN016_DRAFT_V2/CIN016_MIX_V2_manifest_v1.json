@@ -1,0 +1,191 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_016 draft mix v2 (palette re-mix of the checkpoint 50 v1 mix; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Hạ Mặc is now the M-F CP1 palette pickup (VO_CIN_016_S03_HAMAC_palette_v1.wav; Gruff Brick (fictional system voice), avocado_v2:vincent) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (12.5-14.972 s inside 12.5-17.5 s, slack 2.528 s), measured from the real pickup bytes. NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_016; quiet_discovery music + wind_canopy ambience are the quiet-room cues (composed, CP26/CP30) for this scene (S01: detail of the old manuscript on the desk under the hanging lamp, inkstone and brush, DETAIL_LOCKED; S02: the blue-robed man at the desk and a hooded figure seen from behind, MEDIUM_STATIC; S03: Ha Mac in a green robe and headband, brush in hand, writing in his book as he asks the elder across the desk, DETAIL_LOCKED; keyframes CIN_016 S01/S02/S03). quiet_discovery is the composed set's exploration silence ('Khoang lang kham pha': solo flute fragments, single bells, long near-silences, water drops, 60 BPM) -- the setting-exact cue for a quiet indoor conversation about writing someone else's story down, for the line asking to record the part the elder wishes to tell ('Toi co the ghi lai phan ong muon ke khong?'). It was used before in scene mixes CIN_007 and CIN_011 (same pairing); this is its third scene-mix use. wind_canopy is the wind-through-canopy bed (gusted band noise + leaf rustle) for the greenery visible through the S03 window and the bamboo walls and hanging herbs of the room; also third scene-mix use (CIN_007, CIN_011, CIN_014). ben_mua was passed over: the rain-quay leitmotif, used for CIN_014. lam_trieu was passed over: the pastoral flute, used for CIN_013. tran_son ('Tran Son — Nguoi qua cua', the bell-led gate form) was passed over: already used for CIN_008 and CIN_012. bach_uyen was passed over: the underwater low-passed form, just used for CIN_015 (wrong setting -- this room is dry). thang_long is the capital-city form (wrong setting); sa_hoa is desert/dry (wrong setting); rift_finale is the set's only full close (finale material, wrong for a mid-campaign chapter beat); boss_mang_cot is boss material. underwater was passed over: just used for CIN_015 (submerged city, wrong setting); mountain_wind was used for CIN_013, forge for CIN_012, river_shore for CIN_003 and CIN_008 (water-edge, not an interior), waterfall for CIN_009; rain_light and rain_heavy are rain beds, but no rain is depicted in any of the three keyframes (dry lamplit interior, greenery outside the window, no rain streaks); cave_drips is a cave bed, not a study room; desert_wind, city_night, thang_long_crowd and rift are wrong for this setting. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_016_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_016 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s; it was NOT widened.",
+    "VO take runs 12.5-14.972 s: 2.472 s, ending 2.528 s BEFORE the 17.5 s window end -- the take FITS inside its window by 2528 ms (no overrun, unlike CIN_005/CIN_006). The take ends 3.028 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -21.92 LUFS (checkpoint 17, re-verified from real bytes this run, vs -23.27 LUFS for the CIN_015 take). VO is kept at unity per the recipe, not normalized.",
+    "Staging: unlike CIN_015, the speaker IS identifiable here. The timing manifest marks the S03 dialogue onscreen: true for Ha Mac (NPC_HA_MAC), and the S03 keyframe shows him clearly -- face in profile, green headband, green robe, brush in hand, writing in the book -- asking the blue-robed elder across the desk. S01 is a detail shot of the manuscript under the lamp with no figures, and S02 shows the blue-robed man at the desk with a hooded figure seen from behind carrying a backpack. Whether that hooded figure is Ha Mac arriving is a continuity question for final picture (S03 Ha Mac wears a round woven basket-hat on his back; the S02 figure carries a rectangular backpack) -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ducking depth is 0.0 dB over the full VO window -- NOT a missing compressor: MUSIC/quiet_discovery is digitally silent from 12 s to 15 s (RMS -120 dB floor, measured from the real stem bytes), so the 12.5-14.972 s VO window falls entirely inside the cue's near-silence gap between fragments; the sidechain compressor (same params as every scene mix) has no signal to cut there, and the ducked bus is identical to the unducked bus inside the window. The two earlier quiet_discovery mixes show a real cut (CIN_007 -9.43 dB, CIN_011 -10.79 dB) because their longer windows extended past 15 s into the next fragment. The VO sits in a pocket of silence by the cue's own design -- no recipe change, no stem change, no gain change was made to manufacture a number.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_016",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_016_S03_HAMAC_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          14.972
+        ],
+        "takeDurationSeconds": 2.472,
+        "takeEndSeconds": 14.972,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -2.528,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/quiet_discovery",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.72,
+          "remeasuredLUFS": -21.72,
+          "gainDb": -8.28,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.7,
+          "remeasuredLUFS": -29.7,
+          "gainDb": -6.3,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              14.972
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": 0.0,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00458,
+              "bedP999Jump": 0.00598,
+              "ratioToP999": 0.765
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_016_mix_draft_v2.wav",
+        "sha256": "63f47babb580105baf870886baf0c780526293bb5f331e13d73babc2a6b30b74",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-25.40",
+        "truePeakDBTP": "-6.54",
+        "loudnessRangeLU": "12.90",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN016_S03",
+        "shotId": "CIN_016_S03",
+        "role": "NPC_HA_MAC",
+        "speakerDisplay": "Hạ Mặc",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:vincent",
+        "paletteVoiceLabel": "Gruff Brick (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_016_S03_HAMAC_palette_v1.wav",
+        "paletteTakeSha256": "ea848ffeb8fec90f4279b7b8b249d1365fb310a748476b5ffa6c3eac841c7e75",
+        "paletteTakeDurationSeconds": 2.472,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 14.972,
+        "slackSeconds": 2.528,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

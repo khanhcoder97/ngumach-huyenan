@@ -1,3 +1,5 @@
+> Cập nhật05/11/2026: camera/map tuân CAM-TOPDOWN-WIDE-20261105, default64×36WU/1280×720/20PPU, gần nhìn thẳng từ trên; HUD độc lập. Các default32×18 và chỉ hub48×27 bên dưới là lịch sử. Art/Godot runtime do Codex; Muse chỉ media theo work28. Không thay canonical geometry từ ảnh.
+
 # CHUẨN SẢN XUẤT PIXEL ART — NGŨ MẠCH: HUYỀN ẤN
 
 **Trạng thái:** art direction hiện hành theo quyết định chủ dự án ngày 2026-10-26; **bản sửa 2026-10-27 theo DEC-015** khóa định dạng sheet nhân vật 8 hướng, cell 48×64 (Mẫu A) và tạo hình Minh Kiếm đã chốt, thay các dòng mâu thuẫn tương ứng của bản 2026-10-26.  

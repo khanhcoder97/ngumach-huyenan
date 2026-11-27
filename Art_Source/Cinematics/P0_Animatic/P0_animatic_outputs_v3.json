@@ -1,0 +1,106 @@
+{
+  "spec": "Art_Source/Cinematics/P0_Animatic/P0_animatic_spec_v3.json",
+  "shots": [
+    {
+      "shotId": "CIN_001_S01",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S01.png",
+      "panelSha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_001_S02",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S02.png",
+      "panelSha256": "b09dfb68f439b034ecbc102f5df6b52f4d8e6babe14b89fce38d1fd66dbf343e",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_001_S03",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S03.png",
+      "panelSha256": "c07ddc98665021894c4cd92099dd24faac3a6f18f10610d3d67f81d34f1467bb",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_001_S04",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S04.png",
+      "panelSha256": "0722da26101620a15e622f9bf54237ad929f10cc65ddf0555447c582299aa741",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_001_S05",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S05.png",
+      "panelSha256": "0d48a6283d82aec6b1e5b77051d80c0e0714b12b86c4ef48d153d129ba098656",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_001_S06",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_001_S06.png",
+      "panelSha256": "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_002_S01",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_002_S01.png",
+      "panelSha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_002_S02.png",
+      "panelSha256": "c60405d6e62c190fe092fe5c95e9da5ca74fbc0cce872e2c553d5e5ba5796096",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_002_S03.png",
+      "panelSha256": "71d1a25239eb8c7720243e96e1be9195859b801409f97952d37cd037db39e3d6",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_004_S01",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_004_S01.png",
+      "panelSha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_004_S02",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_004_S02.png",
+      "panelSha256": "fc0450bf902e9020dd2d1548168712653e20566ba1f437de80a9a26f09615cf5",
+      "durationSeconds": 6.0
+    },
+    {
+      "shotId": "CIN_004_S03",
+      "panel": "Art_Source/Cinematics/P0_Animatic/panels/panel_CIN_004_S03.png",
+      "panelSha256": "e7493991a21827df7dc5a5d4e115d3aa12ebf986c5301e6ea183bdea662cf59b",
+      "durationSeconds": 6.0
+    }
+  ],
+  "outputs": {
+    "mp4": {
+      "file": "ClientGodot/assets/cinematics/P0_animatic_640x360_30fps.mp4",
+      "sha256": "570c78ff0f3a03409ef0b292d5f505f15719476e64cb1e30f49047112091dcf4",
+      "codec": "h264",
+      "durationSeconds": 72.0,
+      "storedFrames": 2160,
+      "size": "640x360",
+      "fps": 30,
+      "audioTracks": 0,
+      "bakedSubtitles": false
+    },
+    "ogv": {
+      "file": "ClientGodot/assets/cinematics/P0_animatic_640x360_30fps.ogv",
+      "sha256": "06acf54e73eeba5358d5e738984f63c48484a3bfacf75cc5a63fcaa407c68f50",
+      "codec": "theora",
+      "durationSeconds": 72.0,
+      "storedFrames": 271,
+      "size": "640x360",
+      "fps": 30,
+      "audioTracks": 0,
+      "bakedSubtitles": false
+    },
+    "poster": {
+      "file": "ClientGodot/assets/cinematics/P0_animatic_poster.png",
+      "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8"
+    }
+  },
+  "totalSeconds": 72.0
+}

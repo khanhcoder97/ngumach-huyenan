@@ -1,0 +1,48 @@
+name: Codex visual reboot
+on:
+  pull_request:
+    paths:
+      - 'ClientGodot/**'
+      - 'Client/Assets/Scripts/Online/Core/**'
+      - 'Client/Assets/Resources/Narrative/dialogue_vi.json'
+      - 'Implementation/Content/Examples/QuestDefinition/**'
+      - 'Implementation/Content/Examples/QuestDefinitionAlpha/**'
+      - 'docs/production/Item_Master_Catalog_vi.csv'
+      - 'docs/production/Item_Rarity_Variant_Catalog_vi.csv'
+      - 'docs/production/World_Spawn_Gathering_Manifest_vi.csv'
+      - 'Art_Source/Visual_Reboot_20261104/**'
+      - 'Art_Source/BenMua_Concept_Rebuild_20261105/**'
+      - 'Art_Source/Combat_Visuals_20261105/**'
+      - 'Art_Source/MoonGlass_UI_20261105/**'
+      - 'Art_Source/Motion_16F_20261106/**'
+      - 'Implementation/Content/Maps/BenMua/**'
+      - 'Tools/ArtProduction/**'
+      - 'Tools/Coordination/**'
+      - 'Implementation/Coordination/**'
+      - '.github/workflows/visual-reboot.yml'
+permissions:
+  contents: read
+jobs:
+  build-and-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch only the new art batch
+        run: git lfs pull --include="Art_Source/Visual_Reboot_20261104/**,ClientGodot/assets/reboot/**,Art_Source/BenMua_Concept_Rebuild_20261105/**,ClientGodot/assets/ben_mua_v3/**,Art_Source/Combat_Visuals_20261105/**,ClientGodot/assets/combat_v1/**,Art_Source/MoonGlass_UI_20261105/**,ClientGodot/assets/ui_moonglass/**,Art_Source/Motion_16F_20261106/**,ClientGodot/assets/motion16/**" --exclude=""
+      - run: python -m pip install Pillow==11.3.0
+      - run: python Tools/ArtProduction/inspect_reboot.py
+      - run: python Tools/ArtProduction/inspect_environment.py
+      - run: python Tools/ArtProduction/inspect_combat.py
+      - run: python Tools/ArtProduction/inspect_moonglass.py
+      - run: python Tools/ArtProduction/inspect_motion16.py
+      - run: python Tools/ArtProduction/export_ben_mua_terrain.py --check
+      - run: python Tools/ArtProduction/export_native_catalog.py --check
+      - run: python -m unittest discover -s Tools/Coordination -p 'test_*.py' -v
+      - run: dotnet restore ClientGodot/VisualReboot.csproj --locked-mode
+      - run: dotnet build ClientGodot/VisualReboot.csproj --no-restore --nologo

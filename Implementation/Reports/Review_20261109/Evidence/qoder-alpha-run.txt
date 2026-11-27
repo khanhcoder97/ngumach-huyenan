@@ -1,0 +1,14 @@
+head=4cada354fc9efc1f1f4fff9c1d8acf9bccba6731 pid=4816 port=5211
+C1 level refusal status=422 response={"error": {"code": "prerequisite_not_met", "correlationId": "5844289e-eb86-4690-af4b-4a870f8f749a", "fieldErrors": ["level"], "messageKey": "P1.ERROR.PREREQUISITE_NOT_MET", "retryable": false}, "requestId": "a1000000000000000000000000000001", "result": {"objectiveCounters": {"OBJ_C1_01_REPRESENTATIVES": 0, "OBJ_C1_01_TRIAL_REGISTRATION": 0}, "questId": "C1-01", "revision": 1, "state": "LOCKED", "stepId": "STEP_C1_01_REPRESENTATIVES"}, "schemaVersion": 1, "serverTimeUtc": "2026-11-09T05:34:10Z", "sessionId": "7abdfdf058e04ff483309f1d2b977a0d"}
+C1 locked read={"objectiveCounters": {"OBJ_C1_01_REPRESENTATIVES": 0, "OBJ_C1_01_TRIAL_REGISTRATION": 0}, "questId": "C1-01", "revision": 1, "state": "LOCKED", "stepId": "STEP_C1_01_REPRESENTATIVES"}
+P00-03 wave trial credited after 1 ticks of the 400 allowed (one windup is 24 ticks) over 3 in/out attempts, each followed by [24, 24, 24] ticks of windup waited for
+P00-04 wave A activated after 0 ticks of the 1200 allowed (sourced traverse: 38 WU at 3 wu/s = 254 ticks)
+P00-04 AOI: row left at x=93.80000000000052, absent at 93.74846039999997,60, returned x=105.50000000000097
+P00-04 wave B activated after 0 ticks of the 1500 allowed (sourced traverse: 40 WU at 3 wu/s = 267 ticks)
+P00-05 talk: credited=False objective=None appliedFlag=None eventId=
+portal: 422 out_of_range naming [] from 282.8 WU away from TP_BM_THANH_LAC at (348,0)
+TALK replay away from NPC: HTTP 200, receiptRevision=3, conflict HTTP 409, questRevision=3
+TALK original response={"requestId": "f370e7f9e9724d94a2dfbefae57ddba1", "result": {"appliedFlag": null, "credited": false, "eventId": null, "nodeId": "DLG_P00_05_CLUE", "npcId": "NPC_TA_VAN_KHANH", "objectiveId": null, "questId": "P00-05", "replayed": false, "revision": 3}, "schemaVersion": 1, "serverTimeUtc": "2026-11-09T05:37:46Z", "sessionId": "7abdfdf058e04ff483309f1d2b977a0d"}
+TALK replay response={"requestId": "6fc4cfcd8da748e1b0aa3b41d9d817f1", "result": {"appliedFlag": null, "credited": false, "eventId": null, "nodeId": "DLG_P00_05_CLUE", "npcId": "NPC_TA_VAN_KHANH", "objectiveId": null, "questId": "P00-05", "replayed": true, "revision": 3}, "schemaVersion": 1, "serverTimeUtc": "2026-11-09T05:38:09Z", "sessionId": "7abdfdf058e04ff483309f1d2b977a0d"}
+TALK conflict response={"error": {"code": "idempotency_conflict", "correlationId": "dbb82376-0c0c-4303-8315-4b9db42553d7", "fieldErrors": ["idempotencyKey"], "messageKey": "P1.ERROR.IDEMPOTENCY_CONFLICT", "retryable": false}, "requestId": "80a897c06dc543fcb429ceb918a7814f", "schemaVersion": 1, "serverTimeUtc": "2026-11-09T05:38:09Z", "sessionId": "7abdfdf058e04ff483309f1d2b977a0d"}
+owned_server_stopped

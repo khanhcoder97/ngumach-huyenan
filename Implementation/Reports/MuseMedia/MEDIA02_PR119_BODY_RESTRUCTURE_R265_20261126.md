@@ -1,0 +1,56 @@
+# MEDIA-02 — PR #119 Body Restructure R265 (2026-11-26)
+
+## Tóm tắt
+
+- Khối: body restructure R265 — gọn ĐƠN R172 (gọn đơn thứ NĂM; gọn đơn bắt đầu ở R168); index + body v2 + checker đồng bộ tới head `451147b` (719 commit / 3187 file / +365156 từ merge-base `cf17178`); merge-tree tại `451147b` vs integration `f3db6b3` exit 0, tree `1772e5f0…`.
+- SỰ KIỆN ĐĂNG GIỮA HAI VÒNG: không có — payload R264 CHƯA ĐĂNG, live body vẫn R263 (94.825 ký tự, sha `07316552`); payload R264 sẵn sàng trình từ vòng trước, bị R265 supersede trước khi đăng.
+- Vòng này chạy MỘT PHA (~22:01–22:21 JST): fetch ~22:01 JST, đọc live, áp edit index + body v2, dựng chuỗi checker tới `check_pr119_restructure_r265_v1.py` + fill SHA-hits, checker chạy sạch **PASS 146/146** ngay lần đầu, scope audit block **3 path / 0 violation**, commit nội dung `ecee5f7` + push (ls-remote xác minh), đọc live post-push (2 lần), viết báo cáo này + payload R265.
+- Đọc live post-push (~22:19 + ~22:20 JST, connector): PR head `ecee5f7`, 720 commit / 3188 file / +366510 — khớp đếm git tại commit nội dung; mergeable **null / state unstable** tại head mới (CI đang chạy — cả 2 lần đọc); live body vẫn R263 (94.825 ký tự, sha `07316552`, 0 U+FFFD), tiêu đề kết thúc "+ R263", updated_at 2026-11-26T13:19:26Z (đổi do push R265 cập nhật head, body không đổi). Issue #116: **34 comment**, updated_at 2026-11-13T19:24:49Z, mới nhất ACK `6862732081`, **không chỉ đạo mới kể từ Gói 39 (`6815238814`)**.
+- Body v2: **94.450 ký tự** (net −107 so với R264), headroom **10.550** so với 105.000; head line 1.244 ký tự; R172 gọn 719 → 214 (gọn đơn thứ năm); đoạn R264 đúng 270 ký tự (theo checker).
+- Commit nội dung `ecee5f7` (~22:18 JST): 3 file, 1365 insertions, 11 deletions; scope audit block (`451147b..ecee5f7`) **3 path / 0 violation**; cumulative tại `ecee5f7` = 3188 path / 1 violation — artifact `.gitattributes` ở merge-base đã biết.
+- Payload R265 chuẩn bị sau push (dựng từ body v2 + đoạn Head làm tươi theo head sau push): body 94.300 ký tự, sha `dd56f4ea` (xem mục Payload), **SẴN SÀNG TRÌNH** trong giờ làm việc; chưa đăng — cần thẻ duyệt của chủ dự án. Lưu ý: mergeable_state trong payload là **unstable** (CI đang chạy lúc đọc post-push) — luồng chính làm tươi Head lúc trình nếu CI đã xong (bài học 39).
+
+## Đọc live
+
+- Lượt này, đọc trước push (connector): live body R263 (94.825 ký tự, sha `07316552`, byte-exact với file JSON R263 trên đĩa, 0 U+FFFD — một lần đọc sạch, không cần đọc lại); mergeable_state clean tại `451147b` (mergeable null — GitHub chưa tính lại cờ, state clean là giá trị vận hành); tiêu đề kết thúc "+ R263"; updated_at 2026-11-26T12:57:47Z. Issue read (call-read-tool, method get, ~22:06 JST): 34 comment, updated_at 2026-11-13T19:24:49Z — không chỉ đạo mới. Lệnh call-tool get_comments bắt đầu ~22:02 JST vẫn đang chờ duyệt lúc viết báo cáo (~22:2x JST, ~20 phút) — không cần vì count + updated_at không đổi so với lần get_comments đã xác minh ở R264.
+- Sau push (~22:19 JST + ~22:20 JST, connector, 2 lần đọc): API — head `ecee5f7`, 720/3188, mergeable null, mergeable_state **unstable** (CI đang chạy), live body R263 (94.825 ký tự, sha `07316552`, 0 U+FFFD), tiêu đề 765 ký tự kết thúc "+ R263", updated_at 2026-11-26T13:19:26Z; issue #116 không đọc lại sau push (ghi rõ trong head line của payload).
+- Suy ra từ git tại `ecee5f7`: rev-list `cf17178..ecee5f7` = 720; diff `--name-only` = 3188 file; `--shortstat` = 366510 insertions, 0 deletions — khớp đọc API; merge-tree `ecee5f7` vs `f3db6b3` exit 0, tree `c33b24b6…`; tại `451147b`: 719/3187/+365156 (khớp dòng cumulative của index R265).
+
+## Mốc giờ
+
+- Fetch lượt này chạy đúng giờ hẹn: `.git/FETCH_HEAD` mtime 22:01:37 JST; các số đếm git (719/3187/+365156) đo ~22:02 JST.
+- Đọc PR chạy ~22:03 JST (file `pr119_read_r265.json` mtime 22:03:45 JST); đọc issue chạy ~22:06 JST (file `issue116_read_r265.json` mtime 22:06:17 JST).
+- Transform/edit/shift/fill/checker/commit/push chạy 22:12–22:19 JST (mtime file: transform 22:12:17, edit 22:12:20, shift 22:17:10, fill 22:18:04, validation JSON 22:18:17; commit nội dung 22:18:46 JST; push xong ~22:19 JST). Đọc post-push 22:19:33 + 22:20:05 JST; payload 22:20:52 JST.
+- Đính chính nhãn giờ của vòng R264 (bài học 57a): nhãn "~16:47 JST" trong index/body v2 của vòng R264 gộp ba bước khác giờ (fetch 16:40:38 JST; đếm git ~16:47 JST; đọc issue ~16:41–17:05 JST; đọc PR khả năng ~17:05–17:15 JST sau 2 lần thử lỗi; transform/commit/push 21:48–21:53 JST) — chỉ nhãn giờ của lần đọc PR sai ~20–30 phút, mọi GIÁ TRỊ đã xác minh đúng. Vòng này KHÔNG sửa tay nội dung đã qua checker của R264 (sửa sẽ phá assertion) — các nhãn đó ở nguyên trong dòng R264 + đoạn R264; vòng này chỉ tách nhãn khi viết nội dung MỚI (fetch ~22:01, đếm ~22:02, đọc PR ~22:03, đọc issue ~22:06, push ~22:18, đọc post-push ~22:19–22:20).
+
+## R265 đóng khoảng trống
+
+- Delivery index: tiêu đề head → `451147b`; dòng milestone → 719/3187/365156; delta `7ac9433..451147b`: 2 path, 649 insertions, 0 deletions; một dòng được thêm — R264 (`7ac9433`/`451147b`), ghi payload R264 (94.490 ký tự, sha `b19bf59c`, CHƯA ĐĂNG — bị R265 supersede) + đính chính .bak (KHÔNG có file `.bak` rời cho R264 — báo cáo R264 overstated "main == .bak"; main == 2 bản .bak-prepost byte-identical, sha256 `19422e8d…`, đo từ đĩa lượt này) + đính chính lesson (33) của checker R264 + row-convention (dòng R263 = 3185) + sửa dòng Ghi chú + sửa câu "lượt cập nhật này" (chính R264); không có ACK riêng cho R264. Index bao quát mọi khối tới `451147b`; 2 commit của R265 gộp vào ở R266.
+- Body v2: head line đồng bộ tới `451147b` · 719 · 3187 (additions 365156, Gói 39 ID 6815238814, tree `1772e5f0…`, mergeable_state clean tại `451147b` theo đọc lượt này), cộng đoạn R264 và ghi chú R265. Gọn: đoạn R172 (719 → 214) — gọn ĐƠN thứ năm. Body 94.450 ký tự — net −107 so với R264 (−505 R172 + 271 đoạn mới + 28 trail + 30 tiêu đề + 5 Ghi-chú list "/R264" + 0 Ghi-chú range "R3–R171"→"R3–R172" + 64 head line — các thành phần theo projection của chuỗi edit; tổng net −107 đo trực tiếp từ đĩa: 94.557 → 94.450).
+- Checker `check_pr119_restructure_r265_v1.py`: PASS **146/146** ngay lần đầu (`--out` ghi validation JSON của vòng này; trường "checkpoint" trong JSON mang nhãn vòng trước "PR119 BODY RESTRUCTURE R264" — quy ước đặt tên mang sang của chuỗi shift, không phải lỗi số liệu; checks 146/146, failures []). 146 = 145 + đúng 1 check row-convention mới (tuple R263), khớp bài học vòng R264 mục 6 ("mỗi vòng chỉ thêm đúng 1 check row-convention").
+- Fill SHA-hits: `fill_sha_hits_r265.py` đã chạy thành công — đoạn SHA-hits 95 dòng / 78 entry đã điền đầy vào checker. Entry set: 77 entry của R264 trừ `2a559e7` đã nghỉ hưu (0 lần xuất hiện trong checker R265 — các tham chiếu dòng R262 đã chuyển sang `daf9540`/`451147b`) + 2 entry mới `451147b` (cover) + `7ac9433` (nội dung R264) lên đầu. Extra-token khớp hoàn toàn với R264 (43 token, cùng số lần xuất hiện).
+
+## Kiểm chứng sau commit nội dung
+
+- Commit nội dung `ecee5f76daaa27cf0bc56ae5113f60e850e3595c` (~22:18 JST): 3 file (body v2, delivery index, checker.py), 1365 insertions, 11 deletions; scope audit block (`451147b..ecee5f7`): **3 path / 0 violation**; cumulative tại `ecee5f7`: 3188 path / 1 violation — artifact `.gitattributes` đã biết.
+- Đếm tại `ecee5f7`: **720 commit / 3188 file / +366510** — khớp đọc API post-push. Dòng R264 trong index ghi cumulative 3188 — đã xác minh sau commit (diff tại `ecee5f7` = 3188, gồm 3187 tại `451147b` + 1 checker mới).
+- Merge-tree tại `ecee5f7` vs `f3db6b3`: exit 0, tree `c33b24b6…`.
+- Push: `451147b..ecee5f7` lên `muse/media-production-20261104` (deploy key, không force-push); ls-remote xác minh remote head = `ecee5f76daaa27cf0bc56ae5113f60e850e3595c`.
+- Working tree sau commit nội dung: sạch (chỉ còn báo cáo + validation JSON của vòng này, commit ở commit báo cáo).
+- Không có execution-risk flag nào chạm luồng chính vòng này.
+
+## Payload R265
+
+- Dựng bởi vòng này sau push (script `r265_payload.py` trong goal hidden_files) từ body v2 của vòng + đoạn Head làm tươi DUY NHẤT sang head sau push: head `ecee5f7` · 720 · 3188, additions 366510, mergeable **null / unstable** tại `ecee5f7` (đọc API tươi post-push ~22:19 + ~22:20 JST — CI đang chạy trên head mới; luồng chính làm tươi Head lúc trình nếu CI đã xong), live body R263 (94.825 ký tự, sha `07316552`, updated_at 2026-11-26T13:19:26Z), merge-tree tree `c33b24b6…`, issue #116 34 comment (đọc trước push lượt này ~22:06 JST, không đọc lại sau push — ghi rõ trong head line).
+- Body **94.300 ký tự, sha `dd56f4ea`**; JSON 105.344 byte < trần 131.072 (còn 25.728 byte); tiêu đề 765 ký tự kết thúc "+ R265" (hậu tố THAY, không nối — bài học R120); envelope đủ (owner `khanhcoder97`, repo `ngumach-huyenan`, pullNumber 119); file `~/workspace/godot-prototype/pr_comments/pr119_update_body_v2_r265.json` + `.bak` byte-identical (sha256 `c384c85a`) + bản sao byte-identical trong `.bak-prepost-20261124/` và `.bak-prepost-20261126/` — bước ghi `.bak` được KHÔI PHỤC ở vòng này (r264_payload.py đã bỏ bước này; xem bài học 58).
+- **CHƯA ĐĂNG** — cần thẻ duyệt của chủ dự án; luồng chính trình widget trong giờ làm việc. Lưu ý: thẻ duyệt hết hạn sau ~30 phút chờ (đã 10 lần) — nên bấm khi còn ngồi máy. Lưu ý thêm: payload R264 nay ĐÃ LỖI THỜI (head đã sang `ecee5f7`) — KHÔNG bấm widget R264.
+
+## Cảnh báo headroom
+
+Body v2 hiện 94.450 ký tự, headroom 10.550. Gọn ĐƠN tiếp theo là R173 ở vòng R266. Đoạn đầy đủ còn lại R173..R264 = 92 đoạn; khối gọn R2–R172 = 171 dòng. Ước tính net mỗi vòng gọn đơn ≈ −100..−250 — headroom an toàn dài hạn.
+
+## Bài học
+
+Lessons carried: toàn bộ danh sách bài học (1)–(57) trong báo cáo R262 + R263 + R264 cùng thư mục giữ nguyên hiệu lực. Mới vòng này:
+
+(58) NEW THIS ROUND (R265) — bốn điều: (a) ĐÍNH CHÍNH .BAK: báo cáo R264 viết "main == .bak byte-identical" cho payload R264 nhưng KHÔNG có file `.bak` rời nào cho R264 trên đĩa (find toàn thư mục pr_comments chỉ thấy main + 2 bản .bak-prepost, cả hai khớp sha256 `19422e8d…`) — nguyên nhân: `r264_payload.py` (viết mới) bỏ bước ghi `.bak` mà các builder R260–R263 vẫn có; câu trong báo cáo R264 là overstated, không phải dữ liệu sai (main == 2 bản prepost là đúng). R265 ghi trạng thái đo được vào dòng R264 và KHÔI PHỤC bước ghi `.bak` trong `r265_payload.py` (main == .bak == 2 prepost, sha256 `c384c85a`). (b) ISSUE READ: `call-read-tool` + `issue_read` method `get` + tham số `issue_number` chạy ngay lần đầu (~22:06 JST, 34 comment, updated_at không đổi) — đường đọc này đã đúng từ R263 phase 2; lệnh `call-tool` + `get_comments` vẫn chờ duyệt (~20 phút lúc viết báo cáo) và KHÔNG cần thiết khi count + updated_at không đổi so với lần get_comments đã xác minh — không treo chờ nó. (c) NHÃN GIỜ: vòng này tách nhãn theo từng bước (fetch ~22:01, đếm ~22:02, đọc PR ~22:03, đọc issue ~22:06, push ~22:18, post-push ~22:19–22:20) — áp dụng bài học 57a cho nội dung MỚI; các nhãn "~16:47 JST" đã khóa trong dòng R264/đoạn R264 ở nguyên (checker-locked; chỉ nhãn sai ~20–30 phút, giá trị đúng). (d) SHA NGHỈ HƯU: `2a559e7` về 0 lần xuất hiện trong checker R265 (mọi tham chiếu dòng R262 đã chuyển sang `daf9540`/`451147b`) nên rời entry set của fill; entry set 77 → 78 (trừ 1, cộng 2: `451147b` + `7ac9433`); extra-token vẫn khớp hoàn toàn với R264 (43 token, cùng số lần xuất hiện).

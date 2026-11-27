@@ -1,0 +1,88 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R183",
+ "validator": "check_pr119_restructure_r184_v1.py",
+ "checks": {
+  "total": 19,
+  "passed": 19
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == ebd3c1d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha bd537e6": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha ebd3c1d": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 557/2944": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R184 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R183 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R183 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..ebd3c1d == 557": {
+   "pass": true,
+   "detail": "557"
+  },
+  "git files cf17178..ebd3c1d == 2944": {
+   "pass": true,
+   "detail": "2944"
+  },
+  "git additions == 276843, deletions 0": {
+   "pass": true,
+   "detail": "2944 files changed, 276843 insertions(+)"
+  },
+  "merge-tree ebd3c1d vs integration exit 0, tree 3be4d304": {
+   "pass": true,
+   "detail": "3be4d3046e30cbb9dd2f51c80161664be5ba85e0"
+  },
+  "body head line ebd3c1d/557/2944": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R183 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R183": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R182 + PR119 BODY RESTRUCTURE R183"
+  },
+  "body title has full R93..R183 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R183 added"
+  },
+  "body index reference at ebd3c1d": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R184 note + R122-R165 compacted (44 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 44, body chars: 104921"
+  }
+ },
+ "status": "PASS"
+}

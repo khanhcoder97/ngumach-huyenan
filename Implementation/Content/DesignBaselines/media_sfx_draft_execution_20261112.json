@@ -1,0 +1,32 @@
+{
+  "decisionId": "DEC-MEDIA-SFX-DRAFT-20261112",
+  "status": "APPROVED_DRAFT_PRODUCTION",
+  "owner": "Codex",
+  "sourceRefs": [
+    "Implementation/Work_Orders/37_MUSE_FULL_CAMPAIGN_MEDIA_20261108.md",
+    "Implementation/Content/Audio/Deliveries/SFX_COVERAGE_ME_CP2A_v1.json @ b1472f2bb356852f49bbb127dd40dc4f99a79df2",
+    "Implementation/Reports/MuseMedia/MEDIA02_WO37_ME_CP2A_SFX_COVERAGE_20261111.md @ b1472f2bb356852f49bbb127dd40dc4f99a79df2"
+  ],
+  "scope": "Muse media-only draft assets and manifests; Codex owns runtime binding and acceptance",
+  "productionEnabled": false,
+  "runtimeAdoptionApproved": false,
+  "draftCandidates": [
+    { "proposal": "P-GUARD", "candidateKey": "SFX/COMBAT/guard_expire", "brief": "Small stance-release cue on an unhit guard-window expiry; distinguish from successful metal parry/counter; never imply confirmed block", "variants": 3 },
+    { "proposal": "P-WEAPON", "candidateKey": "SFX/COMBAT/dao_swing", "brief": "Short light blade swing identity for Anh Dao", "variants": 3 },
+    { "proposal": "P-WEAPON", "candidateKey": "SFX/COMBAT/brush_stroke", "brief": "Brush and ink gesture identity for Huyen But", "variants": 3 },
+    { "proposal": "P-WEAPON", "candidateKey": "SFX/COMBAT/mace_swing", "brief": "Heavy stone and air gesture identity for Thach Chuy", "variants": 3 },
+    { "proposal": "P-WEAPON", "candidateKey": "SFX/COMBAT/bow_string", "brief": "Bowstring release identity for Linh Cung", "variants": 3 },
+    { "proposal": "P-GRASS", "candidateKey": "SFX/WORLD/step_grass", "brief": "Grass footstep candidate, distinct from stone, wood and wet mud", "variants": 3 }
+  ],
+  "rules": {
+    "candidateKeysAreNotWireEnums": true,
+    "existingBasicBladeAndMetalParryRemainBaseline": true,
+    "skillPhaseDisposition": "Retain the current one-cue-per-skill catalogue; shared miss/impact may be reused only at host-confirmed events. New phase-specific cues require a separate sourced proposal; do not fabricate sixty runtime keys.",
+    "delivery": "18 draft variants plus provenance, format and measured peak/loudness/duration manifest, audition playlist and event-intent notes; keep originals and runtime manifests unchanged until reviewed",
+    "auditionStatus": "NOT_AUDITIONED until actual listening",
+    "unsupportedTrigger": "If the client/server has no authoritative trigger, deliver the asset and mark binding unsupported; do not add gameplay events or synthesize a successful counter",
+    "voiceCasting": "Existing original draft VO remains the baseline; palette alternates may enter a level-matched review comparison only, with no final casting or replacement approval",
+    "standard720": "Retain existing 720p review MP4 set and three OGV samples. Runtime candidate remains 640x360; defer the full upscaled OGV set until a measured native requirement justifies it.",
+    "motion": "P0 candidate and continuity documents accepted for review; no final character lock, animation acceptance or runtime replacement is granted"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "checkpoint": "WO37 M-G CP10",
+  "validator": "check_fresh_delta_mg_cp10_v1.py",
+  "fresh_clone": "mg_cp10_fresh",
+  "fresh_head": "8f7120a34d92bee816ce163e6ea6213a1a916e24",
+  "verified_delta": "WO37 M-B CP5 content 257c985 (7 files)",
+  "checks": {
+    "total": 40,
+    "passed": 40
+  },
+  "failures": [],
+  "details": {
+    "fresh HEAD == 8f7120a": "8f7120a",
+    "content commit delta == exactly the 7 expected paths": "7 paths",
+    "range 443d3e4..8f7120a has no ClientGodot/ path": "14 paths in range",
+    "CIN_000_640x360_30fps_sub_vi_v2.mp4 sha/size == CP5 record": "f8d6ac322c912311 / 11927191",
+    "CIN_000_1280x720_30fps_sub_vi_v2.mp4 sha/size == CP5 record": "472c116718f29466 / 32342539",
+    "CIN_000_vi_readable_v2.srt sha/size == CP5 record": "b4495c2506295535 / 2526",
+    "film manifest subtitledVariantV2 sha == 640 disk": "f8d6ac322c912311",
+    "CP5 manifest budget arithmetic": "44269730",
+    "CIN_000_640x360_30fps_sub_vi_v2.mp4 streams [video, audio, subtitle]": "['video', 'audio', 'subtitle']",
+    "CIN_000_640x360_30fps_sub_vi_v2.mp4 duration 87.2667 +-0.01": "87.2670",
+    "CIN_000_1280x720_30fps_sub_vi_v2.mp4 streams [video, audio, subtitle]": "['video', 'audio', 'subtitle']",
+    "CIN_000_1280x720_30fps_sub_vi_v2.mp4 duration 87.2667 +-0.01": "87.2670",
+    "640 and 720 durations equal within 0.01 s": "87.2670 vs 87.2670",
+    "readable v2 SRT has 26 chunks": "26",
+    "min chunk duration >= 1.0 s": "1.200 s",
+    "first chunk starts at 1.400 s (SEG01 window)": "1.400",
+    "24th chunk ends at 77.839 s (SEG05 palette end)": "77.839",
+    "25th chunk starts at 80.907 s (Ly An final line)": "80.907",
+    "last chunk ends at 83.475 s (final line end)": "83.475",
+    "CP5 checker re-run in fresh clone: 55/55 PASS": "{'total': 55, 'passed': 55}",
+    "re-run presentation gain == committed 0.9 dB": "0.9"
+  },
+  "status": "PASS"
+}

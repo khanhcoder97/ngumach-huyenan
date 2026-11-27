@@ -1,0 +1,150 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 45 - CIN_011 draft mix v1 (eighth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1 and CIN_010 v1, same recipe as P0 v3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVersion": "v1_cin011_proposed",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: eighth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1 and CIN_010 v1, built with the P0 v3 recipe (same gain targets, ducking params, peak guard, loop joins). Stem assignment is NEW and PROPOSED_CANDIDATE (the CP02 stem table assigns nothing to CIN_011; the scene timing manifest lists only the reveal stinger as a candidate stem). VO take is the CP17 draft; the take FITS its window (5.592 s, 12.2-17.792 s) by 0.008 s: no overrun, no tail trim at the scene edge. NOT a mix PASS: no ear audition, stem table not locked, stinger placement PROPOSED pending picture lock. Adoption is Codex's adapter decision.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_011; quiet_discovery music + wind_canopy ambience are the quiet-workshop cues (composed, CP26/CP30) for this carving-workshop scene (S01: a workbench with carved tablets -- handprint and tally-mark motifs -- and carving tools (hammer, chisels, brushes), DETAIL_LOCKED; S02: two men in an open bamboo shelter, the younger handing a small bowl to the older bearded man, lanterns, baskets and pots around them, MEMORY_MEDIUM; S03: Ha Mac leaning over a carved landscape panel, brush in hand, DETAIL_LOCKED; keyframes CIN_011 S01/S02/S03). quiet_discovery is the composed set's exploration silence ('Khoang lang kham pha': solo flute fragments, single bells, long near-silences, water drops, 60 BPM) -- the sparse quiet of a carving workshop and of a moral reflection ('Net sau khong xoa duoc dieu tot truoc do'); wind_canopy is the wind-through-canopy bed (gusted band noise + leaf rustle) for the open bamboo shelter and the greenery behind S02. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_011_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_011 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "VO window 12.2-17.8 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window was widened from the uniform 12.5-17.5 s for rate (87 chars at 15.54 chars/s).",
+    "VO take runs 12.2-17.792 s: 5.592 s, ending 0.008 s BEFORE the 17.8 s window end -- the take FITS inside its window by 8 ms (no overrun, unlike CIN_005/CIN_006). The take ends 0.208 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -21.50 LUFS (checkpoint 17, re-verified from real bytes this run, vs -22.01 LUFS for the CIN_010 take). VO is kept at unity per the recipe, not normalized.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_011",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_011_S03_HAMAC_draft_v1.wav",
+        "windowSeconds": [
+          12.2,
+          17.792
+        ],
+        "takeDurationSeconds": 5.592,
+        "takeEndSeconds": 17.792,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -0.008,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/quiet_discovery",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.72,
+          "remeasuredLUFS": -21.72,
+          "gainDb": -8.28,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.7,
+          "remeasuredLUFS": -29.7,
+          "gainDb": -6.3,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.2,
+              17.792
+            ],
+            "referenceSeconds": [
+              9.7,
+              11.7
+            ],
+            "depthInWindowDb": -10.79,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/wind_canopy",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00458,
+              "bedP999Jump": 0.00598,
+              "ratioToP999": 0.765
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_011_mix_draft_v1.wav",
+        "sha256": "aa89602b48cf2e2ac0ae2b5a3d4a7c872fc7c386c7989c5c46d32df074232fa1",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-20.34",
+        "truePeakDBTP": "-3.30",
+        "loudnessRangeLU": "10.90",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ]
+}

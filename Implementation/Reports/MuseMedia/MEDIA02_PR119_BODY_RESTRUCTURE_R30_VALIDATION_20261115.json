@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R30",
+ "validator": "check_pr119_restructure_r30_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 8ed54cd": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 406f12f": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 8ed54cd": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 249/2482": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R29 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R29 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..8ed54cd == 249": {
+   "pass": true,
+   "detail": "249"
+  },
+  "git files cf17178..8ed54cd == 2482": {
+   "pass": true,
+   "detail": "2482"
+  },
+  "git additions == 230972, deletions 0": {
+   "pass": true,
+   "detail": "2482 files changed, 230972 insertions(+)"
+  },
+  "merge-tree 8ed54cd vs integration exit 0": {
+   "pass": true,
+   "detail": "be5ceed12b2ec9a114850577eb04f14010de1a92"
+  },
+  "body head line 8ed54cd/249/2482": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R29 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R29": {
+   "pass": true,
+   "detail": ""
+  },
+  "body index reference at 8ed54cd": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R29 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}

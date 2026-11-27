@@ -1,0 +1,109 @@
+{
+  "reviewedHead": "6e8394dc540a18b8a87cce07c94e9c4e8dbde06c",
+  "scope": "External diagnostic project, NOT original project or Unity",
+  "sourceSha256": {
+    "Client/Assets/Scripts/Online/Core/P1Audio.cs": "6ea14ed1b6c37a7fd909d658dc16d39f6558cb8779a5b83685e1b47c1a19c941",
+    "Client/Assets/Scripts/Online/Core/P1AudioNotice.cs": "301b976aad2034374872743bf52d76481e7c5ae9366416b5fbf41600e2ddfc81",
+    "Client/Assets/Scripts/Online/Core/P1Client.cs": "48f39dcf78766068d138726984e186a92a24d72cd0d4074bb35a89e6b6a1c1fc",
+    "Client/Assets/Scripts/Online/Core/P1ClientV2.cs": "9c6f137e4e216a292e3003e25fc82759ff9665edb78d15d861bb49e91c156488",
+    "Client/Assets/Scripts/Online/Core/P1GameplayInputGate.cs": "486d61b9accc62d30560548eb1634f67c38cdeac0c483e707ec4a716eefa936f",
+    "Client/Assets/Scripts/Online/Core/P1Models.cs": "649a25f3ce920b0f164fc0f4d0ac46507337bcb171416e680f358eb5f32164e2",
+    "Client/Assets/Scripts/Online/Core/P1ModelsV2.cs": "590326762ad8f1d30aecabfc4a3610c00db1ff328a206b8b250e72b737efac3b",
+    "Client/Assets/Scripts/Online/Core/P1Wire.cs": "aaccc33f29d767b6b3b57399ea96addf692ffc2bf9c2cb9e5b3deaf9be532c87",
+    "Client/Assets/Scripts/Online/Presentation/InventoryPresenter.cs": "ce8aa70ff1187c1357ddaa6ccbece47e4c66943a5f0a0a20ed20977d0001386d",
+    "Client/Assets/Scripts/Online/Presentation/IP1UIAdapter.cs": "af5e36c63a4bdafe0853fab1d23fe33011d171c4c2f149ac54c1a298854d60aa",
+    "Client/Assets/Scripts/Online/Presentation/MapPresenter.cs": "e19fc35632a80aee5862895cd3b3fdcc2d7e5f3f73f597065b5d00b71a715e69",
+    "Client/Assets/Scripts/Online/Presentation/NpcDialoguePresenter.cs": "383ebca908ef81485b09a961d457ab0a6f098937b4d8ed927d75525b429ef2e8",
+    "Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs": "4a1f67c2e607ba528cb2038e57e2a543e0001c700fff46ebf30fd0a121e5f5db",
+    "Client/Assets/Scripts/Online/Presentation/P1UIState.cs": "2d26585b70e7cf46ae957d0cb3fcf8bea898c7b5ac59d1e977a4e914e5e769d2",
+    "Client/Assets/Scripts/Online/Presentation/PanelRouter.cs": "5392cbaff3eb2868cd5f80c04ae469d153c68033331ce999c5826f5263a656bd",
+    "Client/Assets/Scripts/Online/Presentation/QuestJournalPresenter.cs": "189207aaa09e14735759a5b4430bb4d438871968baf3dd9aaf15527a196bf986",
+    "Client/Assets/Scripts/Online/Presentation/SettingsPresenter.cs": "18c867a201b3e185241cdd769db384f29a846cf787950b82f9fb4d40f5e74d3d",
+    "Client/Tests/PlayerUIChecks/PlayerUIChecksTests.cs": "dcbe7e671b80459bb6d2f6f8d03678ecd49d5d49553e586ddc5716cb46e2b77c",
+    "Client/Tests/PlayerUIChecks/PlayerUIChecksTests2.cs": "ef5a67f7919e167be552f1f4aa6b76526695da8ae1ef418c46bb1b763bbdaac9"
+  },
+  "negativeChecksSha256": "74c2b5331bd6ab2214812c17cb2d7914d9226aba1eca2d44702fb5dbc311d41a",
+  "exitCode": 1,
+  "counters": {
+    "total": "37",
+    "executed": "37",
+    "passed": "29",
+    "failed": "8",
+    "error": "0",
+    "timeout": "0",
+    "aborted": "0",
+    "inconclusive": "0",
+    "passedButRunAborted": "0",
+    "notRunnable": "0",
+    "notExecuted": "0",
+    "disconnected": "0",
+    "warning": "0",
+    "completed": "0",
+    "inProgress": "0",
+    "pending": "0"
+  },
+  "failedTests": [
+    {
+      "name": "PlayerUIChecks.MapPresenterTests.Zoom_Clamps_ToRange",
+      "message": "System.NullReferenceException : Object reference not set to an instance of an object."
+    },
+    {
+      "name": "PlayerUIChecks.ProducerNegativeChecks.CancelledReadMustNotLeaveLoadingForever",
+      "message": "Assert.False() Failure\r\nExpected: False\r\nActual:   True"
+    },
+    {
+      "name": "PlayerUIChecks.MapPresenterTests.Topology_MarkedCandidate",
+      "message": "System.NullReferenceException : Object reference not set to an instance of an object."
+    },
+    {
+      "name": "PlayerUIChecks.InventoryPresenterTests.StaleRevision_NotApplied",
+      "message": "Assert.Equal() Failure: Values differ\r\nExpected: 10\r\nActual:   5"
+    },
+    {
+      "name": "PlayerUIChecks.MapPresenterTests.Refresh_BuildsMarkersFromV1World",
+      "message": "Assert.NotNull() Failure: Value is null"
+    },
+    {
+      "name": "PlayerUIChecks.ProducerNegativeChecks.EquipmentMustNotOccupyBagCell",
+      "message": "Assert.DoesNotContain() Failure: Filter matched in collection\r\n             ↓ (pos 0)\r\nCollection: [\"out_of_range_slot:MAIN_HAND:ITM_REVIEW_E\"]"
+    },
+    {
+      "name": "PlayerUIChecks.ProducerNegativeChecks.ValidBagItemWithoutSlotMustBeVisible",
+      "message": "Assert.Single() Failure: The collection was empty"
+    },
+    {
+      "name": "PlayerUIChecks.ProducerNegativeChecks.QuestReadyMustNotOfferTurnInAtEveryNpc",
+      "message": "Assert.DoesNotContain() Failure: Filter matched in collection\r\n             ↓ (pos 0)\r\nCollection: [DialogueChoice { DisabledReason = null, Enabled = True, Index = 0, Label = \"[Nộp nhiệm vụ] P00-01 (UNRESOLVED)\" }]"
+    }
+  ],
+  "status": "FAIL",
+  "originalProject": {
+    "status": "BUILD_FAILED",
+    "exitCode": 1,
+    "errorCode": "CS0246",
+    "missingType": "NpcDialoguePresenter",
+    "errorLocations": [
+      "PlayerUIChecksTests2.cs:37",
+      "PlayerUIChecksTests2.cs:48",
+      "PlayerUIChecksTests2.cs:59",
+      "PlayerUIChecksTests2.cs:74"
+    ],
+    "executedTests": 0,
+    "ciRunUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41054058580/job/124057003340"
+  },
+  "authorTestsUnderDiagnosticProject": {
+    "total": 33,
+    "passed": 29,
+    "failed": 4
+  },
+  "producerAdditionalNegativeChecks": {
+    "total": 4,
+    "passed": 0,
+    "failed": 4
+  },
+  "nativeUnity": {
+    "status": "UNVERIFIED",
+    "reason": "No Unity Editor available; assembly/API findings are static review only"
+  },
+  "reviewDecision": "CHANGES_REQUIRED"
+}

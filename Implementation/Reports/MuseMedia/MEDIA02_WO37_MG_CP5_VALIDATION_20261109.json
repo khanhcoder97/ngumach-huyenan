@@ -1,0 +1,119 @@
+{
+ "tool": "check_fresh_checkout_mg_cp5_v1.py",
+ "tool_version": "1.0.0",
+ "checkpoint": "WO37 M-G CP5",
+ "checkout": "/home/hatch/workspace/projects/media02-scratch/mg_cp5_fresh",
+ "reference": "/home/hatch/workspace/projects/ngumach-media02",
+ "expected_head": "b09d718c632536aa17d7372cca99973df460c492",
+ "checks": {
+  "head_matches": {
+   "passed": true,
+   "expected_head": "b09d718c632536aa17d7372cca99973df460c492",
+   "actual_head": "b09d718c632536aa17d7372cca99973df460c492",
+   "branch": "muse/media-production-20261104"
+  },
+  "lfs_filters_configured": {
+   "passed": true,
+   "smudge": "git-lfs smudge -- %f",
+   "note": "Plain `git clone` without `git lfs install` leaves LFS files as pointers; CP1 found 2147 pointers before `git lfs install --local` + `git lfs pull`."
+  },
+  "lfs_no_pointers": {
+   "passed": true,
+   "files_checked": 2027,
+   "pointer_files": [],
+   "pointer_count": 0
+  },
+  "lfs_objects_complete": {
+   "passed": true,
+   "distinct_oids": 2013,
+   "tracked_files": 2709,
+   "objects_on_disk": 2088
+  },
+  "root_counts_match": {
+   "passed": true,
+   "fresh": {
+    "Art_Source/Cinematics": {
+     "files": 451,
+     "bytes": 219733487
+    },
+    "Art_Source/Audio/Muse": {
+     "files": 315,
+     "bytes": 1626163856
+    },
+    "ClientGodot/assets/cinematics": {
+     "files": 174,
+     "bytes": 107755934
+    },
+    "ClientGodot/assets/audio": {
+     "files": 784,
+     "bytes": 304098533
+    },
+    "Implementation/Content/Narrative/Deliveries": {
+     "files": 50,
+     "bytes": 343200
+    },
+    "Implementation/Content/Audio/Deliveries": {
+     "files": 18,
+     "bytes": 1450104
+    },
+    "Implementation/Reports/MuseMedia": {
+     "files": 235,
+     "bytes": 2710654
+    }
+   },
+   "reference": {
+    "Art_Source/Cinematics": {
+     "files": 451,
+     "bytes": 219733487
+    },
+    "Art_Source/Audio/Muse": {
+     "files": 315,
+     "bytes": 1626163856
+    },
+    "ClientGodot/assets/cinematics": {
+     "files": 174,
+     "bytes": 107755934
+    },
+    "ClientGodot/assets/audio": {
+     "files": 784,
+     "bytes": 304098533
+    },
+    "Implementation/Content/Narrative/Deliveries": {
+     "files": 50,
+     "bytes": 343200
+    },
+    "Implementation/Content/Audio/Deliveries": {
+     "files": 18,
+     "bytes": 1450104
+    },
+    "Implementation/Reports/MuseMedia": {
+     "files": 235,
+     "bytes": 2710654
+    }
+   },
+   "diffs": {}
+  },
+  "ogv_real_bytes": {
+   "passed": true,
+   "real_bytes": 22,
+   "lfs_pointers": 0,
+   "other": [],
+   "pointer_files": []
+  },
+  "runtime_manifest_match": {
+   "passed": true,
+   "fresh_entries": 783,
+   "reference_entries": 783,
+   "fresh_sha256": "f0e3a015500b835e4f3ffbecec2dbc18929942ff057009cbd38690ab22a9806c",
+   "reference_sha256": "f0e3a015500b835e4f3ffbecec2dbc18929942ff057009cbd38690ab22a9806c"
+  },
+  "text_lf_endings": {
+   "passed": true,
+   "files_checked": 377,
+   "files_with_cr": [],
+   "note": "Linux-only evidence: a Linux checkout keeps LF even without the policy; the LF rules matter for Windows checkouts. A PASS here never proves the policy is present."
+  }
+ },
+ "mismatches": [],
+ "result": "PASS"
+}

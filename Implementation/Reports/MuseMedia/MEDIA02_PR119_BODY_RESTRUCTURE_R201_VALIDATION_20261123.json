@@ -1,0 +1,108 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R200",
+ "validator": "check_pr119_restructure_r201_v1.py",
+ "checks": {
+  "total": 24,
+  "passed": 24
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 5e5fbba": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 01dd796": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 5e5fbba": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 591/2995": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R201 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R200 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R200 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196-defect repairs (milestone 6 lines, heading, R167 ascending, R200 note)": {
+   "pass": true,
+   "detail": "milestone6=True heading=True r196clean=True r167ascending=True r200note=True"
+  },
+  "index R198 row carries ĐÍNH CHÍNH R200 (.bak claim corrected)": {
+   "pass": true,
+   "detail": ""
+  },
+  "row-convention R197 cumulative 2987 == diff at 285ade4": {
+   "pass": true,
+   "detail": "2987"
+  },
+  "row-convention R198 cumulative 2990 == diff at 4513812": {
+   "pass": true,
+   "detail": "2990"
+  },
+  "row-convention R199 cumulative 2993 == diff at 01dd796": {
+   "pass": true,
+   "detail": "2993"
+  },
+  "git commits cf17178..5e5fbba == 591": {
+   "pass": true,
+   "detail": "591"
+  },
+  "git files cf17178..5e5fbba == 2995": {
+   "pass": true,
+   "detail": "2995"
+  },
+  "git additions == 284019, deletions 0": {
+   "pass": true,
+   "detail": "2995 files changed, 284019 insertions(+)"
+  },
+  "merge-tree 5e5fbba vs integration exit 0, tree 929a6fd5": {
+   "pass": true,
+   "detail": "929a6fd5cd565373ddc127b59ef698d4b0840a6e"
+  },
+  "body head line 5e5fbba/591/2995": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R200 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R200": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R199 + PR119 BODY RESTRUCTURE R200"
+  },
+  "body title has full R93..R200 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R200 added"
+  },
+  "body index reference at 5e5fbba": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R201 note + R105-R165 compacted (61 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 61, body chars: 104879"
+  }
+ },
+ "status": "PASS"
+}

@@ -1,0 +1,19 @@
+Docs directory: D:\Project\NGUMACHHUYENAN-review-qod-20261109\docs\production
+Content directory: D:\Project\NGUMACHHUYENAN-review-qod-20261109\Implementation\Content
+Manifest: World_Spawn_Gathering_Manifest_vi.csv
+Item_Master_Catalog_vi.csv: ID column = item_id
+Item_Rarity_Variant_Catalog_vi.csv: ID column = item_id
+NPC_Actor_Production_Registry_vi.csv: ID column = npc_id
+Currency_Production_Data_vi.csv: ID column = currency_id
+Class_Passive_Production_Data_vi.csv: ID column = passive_id
+Definition schemas: 8
+  ClassDefinition: 1 example(s)
+  GatheringNodeDefinition: 1 example(s)
+  ItemDefinition: 1 example(s)
+  MapDefinition: 1 example(s)
+  MapTopology: 1 example(s)
+  QuestDefinition: 5 example(s)
+  SkillDefinition: 7 example(s)
+  SpawnDefinition: 1 example(s)
+
+OK: all content validation checks passed.

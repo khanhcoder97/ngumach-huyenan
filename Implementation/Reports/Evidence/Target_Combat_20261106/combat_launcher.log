@@ -1,0 +1,80 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Health -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Server\Health\bin\Release\net10.0\Health.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:07.17
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  P1NativeCore -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\Portable\bin\Debug\net8.0\Ngumach.P1NativeCore.dll
+  VisualReboot -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\.godot\mono\temp\bin\Debug\VisualReboot.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:09.98
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Khởi tạo dự án (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Đang quét các tệp tin...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Đang tải các tên lớp toàn cục (global class names)...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Đang xác thực các GDExtension...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Đang tạo các tập lệnh tự động tải (autoload scripts)...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Đang khởi tạo plugin...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Bắt đầu quét hệ thống tệp...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Đang đăng ký các lớp toàn cục (global classes)... (2 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Đang tải editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Đang tải bố cục của editor...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Đang tải các tab (docks)...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 388.73 - Compatibility - Using Device: NVIDIA - GeForce 820M
+
+NATIVE_COMBAT_MODE REAL_HTTP_AND_VIEWPORT_POINTER_NOT_HARDWARE_MOUSE
+COMBAT_CHECK ordinary authoritative spawn remains x18
+COMBAT_CHECK walked from village to real fish spawn along dry bank
+COMBAT_CHECK real enemy is living and targetable
+COMBAT_CHECK pointer selects a rendered real enemy
+COMBAT_CHECK target HUD reads server HP
+FRAME_PROFILE {"renderer":"GeForce 820M","profileWalk":false,"travelledPixels":0,"clock":"Stopwatch wall time","targetFps":60,"engineLimit":0,"vsync":"Enabled","frames":713,"seconds":12.024092300000005,"averageFps":59.297615338498325,"medianMs":16.65030000000023,"p95Ms":19.029599999999647,"cpuMs":25.589704067321083,"drawCalls":163.92706872370266,"textureMiB":321.1717529296875,"nodes":942}
+COMBAT_CHECK target remains stable during real online frame profile
+COMBAT_CHECK native Tab changes real group member
+COMBAT_CHECK re-pick nearest member for authoritative cone target semantics
+COMBAT_AIM from=83,79442669386472,2,9977358109124577 to=84,0
+COMBAT_EVENT CAST_START target= hpDamage=
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01 hpDamage=28
+COMBAT_EVENT END target= hpDamage=
+COMBAT_CHECK attack button receives authoritative acceptance
+COMBAT_CHECK real impact reaches life-scoped VFX feedback
+COMBAT_CHECK confirmed attack HP change reaches target panel
+COMBAT_CHECK native capture native_combat_hit.png
+COMBAT_EVENT CAST_START target= hpDamage=
+COMBAT_CHECK targeted skill consumes real MP
+COMBAT_CHECK targeted skill cooldown displayed from receipt
+COMBAT_CHECK fresh second pointer cast reports cooldown
+COMBAT_CHECK rejected repeated input consumes nothing extra
+COMBAT_CHECK native capture native_combat_target.png
+COMBAT_EVENT MISS target=ENT_MAN_BM_SPAWN_BM_01 hpDamage=0
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M2 hpDamage=8
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M3 hpDamage=8
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01 hpDamage=10
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M2 hpDamage=10
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M3 hpDamage=10
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01 hpDamage=17
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M2 hpDamage=17
+COMBAT_EVENT IMPACT target=ENT_MAN_BM_SPAWN_BM_01_M3 hpDamage=17
+COMBAT_EVENT END target= hpDamage=
+COMBAT_CHECK native right-click clears real target and HUD
+COMBAT_CHECK combat test grants no local loot or quest reward
+NATIVE_COMBAT_PASS assertions=19

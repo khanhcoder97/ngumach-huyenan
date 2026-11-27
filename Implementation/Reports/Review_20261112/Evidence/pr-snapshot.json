@@ -1,0 +1,767 @@
+[
+  {
+    "baseRefName": "qoder/qod-17-guard-runtime",
+    "headRefOid": "fc86916f21510e40fac0fd8a1c936cbb27a165a0",
+    "number": 91,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:44:59Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051070/job/129001946286",
+        "name": "validate",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "content-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:15Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051157/job/129001946597",
+        "name": "e2e-default",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:10Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051044/job/129001946185",
+        "name": "smoke",
+        "startedAt": "2026-11-09T05:44:51Z",
+        "status": "COMPLETED",
+        "workflowName": "server-smoke"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:44:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051106/job/129001946213",
+        "name": "validate",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "contract-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:13Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051124/job/129001946421",
+        "name": "build",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "server-build"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:13Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051157/job/129001946691",
+        "name": "e2e-dev",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:18Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051157/job/129001946332",
+        "name": "e2e-mob-combat",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T05:45:12Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42569051157/job/129001946669",
+        "name": "e2e-two-client",
+        "startedAt": "2026-11-09T05:44:52Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      }
+    ],
+    "url": "https://github.com/khanhcoder97/ngumach-huyenan/pull/91"
+  },
+  {
+    "baseRefName": "main",
+    "headRefOid": "5371a4675fbd8fc4b41b4748f2b1732ef2d81824",
+    "number": 98,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:38:37Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877541/job/125597627765",
+        "name": "pipeline",
+        "startedAt": "2026-11-02T22:37:48Z",
+        "status": "COMPLETED",
+        "workflowName": "content-candidate-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:37:55Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877642/job/125597628289",
+        "name": "validate",
+        "startedAt": "2026-11-02T22:37:49Z",
+        "status": "COMPLETED",
+        "workflowName": "content-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:37:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877587/job/125597627982",
+        "name": "validate",
+        "startedAt": "2026-11-02T22:37:49Z",
+        "status": "COMPLETED",
+        "workflowName": "contract-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:37:56Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877561/job/125597627318",
+        "name": "guard-design-input",
+        "startedAt": "2026-11-02T22:37:49Z",
+        "status": "COMPLETED",
+        "workflowName": "producer-design-checks"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:38:05Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877563/job/125597627487",
+        "name": "build",
+        "startedAt": "2026-11-02T22:37:48Z",
+        "status": "COMPLETED",
+        "workflowName": "server-build"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-02T22:38:14Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41538877713/job/125597628197",
+        "name": "smoke",
+        "startedAt": "2026-11-02T22:37:48Z",
+        "status": "COMPLETED",
+        "workflowName": "server-smoke"
+      }
+    ],
+    "url": "https://github.com/khanhcoder97/ngumach-huyenan/pull/98"
+  },
+  {
+    "baseRefName": "qoder/qod-18-ben-mua-completion-20261030",
+    "headRefOid": "4cada354fc9efc1f1f4fff9c1d8acf9bccba6731",
+    "number": 106,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:23:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525546/job/128614579661",
+        "name": "validate",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "content-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:23:45Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525543/job/128614579125",
+        "name": "validate",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "contract-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:23:55Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525548/job/128614579335",
+        "name": "build",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-build"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:10Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579432",
+        "name": "e2e-default",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:48Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525557/job/128614579333",
+        "name": "smoke",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-smoke"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:35Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579515",
+        "name": "e2e-dev",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:25:13Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579296",
+        "name": "e2e-mob-combat",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:35Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579571",
+        "name": "e2e-two-client",
+        "startedAt": "2026-11-08T03:23:47Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:28:50Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579529",
+        "name": "e2e-alpha-p00",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579556",
+        "name": "e2e-alpha-revive",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:25:02Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579553",
+        "name": "e2e-death-return",
+        "startedAt": "2026-11-08T03:24:11Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:39Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579492",
+        "name": "e2e-audience-gateoff",
+        "startedAt": "2026-11-08T03:23:56Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614580047",
+        "name": "e2e-gate-one (QuestAccept)",
+        "startedAt": "2026-11-08T03:24:18Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579608",
+        "name": "e2e-gate-one (Interact)",
+        "startedAt": "2026-11-08T03:24:00Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:23:58Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579667",
+        "name": "e2e-gate-one (QuestTurnIn)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:24Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579662",
+        "name": "e2e-gate-one (Equipment)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:15Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579615",
+        "name": "e2e-gate-one (CombatV2)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:18Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579530",
+        "name": "e2e-gate-one (AlphaProfile)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:11Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579517",
+        "name": "e2e-gate-one (DeathReturn)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:29Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579605",
+        "name": "e2e-gate-one (CombatDamage)",
+        "startedAt": "2026-11-08T03:23:47Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:23:59Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579533",
+        "name": "e2e-gate-one (MobBehavior)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:58Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579837",
+        "name": "e2e-gate-one (AlphaLoot)",
+        "startedAt": "2026-11-08T03:24:17Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579768",
+        "name": "e2e-gate-one (DeathReturnAlpha)",
+        "startedAt": "2026-11-08T03:24:16Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579617",
+        "name": "e2e-gate-one (QuestTalk)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579623",
+        "name": "e2e-gate-one (QuestTalkAlpha)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:26Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579798",
+        "name": "e2e-gate-one (Portal)",
+        "startedAt": "2026-11-08T03:24:00Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:19Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579708",
+        "name": "e2e-gate-one (PortalAlpha)",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:22Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579697",
+        "name": "e2e-gate-one (AlphaLootAlpha)",
+        "startedAt": "2026-11-08T03:23:39Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:45Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579770",
+        "name": "e2e-gate-one (DeathReturnFixture)",
+        "startedAt": "2026-11-08T03:24:12Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-08T03:24:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42442525542/job/128614579484",
+        "name": "e2e-restart",
+        "startedAt": "2026-11-08T03:23:38Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      }
+    ],
+    "url": "https://github.com/khanhcoder97/ngumach-huyenan/pull/106"
+  },
+  {
+    "baseRefName": "opencode/opc-14-ui-runtime-hardening-20261101",
+    "headRefOid": "85719a7ecdaa10d3ad2d20d32077a78cea88b92b",
+    "number": 109,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:29Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423264/job/129028173548",
+        "name": "PlayerUIChecks (.NET 10)",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "antigravity-player-ui"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:23Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423277/job/129028173900",
+        "name": "client-core",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "client-core-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:08:50Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423119/job/129028173299",
+        "name": "validate",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "content-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:08:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423400/job/129028174080",
+        "name": "validate",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "contract-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:14Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423243/job/129028173583",
+        "name": "shared-core",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "godot-client-core"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:15Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423232/job/129028174207",
+        "name": "narrative-client-http",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "narrative-gameplay"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:08:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423239/job/129028173606",
+        "name": "guard-design-input",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "producer-design-checks"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:05Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423248/job/129028173707",
+        "name": "build",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "server-build"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:02Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423263/job/129028173405",
+        "name": "e2e-default",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423231/job/129028173607",
+        "name": "smoke",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "server-smoke"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:08:47Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423264/job/129028173929",
+        "name": "Docs UTF-8 and diff check",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "antigravity-player-ui"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:39Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423277/job/129028174141",
+        "name": "client-v2-http",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "client-core-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:10:43Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423243/job/129028350712",
+        "name": "paired-http-runner (gates-off)",
+        "startedAt": "2026-11-09T07:09:15Z",
+        "status": "COMPLETED",
+        "workflowName": "godot-client-core"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423263/job/129028173869",
+        "name": "e2e-dev",
+        "startedAt": "2026-11-09T07:08:44Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:17:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423243/job/129028350792",
+        "name": "paired-http-runner (private-alpha)",
+        "startedAt": "2026-11-09T07:09:16Z",
+        "status": "COMPLETED",
+        "workflowName": "godot-client-core"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:10:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423243/job/129028350698",
+        "name": "shared-http-runner",
+        "startedAt": "2026-11-09T07:09:15Z",
+        "status": "COMPLETED",
+        "workflowName": "godot-client-core"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-09T07:09:58Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/42577423263/job/129028173852",
+        "name": "e2e-mob-combat",
+        "startedAt": "2026-11-09T07:08:43Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      }
+    ],
+    "url": "https://github.com/khanhcoder97/ngumach-huyenan/pull/109"
+  },
+  {
+    "baseRefName": "codex/story-gameplay-integration-20261031",
+    "headRefOid": "b1472f2bb356852f49bbb127dd40dc4f99a79df2",
+    "number": 119,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:53Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125509/job/130868352367",
+        "name": "build-and-structure",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "Codex visual reboot"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:54:03Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125354/job/130868351903",
+        "name": "pipeline",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "content-candidate-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:52:50Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125411/job/130868351928",
+        "name": "validate",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "content-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:52:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125583/job/130868353021",
+        "name": "validate",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "contract-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:43Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125362/job/130868351960",
+        "name": "decode-and-provenance",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "game-audio-pack-validation"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:52:47Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125382/job/130868352061",
+        "name": "guard-design-input",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "producer-design-checks"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:02Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125380/job/130868352433",
+        "name": "build",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "server-build"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:05Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125419/job/130868352192",
+        "name": "e2e-default",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:24Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125366/job/130868351850",
+        "name": "smoke",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "server-smoke"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:53:28Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125419/job/130868352179",
+        "name": "e2e-dev",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-11T23:54:01Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/43123125419/job/130868351786",
+        "name": "e2e-mob-combat",
+        "startedAt": "2026-11-11T23:52:41Z",
+        "status": "COMPLETED",
+        "workflowName": "server-e2e"
+      }
+    ],
+    "url": "https://github.com/khanhcoder97/ngumach-huyenan/pull/119"
+  }
+]

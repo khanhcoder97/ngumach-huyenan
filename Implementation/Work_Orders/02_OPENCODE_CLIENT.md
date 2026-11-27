@@ -1,5 +1,9 @@
 # OpenCode — GitHub Asset Pipeline Validator
 
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
+
 ## Gói tiếp theo đang được giao — 2026-10-29
 
 OPC-05 đã bàn giao; PR #31 là coverage follow-up đang review. Tiếp tục cả gói OPC-06→10 trong `05_OPENCODE_ASSET_PIPELINE_EPIC.md` theo cơ chế `04_CONTINUOUS_DELIVERY_20261029.md`. Phạm vi được mở rộng sang schema migration có review, PNG/meta hardening, browser preview và release tooling; các hạn chế phạm vi OPC-05 bên dưới không chặn gói mới. Không cần Unity; không dừng sau mỗi PR nếu còn phần độc lập được giao.

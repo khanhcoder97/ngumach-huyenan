@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+TILEMAP detail layers on: under z=5, over z=15 (7200x960)
+SELECTTEST PASS: menu_shown_first 
+SELECTTEST PASS: no_class_yet 
+SELECTTEST PASS: cards_disabled_except_minh_kiem 
+SELECTTEST PASS: refused_menu_stays_open 
+SELECTTEST PASS: refused_no_selection 
+SELECTTEST PASS: refused_reason_shown LINH CUNG — Server alpha hiện chỉ mở Minh Kiếm
+SELECTTEST PASS: refused_animator_untouched minh_kiem
+SELECTTEST PASS: refused_key_path THẠCH CHÙY — Server alpha hiện chỉ mở Minh Kiếm
+SELECTTEST PASS: menu_hidden_after_choose 
+SELECTTEST PASS: selected_minh_kiem minh_kiem
+SELECTTEST PASS: animator_minh_kiem_128 minh_kiem/128
+SELECTTEST PASS: hud_portrait_minh_kiem minh_kiem
+SELECTTEST PASS: character_id_for_class CHR_MINH_KIEM_01
+SELECTTEST PASS: not_connected_without_server 
+SELECTTEST RESULT: PASS

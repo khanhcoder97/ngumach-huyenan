@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "sourceBefore": "8bab575feb0bee941f86b2fa8d6b3d6d908964ef",
+  "p0Ids": [
+    "CIN_001",
+    "CIN_002",
+    "CIN_004"
+  ],
+  "p0Seconds": 72,
+  "p0Shots": 12,
+  "inventory": {
+    "scenes": 20,
+    "shots": 63,
+    "seconds": 378
+  },
+  "answers": {
+    "Q1": {
+      "sceneId": "CIN_001",
+      "shotId": "CIN_001_S05",
+      "canonicalDialogue": "Ly An: Đầu kia! Giữ giúp tôi đầu kia!",
+      "voiceWindowSeconds": [
+        24.8,
+        28.5
+      ],
+      "direction": "urgent while holding parcel/rope, eyes on the task, not trailer delivery",
+      "supersedes": "Ly An: Giữ giúp tôi đầu dây. Đừng để kiện ấy trôi."
+    },
+    "Q2": {
+      "sceneId": "CIN_004",
+      "voiceActor": "NPC_LYAN",
+      "onscreen": false,
+      "charactersMeaning": "on-screen actors; remains BOSS_MANG_COT",
+      "line": "Ly An: Nó cứ tránh chỗ nước ấy.",
+      "newWorldSpawn": false
+    },
+    "Q3": {
+      "sceneId": "CIN_006",
+      "alternateTakeChangesCanonical": false,
+      "requiresVersionedTakeLabel": true,
+      "canonicalDialogue": "Hạ Mặc: Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì."
+    },
+    "Q4": {
+      "sceneId": "CIN_006",
+      "cinematicOnlyStagingApproved": true,
+      "existingCharacterIds": [
+        "NPC_HA_MAC",
+        "NPC_SAM_CHU_QUY"
+      ],
+      "persistentNpcIdDuplication": false,
+      "worldRegistryMigrationApproved": false
+    },
+    "Q5": {
+      "work28AndPolicyAt7a85494": true,
+      "p0SourceDiff3557959To8bab575": "none in Cinema_Production_Pack_v1.json, Directors Pack, or MUSE_CINEMA_DIRECTION_vi.md",
+      "newDecisionChanges": "Q1 canonical line, explicit off-screen direction for CIN_004, references owned by Codex",
+      "offlineProxyFallback": "use full decision/work order posted in issue116; do timing/VO/music/subtitle inventory independently while Git fetch is unavailable"
+    }
+  },
+  "mediaScopeOnly": true,
+  "referenceEnvironment": "Art_Source/BenMua_Concept_Rebuild_20261105",
+  "visualLock": "environment reference approved for storyboard; absent named-character keyframe blocks only that shot's final picture, not audio/timing/other shots"
+}

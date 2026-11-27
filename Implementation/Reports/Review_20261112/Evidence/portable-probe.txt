@@ -1,0 +1,5 @@
+explicitRequestedIdentity=False actualActor=CHR_TEST suppliedOwner=CHR_FOREIGN accepted=False outcome=Error deliveries=0
+explicitRequestedIdentity=True actualActor=CHR_TEST suppliedOwner=CHR_FOREIGN accepted=False outcome=Error deliveries=0
+media traversalInAllowedList accepted=True phase=Playing
+media externalMixUnderEmbeddedPolicy accepted=True phase=Playing
+escort v2AbsentButV1OldNpc inAudience=True entity=ENT_NPC_LYAN_STATIC map=MAP_THANH_LAC tick=500 x=90 onRoad=True

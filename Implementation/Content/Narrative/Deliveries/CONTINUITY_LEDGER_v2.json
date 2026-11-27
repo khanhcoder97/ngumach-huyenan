@@ -1,0 +1,4139 @@
+{
+ "ledgerId": "NGM_CONTINUITY_LEDGER_V2",
+ "checkpoint": "MEDIA-02 WO37 M-C CP5 — continuity ledger v2 (63 campaign shots; CP4 FLAG closure)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C (continuity), continuing Gói 38 item 4 — CP5 FLAG closure",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "headSha": "9ab006f",
+ "status": "DRAFT",
+ "sources": {
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "motionLedgerSha256": "6730ea5707c7be1d37a20ce2408039fe248af8457469d17812c0f663e8656c43",
+  "runtimeManifest": "ClientGodot/assets/cinematics/RUNTIME_CINEMATICS_manifest_v1.json",
+  "runtimeManifestSha256": "a1a22f00d09dc31cf6613386bf62ddd29a885d36d5d149901f4cfb6e25f44bd3",
+  "pronunciationTable": "Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json",
+  "pronunciationTableSha256": "6cd66a510e070a22de23de0c6e1e0c0d3cb872039bc450817f409263dd98d579",
+  "timingManifests": "ClientGodot/assets/cinematics/timing/CIN_XXX_timing_v1.json (20 files)",
+  "sceneExportManifests": "ClientGodot/assets/cinematics/CIN_XXX/scene_export_manifest_v1.json (20 files)",
+  "srtFiles": "ClientGodot/assets/cinematics/timing/CIN_XXX_vi.srt (20 files)",
+  "mixManifests": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3 (P0 scenes) + Art_Source/Audio/Muse/MIX/CINxxx_DRAFT_V1 (17 scenes)"
+ },
+ "rules": [
+  "K1 timing tiling from timing manifests; ledger timing must match; durations must agree across timing/export/mix/runtime; totals 20/63/378/21.",
+  "K2 SRT (runtime-manifest sha) must be UTF-8/NFC/LF-only, cue count == export dialogueCues, ordered non-overlapping; one cue per dialogue shot, window inside shot, text == ledger dialogue text.",
+  "K3 per scene per named character: visible-shot sequence, BLINK = visible/absent/visible again in one scene; REQUIRED_NOT_VISIBLE; speaker not visible in own dialogue shot is NOTE when onscreen=false (voice off-screen as recorded in the current picture/mix; final-picture decision open) or the ledger records off-screen staging (speakerNotInFrame / identifiability defect), otherwise FLAG (no off-screen record); speaker with no canonical ID is FLAG.",
+  "K4 each R5 guardrail key traced across its scene: every shot where the same subject appears should re-assert it; unasserted shots are NOTE (documentation coverage).",
+  "K5 per-shot audio coverage from the current mix manifest; DRY_SHOT is FLAG; segment boundary mid-shot and stinger on a shot boundary are NOTE (a stinger belongs to the shot starting at its placement second); ambience loop-seam wrapJump attached from pronunciation seam table.",
+  "K6 mix VO take extent vs locked/SRT window, matched by shotId (mix `voices` list, else single `vo`); take end is takeEndSeconds when present, else windowSeconds[1]; a take ending before the locked end is NOTE, an overrun is NOTE with the recorded overrunVsWindowSeconds; a window mismatch is FLAG."
+ ],
+ "totals": {
+  "scenes": 20,
+  "shots": 63,
+  "durationSeconds": 378.0,
+  "dialogueCues": 21,
+  "dialogueShots": 21,
+  "findings": 59,
+  "findingsBySeverity": {
+   "FLAG": 0,
+   "NOTE": 59
+  },
+  "dryShots": 0,
+  "characterBlinks": 0
+ },
+ "scenes": [
+  {
+   "sceneId": "CIN_001",
+   "durationSeconds": 36,
+   "shots": 6,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 73,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json",
+   "mixSeconds": 36.0
+  },
+  {
+   "sceneId": "CIN_002",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 105,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_003",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 108,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN003_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_004",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 68,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_005",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 119,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN005_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_006",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 141,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN006_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_007",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 110,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN007_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_008",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 92,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN008_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_009",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 125,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN009_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_010",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 90,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN010_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_011",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 154,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN011_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_012",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 128,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN012_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_013",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 82,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN013_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_014",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 92,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN014_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_015",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 97,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN015_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_016",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 89,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/CIN016_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_017",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 94,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN017_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_018",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 2,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 228,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_019",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 85,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN019_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  },
+  {
+   "sceneId": "CIN_020",
+   "durationSeconds": 18,
+   "shots": 3,
+   "dialogueCues": 1,
+   "timingShaMatchesRuntimeManifest": true,
+   "srtShaMatchesRuntimeManifest": true,
+   "srtChecks": {
+    "bytes": 87,
+    "utf8Ok": true,
+    "hasCR": false,
+    "endsWithLF": true,
+    "nfcOk": true
+   },
+   "tilingOk": true,
+   "ledgerTimingMatchesTimingManifest": true,
+   "durationsAgreeAcrossSources": true,
+   "srtCueCountMatchesExport": true,
+   "srtCuesOrderedNonOverlapping": true,
+   "mixManifest": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN020_MIX_V1_manifest_v1.json",
+   "mixSeconds": 18.0
+  }
+ ],
+ "shots": [
+  {
+   "shotId": "CIN_001_S01",
+   "sceneId": "CIN_001",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      6.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000181,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_001_S02",
+   "sceneId": "CIN_001",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      6.0,
+      30.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_001_S03",
+   "sceneId": "CIN_001",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      6.0,
+      30.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_001_S04",
+   "sceneId": "CIN_001",
+   "startSeconds": 18.0,
+   "endSeconds": 24.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      6.0,
+      30.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_001_S05",
+   "sceneId": "CIN_001",
+   "startSeconds": 24.0,
+   "endSeconds": 30.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      6.0,
+      30.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    24.8,
+    27.368
+   ]
+  },
+  {
+   "shotId": "CIN_001_S06",
+   "sceneId": "CIN_001",
+   "startSeconds": 30.0,
+   "endSeconds": 36.0,
+   "audioRoles": [
+    "ambience",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      36.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 30.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_002_S01",
+   "sceneId": "CIN_002",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      6.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "sceneId": "CIN_002",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "stinger",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/tension",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    7.0,
+    10.792
+   ]
+  },
+  {
+   "shotId": "CIN_002_S03",
+   "sceneId": "CIN_002",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_003_S01",
+   "sceneId": "CIN_003",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_003_S02",
+   "sceneId": "CIN_003",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_003_S03",
+   "sceneId": "CIN_003",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    16.532
+   ]
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "sceneId": "CIN_004",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/boss_mang_cot",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "sceneId": "CIN_004",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/boss_mang_cot",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      12.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    7.5,
+    9.252
+   ]
+  },
+  {
+   "shotId": "CIN_004_S03",
+   "sceneId": "CIN_004",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_005_S01",
+   "sceneId": "CIN_005",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_005_S02",
+   "sceneId": "CIN_005",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_005_S03",
+   "sceneId": "CIN_005",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    17.66
+   ]
+  },
+  {
+   "shotId": "CIN_006_S01",
+   "sceneId": "CIN_006",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_006_S02",
+   "sceneId": "CIN_006",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_006_S03",
+   "sceneId": "CIN_006",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/thang_long",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000286,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    18.0
+   ]
+  },
+  {
+   "shotId": "CIN_007_S01",
+   "sceneId": "CIN_007",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_007_S02",
+   "sceneId": "CIN_007",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_007_S03",
+   "sceneId": "CIN_007",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    16.412
+   ]
+  },
+  {
+   "shotId": "CIN_008_S01",
+   "sceneId": "CIN_008",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_008_S02",
+   "sceneId": "CIN_008",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_008_S03",
+   "sceneId": "CIN_008",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    16.052
+   ]
+  },
+  {
+   "shotId": "CIN_009_S01",
+   "sceneId": "CIN_009",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/waterfall",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/waterfall",
+     "version": "composed",
+     "wrapJumpMeasured": 0.002209,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_009_S02",
+   "sceneId": "CIN_009",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/waterfall",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/waterfall",
+     "version": "composed",
+     "wrapJumpMeasured": 0.002209,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_009_S03",
+   "sceneId": "CIN_009",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/waterfall",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/waterfall",
+     "version": "composed",
+     "wrapJumpMeasured": 0.002209,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    16.58
+   ]
+  },
+  {
+   "shotId": "CIN_010_S01",
+   "sceneId": "CIN_010",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_010_S02",
+   "sceneId": "CIN_010",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_010_S03",
+   "sceneId": "CIN_010",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.308
+   ]
+  },
+  {
+   "shotId": "CIN_011_S01",
+   "sceneId": "CIN_011",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_011_S02",
+   "sceneId": "CIN_011",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_011_S03",
+   "sceneId": "CIN_011",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.2,
+    17.792
+   ]
+  },
+  {
+   "shotId": "CIN_012_S01",
+   "sceneId": "CIN_012",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/forge",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/forge",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000533,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_012_S02",
+   "sceneId": "CIN_012",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/forge",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/forge",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000533,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_012_S03",
+   "sceneId": "CIN_012",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/tran_son",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/forge",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/forge",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000533,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    16.82
+   ]
+  },
+  {
+   "shotId": "CIN_013_S01",
+   "sceneId": "CIN_013",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000734,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_013_S02",
+   "sceneId": "CIN_013",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000734,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_013_S03",
+   "sceneId": "CIN_013",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/lam_trieu",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/mountain_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000734,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    14.972
+   ]
+  },
+  {
+   "shotId": "CIN_014_S01",
+   "sceneId": "CIN_014",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_014_S02",
+   "sceneId": "CIN_014",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_014_S03",
+   "sceneId": "CIN_014",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.572
+   ]
+  },
+  {
+   "shotId": "CIN_015_S01",
+   "sceneId": "CIN_015",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_015_S02",
+   "sceneId": "CIN_015",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_015_S03",
+   "sceneId": "CIN_015",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.38
+   ]
+  },
+  {
+   "shotId": "CIN_016_S01",
+   "sceneId": "CIN_016",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_016_S02",
+   "sceneId": "CIN_016",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_016_S03",
+   "sceneId": "CIN_016",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/quiet_discovery",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000222,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    14.972
+   ]
+  },
+  {
+   "shotId": "CIN_017_S01",
+   "sceneId": "CIN_017",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_017_S02",
+   "sceneId": "CIN_017",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_017_S03",
+   "sceneId": "CIN_017",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/bach_uyen",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "version": "composed",
+     "wrapJumpMeasured": 9e-06,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.668
+   ]
+  },
+  {
+   "shotId": "CIN_018_S01",
+   "sceneId": "CIN_018",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 0.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_018_S02",
+   "sceneId": "CIN_018",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    6.5,
+    9.38
+   ]
+  },
+  {
+   "shotId": "CIN_018_S03",
+   "sceneId": "CIN_018",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/sa_hoa",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000514,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    17.78
+   ]
+  },
+  {
+   "shotId": "CIN_019_S01",
+   "sceneId": "CIN_019",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/rift_finale",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_019_S02",
+   "sceneId": "CIN_019",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/rift_finale",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_019_S03",
+   "sceneId": "CIN_019",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/rift_finale",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.38
+   ]
+  },
+  {
+   "shotId": "CIN_020_S01",
+   "sceneId": "CIN_020",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "audioRoles": [
+    "ambience",
+    "music"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_020_S02",
+   "sceneId": "CIN_020",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "stinger"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "SFX/CINEMA/reveal",
+     "role": "stinger",
+     "atSeconds": 6.0
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": false,
+   "voWindowInMix": null
+  },
+  {
+   "shotId": "CIN_020_S03",
+   "sceneId": "CIN_020",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "audioRoles": [
+    "ambience",
+    "music",
+    "vo"
+   ],
+   "stemsCovering": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "role": "music",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "role": "ambience",
+     "segmentSceneSeconds": [
+      0.0,
+      18.0
+     ]
+    }
+   ],
+   "ambienceLoopSeams": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "version": "composed",
+     "wrapJumpMeasured": 0.000188,
+     "flagEarCheck": false
+    }
+   ],
+   "dialogueShot": true,
+   "voWindowInMix": [
+    12.5,
+    15.5
+   ]
+  }
+ ],
+ "characterContinuity": [
+  {
+   "character": "NPC_LYAN",
+   "sceneId": "CIN_001",
+   "visibleShotIds": [
+    "CIN_001_S05",
+    "CIN_001_S06"
+   ],
+   "requiredShotIds": [
+    "CIN_001_S05",
+    "CIN_001_S06"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_TA_VAN_KHANH",
+   "sceneId": "CIN_002",
+   "visibleShotIds": [
+    "CIN_002_S02"
+   ],
+   "requiredShotIds": [
+    "CIN_002_S02"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_LYAN",
+   "sceneId": "CIN_003",
+   "visibleShotIds": [
+    "CIN_003_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_003_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "BOSS_MANG_COT",
+   "sceneId": "CIN_004",
+   "visibleShotIds": [
+    "CIN_004_S01",
+    "CIN_004_S02",
+    "CIN_004_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_004_S01",
+    "CIN_004_S02",
+    "CIN_004_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_HA_MAC",
+   "sceneId": "CIN_006",
+   "visibleShotIds": [
+    "CIN_006_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_006_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_SAM_CHU_QUY",
+   "sceneId": "CIN_006",
+   "visibleShotIds": [
+    "CIN_006_S01"
+   ],
+   "requiredShotIds": [
+    "CIN_006_S01"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_LYAN",
+   "sceneId": "CIN_007",
+   "visibleShotIds": [
+    "CIN_007_S02",
+    "CIN_007_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_007_S02",
+    "CIN_007_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_TA_VAN_KHANH",
+   "sceneId": "CIN_008",
+   "visibleShotIds": [
+    "CIN_008_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_008_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_SAM_CHU_QUY",
+   "sceneId": "CIN_010",
+   "visibleShotIds": [
+    "CIN_010_S02",
+    "CIN_010_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_010_S02",
+    "CIN_010_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_HA_MAC",
+   "sceneId": "CIN_011",
+   "visibleShotIds": [
+    "CIN_011_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_011_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_HA_MAC",
+   "sceneId": "CIN_012",
+   "visibleShotIds": [
+    "CIN_012_S02",
+    "CIN_012_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_012_S02",
+    "CIN_012_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_LYAN",
+   "sceneId": "CIN_013",
+   "visibleShotIds": [
+    "CIN_013_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_013_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_REFUGEE_LEAD",
+   "sceneId": "CIN_013",
+   "visibleShotIds": [
+    "CIN_013_S02"
+   ],
+   "requiredShotIds": [
+    "CIN_013_S02",
+    "CIN_013_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": [
+    "CIN_013_S03"
+   ]
+  },
+  {
+   "character": "NPC_TONG_BANH",
+   "sceneId": "CIN_014",
+   "visibleShotIds": [
+    "CIN_014_S01",
+    "CIN_014_S02"
+   ],
+   "requiredShotIds": [
+    "CIN_014_S01",
+    "CIN_014_S02",
+    "CIN_014_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": [
+    "CIN_014_S03"
+   ]
+  },
+  {
+   "character": "NPC_DIVER_LEAD",
+   "sceneId": "CIN_015",
+   "visibleShotIds": [],
+   "requiredShotIds": [
+    "CIN_015_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": [
+    "CIN_015_S03"
+   ]
+  },
+  {
+   "character": "NPC_HA_MAC",
+   "sceneId": "CIN_016",
+   "visibleShotIds": [
+    "CIN_016_S02",
+    "CIN_016_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_016_S02",
+    "CIN_016_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "BOSS_TIDE_SERPENT",
+   "sceneId": "CIN_017",
+   "visibleShotIds": [
+    "CIN_017_S01",
+    "CIN_017_S02",
+    "CIN_017_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_017_S01",
+    "CIN_017_S02",
+    "CIN_017_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_CO_VO_TUONG",
+   "sceneId": "CIN_018",
+   "visibleShotIds": [
+    "CIN_018_S02",
+    "CIN_018_S03"
+   ],
+   "requiredShotIds": [
+    "CIN_018_S02",
+    "CIN_018_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": []
+  },
+  {
+   "character": "NPC_LYAN",
+   "sceneId": "CIN_019",
+   "visibleShotIds": [],
+   "requiredShotIds": [
+    "CIN_019_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": [
+    "CIN_019_S03"
+   ]
+  },
+  {
+   "character": "LETTER_RECIPIENT",
+   "sceneId": "CIN_020",
+   "visibleShotIds": [],
+   "requiredShotIds": [
+    "CIN_020_S03"
+   ],
+   "blinks": [],
+   "requiredNotVisibleShotIds": [
+    "CIN_020_S03"
+   ]
+  }
+ ],
+ "guardrailContinuity": [
+  {
+   "guardrailKey": "BROKEN_HORN",
+   "originShot": "CIN_004_S01",
+   "sceneId": "CIN_004",
+   "subject": "BOSS_MANG_COT",
+   "subjectAppearances": [
+    "CIN_004_S01",
+    "CIN_004_S02",
+    "CIN_004_S03"
+   ],
+   "assertedOnShotIds": [
+    "CIN_004_S01"
+   ],
+   "unassertedShotIds": [
+    "CIN_004_S02",
+    "CIN_004_S03"
+   ]
+  },
+  {
+   "guardrailKey": "LEFT_BANDAGE",
+   "originShot": "CIN_008_S03",
+   "sceneId": "CIN_008",
+   "subject": "NPC_TA_VAN_KHANH",
+   "subjectAppearances": [
+    "CIN_008_S03"
+   ],
+   "assertedOnShotIds": [
+    "CIN_008_S03"
+   ],
+   "unassertedShotIds": []
+  },
+  {
+   "guardrailKey": "NO_ENGLISH_UI",
+   "originShot": "CIN_012_S03",
+   "sceneId": "CIN_012",
+   "subject": "SCENE_LEVEL",
+   "subjectAppearances": [
+    "CIN_012_S01",
+    "CIN_012_S02",
+    "CIN_012_S03"
+   ],
+   "assertedOnShotIds": [
+    "CIN_012_S03"
+   ],
+   "unassertedShotIds": [
+    "CIN_012_S01",
+    "CIN_012_S02"
+   ]
+  },
+  {
+   "guardrailKey": "UNDERWATER_NOT_DRY",
+   "originShot": "CIN_015_S02",
+   "sceneId": "CIN_015",
+   "subject": "SCENE_LEVEL",
+   "subjectAppearances": [
+    "CIN_015_S01",
+    "CIN_015_S02",
+    "CIN_015_S03"
+   ],
+   "assertedOnShotIds": [
+    "CIN_015_S02"
+   ],
+   "unassertedShotIds": [
+    "CIN_015_S01",
+    "CIN_015_S03"
+   ]
+  },
+  {
+   "guardrailKey": "SUBJECT_CORE_SERPENT",
+   "originShot": "CIN_017_S02",
+   "sceneId": "CIN_017",
+   "subject": "BOSS_TIDE_SERPENT",
+   "subjectAppearances": [
+    "CIN_017_S01",
+    "CIN_017_S02",
+    "CIN_017_S03"
+   ],
+   "assertedOnShotIds": [
+    "CIN_017_S02"
+   ],
+   "unassertedShotIds": [
+    "CIN_017_S01",
+    "CIN_017_S03"
+   ]
+  }
+ ],
+ "findings": [
+  {
+   "id": "F001",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_001_S06"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 30.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F002",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_001_S05"
+   ],
+   "evidence": "take VO_CIN001_S05_LYAN_draft_v1.wav ends at 27.368 s; locked window ends 28.500 s — ends 1.132 s before the locked window end (mix manifest records overrunVsWindowSeconds=n/a)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F003",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_002_S02"
+   ],
+   "evidence": "SFX/CINEMA/tension placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F004",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_002_S02"
+   ],
+   "evidence": "take VO_CIN002_S02_TAVANKHANH_draft_v1.wav ends at 10.792 s; locked window ends 11.000 s — ends 0.208 s before the locked window end (mix manifest records overrunVsWindowSeconds=n/a)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F005",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_003_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN003_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F006",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_003_S03"
+   ],
+   "evidence": "take VO_CIN_003_S03_LYAN_draft_v1.wav ends at 16.532 s; locked window ends 17.500 s — ends 0.968 s before the locked window end (mix manifest records overrunVsWindowSeconds=-0.968)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN003_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F007",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_004_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F008",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_004_S02"
+   ],
+   "evidence": "take VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav ends at 9.252 s; locked window ends 9.500 s — ends 0.248 s before the locked window end (mix manifest records overrunVsWindowSeconds=n/a)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F009",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_005_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN005_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F010",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_005_S03"
+   ],
+   "evidence": "take VO_CIN_005_S03_LYAN_draft_v1.wav ends at 17.660 s; locked window ends 17.500 s — overruns the locked window end by 0.160 s (mix manifest records overrunVsWindowSeconds=0.16)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN005_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F011",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_006_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN006_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F012",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_006_S03"
+   ],
+   "evidence": "take VO_CIN_006_S03_HAMAC_draft_v1.wav ends at 18.020 s; locked window ends 17.500 s — overruns the locked window end by 0.520 s (mix manifest records overrunVsWindowSeconds=0.52)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN006_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F013",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_007_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN007_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F014",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_007_S03"
+   ],
+   "evidence": "take VO_CIN_007_S03_LYAN_draft_v1.wav ends at 16.412 s; locked window ends 17.500 s — ends 1.088 s before the locked window end (mix manifest records overrunVsWindowSeconds=-1.088)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN007_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F015",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_008_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN008_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F016",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_008_S03"
+   ],
+   "evidence": "take VO_CIN_008_S03_TAVANKHANH_draft_v1.wav ends at 16.052 s; locked window ends 17.500 s — ends 1.448 s before the locked window end (mix manifest records overrunVsWindowSeconds=-1.448)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN008_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F017",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_009_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN009_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F018",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_009_S03"
+   ],
+   "evidence": "take VO_CIN_009_S03_LYAN_draft_v1.wav ends at 16.580 s; locked window ends 17.500 s — ends 0.920 s before the locked window end (mix manifest records overrunVsWindowSeconds=-0.92)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN009_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F019",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_010_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN010_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F020",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_010_S03"
+   ],
+   "evidence": "take VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav ends at 15.308 s; locked window ends 17.500 s — ends 2.192 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.192)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN010_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F021",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_011_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN011_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F022",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_011_S03"
+   ],
+   "evidence": "take VO_CIN_011_S03_HAMAC_draft_v1.wav ends at 17.792 s; locked window ends 17.800 s — ends 0.008 s before the locked window end (mix manifest records overrunVsWindowSeconds=-0.008)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN011_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F023",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_012_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN012_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F024",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_012_S03"
+   ],
+   "evidence": "take VO_CIN_012_S03_HAMAC_draft_v1.wav ends at 16.820 s; locked window ends 17.500 s — ends 0.680 s before the locked window end (mix manifest records overrunVsWindowSeconds=-0.68)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN012_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F025",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_013_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN013_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F026",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_013_S03"
+   ],
+   "evidence": "take VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav ends at 14.972 s; locked window ends 17.500 s — ends 2.528 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.528)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN013_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F027",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_014_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN014_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F028",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_014_S03"
+   ],
+   "evidence": "take VO_CIN_014_S03_TONGBANH_draft_v1.wav ends at 15.572 s; locked window ends 17.500 s — ends 1.928 s before the locked window end (mix manifest records overrunVsWindowSeconds=-1.928)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN014_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F029",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_015_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN015_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F030",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_015_S03"
+   ],
+   "evidence": "take VO_CIN_015_S03_DIVERLEAD_draft_v1.wav ends at 15.380 s; locked window ends 17.500 s — ends 2.120 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.12)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN015_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F031",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_016_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/CIN016_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F032",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_016_S03"
+   ],
+   "evidence": "take VO_CIN_016_S03_HAMAC_draft_v1.wav ends at 14.972 s; locked window ends 17.500 s — ends 2.528 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.528)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/CIN016_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F033",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_017_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN017_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F034",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_017_S03"
+   ],
+   "evidence": "take VO_CIN_017_S03_DIVERLEAD_draft_v1.wav ends at 15.668 s; locked window ends 17.500 s — ends 1.832 s before the locked window end (mix manifest records overrunVsWindowSeconds=-1.832)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN017_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F035",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_018_S01"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 0.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F036",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_018_S02"
+   ],
+   "evidence": "take VO_CIN_018_S02_COVOTUONG_draft_v1.wav ends at 9.380 s; locked window ends 11.500 s — ends 2.120 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.12)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F037",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_018_S03"
+   ],
+   "evidence": "take VO_CIN_018_S03_PLAYER_draft_v1.wav ends at 17.780 s; locked window ends 17.500 s — overruns the locked window end by 0.280 s (mix manifest records overrunVsWindowSeconds=0.28)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F038",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_019_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN019_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F039",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_019_S03"
+   ],
+   "evidence": "take VO_CIN_019_S03_LYAN_draft_v1.wav ends at 15.380 s; locked window ends 17.500 s — ends 2.120 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.12)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN019_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F040",
+   "severity": "NOTE",
+   "category": "K5_STINGER_AT_SHOT_BOUNDARY",
+   "shots": [
+    "CIN_020_S02"
+   ],
+   "evidence": "SFX/CINEMA/reveal placed at 6.000 s, exactly on a shot boundary (opens this shot)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN020_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F041",
+   "severity": "NOTE",
+   "category": "K6_VO_TAKE_EXTENT",
+   "shots": [
+    "CIN_020_S03"
+   ],
+   "evidence": "take VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav ends at 15.500 s; locked window ends 17.500 s — ends 2.000 s before the locked window end (mix manifest records overrunVsWindowSeconds=-2.0)",
+   "sources": [
+    "/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN020_MIX_V1_manifest_v1.json"
+   ]
+  },
+  {
+   "id": "F042",
+   "severity": "NOTE",
+   "category": "K3_REQUIRED_NOT_VISIBLE",
+   "shots": [
+    "CIN_013_S03"
+   ],
+   "evidence": "NPC_REFUGEE_LEAD required but not visible in this shot (ledger records the staging reason)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F043",
+   "severity": "NOTE",
+   "category": "K3_REQUIRED_NOT_VISIBLE",
+   "shots": [
+    "CIN_014_S03"
+   ],
+   "evidence": "NPC_TONG_BANH required but not visible in this shot (ledger records the staging reason)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F044",
+   "severity": "NOTE",
+   "category": "K3_REQUIRED_NOT_VISIBLE",
+   "shots": [
+    "CIN_015_S03"
+   ],
+   "evidence": "NPC_DIVER_LEAD required but not visible in this shot (ledger records the staging reason)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F045",
+   "severity": "NOTE",
+   "category": "K3_REQUIRED_NOT_VISIBLE",
+   "shots": [
+    "CIN_019_S03"
+   ],
+   "evidence": "NPC_LYAN required but not visible in this shot (ledger records the staging reason)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F046",
+   "severity": "NOTE",
+   "category": "K3_REQUIRED_NOT_VISIBLE",
+   "shots": [
+    "CIN_020_S03"
+   ],
+   "evidence": "LETTER_RECIPIENT required but not visible in this shot (ledger records the staging reason)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F047",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_DECIDED",
+   "shots": [
+    "CIN_004_S02"
+   ],
+   "evidence": "speaker NPC_LYAN not visible in its dialogue shot; onscreen=false in the timing manifest and the ledger (voice off-screen in the current storyboard picture and draft mix; final-picture decision open — see the shot stagingNote in the timing manifest)",
+   "sources": [
+    "ClientGodot/assets/cinematics/timing/CIN_004_timing_v1.json",
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F048",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_DECIDED",
+   "shots": [
+    "CIN_005_S03"
+   ],
+   "evidence": "speaker NPC_LYAN not visible in its dialogue shot; onscreen=false in the timing manifest and the ledger (voice off-screen in the current storyboard picture and draft mix; final-picture decision open — see the shot stagingNote in the timing manifest)",
+   "sources": [
+    "ClientGodot/assets/cinematics/timing/CIN_005_timing_v1.json",
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F049",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_DECIDED",
+   "shots": [
+    "CIN_009_S03"
+   ],
+   "evidence": "speaker NPC_LYAN not visible in its dialogue shot; onscreen=false in the timing manifest and the ledger (voice off-screen in the current storyboard picture and draft mix; final-picture decision open — see the shot stagingNote in the timing manifest)",
+   "sources": [
+    "ClientGodot/assets/cinematics/timing/CIN_009_timing_v1.json",
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F050",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_STAGING",
+   "shots": [
+    "CIN_013_S03"
+   ],
+   "evidence": "speaker NPC_REFUGEE_LEADER not visible in its dialogue shot; ledger records it as speakerNotInFrame=True / identifiability defect=True (staging note, not a mix defect)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F051",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_STAGING",
+   "shots": [
+    "CIN_014_S03"
+   ],
+   "evidence": "speaker NPC_TONG_BANH not visible in its dialogue shot; ledger records it as speakerNotInFrame=False / identifiability defect=True (staging note, not a mix defect)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F052",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_STAGING",
+   "shots": [
+    "CIN_015_S03"
+   ],
+   "evidence": "speaker NPC_DIVER_LEAD not visible in its dialogue shot; ledger records it as speakerNotInFrame=False / identifiability defect=True (staging note, not a mix defect)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F053",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_DECIDED",
+   "shots": [
+    "CIN_017_S03"
+   ],
+   "evidence": "speaker NPC_DIVER_LEAD not visible in its dialogue shot; onscreen=false in the timing manifest and the ledger (voice off-screen in the current storyboard picture and draft mix; final-picture decision open — see the shot stagingNote in the timing manifest)",
+   "sources": [
+    "ClientGodot/assets/cinematics/timing/CIN_017_timing_v1.json",
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F054",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_STAGING",
+   "shots": [
+    "CIN_019_S03"
+   ],
+   "evidence": "speaker NPC_LYAN not visible in its dialogue shot; ledger records it as speakerNotInFrame=False / identifiability defect=True (staging note, not a mix defect)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F055",
+   "severity": "NOTE",
+   "category": "K3_SPEAKER_OFFSCREEN_STAGING",
+   "shots": [
+    "CIN_020_S03"
+   ],
+   "evidence": "speaker LETTER_RECIPIENT not visible in its dialogue shot; ledger records it as speakerNotInFrame=True / identifiability defect=True (staging note, not a mix defect)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F056",
+   "severity": "NOTE",
+   "category": "K4_GUARDRAIL_NOT_ASSERTED_ELSEWHERE",
+   "shots": [
+    "CIN_004_S01",
+    "CIN_004_S02",
+    "CIN_004_S03"
+   ],
+   "evidence": "BROKEN_HORN asserted on CIN_004_S01 only, but subject appears in 3 shot(s) of CIN_004; other shots do not re-assert it in the ledger (documentation coverage, not a picture verdict — the keyframe may still show it)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F057",
+   "severity": "NOTE",
+   "category": "K4_GUARDRAIL_NOT_ASSERTED_ELSEWHERE",
+   "shots": [
+    "CIN_012_S03",
+    "CIN_012_S01",
+    "CIN_012_S02"
+   ],
+   "evidence": "NO_ENGLISH_UI asserted on CIN_012_S03 only, but subject appears in 3 shot(s) of CIN_012; other shots do not re-assert it in the ledger (documentation coverage, not a picture verdict — the keyframe may still show it)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F058",
+   "severity": "NOTE",
+   "category": "K4_GUARDRAIL_NOT_ASSERTED_ELSEWHERE",
+   "shots": [
+    "CIN_015_S02",
+    "CIN_015_S01",
+    "CIN_015_S03"
+   ],
+   "evidence": "UNDERWATER_NOT_DRY asserted on CIN_015_S02 only, but subject appears in 3 shot(s) of CIN_015; other shots do not re-assert it in the ledger (documentation coverage, not a picture verdict — the keyframe may still show it)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  },
+  {
+   "id": "F059",
+   "severity": "NOTE",
+   "category": "K4_GUARDRAIL_NOT_ASSERTED_ELSEWHERE",
+   "shots": [
+    "CIN_017_S02",
+    "CIN_017_S01",
+    "CIN_017_S03"
+   ],
+   "evidence": "SUBJECT_CORE_SERPENT asserted on CIN_017_S02 only, but subject appears in 3 shot(s) of CIN_017; other shots do not re-assert it in the ledger (documentation coverage, not a picture verdict — the keyframe may still show it)",
+   "sources": [
+    "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json"
+   ]
+  }
+ ]
+}

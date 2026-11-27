@@ -1,0 +1,263 @@
+{
+  "cottage": [
+    "village.png",
+    [
+      0,
+      0,
+      480,
+      512
+    ]
+  ],
+  "townhouse": [
+    "village.png",
+    [
+      480,
+      0,
+      480,
+      512
+    ]
+  ],
+  "hall": [
+    "village.png",
+    [
+      960,
+      0,
+      576,
+      512
+    ]
+  ],
+  "garden": [
+    "village.png",
+    [
+      0,
+      512,
+      480,
+      512
+    ]
+  ],
+  "market": [
+    "village.png",
+    [
+      448,
+      512,
+      576,
+      512
+    ]
+  ],
+  "roof_boat": [
+    "village.png",
+    [
+      1024,
+      512,
+      512,
+      512
+    ]
+  ],
+  "banyan": [
+    "nature.png",
+    [
+      0,
+      0,
+      512,
+      512
+    ]
+  ],
+  "canopy": [
+    "nature.png",
+    [
+      512,
+      0,
+      512,
+      512
+    ]
+  ],
+  "rocks": [
+    "nature.png",
+    [
+      1024,
+      0,
+      512,
+      512
+    ]
+  ],
+  "shrub": [
+    "nature.png",
+    [
+      0,
+      512,
+      512,
+      512
+    ]
+  ],
+  "reeds": [
+    "nature.png",
+    [
+      512,
+      512,
+      512,
+      512
+    ]
+  ],
+  "lotus": [
+    "nature.png",
+    [
+      1024,
+      512,
+      512,
+      512
+    ]
+  ],
+  "skiff": [
+    "details.png",
+    [
+      0,
+      0,
+      512,
+      512
+    ]
+  ],
+  "well": [
+    "details.png",
+    [
+      512,
+      0,
+      512,
+      512
+    ]
+  ],
+  "jars": [
+    "details.png",
+    [
+      1024,
+      0,
+      512,
+      512
+    ]
+  ],
+  "steps": [
+    "details.png",
+    [
+      0,
+      512,
+      512,
+      512
+    ]
+  ],
+  "fence": [
+    "details.png",
+    [
+      512,
+      512,
+      512,
+      512
+    ]
+  ],
+  "flowers": [
+    "details.png",
+    [
+      1024,
+      512,
+      512,
+      512
+    ]
+  ],
+  "willow": [
+    "../reboot/props.png",
+    [
+      0,
+      0,
+      512,
+      512
+    ]
+  ],
+  "bamboo": [
+    "../reboot/props.png",
+    [
+      512,
+      0,
+      512,
+      512
+    ]
+  ],
+  "workshop": [
+    "../reboot/props.png",
+    [
+      0,
+      512,
+      512,
+      512
+    ]
+  ],
+  "stall": [
+    "../reboot/props.png",
+    [
+      512,
+      512,
+      512,
+      512
+    ]
+  ],
+  "dock": [
+    "../reboot/props.png",
+    [
+      1024,
+      512,
+      512,
+      512
+    ]
+  ],
+  "villager_0": [
+    "villagers.png",
+    [
+      0,
+      0,
+      512,
+      512
+    ]
+  ],
+  "villager_1": [
+    "villagers.png",
+    [
+      512,
+      0,
+      512,
+      512
+    ]
+  ],
+  "villager_2": [
+    "villagers.png",
+    [
+      1024,
+      0,
+      512,
+      512
+    ]
+  ],
+  "villager_3": [
+    "villagers.png",
+    [
+      0,
+      512,
+      512,
+      512
+    ]
+  ],
+  "villager_4": [
+    "villagers.png",
+    [
+      512,
+      512,
+      512,
+      512
+    ]
+  ],
+  "villager_5": [
+    "villagers.png",
+    [
+      1024,
+      512,
+      512,
+      512
+    ]
+  ]
+}

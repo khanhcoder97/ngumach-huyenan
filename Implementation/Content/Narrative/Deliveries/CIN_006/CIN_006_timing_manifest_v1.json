@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 05 - CIN_006 (P1) timing + SRT draft",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "sourceHashes": {
+    "Cinema_Production_Pack_v1.json": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+    "MUSE_THANG_LONG_CIN006_DIRECTION_vi.md": "9a90ef410db0e2084a8d31521604dc96c95dd1b0943b33c2f863b45cf7955c31",
+    "game_audio_v1.json": "39e9ff6574650c385344e32271ccb6430618cdab21d07e3df86682754693efd9"
+  },
+  "scene": {
+    "sceneId": "CIN_006",
+    "durationSeconds": 18,
+    "shots": 3,
+    "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_006/CIN_006_timing_v1.json",
+    "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_006/CIN_006_vi.srt",
+    "srtSha256": "cf43595db5e0a88fa687ee934ca953f19aa4e8e614af39bc27a9af01a164f708",
+    "srtStatus": "DRAFT",
+    "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+    "canonicalChars": 82,
+    "charsPerSecond": 16.4,
+    "alternateTakeId": "CIN_006_ALT_T01",
+    "alternateTakeInSrt": false
+  }
+}

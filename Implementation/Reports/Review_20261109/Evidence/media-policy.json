@@ -1,0 +1,41 @@
+{
+  "tool": "verify_fresh_checkout_item5.py",
+  "tool_version": "1.0.0",
+  "checkout": "D:\\Project\\NGUMACHHUYENAN-review-media-20261109",
+  "checkout_head": "14b588c663a6d53295b34f1d632e84c48c7f5ca9",
+  "checked_at_utc": "2026-11-09T05:32:03.617638+00:00",
+  "policy_source": "integration codex/story-gameplay-integration-20261031 @ 6f2b465",
+  "attributes_file_present": true,
+  "checks": {
+    "policy_ogv_lfs": {
+      "passed": true,
+      "expected": "*.ogv filter=lfs diff=lfs merge=lfs -text",
+      "present": true
+    },
+    "policy_lf_rules": {
+      "passed": true,
+      "expected_count": 7,
+      "missing": []
+    },
+    "ogv_real_bytes": {
+      "passed": true,
+      "real_bytes": 22,
+      "lfs_pointers": 0,
+      "other": [],
+      "pointer_files": []
+    },
+    "text_lf_endings": {
+      "passed": true,
+      "files_checked": 380,
+      "files_with_cr": [],
+      "note": "Linux-only evidence: a Linux checkout keeps LF even without the policy; the LF rules matter for Windows checkouts. A PASS here never proves the policy is present."
+    },
+    "policy_matches_reference": {
+      "passed": true,
+      "reference": "D:/Project/NGUMACHHUYENAN-handoff-20261109/.gitattributes",
+      "reference_rules": 29,
+      "missing": []
+    }
+  },
+  "verdict": "PASS"
+}

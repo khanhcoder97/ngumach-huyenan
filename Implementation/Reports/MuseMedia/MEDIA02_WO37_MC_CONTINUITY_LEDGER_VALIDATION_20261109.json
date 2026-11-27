@@ -1,0 +1,1645 @@
+{
+ "validatorId": "NGM_CONTINUITY_LEDGER_VALIDATION_V1",
+ "checkpoint": "MEDIA-02 WO37 M-C CP4 — continuity ledger v1",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "headSha": "4c53683",
+ "ledgerFile": "Implementation/Content/Narrative/Deliveries/CONTINUITY_LEDGER_v1.json",
+ "ledgerSha256": "cd1c2d56f24b66fa61a0dffa13af895e1d30e0936f64b7b84363c496667f2ab6",
+ "checksTotal": 326,
+ "checksPassed": 326,
+ "checksFailed": 0,
+ "verdict": "PASS",
+ "results": [
+  {
+   "check": "totals.scenes",
+   "pass": true,
+   "detail": "20"
+  },
+  {
+   "check": "totals.shots",
+   "pass": true,
+   "detail": "63"
+  },
+  {
+   "check": "totals.duration",
+   "pass": true,
+   "detail": "378.0"
+  },
+  {
+   "check": "totals.cues",
+   "pass": true,
+   "detail": "21"
+  },
+  {
+   "check": "totals.findings_count",
+   "pass": true,
+   "detail": "58 vs 58"
+  },
+  {
+   "check": "totals.severity_counts",
+   "pass": true,
+   "detail": "FLAG=4 NOTE=54"
+  },
+  {
+   "check": "sources.motionLedgerSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "sources.runtimeManifestSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "sources.pronunciationSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_001.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_001.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_001_S05.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_001_S01.roles",
+   "pass": true,
+   "detail": "['ambience'] vs ['ambience']"
+  },
+  {
+   "check": "audio.CIN_001_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_001_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_001_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_001_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_001_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_001_S04.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_001_S04.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_001_S05.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_001_S05.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_001_S06.roles",
+   "pass": true,
+   "detail": "['ambience', 'stinger'] vs ['ambience', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_001_S06.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_002.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_002.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_002_S02.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_002_S01.roles",
+   "pass": true,
+   "detail": "['ambience'] vs ['ambience']"
+  },
+  {
+   "check": "audio.CIN_002_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_002_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'stinger', 'vo'] vs ['ambience', 'stinger', 'vo']"
+  },
+  {
+   "check": "audio.CIN_002_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_002_S03.roles",
+   "pass": true,
+   "detail": "['ambience'] vs ['ambience']"
+  },
+  {
+   "check": "audio.CIN_002_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_003.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_003.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_003_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_003_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_003_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_003_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_003_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_003_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_003_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_004.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_004.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_004_S02.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_004_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_004_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_004_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger', 'vo'] vs ['ambience', 'music', 'stinger', 'vo']"
+  },
+  {
+   "check": "audio.CIN_004_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_004_S03.roles",
+   "pass": true,
+   "detail": "['ambience'] vs ['ambience']"
+  },
+  {
+   "check": "audio.CIN_004_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_005.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_005.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_005_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_005_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_005_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_005_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_005_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_005_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_005_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_006.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_006.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_006_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_006_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_006_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_006_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_006_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_006_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_006_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_007.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_007.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_007_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_007_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_007_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_007_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_007_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_007_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_007_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_008.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_008.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_008_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_008_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_008_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_008_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_008_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_008_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_008_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_009.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_009.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_009_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_009_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_009_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_009_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_009_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_009_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_009_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_010.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_010.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_010_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_010_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_010_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_010_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_010_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_010_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_010_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_011.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_011.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_011_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_011_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_011_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_011_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_011_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_011_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_011_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_012.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_012.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_012_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_012_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_012_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_012_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_012_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_012_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_012_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_013.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_013.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_013_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_013_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_013_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_013_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_013_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_013_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_013_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_014.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_014.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_014_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_014_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_014_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_014_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_014_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_014_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_014_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_015.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_015.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_015_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_015_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_015_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_015_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_015_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_015_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_015_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_016.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_016.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_016_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_016_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_016_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_016_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_016_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_016_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_016_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_017.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_017.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_017_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_017_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_017_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_017_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_017_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_017_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_017_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.cueCount",
+   "pass": true,
+   "detail": "2 vs 2"
+  },
+  {
+   "check": "scene.CIN_018.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_018.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_018_S02.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "dialogue.CIN_018_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_018_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_018_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_018_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_018_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_018_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_018_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_019.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_019.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_019_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_019_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_019_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_019_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_019_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_019_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_019_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.tiling",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.timingSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.srtSha",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.cueCount",
+   "pass": true,
+   "detail": "1 vs 1"
+  },
+  {
+   "check": "scene.CIN_020.cuesOrdered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.durationsAgree",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "scene.CIN_020.ledgerTiming",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "dialogue.CIN_020_S03.srtCue",
+   "pass": true,
+   "detail": "matches=1"
+  },
+  {
+   "check": "audio.CIN_020_S01.roles",
+   "pass": true,
+   "detail": "['ambience', 'music'] vs ['ambience', 'music']"
+  },
+  {
+   "check": "audio.CIN_020_S01.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_020_S02.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'stinger'] vs ['ambience', 'music', 'stinger']"
+  },
+  {
+   "check": "audio.CIN_020_S02.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audio.CIN_020_S03.roles",
+   "pass": true,
+   "detail": "['ambience', 'music', 'vo'] vs ['ambience', 'music', 'vo']"
+  },
+  {
+   "check": "audio.CIN_020_S03.bounds",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "totals.durationSum",
+   "pass": true,
+   "detail": "378"
+  },
+  {
+   "check": "totals.shotSum",
+   "pass": true,
+   "detail": "63"
+  },
+  {
+   "check": "totals.cueSum",
+   "pass": true,
+   "detail": "21"
+  },
+  {
+   "check": "character.CIN_001.NPC_LYAN",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_002.NPC_TA_VAN_KHANH",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_003.NPC_LYAN",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_004.BOSS_MANG_COT",
+   "pass": true,
+   "detail": "vis=3 req=3"
+  },
+  {
+   "check": "character.CIN_006.NPC_HA_MAC",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_006.NPC_SAM_CHU_QUY",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_007.NPC_LYAN",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_008.NPC_TA_VAN_KHANH",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_010.NPC_SAM_CHU_QUY",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_011.NPC_HA_MAC",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_012.NPC_HA_MAC",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_013.NPC_LYAN",
+   "pass": true,
+   "detail": "vis=1 req=1"
+  },
+  {
+   "check": "character.CIN_013.NPC_REFUGEE_LEAD",
+   "pass": true,
+   "detail": "vis=1 req=2"
+  },
+  {
+   "check": "character.CIN_014.NPC_TONG_BANH",
+   "pass": true,
+   "detail": "vis=2 req=3"
+  },
+  {
+   "check": "character.CIN_015.NPC_DIVER_LEAD",
+   "pass": true,
+   "detail": "vis=0 req=1"
+  },
+  {
+   "check": "character.CIN_016.NPC_HA_MAC",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_017.BOSS_TIDE_SERPENT",
+   "pass": true,
+   "detail": "vis=3 req=3"
+  },
+  {
+   "check": "character.CIN_018.NPC_CO_VO_TUONG",
+   "pass": true,
+   "detail": "vis=2 req=2"
+  },
+  {
+   "check": "character.CIN_019.NPC_LYAN",
+   "pass": true,
+   "detail": "vis=0 req=1"
+  },
+  {
+   "check": "guardrail.BROKEN_HORN.CIN_004_S01",
+   "pass": true,
+   "detail": "appear=3 asserted=1"
+  },
+  {
+   "check": "guardrail.LEFT_BANDAGE.CIN_008_S03",
+   "pass": true,
+   "detail": "appear=1 asserted=1"
+  },
+  {
+   "check": "guardrail.NO_ENGLISH_UI.CIN_012_S03",
+   "pass": true,
+   "detail": "appear=3 asserted=1"
+  },
+  {
+   "check": "guardrail.UNDERWATER_NOT_DRY.CIN_015_S02",
+   "pass": true,
+   "detail": "appear=3 asserted=1"
+  },
+  {
+   "check": "guardrail.SUBJECT_CORE_SERPENT.CIN_017_S02",
+   "pass": true,
+   "detail": "appear=3 asserted=1"
+  },
+  {
+   "check": "findings.multiset",
+   "pass": true,
+   "detail": "actual=58 expected=58"
+  },
+  {
+   "check": "findings.no_dry_shots",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "findings.no_blinks",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

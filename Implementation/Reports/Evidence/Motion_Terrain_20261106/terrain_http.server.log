@@ -1,0 +1,40 @@
+info: Health[0]
+      Loaded map bounds for 46 maps.
+info: Health[0]
+      Loaded 3 combat skills.
+info: Health[0]
+      Loaded quest definitions: 5.
+info: Health[0]
+      Loaded narrative nodes: 229 (flags 2).
+info: Health[0]
+      Loaded NPC anchors: 104.
+info: Health[0]
+      Loaded topology bundles: 1 (reviewed 0).
+warn: Health[0]
+      DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal is not approved yet, so every damage number in flight is a DEV fixture, not reviewed production balance.
+warn: Health[0]
+      DEV STUB: P1:CombatV2 is enabled — /p1/v2/world, /p1/v2/combat and /p1/v2/events use the QOD-17 tick engine for the supported DEV subset.
+info: Health[0]
+      Combat event stream: 512 events per session, page 200.
+info: Health[0]
+      Loaded world entities: 44 (mobs 25, bosses 2, nodes 9, npcs 8).
+info: Health[0]
+      Loaded world records: 352.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://127.0.0.1:63794
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101
+info: Health[0]
+      Health check requested. CorrelationId: b9bbf020-cc31-40cd-b815-877a1e39c648
+info: P1.Sessions[0]
+      Session 0cd62e9ea55c49d99b86a4d6f1f44c26 created for CHR_B89752CF on MAP_BEN_MUA at (18,0)
+info: P1.Sessions[0]
+      Session fdacdd3e4e174a628d384bad25abed99 created for CHR_2900AA10 on MAP_BEN_MUA at (18,0)
+info: P1.Sessions[0]
+      Session 82d881fb10d04858a0755547f423e8d7 created for CHR_6A77C79D on MAP_BEN_MUA at (18,0)
+info: P1.Sessions[0]
+      Session 104654ec0aaf4f969a8a582de7b3f07b created for CHR_C1352340 on MAP_BEN_MUA at (18,0)

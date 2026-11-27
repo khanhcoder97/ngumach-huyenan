@@ -1,0 +1,33 @@
+name: narrative-gameplay
+on:
+  pull_request:
+    paths: ['Client/**', 'Server/**', 'docs/narrative/gameplay/**', 'docs/production/Quest_Dialogue_Production_Data_vi.csv', 'docs/production/World_Spawn_Gathering_Manifest_vi.csv', 'Implementation/Tools/build_dialogue_text.py', 'Tools/ProducerReview/review_narrative_gameplay.py', '.github/workflows/narrative-gameplay.yml']
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  narrative-client-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check all 76 quests against the shipped read-only prose resource
+        run: python Implementation/Tools/build_dialogue_text.py --check
+      - name: Run actual client core narrative policies and build integrated server
+        run: |
+          dotnet run --project Client/Tests/NarrativeChecks/NarrativeChecks.csproj -c Release -- Client/Assets/Resources/Narrative/dialogue_vi.json
+          dotnet build Server/Health/Health.csproj -c Release --nologo
+      - name: Walk, converse, accept, gather, lose receipt, retry and read committed scene over HTTP
+        run: python Tools/ProducerReview/review_narrative_gameplay.py --client-root . --server-root . --dotnet dotnet --output /tmp/narrative-gameplay.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: narrative-gameplay-evidence
+          path: /tmp/narrative-gameplay*

@@ -1,0 +1,10 @@
+Use case: stylized-concept. Asset type: production transparent pixel-art overworld gather-node atlas for Ngũ Mạch Huyền Ấn, a Vietnamese fantasy RPG viewed from above. New image, not a screenshot.
+Make EXACTLY SIX isolated sprites in a regular THREE columns by TWO rows, full 1536 by 1024 canvas (each cell 512 by 512). Every sprite centered inside its own cell, at least 45 transparent pixels clear on every cell edge. Truly transparent alpha background, no checkerboard, labels, icons, panels or text. No environmental ground rectangle, no smooth gradient haze.
+Rows left to right:
+top 1 small dark-grey rock outcrop with visible silvery iron seams (iron mining vein).
+top 2 a broader dark iron vein with two pale silver exposed seams, a few moss patches (second iron vein, not gold or crystals).
+top 3 a low herb patch with five narrow emerald leaves and three tiny pale-blue flowers (medicinal marsh herb).
+bottom 1 weathered short tree stump with two fallen branches and a little dark green moss (gatherable wet spirit wood).
+bottom 2 three broad leaves and small ivory blossoms forming a floating medicinal-herb rosette (second herb).
+bottom 3 a small scatter of three wet grey pebbles encircling a dim teal broken seal shard, an inert visual prop, not a glowing pickup UI icon.
+Art direction: crisp beautiful HAND-PLACED PIXEL ART, coherent 2-3 pixel clusters at source size, strongly readable silhouette, restrained 12-20 colors per prop, no vector strokes, no photorealism, no blur/no noisy texture. Match a lush yellow-green bamboo river village with red tile roofs, warm ochre stone paths, turquoise water. Orthographic TOP-DOWN with a slight readable top surface (about 70 degrees down), no isometric diagonal-grid projection. Light from upper left. Every full prop visible, each independent sprite complete; no cast shadow outside its cell. No characters or tools.

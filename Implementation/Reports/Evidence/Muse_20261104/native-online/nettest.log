@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+NETTEST PASS: health_200_ok status=200
+NETTEST PASS: health_correlation_echo sent=0b4c789c… got=0b4c789c…
+NETTEST PASS: session_201 status=201
+NETTEST PASS: session_spawn_18_0 spawn=(18,0) map=MAP_BEN_MUA
+NETTEST PASS: move_200 status=200 body={"schemaVersion":1,"requestId":"ab26dfb2ef6649cf91755583038e9370","serverTimeUtc":"2026-11-04T08:07:12Z","sessionId":"81
+NETTEST PASS: move_authoritative_east x 18 -> 19,5
+NETTEST PASS: move_revision_increment rev 1 -> 2
+NETTEST PASS: replay_409_stale_sequence status=409 code=stale_sequence
+NETTEST PASS: world_snapshot_matches world x=19,5 tick=95
+NETTEST RESULT: PASS

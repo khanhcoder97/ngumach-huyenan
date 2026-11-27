@@ -1,10 +1,40 @@
+> Hiện hành05/11: nhận TOÀN BỘ gói29_ALL_STAFF_FULL_GAMEPLAY_EPICS_20261105.md. Death-return và MEDIA-P0 đã chốt ở haiJSON mới; Musechỉmedia, CodexGodot/art. CheckpointCodexBếnMưamới PR115đãmerge.
+
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
+
+## Điều phối hiện hành05/11/2026
+
+**Camera/map:** CAM-TOPDOWN-WIDE-20261105 — north-up, art gần nhìn thẳng từ trên, default64×36WU. Xem docs/production/TopDown_Wide_Camera_20261105_vi.md; không tiếp tục chuẩn32×18 hoặc chỉ hub48×27.
+
+**OWNER OVERRIDE — đọc trước mọi gói cũ:** `28_MUSE_MEDIA_ONLY_AND_CODEX_VISUAL_REBOOT.md`. Chủ dự án rút toàn bộ graphics/UIUX/VFX/animation/map/Godot runtime khỏi Muse và giao Codex làm lại hình ảnh. Muse chỉ video/cinematic/âm thanh. Work24..27 giao Muse graphics/runtime đã hết hiệu lực; PR22/111/112 đóng, source giữ làm lịch sử. Policy `Implementation/Coordination/agent_scope_v2.json`; Codex là đầu mối client visual/runtime cho OpenCode và Qoder.
+
+**Review Muse chuyên sâu 04/11:** `27_MUSE_NATIVE_REVIEW_AND_PLAYABLE_DELIVERY_20261104.md`, report `Muse_Complete_Handoff_Review_20261104_vi.md` và native evidence trong `Implementation/Reports/Evidence/Muse_20261104/`. Source prototype build/import/render được trên Windows; PR111/112 đã đóng theo owner override; không coi 10/10 hoặc fullalpha đã nghiệm thu. Work26 của ba vai trò còn lại giữ nguyên; Muse dừng R1..R5 cũ, chuyển MEDIA-01 work28.
+
+**Cập nhật 04/11:** ưu tiên `26_ALL_AGENTS_PLAYABLE_ALPHA_20261104.md` và report `All_Agent_Handoff_Review_20261104_vi.md`. Blocker Qoder được giải quyết tại `Qoder_Q3_Blocker_Resolution_20261104_vi.md` + JSONQ3; encounter có reference payload chung và collision306ô có quyết định triển khai/navgates. Các work order cũ vẫn làm nền, không hỏi lại approval đã có. Bốn vai trò hoạt động: OpenCode, Qoder local, Qoder remote, Muse; Antigravity không trở lại.
+
+Tiếp theo: `25_OPENCODE_QODER_GODOT_GAMEPLAY_INTEGRATION_20261103.md` giao đồng thời OpenCode và Qoder sau checkpoint #109/#106. OpenCode sửa wire/composition và chạy HTTP thật; Qoder thực thi approval encounter đã có, đồng bộ AOI/instance và hoàn inventory/death-return/quest alpha. Không chờ lại ba câu hỏi đã trả lời tại PR108. Review: `Implementation/Reports/OPC15_QOD21_Integration_Checkpoint_Review_20261103_vi.md`.
+
+Đọc `24_GODOT_PLAYABLE_ALPHA_FOLLOWTHROUGH_20261103.md` trước các bảng lịch sử bên dưới. Client tiếp tục với **Godot .NET** theo `docs/production/Godot_Client_Execution_Decision_20261103_vi.md`: Muse sở hữu Godot runtime/scene và art; OpenCode sở hữu lõi C# độc lập engine, protocol/HTTP và API tích hợp; Qoder local sở hữu gameplay server, Qoder remote sở hữu persistence. Antigravity vẫn thu hồi. Các phần Unity bên dưới là lịch sử, không là lệnh phát triển client hiện hành. Giữ source cũ; không tự xóa file hoặc đóng PR.
+
+Hợp đồng encounter alpha được duyệt kèm sửa tại `docs/production/Encounter_Snapshot_Review_Decisions_20261103_vi.md`. Gameplay design và production gates OFF của work order 23 giữ nguyên. Review mới: `Implementation/Reports/Latest_Handoff_Review_20261103_vi.md`.
+
+## Dispatch hiện hành 03/11/2026
+
+Đọc `23_AGENT_EXECUTION_PACKS_20261103.md`, report `Agent_Review_20261103_vi.md` và quyết định DESIGN-BM-ALPHA-20261103 trước các work order cũ. Qoder local nhận tutorial/boss/12slot alpha; OpenCode giữ runtime UI/HTTP/native correctness; QODER Remote hoàn QR1→QR6 DB thật; Muse nhận asset pack Bến Mưa chơi được. Antigravity tiếp tục bị thu hồi. Không coi report tự xưng hoàn tất hoặc CI không chạy module là nghiệm thu.
+
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
 
 ## Owner hiện hành sau bàn giao OpenCode — 2026-10-31
 
 Theo yêu cầu chủ dự án, **Codex nhận toàn bộ OPC-05b/06…12**: coverage, manifest/migration, PNG/meta, preview, pack/CI, compiler dữ liệu ứng viên và adapter map Muse. OpenCode giữ các checkout/WIP cũ để đối chiếu, không sửa/push tiếp các nhánh đã bàn giao. Chi tiết tại `15_CODEX_OPENCODE_TAKEOVER_20261031.md`; các phân công OpenCode bên dưới là lịch sử và không còn là lệnh giao mới.
 
 Qoder local tiếp gameplay/Health tại #41/#87; QODER Remote giữ Persistence tại #79; Antigravity giữ PlayerUI tại #85/#89; Muse giữ art/map/sprite/VFX/cinema và native engine evidence tại #1/#29/#39. Codex tiếp tục quản lý/review/client core/audio và phần tooling mới nhận. Không dùng checkout của nhau, không tự thay canonical IDs/349XY hoặc bật runtime từ candidate.
+
+## Mở rộng đội ngũ trên máy khác — 2026-10-30
+
+Theo yêu cầu chủ dự án, thêm **Antigravity** và **QODER Remote**. Đọc `09_REMOTE_AGENT_COORDINATION_20261030.md`: đây là cập nhật owner hiện hành cho hai gói mới, không hủy các công việc đang chạy. Antigravity nhận client UI tại `10_ANTIGRAVITY_PLAYER_UI_EPIC_20261030.md`; QODER Remote nhận durable state tại `11_QODER_REMOTE_DURABLE_STATE_EPIC_20261030.md`. Qoder local tiếp tục combat/quest/loot/spawn và tích hợp gameplay; phần triển khai storage mới được tách cho QODER Remote. OpenCode vẫn làm tooling, Muse vẫn làm art. Các phần cũ bên dưới là baseline lịch sử.
 
 ## Chương trình hiện hành từ 2026-10-29
 
@@ -15,7 +45,7 @@ Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các k
 | Agent | Trách nhiệm chính | Tài liệu giao việc |
 |---|---|---|
 | Muse | Toàn bộ hình ảnh pixel art, animation, tilemap, VFX và UI art | `01_MUSE_PIXEL_ART.md` |
-| OpenCode | GitHub asset handoff validator và CI; Unity client chuyển thành backlog khi có máy build phù hợp | `02_OPENCODE_CLIENT.md` |
+| OpenCode local | Tiếp nhận toàn UI implementation của Antigravity; headless checks/CI và native packet; asset pipeline cũ đã chuyển Codex | `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md` |
 | Qoder | ASP.NET Core authoritative server, gameplay systems, dữ liệu và kiểm thử | `03_QODER_SERVER_CONTENT.md` |
 
 ## Quy ước chung

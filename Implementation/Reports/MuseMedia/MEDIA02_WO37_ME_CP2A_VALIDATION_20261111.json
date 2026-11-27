@@ -1,0 +1,14 @@
+{
+ "validator": "check_sfx_coverage_me_cp2a_v1.py",
+ "checkpoint": "MEDIA-02 WO37 M-E checkpoint 2a",
+ "manifest": "Implementation/Content/Audio/Deliveries/SFX_COVERAGE_ME_CP2A_v1.json",
+ "checksTotal": 700,
+ "checksPassed": 700,
+ "mismatches": [],
+ "counts": {
+  "total": 700,
+  "passed": 700,
+  "files_reverified": 72
+ },
+ "status": "PASS"
+}

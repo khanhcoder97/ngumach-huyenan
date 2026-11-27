@@ -1,0 +1,45 @@
+{
+  "reviewedHead": "4d959dd0473435c3bf7feea2877e1d5076d186d5",
+  "reviewDecision": "CHANGES_REQUIRED",
+  "sourceSha256": {
+    "Server/Health/Gameplay/Combat/GuardRuntime.cs": "69b02a4c303656bf86308d5b4b69182ffe114082ef9050c658237c285bf2444b",
+    "Server/Health/Gameplay/Combat/CombatTickEngine.cs": "e7294163929a37ee1d93fb686da7e175e34b4b5e79d05b46b03f9df26bc8e99e",
+    "Server/Health/Gameplay/Combat/MobAttackService.cs": "214882b47e24ab7836293339bc5af2cd5c5f09d1d082e3dc9b13276bef028bac",
+    "Server/Health/Gameplay/Combat/InMemoryCombatV2Service.cs": "c1713a547d1267748f4a8c14adfee5b3f6d4a28ca4eeb775c760c2903f17376c",
+    "Server/Health/Endpoints/P1Endpoints.cs": "8bba9cd810172393140c6c89ced6f9cd46999abd97d596261a294e499a03a024",
+    "Server/Health/World/WorldTickBackgroundService.cs": "44d1bf767dd2042c51cb8ea2826aebf8f442639a0e04e29b0705f72a122f7edb",
+    "Server/Health/World/ServerClock.cs": "fdcd91216d289b3e9c5544849e647e1615862b86205648d26aa70746213f474c"
+  },
+  "local": {
+    "sdk": "10.0.403",
+    "buildExitCode": 0,
+    "buildErrors": 0,
+    "buildWarnings": 3,
+    "selfCheckExitCode": 0,
+    "selfCheckSummaryCaptured": false
+  },
+  "verifiedCi": {
+    "head": "4d959dd0473435c3bf7feea2877e1d5076d186d5",
+    "run": "https://github.com/khanhcoder97/ngumach-huyenan/actions/runs/41056155892",
+    "conclusion": "success",
+    "selfChecksPassed": 301,
+    "selfChecksFailed": 0,
+    "httpSmokeChecks": 440,
+    "mobBehaviorEnabledInSmoke": false
+  },
+  "negativeEvidence": [
+    "Qoder_Replay_Review_20261030.json",
+    "Qoder_Guard_Queue_Review_20261030.json"
+  ],
+  "fix76IsAncestor": false,
+  "remoteQoder": {
+    "issue": 79,
+    "head": "0bac9af4cb0cff208165896989cf1b02b9efe557",
+    "state": "DISPATCH_ONLY_NO_ACK_OR_IMPLEMENTATION_VERIFIED"
+  },
+  "limits": [
+    "No full mob-guard HTTP encounter in this review",
+    "No Unity/device/load/persistence acceptance",
+    "Geometry placements and feature gates unchanged"
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_017 draft mix v2 (palette re-mix of the checkpoint 51 v1 mix; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Đội trưởng thợ lặn is now the M-F CP1 palette pickup (VO_CIN_017_S03_DIVERLEAD_palette_v1.wav; Husky Campfire (fictional system voice), avocado_v2:briggs) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (12.5-15.38 s inside 12.5-17.5 s, slack 2.12 s), measured from the real pickup bytes. NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_017; bach_uyen music + underwater ambience are the water cues (composed, CP26/CP30) for this scene (S01: wide view of the flooded ruined temple courtyard at night, the teal tide serpent coiled around the crystal core in the water, WIDE_STATIC; S02: detail of the serpent coiled around the glowing crystal on the stone pillar, bubbles rising, DETAIL_LOCKED; S03: misty river gorge, fishing gear on the bank and the serpent-shaped dark current winding down the river, WIDE_STATIC; keyframes CIN_017 S01/S02/S03). bach_uyen is the composed set's underwater low-passed form (850 Hz) -- the setting-exact cue for a tide-serpent scene built around water and a crystal core, for the line about carrying the core while keeping the remaining waterway ('Mang loi di thi phai giu duong nuoc con lai.'). It was used before in scene mix CIN_015 (the drowned city); this is its second scene-mix use, same pairing as CIN_015, stated plainly because the two scenes share one water chapter and the cue set has a single water form. underwater is the composed underwater bed for the water framing all three shots; also second scene-mix use (CIN_015). quiet_discovery was passed over: the exploration silence, just used for CIN_016 (quiet interior, wrong setting for a serpent/tide scene). lam_trieu was passed over: the pastoral flute, used for CIN_013. tran_son ('Tran Son — Nguoi qua cua', the bell-led gate form) was passed over: already used for CIN_008 and CIN_012. ben_mua was passed over: the rain-quay leitmotif, used for CIN_014. thang_long is the capital-city form (wrong setting); sa_hoa is desert/dry (wrong setting); rift_finale is the set's only full close (finale material, wrong for a mid-campaign chapter beat); boss_mang_cot is boss material for the WRONG boss (Mang Cot, not the Tide Serpent) -- and this beat is a quiet line, not a boss fight. river_shore was passed over: a water-edge bed, used for CIN_003 and CIN_008 -- S01/S02 put the serpent IN the water, not at its edge; S03's riverbank alone does not carry the scene. waterfall was used for CIN_009; mountain_wind was used for CIN_013, forge for CIN_012; rain_light and rain_heavy are rain beds, but no rain is depicted in any of the three keyframes (flooded temple at night, crystal in the water, misty gorge -- no rain streaks); cave_drips is a cave bed, not a water scene; desert_wind, city_night, thang_long_crowd and rift are wrong for this setting. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_017_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_017 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s; it was NOT widened.",
+    "VO take runs 12.5-15.668 s: 3.168 s, ending 1.832 s BEFORE the 17.5 s window end -- the take FITS inside its window by 1832 ms (no overrun, unlike CIN_005/CIN_006). The take ends 2.332 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -22.33 LUFS (checkpoint 17, re-verified from real bytes this run, vs -23.27 LUFS for the CIN_015 take and -21.92 LUFS for the CIN_016 take). VO is kept at unity per the recipe, not normalized.",
+    "Staging: like CIN_015, the speaker is NOT identifiable here -- and this time the timing manifest says so itself: the S03 dialogue onscreen is null for the Diver Lead (NPC_DIVER_LEAD). The S03 keyframe shows only the misty river gorge -- bamboo, fishing baskets and poles on the bank, the serpent-shaped dark current winding down the river -- with no diver figure anywhere in the frame. S01 shows the tide serpent (BOSS_TIDE_SERPENT) with no human figure; S02 shows only the serpent and the crystal. So the line is delivered off-screen, like Ly An's voice in CIN_004 (DEC-MEDIA-P0 Q2) -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016/CIN_017 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ducking depth is measured from real bytes over the full VO window (CP39 method, same params as every scene mix); bach_uyen was NOT silent inside CIN_015's window (measured cut -6.87 dB there), so a real cut is expected here too, and the number in the manifest is the measured one, not a target. If the depth came out 0.0 dB it would mean the cue is silent in this window -- that is NOT the case for bach_uyen (unlike quiet_discovery in CIN_016, which is digitally silent 12-15 s); a 0.0 dB reading here would be investigated, not reported as a silence pocket.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_017",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_017_S03_DIVERLEAD_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.38
+        ],
+        "takeDurationSeconds": 2.88,
+        "takeEndSeconds": 15.38,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -2.12,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/bach_uyen",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.96,
+          "remeasuredLUFS": -21.96,
+          "gainDb": -8.04,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -33.11,
+          "remeasuredLUFS": -33.11,
+          "gainDb": -2.89,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.38
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -6.47,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00049,
+              "bedP999Jump": 0.00082,
+              "ratioToP999": 0.593
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_017_mix_draft_v2.wav",
+        "sha256": "a364c9823a95a3282498ce879bd9bb01686aa162784daab1a379daf21fd813bf",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-25.95",
+        "truePeakDBTP": "-5.92",
+        "loudnessRangeLU": "9.10",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN017_S03",
+        "shotId": "CIN_017_S03",
+        "role": "NPC_DIVER_LEAD",
+        "speakerDisplay": "Đội trưởng thợ lặn",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:briggs",
+        "paletteVoiceLabel": "Husky Campfire (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_017_S03_DIVERLEAD_palette_v1.wav",
+        "paletteTakeSha256": "d546ddffb2c848fdab9933e87b8e2e56055891b48cf60a572b1cb7d4d6ac23c1",
+        "paletteTakeDurationSeconds": 2.88,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 15.38,
+        "slackSeconds": 2.12,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/InteractRequest.schema.json",
+  "title": "P1 world interact request payload",
+  "description": "Payload of POST /p1/world/interact. The envelope keeps the shared Envelope shape; only INTERACTABLE and GATHER_NODE entities can be targeted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "targetId"
+  ],
+  "properties": {
+    "targetId": {
+      "type": "string",
+      "pattern": "^ENT_[A-Z0-9_]+$"
+    }
+  }
+}

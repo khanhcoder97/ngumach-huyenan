@@ -1,0 +1,279 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_018 draft mix v2 (palette re-mix of the checkpoint 52 v1 mix, both VO takes; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Cơ Vô Tướng + the player is now the M-F CP1 palette pickup (both palette pickups; Burnished Trophy (fictional system voice) / Satiny Moon (fictional system voice), avocado_v2:atlas / avocado_v2:miles) instead of the draft take voiced by avocado_v2:MAI_03. The palette take FITS its window (6.5-9.068 s inside 6.5-11.5 s, slack 2.432 s), measured from the real pickup bytes. The v1 S03 player take overran its window by +0.280 s and was kept as-is per the owner verdict; the palette take FITS with 0.488 s of slack -- a property of the new voice's timing, recorded as data; the v1 mix is untouched. The S03 palette take stays VOICE_PLACEHOLDER_ONLY (the player has no cast voice; the take times the line, it is not a casting decision). NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_018; sa_hoa music + desert_wind ambience are the desert cues (composed, CP26/CP30) for this scene (S01: cracked drought field, a man pouring the last water from a gourd into a cup, a sealed petition letter and a measuring post, MEMORY_MEDIUM; S02: Co Vo Tuong at his desk with scrolls and seal, MEMORY_DETAIL; S03: the masked hooded figure beside the copper water-machine at night, MEDIUM_STATIC; keyframes CIN_018 S01/S02/S03). sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat': kiln and sand, A minor pentatonic, dry bright plucks, 110 BPM) -- the setting-exact cue for a drought scene built around the lack of water, for the confrontation about who gave water at Sa Hoa and who was never asked why water vanished elsewhere. It was used before in scene mix CIN_010 (the ash-gold caravan rest); this is its second scene-mix use, same pairing as CIN_010, stated plainly because the two scenes share the Sa Hoa / desert setting and the cue set has a single desert form. desert_wind is the desert wind bed for the dry field and the night bamboo of all three shots; also second scene-mix use (CIN_010). ben_mua was passed over: the rain-quay leitmotif, wrong setting for a drought scene about water that is NOT there. thang_long is the capital-city form (wrong setting); tran_son ('Tran Son — Nguoi qua cua', the bell-led gate form) was passed over: already used for CIN_008 and CIN_012. lam_trieu was passed over: the pastoral flute, used for CIN_013. quiet_discovery was passed over: the exploration silence, used for CIN_007/CIN_011/CIN_016 -- wrong for a confrontation scene. bach_uyen was passed over: the underwater low-passed form, used for CIN_015/CIN_017 -- the opposite of this scene (water present there, water withheld here). rift_finale is the set's only full close (finale material, wrong for a mid-campaign chapter beat); boss_mang_cot is boss material for the WRONG boss (Mang Cot, not Co Vo Tuong) -- and this beat is a quiet confrontation, not a boss fight. river_shore was passed over: a water-edge bed, used for CIN_003 and CIN_008 -- the S01 field is cracked dry earth, not a shore. rain_light and rain_heavy are rain beds, but no rain is depicted in any of the three keyframes (drought field, desk interior, night yard -- no rain streaks); mountain_wind was used for CIN_013, forge for CIN_012, waterfall for CIN_009; wind_canopy is a forest bed, underwater a water bed (wrong here), cave_drips a cave bed; city_night, thang_long_crowd and rift are wrong for this setting. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_018_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_018 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; takes as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO windows 6.5-11.5 s (S02) and 12.5-17.5 s (S03) are PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. Neither window was widened.",
+    "VO take S02 runs 6.5-9.380 s: 2.880 s, ending 2.120 s BEFORE the 11.5 s window end -- the take FITS inside its window by 2120 ms (no overrun). The take ends 8.620 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "VO take S03 runs 12.5-17.780 s: 5.280 s, ending 0.280 s AFTER the 17.5 s window end but 0.220 s BEFORE the 18.00 s scene end -- the overrun is KEPT, not trimmed and not sped up, per the owner verdict on the three campaign overruns (CIN_005_S03 +0.160 s, CIN_018_S03 +0.280 s, CIN_006_S03 +0.520 s -- windows stay as-is, the decision is Codex's at PR review). No tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The S03 take is VOICE_PLACEHOLDER_ONLY (CP17): VOICE_GUIDE assigns the player no spoken voice or gender; the take exists to time the line, and the director must replace it with a cast voice or drop the spoken line. It is mixed in as delivered so the timing can be heard, not as a casting decision.",
+    "The CP17 VO takes measure -23.77 LUFS (S02) and -22.54 LUFS (S03) per checkpoint 17 (re-measured from real bytes this run, recorded per take in the voices list). VO is kept at unity per the recipe, not normalized.",
+    "Staging: the S02 speaker IS identifiable -- the timing manifest marks the S02 dialogue onscreen: true for Co Vo Tuong (NPC_CO_VO_TUONG), and the S02 keyframe shows him at his desk, face visible. Two recorded keyframe defects touch this shot: it is a medium shot instead of the detail close view the timing calls MEMORY_DETAIL, and his hair differs from S01's although both shots are the same memory period. The S03 speaker is NOT identifiable in the picture -- the timing manifest marks the S03 dialogue onscreen: null for the PLAYER, so the line is delivered off-screen, like Ly An's voice in CIN_004 (DEC-MEDIA-P0 Q2); the S03 keyframe shows the masked hooded figure beside the copper water-machine, but that figure is NOT identified as the speaker, and the keyframe defects record that its porcelain mask covers the full face instead of the specified cracked half mask, and its copper machinery spans the whole torso, reading more automaton than a man wearing a chest core and back brace. S01's petition renders as a modern wax-sealed envelope rather than a folded petition sheet. All of these are final-picture/character-lock matters, not mix defects; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over each full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained per window so each depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016/CIN_017/CIN_018 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet). The two windows are ducked through ONE combined VO bus, so the music recovers in the 3.12 s gap between the takes (9.38-12.5 s; compressor release 350 ms).",
+    "Ducking depth is measured from real bytes over each full VO window (CP39 method, same params as every scene mix); sa_hoa was NOT silent inside CIN_010's window (measured cut -7.94 dB there), so a real cut is expected in both windows here too, and the numbers in the manifest are the measured ones, not targets. If either depth came out 0.0 dB it would mean the cue is silent in that window -- that is NOT the case for sa_hoa (unlike quiet_discovery in CIN_016, which is digitally silent 12-15 s); a 0.0 dB reading here would be investigated, not reported as a silence pocket.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 0.0 s (S01 start) is PROPOSED pending picture lock. It is a deviation from the recipe's 6.0 s (S02 start): the reveal cue is 3.000 s long, so at 6.0 s it would run 6.0-9.0 s and sit under 2.5 s of the 2.880 s S02 line (6.5-9.380 s) -- the scene's key refusal line, spoken on screen. At 0.0 s it runs 0.0-3.0 s, clear of both VO windows. The director may move it to 6.0 s (sting under the line) or 12.0 s (S03 start)."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_018",
+      "seconds": 18.0,
+      "vo": {
+        "shotId": "CIN_018_S03",
+        "speaker": "PLAYER",
+        "speakerDisplay": "Người chơi",
+        "take": "VO_CIN_018_S03_PLAYER_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          17.012
+        ],
+        "windowEndSeconds": 17.5,
+        "takeDurationSeconds": 4.512,
+        "takeEndSeconds": 17.012,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -0.488,
+        "fit": "FITS",
+        "measuredLUFS": -23.43,
+        "measuredTruePeakDBTP": -4.63,
+        "gainDb": 0.0
+      },
+      "voices": [
+        {
+          "shotId": "CIN_018_S02",
+          "speaker": "NPC_CO_VO_TUONG",
+          "speakerDisplay": "Cơ Vô Tướng",
+          "take": "VO_CIN_018_S02_COVOTUONG_palette_v1.wav",
+          "windowSeconds": [
+            6.5,
+            9.068
+          ],
+          "windowEndSeconds": 11.5,
+          "takeDurationSeconds": 2.568,
+          "takeEndSeconds": 9.068,
+          "tailTrimmedAtSceneEdgeSeconds": 0.0,
+          "overrunVsWindowSeconds": -2.432,
+          "fit": "FITS",
+          "measuredLUFS": -24.27,
+          "measuredTruePeakDBTP": -7.42,
+          "gainDb": 0.0
+        },
+        {
+          "shotId": "CIN_018_S03",
+          "speaker": "PLAYER",
+          "speakerDisplay": "Người chơi",
+          "take": "VO_CIN_018_S03_PLAYER_palette_v1.wav",
+          "windowSeconds": [
+            12.5,
+            17.012
+          ],
+          "windowEndSeconds": 17.5,
+          "takeDurationSeconds": 4.512,
+          "takeEndSeconds": 17.012,
+          "tailTrimmedAtSceneEdgeSeconds": 0.0,
+          "overrunVsWindowSeconds": -0.488,
+          "fit": "FITS",
+          "measuredLUFS": -23.43,
+          "measuredTruePeakDBTP": -4.63,
+          "gainDb": 0.0
+        }
+      ],
+      "stems": [
+        {
+          "cue": "MUSIC/sa_hoa",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.96,
+          "remeasuredLUFS": -21.96,
+          "gainDb": -8.04,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/desert_wind",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.93,
+          "remeasuredLUFS": -29.93,
+          "gainDb": -6.07,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 0.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "placementNote": "Deviation from the recipe's 6.0 s (S02 start): the reveal cue is 3.000 s long, so at 6.0 s it would run 6.0-9.0 s and sit under 2.5 s of the 2.880 s S02 line (6.5-9.380 s). Placed at 0.0 s (S01 start, the memory's opening reveal), running 0.0-3.0 s, clear of both VO windows. Director may move it to 6.0 s.",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "shotId": "CIN_018_S02",
+            "windowSeconds": [
+              6.5,
+              9.068
+            ],
+            "referenceSeconds": [
+              4.0,
+              6.0
+            ],
+            "depthInWindowDb": -4.93,
+            "depthOutsideWindowDb": 0.0
+          },
+          {
+            "bus": "music",
+            "shotId": "CIN_018_S03",
+            "windowSeconds": [
+              12.5,
+              17.012
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -6.92,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 0.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+        "placementNote": "Deviation from the recipe's 6.0 s (S02 start): the reveal cue is 3.000 s long, so at 6.0 s it would run 6.0-9.0 s and sit under 2.5 s of the 2.880 s S02 line (6.5-9.380 s). Placed at 0.0 s (S01 start, the memory's opening reveal), running 0.0-3.0 s, clear of both VO windows. Director may move it to 6.0 s."
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/desert_wind",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.0029,
+              "bedP999Jump": 0.00481,
+              "ratioToP999": 0.603
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_018_mix_draft_v2.wav",
+        "sha256": "58cead03dc644e1a1f4675bbc0972ab7b289328c7719c172e6610af3001890b2",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-22.97",
+        "truePeakDBTP": "-4.71",
+        "loudnessRangeLU": "7.70",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN018_S02",
+        "shotId": "CIN_018_S02",
+        "role": "NPC_CO_VO_TUONG",
+        "speakerDisplay": "Cơ Vô Tướng",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:atlas",
+        "paletteVoiceLabel": "Burnished Trophy (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_018_S02_COVOTUONG_palette_v1.wav",
+        "paletteTakeSha256": "756abe889a6b812219a797d23d3305f7deab135d31373efd8286c1df5d58f8be",
+        "paletteTakeDurationSeconds": 2.568,
+        "windowSeconds": [
+          6.5,
+          11.5
+        ],
+        "takeStartSeconds": 6.5,
+        "takeEndSeconds": 9.068,
+        "slackSeconds": 2.432,
+        "fit": "FITS",
+        "voGainDb": 0.0
+      },
+      {
+        "takeKey": "CIN018_S03",
+        "shotId": "CIN_018_S03",
+        "role": "PLAYER",
+        "speakerDisplay": "Người chơi",
+        "previousVoice": "avocado_v2:MAI_03",
+        "paletteVoice": "avocado_v2:miles",
+        "paletteVoiceLabel": "Satiny Moon (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_018_S03_PLAYER_palette_v1.wav",
+        "paletteTakeSha256": "7c3e4c61c025f4864a53cf82c2ec405d9432dfa1f2279a9209afb59e3f4b3de1",
+        "paletteTakeDurationSeconds": 4.512,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 17.012,
+        "slackSeconds": 0.488,
+        "fit": "FITS",
+        "voGainDb": 0.0,
+        "voiceStatus": "VOICE_PLACEHOLDER_ONLY"
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

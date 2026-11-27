@@ -1,0 +1,52 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+TILEMAP detail layers on: under z=5, over z=15 (7200x960)
+  PASS library_128
+  PASS frames_walk_SE_6
+  PASS frames_run_E_6
+  PASS frames_attack1_N_5
+  PASS frames_hurt_S_2
+  PASS frames_skill3_NW_6
+  PASS frames_death_NE_4
+  PASS frames_interact_W_4
+  PASS fps_idle_6
+  PASS fps_walk_8
+  PASS fps_run_12
+  PASS fps_attack2_12
+  PASS loop_walk
+  PASS loop_fall
+  PASS noloop_attack1
+  PASS noloop_death
+  PASS starts_idle_S
+  PASS attack1_plays
+  PASS attack1_autoclears
+  PASS death_holds
+  PASS death_clears
+  PASS fall_holds
+WARNING: DirectionalAnimator2D: ActionId 99 not available for class minh_kiem
+   at: void DirectionalAnimator2D.PlayAction(int) (res://scripts/DirectionalAnimator2D.cs:129)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] void DirectionalAnimator2D.PlayAction(int) (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs:129)
+       [2] void AnimTest+<RunTest>d__7.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs:91)
+       [3] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [4] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [5] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [6] void System.Threading.Tasks.Task.RunContinuations(object)
+       [7] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [8] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [9] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+       [10] void AnimTest+<Frames>d__6.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs:34)
+       [11] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [12] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [13] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+  PASS unknown_id_ignored
+  PASS run_E_anim
+  PASS back_to_idle_E
+ANIMTEST: 25 passed, 0 failed
+ANIMTEST RESULT: PASS

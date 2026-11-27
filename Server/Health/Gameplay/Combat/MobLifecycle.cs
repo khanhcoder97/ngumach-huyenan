@@ -2,12 +2,18 @@ using Server.Health.World;
 
 namespace Server.Health.Gameplay.Combat;
 
+// Art Bible §6 bestiary: "Mỗi quái có state machine Idle → Detect →
+// Approach/Position → Telegraph → Attack → Recovery → Return/Death". IDLE and
+// AGGRO/CHASE cover Idle/Detect/Approach, TELEGRAPH is the read window, ATTACK
+// is the impact frame and RECOVER is the punished-after window.
 public static class MobBehaviorStates
 {
     public const string Idle = "IDLE";
     public const string Aggro = "AGGRO";
     public const string Chase = "CHASE";
+    public const string Telegraph = "TELEGRAPH";
     public const string Attack = "ATTACK";
+    public const string Recover = "RECOVER";
     public const string Return = "RETURN";
     public const string Dead = "DEAD";
 }
@@ -29,6 +35,15 @@ public sealed class MobBehaviorOptions
     public double AttackCooldownSeconds { get; set; } = 2;
 
     public double MoveSpeedWuPerSecond { get; set; } = 2;
+
+    // Art Bible §12 requires a melee telegraph of at least 0,45s, and §6 gives
+    // the CARPLING bite as "báo 0,45s; hồi 0,5s". Per-archetype attack timelines
+    // are not exported yet (only the basic-move telegraph inside the gated mob
+    // bundle, and no mob row carries a recovery value), so one labelled fixture
+    // pair drives every mob until that content exists.
+    public double TelegraphSeconds { get; set; } = 0.45;
+
+    public double RecoverySeconds { get; set; } = 0.5;
 }
 
 public static class MobBehaviorOptionsValidator
@@ -39,10 +54,13 @@ public static class MobBehaviorOptionsValidator
             !double.IsFinite(options.LeashRadiusWu) || options.LeashRadiusWu <= 0 ||
             !double.IsFinite(options.AttackRangeWu) || options.AttackRangeWu <= 0 ||
             !double.IsFinite(options.AttackCooldownSeconds) || options.AttackCooldownSeconds <= 0 ||
-            !double.IsFinite(options.MoveSpeedWuPerSecond) || options.MoveSpeedWuPerSecond <= 0)
+            !double.IsFinite(options.MoveSpeedWuPerSecond) || options.MoveSpeedWuPerSecond <= 0 ||
+            !double.IsFinite(options.TelegraphSeconds) || options.TelegraphSeconds <= 0 ||
+            !double.IsFinite(options.RecoverySeconds) || options.RecoverySeconds <= 0)
         {
             throw new InvalidOperationException(
-                "P1:MobBehavior radii, cooldown and speed must be greater than zero.");
+                "P1:MobBehavior radii, cooldown, speed, telegraph and recovery " +
+                "durations must be greater than zero.");
         }
     }
 }
@@ -53,6 +71,13 @@ public sealed record MobLifecycleEvent(
     string ToState,
     DateTimeOffset AtUtc,
     string? TargetCharacterId);
+
+public sealed record MobAttackWindow(
+    string State,
+    string? TargetCharacterId,
+    DateTimeOffset? ImpactAtUtc,
+    DateTimeOffset? RecoverUntilUtc,
+    DateTimeOffset? NextAttackAtUtc);
 
 public sealed class MobLifecycleService
 {
@@ -82,6 +107,19 @@ public sealed class MobLifecycleService
             ? brain.State
             : MobBehaviorStates.Idle;
 
+    // The committed swing, its target and its timing, for read models that have
+    // to tell a client "this frame lands in N ticks" without reaching into the
+    // AI's internals. Null for an entity the AI has never ticked.
+    public MobAttackWindow? GetAttackWindow(string entityId) =>
+        _brains.TryGetValue(entityId, out var brain)
+            ? new MobAttackWindow(
+                brain.State,
+                brain.TargetCharacterId,
+                brain.ImpactAtUtc,
+                brain.RecoverUntilUtc,
+                brain.NextAttackAtUtc)
+            : null;
+
     public IReadOnlyList<MobLifecycleEvent> Tick(IReadOnlyList<PlayerSession> players)
     {
         var now = _clock.UtcNow;
@@ -105,6 +143,7 @@ public sealed class MobLifecycleService
             if (!string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal))
             {
                 Transition(entity, brain, MobBehaviorStates.Dead, now, null, events);
+                brain.ResetAttackWindow();
                 continue;
             }
 
@@ -112,6 +151,7 @@ public sealed class MobLifecycleService
             {
                 Transition(entity, brain, MobBehaviorStates.Idle, now, null, events);
                 brain.TargetCharacterId = null;
+                brain.ResetAttackWindow();
             }
 
             var target = FindTarget(entity, players);
@@ -128,10 +168,12 @@ public sealed class MobLifecycleService
                     continue;
                 }
 
-                if (string.Equals(brain.State, MobBehaviorStates.Attack, StringComparison.Ordinal) ||
-                    string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal) ||
-                    string.Equals(brain.State, MobBehaviorStates.Aggro, StringComparison.Ordinal))
+                if (!string.Equals(brain.State, MobBehaviorStates.Idle, StringComparison.Ordinal))
                 {
+                    // Dropping the target mid-telegraph or mid-recovery cancels
+                    // the pending impact: no ATTACK event, so no damage and no
+                    // loot/kill credit side effects.
+                    brain.ResetAttackWindow();
                     Transition(entity, brain, MobBehaviorStates.Return, now, null, events);
                 }
 
@@ -143,6 +185,7 @@ public sealed class MobLifecycleService
                 Distance(target.X, target.Y, brain.HomeX, brain.HomeY);
             if (targetDistanceFromHome > _options.LeashRadiusWu)
             {
+                brain.ResetAttackWindow();
                 Transition(entity, brain, MobBehaviorStates.Return, now, target.EntityId, events);
                 continue;
             }
@@ -158,35 +201,81 @@ public sealed class MobLifecycleService
                 Transition(entity, brain, MobBehaviorStates.Chase, now, target.EntityId, events);
             }
 
-            if (distanceToTarget <= _options.AttackRangeWu)
-            {
-                if (string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
-                {
-                    Transition(entity, brain, MobBehaviorStates.Attack, now, target.EntityId, events);
-                }
+            // The cycle runs whatever the current gap is: a telegraph that is
+            // already committed must still resolve its impact frame, otherwise
+            // a player who steps out of range freezes the mob mid-swing.
+            TickAttackCycle(entity, brain, target, now, distanceToTarget, events);
 
-                if (string.Equals(brain.State, MobBehaviorStates.Attack, StringComparison.Ordinal) &&
-                    (brain.NextAttackAtUtc is null || now >= brain.NextAttackAtUtc))
-                {
-                    brain.NextAttackAtUtc = now.AddSeconds(_options.AttackCooldownSeconds);
-                    events.Add(new MobLifecycleEvent(
-                        entity.EntityId,
-                        MobBehaviorStates.Attack,
-                        MobBehaviorStates.Attack,
-                        now,
-                        target.EntityId));
-                }
-
-                continue;
-            }
-
-            if (string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
+            if (distanceToTarget > _options.AttackRangeWu &&
+                string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
             {
                 MoveToward(entity, target.X, target.Y, deltaSeconds, brain);
             }
         }
 
         return events;
+    }
+
+    // TELEGRAPH holds for the read window, then the same tick emits the impact
+    // frame (ATTACK) and settles into RECOVER. Cooldown is measured from the
+    // impact, so a mob cannot chain telegraphs.
+    private void TickAttackCycle(
+        WorldEntityInstance entity,
+        MobBrain brain,
+        CombatTarget target,
+        DateTimeOffset now,
+        double distanceToTarget,
+        List<MobLifecycleEvent> events)
+    {
+        switch (brain.State)
+        {
+            case MobBehaviorStates.Chase:
+            {
+                if (distanceToTarget > _options.AttackRangeWu)
+                {
+                    return;
+                }
+
+                if (brain.NextAttackAtUtc is { } ready && now < ready)
+                {
+                    return;
+                }
+
+                Transition(entity, brain, MobBehaviorStates.Telegraph, now, target.EntityId, events);
+                brain.ImpactAtUtc = now.AddSeconds(_options.TelegraphSeconds);
+                return;
+            }
+
+            case MobBehaviorStates.Telegraph:
+            {
+                if (brain.ImpactAtUtc is not { } impact || now < impact)
+                {
+                    return;
+                }
+
+                brain.ImpactAtUtc = null;
+                Transition(entity, brain, MobBehaviorStates.Attack, now, target.EntityId, events);
+                Transition(entity, brain, MobBehaviorStates.Recover, now, target.EntityId, events);
+                brain.RecoverUntilUtc = now.AddSeconds(_options.RecoverySeconds);
+                brain.NextAttackAtUtc = now.AddSeconds(_options.AttackCooldownSeconds);
+                return;
+            }
+
+            case MobBehaviorStates.Recover:
+            {
+                if (brain.RecoverUntilUtc is not { } until || now < until)
+                {
+                    return;
+                }
+
+                brain.RecoverUntilUtc = null;
+                Transition(entity, brain, MobBehaviorStates.Chase, now, target.EntityId, events);
+                return;
+            }
+
+            default:
+                return;
+        }
     }
 
     private CombatTarget? FindTarget(WorldEntityInstance entity, IReadOnlyList<PlayerSession> players)
@@ -303,5 +392,13 @@ public sealed class MobLifecycleService
         public string State { get; set; } = MobBehaviorStates.Idle;
         public string? TargetCharacterId { get; set; }
         public DateTimeOffset? NextAttackAtUtc { get; set; }
+        public DateTimeOffset? ImpactAtUtc { get; set; }
+        public DateTimeOffset? RecoverUntilUtc { get; set; }
+
+        public void ResetAttackWindow()
+        {
+            ImpactAtUtc = null;
+            RecoverUntilUtc = null;
+        }
     }
 }

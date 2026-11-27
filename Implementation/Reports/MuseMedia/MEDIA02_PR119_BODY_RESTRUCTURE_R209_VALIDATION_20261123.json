@@ -1,0 +1,148 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R208",
+ "validator": "check_pr119_restructure_r209_v1.py",
+ "checks": {
+  "total": 34,
+  "passed": 34
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 6cac9da": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha a89a1cf": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 6cac9da": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 607/3019": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R209 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R208 note kept": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R208 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R196-defect repairs (milestone 6 lines, heading, R167 ascending, R208 note)": {
+   "pass": true,
+   "detail": "milestone6=True heading=True r196clean=True r167ascending=True r208note=True"
+  },
+  "index R198 row carries ĐÍNH CHÍNH R200 (.bak claim corrected)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R205 row cumulative == 3011 (ĐÍNH CHÍNH R207)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R207 row cumulative == 3017 (3016 at d37a385 + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R208 row cumulative == 3020 (3019 at 6cac9da + 1 checker)": {
+   "pass": true,
+   "detail": ""
+  },
+  "row-convention R201 cumulative 2999 == diff at e50ba30": {
+   "pass": true,
+   "detail": "2999"
+  },
+  "row-convention R202 cumulative 3002 == diff at 549b8b0": {
+   "pass": true,
+   "detail": "3002"
+  },
+  "row-convention R203 cumulative 3005 == diff at 818f027": {
+   "pass": true,
+   "detail": "3005"
+  },
+  "row-convention R204 cumulative 3008 == diff at df30756": {
+   "pass": true,
+   "detail": "3008"
+  },
+  "row-convention R205 cumulative 3011 == diff at 004cf47": {
+   "pass": true,
+   "detail": "3011"
+  },
+  "row-convention R206 cumulative 3014 == diff at 0db08af": {
+   "pass": true,
+   "detail": "3014"
+  },
+  "row-convention R207 cumulative 3017 == diff at a89a1cf": {
+   "pass": true,
+   "detail": "3017"
+  },
+  "git commits cf17178..6cac9da == 607": {
+   "pass": true,
+   "detail": "607"
+  },
+  "git files cf17178..6cac9da == 3019": {
+   "pass": true,
+   "detail": "3019"
+  },
+  "git additions == 288410, deletions 0": {
+   "pass": true,
+   "detail": "3019 files changed, 288410 insertions(+)"
+  },
+  "merge-tree 6cac9da vs integration exit 0, tree 5ca33484": {
+   "pass": true,
+   "detail": "5ca33484a0707f963892071a7c135543d44ab926"
+  },
+  "body head line 6cac9da/607/3019": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R208 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R37 and R208": {
+   "pass": true,
+   "detail": " + PR119 BODY RESTRUCTURE R207 + PR119 BODY RESTRUCTURE R208"
+  },
+  "body title has full R93..R208 sequence (R94 restored)": {
+   "pass": true,
+   "detail": "R94 restored, R208 added"
+  },
+  "body index reference at 6cac9da": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R209 update note": {
+   "pass": true,
+   "detail": ""
+  },
+  "body Ghi-chú line corrected (R158/R208, R97-R165, list complete)": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R209 note + R97-R165 compacted (69 lines <400ch, body <105k)": {
+   "pass": true,
+   "detail": "compact lines: 69, body chars: 104972"
+  },
+  "git status shows only index + body + this checker": {
+   "pass": true,
+   "detail": " M Implementation/Reports/MuseMedia/MEDIA02_PR119_BODY_V2_20261113.md;  M Implementation/Reports/MuseMedia/MEDIA02_PR119_DELIVERY_INDEX_20261113.md; ?? Tools/MediaProduction/Muse/check_pr119_restructure_r209_v1.py"
+  }
+ },
+ "status": "PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-ALPHA-INTERACT-IDS-20261105",
+  "approved": true,
+  "source": "ben_mua_alpha_20261103.json overlay entity IDs at Qoder77bc3a6",
+  "preserveExistingEntIdRule": true,
+  "additionalExactIds": [
+    "ALPHA_OBJ_BM_FRAGMENT",
+    "ALPHA_OBJ_BM_RIPPLE_01",
+    "ALPHA_OBJ_BM_RIPPLE_02",
+    "ALPHA_OBJ_BM_RIPPLE_03",
+    "ALPHA_OBJ_BM_VILLAGER_01",
+    "ALPHA_OBJ_BM_VILLAGER_02"
+  ],
+  "productionDefault": "alpha ID interaction rejected while AlphaProfile is OFF; do not mutate state",
+  "runtimeValidation": "alpha enabled AND exact published overlay entity registered in same map/floor/quest context; existing distance/LOS/owner/revision/receipt checks still apply",
+  "schemaChange": "additive union with six exact IDs in InteractRequest targetId schema; no renaming canonical IDs or accepting arbitrary ALPHA_*",
+  "client": "accept same schema/allowlist, retain unsupported-feature handling; no Godot bypass",
+  "evidence": "Client109 returns invalid_target before HTTP sends; server77 also restricts targetId to ENT_"
+}
