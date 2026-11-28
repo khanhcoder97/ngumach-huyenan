@@ -25,7 +25,7 @@ namespace PlayerUIChecks
         };
 
         [Fact]
-        public async Task Interact_BuildsDialogueWithAvailableQuest()
+        public async Task OpenSnapshot_BuildsDialogueWithAvailableQuest()
         {
             // SYNTHETIC
             var adapter = new FakeAdapter
@@ -35,29 +35,44 @@ namespace PlayerUIChecks
             adapter.OnReadInventory = () => Task.FromResult(P1Result.Ok());
 
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
+            var state = await presenter.OpenSnapshotAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Contains(state.Value.Choices, c => c.Label.Contains("Nhận nhiệm vụ") && c.Enabled);
         }
 
         [Fact]
-        public async Task Interact_BlockedWhenPendingMutation()
+        public async Task NodeInteract_BlockedWhenPendingMutation()
         {
             var adapter = new FakeAdapter { HasPendingMutation = true };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
+
+            // OPC-13 B: the closed wire interact path keeps its pending-mutation guard; the
+            // snapshot dialogue below has no wire call and stays openable.
+            var state = await presenter.InteractAsync("ENT_NODE_UNKNOWN", CancellationToken.None);
 
             Assert.True(state.IsError);
             Assert.Equal("pending_mutation", state.ErrorCode);
         }
 
         [Fact]
-        public async Task Interact_NoQuests_ShowsGoodbye()
+        public async Task OpenSnapshot_ReadOnly_IgnoresPendingMutation()
+        {
+            // OPC-13 B: opening the read-only conversation view is a local snapshot compose,
+            // never a wire command — a pending server mutation must not block it.
+            var adapter = new FakeAdapter { HasPendingMutation = true };
+            var presenter = new NpcDialoguePresenter(adapter);
+            var state = await presenter.OpenSnapshotAsync("NPC_LYAN", CancellationToken.None);
+
+            Assert.True(state.IsLoaded);
+        }
+
+        [Fact]
+        public async Task OpenSnapshot_NoQuests_ShowsGoodbye()
         {
             var adapter = new FakeAdapter { Quests = Array.Empty<P1Quest>() };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
+            var state = await presenter.OpenSnapshotAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Single(state.Value.Choices);
@@ -65,14 +80,14 @@ namespace PlayerUIChecks
         }
 
         [Fact]
-        public async Task ActiveQuest_ShowsDisabledChoice()
+        public async Task OpenSnapshot_ActiveQuest_ShowsDisabledChoice()
         {
             var adapter = new FakeAdapter
             {
                 Quests = new[] { MakeQuest("P00-01", "ACTIVE") }
             };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
+            var state = await presenter.OpenSnapshotAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Contains(state.Value.Choices, c => !c.Enabled && c.DisabledReason != null);

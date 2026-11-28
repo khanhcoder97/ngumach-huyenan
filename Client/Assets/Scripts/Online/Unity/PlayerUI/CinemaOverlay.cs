@@ -27,6 +27,10 @@ namespace NguMach.Client.P1
 
         public CinemaPresenter Presenter => _presenter;
 
+        /// <summary>True while a cinematic is playing or in fallback preview (single-owner probe).</summary>
+        public bool IsPlaying => _presenter != null && _presenter.State != null &&
+            (_presenter.State.Phase == CinemaPlaybackPhase.Playing || _presenter.State.Phase == CinemaPlaybackPhase.Fallback);
+
         public void Initialize(UIDocument doc = null)
         {
             _doc = doc ?? _doc;
@@ -138,16 +142,21 @@ namespace NguMach.Client.P1
             _presenter.Play(sceneId);
         }
 
+        /// <summary>
+        /// Skip invoked by the single modal input orchestrator (P1OnlinePanel), NOT by a local
+        /// key poll here. One press must execute one behavior; polling in both this Update and
+        /// the HUD dispatcher could close/skip two modals with one stroke (AG89 finding).
+        /// </summary>
+        public void HandleSkip()
+        {
+            if (_presenter != null) _presenter.Skip();
+        }
+
         private void Update()
         {
             if (_presenter == null || !_presenter.State.IsPlaying) return;
-
             _presenter.Update(Time.deltaTime);
-
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
-            {
-                _presenter.Skip();
-            }
+            // NOTE: no Input.GetKeyDown polling here — Escape/Space route through ModalOrchestrator.
         }
 
         private void Render()

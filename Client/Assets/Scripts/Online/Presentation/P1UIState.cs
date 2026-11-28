@@ -359,13 +359,20 @@ namespace NguMach.Client.Presentation
         public float ZoomLevel { get; }       // UI zoom, independent of world camera
         public bool TopologyIsCandidate { get; } // true = not yet reviewed, show warning
         public MapBounds Bounds { get; }
+        // OPC-13 C: world-space center of the visible map window (player + UI-only pan).
+        // Camera GAMEPLAY rectangle / waypoints are intentionally NOT here — no
+        // authority contract exists; rendering them would invent coordinates.
+        public double ViewCenterX { get; }
+        public double ViewCenterY { get; }
 
         public MapViewState(
             string mapId, double playerX, double playerY,
             IReadOnlyList<MapMarker> markers,
             float zoomLevel = 1f,
             bool topologyIsCandidate = false,
-            MapBounds bounds = null)
+            MapBounds bounds = null,
+            double viewCenterX = double.PositiveInfinity,
+            double viewCenterY = double.PositiveInfinity)
         {
             MapId = mapId;
             PlayerX = playerX; PlayerY = playerY;
@@ -373,6 +380,11 @@ namespace NguMach.Client.Presentation
             ZoomLevel = Math.Max(0.25f, Math.Min(4f, zoomLevel));
             TopologyIsCandidate = topologyIsCandidate;
             Bounds = bounds ?? MapBounds.ForMap(mapId);
+            // Callers that predate the pan feature keep player-centered behavior.
+            if (double.IsInfinity(viewCenterX)) viewCenterX = playerX;
+            if (double.IsInfinity(viewCenterY)) viewCenterY = playerY;
+            ViewCenterX = viewCenterX;
+            ViewCenterY = viewCenterY;
         }
     }
 

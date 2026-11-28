@@ -29,6 +29,8 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1ClientAdapter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ModalOrchestration.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemTooltipFormatter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\InventoryPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcDialoguePresenter.cs" />
@@ -40,5 +42,6 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\CinemaPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudSafeAreaPolicy.cs" />
   </ItemGroup>
 </Project>

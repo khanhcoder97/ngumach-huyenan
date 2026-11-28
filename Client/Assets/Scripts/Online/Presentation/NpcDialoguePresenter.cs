@@ -28,8 +28,108 @@ namespace NguMach.Client.Presentation
         public NpcDialoguePresenter(IP1UIAdapter adapter)
             => _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
 
-        /// <summary>Interact with a target (NPC, node). Builds dialogue view from result.</summary>
+        /// <summary>Interact with a gather node/parcel target (closed interact contract; NPC is NOT allowed here).</summary>
         public async Task<AsyncState<NpcDialogueViewState>> InteractAsync(string targetId, CancellationToken ct)
+        {
+            if (string.IsNullOrEmpty(targetId)) throw new ArgumentException("targetId required", nameof(targetId));
+            var context = NpcContextMapping.Resolve(targetId);
+            if (context?.TemplateId != null)
+                throw new InvalidOperationException("NPC conversations must not POST /p1/world/interact; use OpenSnapshotAsync and the narrative provider (OPC-13 B).");
+            return await InteractNodeAsync(targetId, ct);
+        }
+
+        /// <summary>
+        /// OPC-13 B: open NPC dialogue from the world/quest snapshot ONLY (read-only).
+        /// Never POSTs the NPC to the closed /p1/world/interact contract; accept/turn-in keep
+        /// their canonical commands. Generation token drops late results on NPC switch/Clear.
+        /// </summary>
+        public async Task<AsyncState<NpcDialogueViewState>> OpenSnapshotAsync(string targetId, CancellationToken ct)
+        {
+            if (string.IsNullOrEmpty(targetId)) throw new ArgumentException("targetId required", nameof(targetId));
+
+            int curGen = Interlocked.Increment(ref _generation);
+            _state = _state.WithLoading();
+            NotifyChanged();
+
+            // Snapshot-only composition; no adapter call is issued for the conversation itself.
+            await Task.Yield();
+            if (curGen != _generation) return _state;
+
+            var context = NpcContextMapping.Resolve(targetId);
+            _state = ComposeSnapshotView(targetId, context);
+            NotifyChanged();
+            return _state;
+        }
+
+        private AsyncState<NpcDialogueViewState> ComposeSnapshotView(string targetId, NpcContextInfo context)
+        {
+            if (context == null || context.TemplateId == null)
+            {
+                // Unknown/unsupported NPC: exact state, never a forged identity or dialogue.
+                var unknown = new NpcDialogueViewState(
+                    npcId: targetId,
+                    recordId: null,
+                    kind: null,
+                    greetingText: null,
+                    choices: Array.Empty<DialogueChoice>(),
+                    unavailableReason: "UNRESOLVED — NPC chưa có trong catalog narrative (không đọc được thoại).",
+                    correlationId: null,
+                    interactionTargetEntityId: targetId);
+                return _state.WithValue(unknown);
+            }
+
+            string canonicalNpcId = context.TemplateId;
+            var choices = BuildChoicesFromQuestState(canonicalNpcId);
+
+            // Presence snapshot from the world (if available): marks row when the entity is not on the map.
+            string unavailableReason = null;
+            bool presentOnMap = true;
+            try
+            {
+                if (_adapter.WorldV2 != null)
+                {
+                    var entities = _adapter.WorldV2.entities;
+                    presentOnMap = entities != null && Array.Exists(entities, e => e != null && string.Equals(e.entityId, context.EntityId, StringComparison.Ordinal));
+                }
+                else if (_adapter.World != null)
+                {
+                    var world = _adapter.World.entities;
+                    presentOnMap = world != null && Array.Exists(world, e => e != null && string.Equals(e.entityId, context.EntityId, StringComparison.Ordinal));
+                }
+            }
+            catch (Exception) { presentOnMap = true; } // Malformed world must not break a read-only dialogue.
+
+            if (!presentOnMap)
+            {
+                unavailableReason = "NPC không còn trên bản đồ hiện tại (snapshot có thể đã đổi phiên/địa điểm reload).";
+                for (int i = 0; i < choices.Count; i++)
+                {
+                    var c = choices[i];
+                    if (c.Enabled && c.ActionType != DialogueActionType.Close)
+                    {
+                        // Server-authoritative stance: never offer actionable wire commands
+                        // (accept/turn-in) against an entity absent from the world snapshot.
+                        choices[i] = new DialogueChoice(
+                            c.Index, c.Label, enabled: false, disabledReason: unavailableReason,
+                            actionType: c.ActionType, questId: c.QuestId, npcId: c.NpcId);
+                    }
+                }
+            }
+
+            var view = new NpcDialogueViewState(
+                npcId: canonicalNpcId,
+                recordId: context.RecordId,
+                kind: "NPC",
+                greetingText: context.DisplayName,
+                choices: choices,
+                unavailableReason: unavailableReason,
+                correlationId: null,
+                interactionTargetEntityId: context.EntityId);
+            return _state.WithValue(view);
+        }
+
+        /// <summary>Gather node/parcel interaction via the closed interact contract (OPC-13 B carve-out).</summary>
+        private async Task<AsyncState<NpcDialogueViewState>> InteractNodeAsync(string targetId, CancellationToken ct)
         {
             if (_adapter.HasPendingMutation)
             {
