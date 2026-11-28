@@ -1,0 +1,829 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 388.73 - Compatibility - Using Device: NVIDIA - GeForce 820M
+
+Movie Maker mode enabled, recording movie in 1280×720 @ 60 FPS...
+ART_STUDIO_SOURCE_TICK nativeFrame=0 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=0 layer=class_linh_cung_skill_06_n sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=0 layer=mob_waterroot_idle_s sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=0 layer=sk_lc_06_rain_telegraph_component sourceFrame=0
+ART_STUDIO_SOURCE_TICK nativeFrame=5 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=5 layer=class_linh_cung_skill_06_n sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=5 layer=mob_waterroot_idle_s sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=5 layer=sk_lc_06_rain_telegraph_component sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=7 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=7 layer=class_linh_cung_skill_06_n sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=7 layer=mob_waterroot_idle_s sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=7 layer=sk_lc_06_rain_telegraph_component sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=9 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=9 layer=class_linh_cung_skill_06_n sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=9 layer=mob_waterroot_idle_s sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=9 layer=sk_lc_06_rain_telegraph_component sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=13 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=13 layer=class_linh_cung_skill_06_n sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=13 layer=mob_waterroot_idle_s sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=13 layer=sk_lc_06_rain_telegraph_component sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=14 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=14 layer=class_linh_cung_skill_06_n sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=14 layer=mob_waterroot_idle_s sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=14 layer=sk_lc_06_rain_telegraph_component sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=17 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=17 layer=class_linh_cung_skill_06_n sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=17 layer=mob_waterroot_idle_s sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=17 layer=sk_lc_06_rain_telegraph_component sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=18 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=18 layer=class_linh_cung_skill_06_n sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=18 layer=mob_waterroot_idle_s sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=18 layer=sk_lc_06_rain_telegraph_component sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=21 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=21 layer=class_linh_cung_skill_06_n sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=21 layer=mob_waterroot_idle_s sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=21 layer=sk_lc_06_rain_telegraph_component sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=23 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=23 layer=class_linh_cung_skill_06_n sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=23 layer=mob_waterroot_idle_s sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=23 layer=sk_lc_06_rain_telegraph_component sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=25 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=25 layer=class_linh_cung_skill_06_n sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=25 layer=mob_waterroot_idle_s sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=25 layer=sk_lc_06_rain_telegraph_component sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=28 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=28 layer=class_linh_cung_skill_06_n sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=28 layer=mob_waterroot_idle_s sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=28 layer=sk_lc_06_rain_telegraph_component sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=30 sourceFrame=16
+ART_STUDIO_LAYER_TICK nativeFrame=30 layer=class_linh_cung_skill_06_n sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=30 layer=mob_waterroot_idle_s sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=30 layer=sk_lc_06_rain_telegraph_component sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=31 sourceFrame=17
+ART_STUDIO_LAYER_TICK nativeFrame=31 layer=class_linh_cung_skill_06_n sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=31 layer=mob_waterroot_idle_s sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=31 layer=sk_lc_06_rain_telegraph_component sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=32 sourceFrame=18
+ART_STUDIO_LAYER_TICK nativeFrame=32 layer=class_linh_cung_skill_06_n sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=32 layer=mob_waterroot_idle_s sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=32 layer=sk_lc_06_rain_telegraph_component sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=34 sourceFrame=19
+ART_STUDIO_LAYER_TICK nativeFrame=34 layer=class_linh_cung_skill_06_n sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=34 layer=mob_waterroot_idle_s sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=34 layer=sk_lc_06_rain_telegraph_component sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=36 sourceFrame=20
+ART_STUDIO_LAYER_TICK nativeFrame=36 layer=class_linh_cung_skill_06_n sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=36 layer=mob_waterroot_idle_s sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=36 layer=sk_lc_06_rain_telegraph_component sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=39 sourceFrame=21
+ART_STUDIO_LAYER_TICK nativeFrame=39 layer=class_linh_cung_skill_06_n sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=39 layer=mob_waterroot_idle_s sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=39 layer=sk_lc_06_rain_telegraph_component sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=41 sourceFrame=22
+ART_STUDIO_LAYER_TICK nativeFrame=41 layer=class_linh_cung_skill_06_n sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=41 layer=mob_waterroot_idle_s sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=41 layer=sk_lc_06_rain_telegraph_component sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=42 sourceFrame=23
+ART_STUDIO_LAYER_TICK nativeFrame=42 layer=class_linh_cung_skill_06_n sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=42 layer=mob_waterroot_idle_s sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=42 layer=sk_lc_06_rain_telegraph_component sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=44 sourceFrame=24
+ART_STUDIO_LAYER_TICK nativeFrame=44 layer=class_linh_cung_skill_06_n sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=44 layer=mob_waterroot_idle_s sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=44 layer=sk_lc_06_rain_telegraph_component sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=45 sourceFrame=25
+ART_STUDIO_LAYER_TICK nativeFrame=45 layer=class_linh_cung_skill_06_n sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=45 layer=mob_waterroot_idle_s sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=45 layer=sk_lc_06_rain_telegraph_component sourceFrame=10
+ART_STUDIO_SOURCE_TICK nativeFrame=48 sourceFrame=26
+ART_STUDIO_LAYER_TICK nativeFrame=48 layer=class_linh_cung_skill_06_n sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=48 layer=mob_waterroot_idle_s sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=48 layer=sk_lc_06_rain_telegraph_component sourceFrame=10
+ART_STUDIO_SOURCE_TICK nativeFrame=49 sourceFrame=27
+ART_STUDIO_LAYER_TICK nativeFrame=49 layer=class_linh_cung_skill_06_n sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=49 layer=mob_waterroot_idle_s sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=49 layer=sk_lc_06_rain_telegraph_component sourceFrame=10
+ART_STUDIO_SOURCE_TICK nativeFrame=50 sourceFrame=28
+ART_STUDIO_LAYER_TICK nativeFrame=50 layer=class_linh_cung_skill_06_n sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=50 layer=mob_waterroot_idle_s sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=50 layer=sk_lc_06_rain_telegraph_component sourceFrame=11
+ART_STUDIO_SOURCE_TICK nativeFrame=53 sourceFrame=29
+ART_STUDIO_LAYER_TICK nativeFrame=53 layer=class_linh_cung_skill_06_n sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=53 layer=mob_waterroot_idle_s sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=53 layer=sk_lc_06_rain_telegraph_component sourceFrame=11
+ART_STUDIO_SOURCE_TICK nativeFrame=54 sourceFrame=30
+ART_STUDIO_LAYER_TICK nativeFrame=54 layer=class_linh_cung_skill_06_n sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=54 layer=mob_waterroot_idle_s sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=54 layer=sk_lc_06_rain_telegraph_component sourceFrame=12
+ART_STUDIO_SOURCE_TICK nativeFrame=57 sourceFrame=31
+ART_STUDIO_LAYER_TICK nativeFrame=57 layer=class_linh_cung_skill_06_n sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=57 layer=mob_waterroot_idle_s sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=57 layer=sk_lc_06_rain_telegraph_component sourceFrame=12
+ART_STUDIO_SOURCE_TICK nativeFrame=59 sourceFrame=32
+ART_STUDIO_LAYER_TICK nativeFrame=59 layer=class_linh_cung_skill_06_n sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=59 layer=mob_waterroot_idle_s sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=59 layer=sk_lc_06_rain_telegraph_component sourceFrame=13
+ART_STUDIO_SOURCE_TICK nativeFrame=60 sourceFrame=33
+ART_STUDIO_LAYER_TICK nativeFrame=60 layer=class_linh_cung_skill_06_n sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=60 layer=mob_waterroot_idle_s sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=60 layer=sk_lc_06_rain_telegraph_component sourceFrame=13
+ART_STUDIO_SOURCE_TICK nativeFrame=61 sourceFrame=34
+ART_STUDIO_LAYER_TICK nativeFrame=61 layer=class_linh_cung_skill_06_n sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=61 layer=mob_waterroot_idle_s sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=61 layer=sk_lc_06_rain_telegraph_component sourceFrame=13
+ART_STUDIO_SOURCE_TICK nativeFrame=63 sourceFrame=35
+ART_STUDIO_LAYER_TICK nativeFrame=63 layer=class_linh_cung_skill_06_n sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=63 layer=mob_waterroot_idle_s sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=63 layer=sk_lc_06_rain_telegraph_component sourceFrame=14
+ART_STUDIO_SOURCE_TICK nativeFrame=65 sourceFrame=36
+ART_STUDIO_LAYER_TICK nativeFrame=65 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=65 layer=mob_waterroot_idle_s sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=65 layer=sk_lc_06_rain_telegraph_component sourceFrame=14
+ART_STUDIO_SOURCE_TICK nativeFrame=66 sourceFrame=37
+ART_STUDIO_LAYER_TICK nativeFrame=66 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=66 layer=mob_waterroot_idle_s sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=66 layer=sk_lc_06_rain_telegraph_component sourceFrame=14
+ART_STUDIO_SOURCE_TICK nativeFrame=68 sourceFrame=38
+ART_STUDIO_LAYER_TICK nativeFrame=68 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=68 layer=mob_waterroot_idle_s sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=68 layer=sk_lc_06_rain_telegraph_component sourceFrame=15
+ART_STUDIO_SOURCE_TICK nativeFrame=70 sourceFrame=39
+ART_STUDIO_LAYER_TICK nativeFrame=70 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=70 layer=mob_waterroot_idle_s sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=70 layer=sk_lc_06_rain_telegraph_component sourceFrame=15
+ART_STUDIO_SOURCE_TICK nativeFrame=72 sourceFrame=40
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=mob_waterroot_idle_s sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_3 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_4 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_5 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=72 layer=arrow_1_6 sourceFrame=0
+ART_STUDIO_SOURCE_TICK nativeFrame=74 sourceFrame=41
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=mob_waterroot_idle_s sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_3 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_4 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_5 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=74 layer=arrow_1_6 sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=75 sourceFrame=42
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=mob_waterroot_idle_s sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_3 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_4 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_5 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=75 layer=arrow_1_6 sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=76 sourceFrame=43
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=mob_waterroot_idle_s sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_3 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_4 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_5 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=76 layer=arrow_1_6 sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=77 sourceFrame=44
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=mob_waterroot_idle_s sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_3 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_4 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_5 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=77 layer=arrow_1_6 sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=78 sourceFrame=45
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=mob_waterroot_idle_s sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_3 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_4 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_5 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=78 layer=arrow_1_6 sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=80 sourceFrame=46
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=mob_waterroot_idle_s sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_3 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_4 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_5 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=80 layer=arrow_1_6 sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=81 sourceFrame=47
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=mob_waterroot_idle_s sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=flecks_1_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=flecks_1_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_3 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_4 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_5 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=81 layer=arrow_1_6 sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=82 sourceFrame=48
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=mob_waterroot_idle_s sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=flecks_1_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=flecks_1_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_3 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_4 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_5 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=82 layer=arrow_1_6 sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=83 sourceFrame=49
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=mob_waterroot_idle_s sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=flecks_1_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=flecks_1_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_3 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_4 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_5 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=83 layer=arrow_1_6 sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=84 sourceFrame=50
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=mob_waterroot_idle_s sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=flecks_1_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=flecks_1_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_3 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_4 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_5 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_1_6 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_3 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_4 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_5 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=84 layer=arrow_2_6 sourceFrame=0
+ART_STUDIO_SOURCE_TICK nativeFrame=86 sourceFrame=51
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=mob_waterroot_idle_s sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=flecks_1_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=flecks_1_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_3 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_4 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_5 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_1_6 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_3 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_4 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_5 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=86 layer=arrow_2_6 sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=87 sourceFrame=52
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=mob_waterroot_idle_s sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=flecks_1_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=flecks_1_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_3 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_4 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_5 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_1_6 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_3 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_4 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_5 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=87 layer=arrow_2_6 sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=88 sourceFrame=53
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=mob_waterroot_idle_s sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=flecks_1_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=flecks_1_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_3 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_4 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_5 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_1_6 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_3 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_4 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_5 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=88 layer=arrow_2_6 sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=89 sourceFrame=54
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=mob_waterroot_idle_s sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=flecks_1_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=flecks_1_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_3 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_4 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_5 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_1_6 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_3 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_4 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_5 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=89 layer=arrow_2_6 sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=91 sourceFrame=55
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=flecks_1_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=flecks_1_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_3 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_4 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_5 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_1_6 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_3 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_4 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_5 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=91 layer=arrow_2_6 sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=92 sourceFrame=56
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=flecks_1_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=flecks_1_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_3 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_4 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_5 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=92 layer=arrow_2_6 sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=93 sourceFrame=57
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=flecks_1_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=flecks_1_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=flecks_2_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=flecks_2_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_3 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_4 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_5 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=93 layer=arrow_2_6 sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=94 sourceFrame=58
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=flecks_1_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=flecks_1_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=flecks_2_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=flecks_2_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_3 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_4 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_5 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=94 layer=arrow_2_6 sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=95 sourceFrame=59
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=flecks_1_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=flecks_1_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=flecks_2_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=flecks_2_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_3 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_4 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_5 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=95 layer=arrow_2_6 sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=97 sourceFrame=60
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=flecks_1_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=flecks_1_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=flecks_2_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=flecks_2_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_3 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_4 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_5 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_2_6 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_3 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_4 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_5 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=97 layer=arrow_3_6 sourceFrame=0
+ART_STUDIO_SOURCE_TICK nativeFrame=98 sourceFrame=61
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=flecks_1_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=flecks_1_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=flecks_2_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=flecks_2_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_3 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_4 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_5 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_2_6 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_3 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_4 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_5 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=98 layer=arrow_3_6 sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=99 sourceFrame=62
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=flecks_1_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=flecks_1_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=flecks_2_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=flecks_2_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_3 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_4 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_5 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_2_6 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_3 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_4 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_5 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=99 layer=arrow_3_6 sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=100 sourceFrame=63
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=flecks_2_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=flecks_2_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_3 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_4 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_5 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_2_6 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_3 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_4 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_5 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=100 layer=arrow_3_6 sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=101 sourceFrame=64
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=flecks_2_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=flecks_2_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_3 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_4 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_5 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_2_6 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_3 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_4 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_5 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=101 layer=arrow_3_6 sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=103 sourceFrame=65
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=flecks_2_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=flecks_2_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_3 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_4 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_5 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_2_6 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_3 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_4 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_5 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=103 layer=arrow_3_6 sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=104 sourceFrame=66
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=flecks_2_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=flecks_2_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_3 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_4 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_5 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=104 layer=arrow_3_6 sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=105 sourceFrame=67
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=flecks_2_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=flecks_2_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=flecks_3_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=flecks_3_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_3 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_4 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_5 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=105 layer=arrow_3_6 sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=106 sourceFrame=68
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=flecks_2_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=flecks_2_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=flecks_3_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=flecks_3_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_3 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_4 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_5 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=106 layer=arrow_3_6 sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=107 sourceFrame=69
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=flecks_2_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=flecks_2_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=flecks_3_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=flecks_3_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_3 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_4 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_5 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=107 layer=arrow_3_6 sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=109 sourceFrame=70
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=flecks_2_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=flecks_2_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=flecks_3_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=flecks_3_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_3 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_4 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_5 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_3_6 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_3 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_4 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_5 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=109 layer=arrow_4_6 sourceFrame=0
+ART_STUDIO_SOURCE_TICK nativeFrame=110 sourceFrame=71
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=flecks_2_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=flecks_2_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=flecks_3_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=flecks_3_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_3 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_4 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_5 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_3_6 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_3 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_4 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_5 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=110 layer=arrow_4_6 sourceFrame=1
+ART_STUDIO_SOURCE_TICK nativeFrame=111 sourceFrame=72
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=flecks_2_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=flecks_2_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=flecks_3_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=flecks_3_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_3 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_4 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_5 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_3_6 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_3 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_4 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_5 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=111 layer=arrow_4_6 sourceFrame=2
+ART_STUDIO_SOURCE_TICK nativeFrame=112 sourceFrame=73
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=flecks_3_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=flecks_3_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_3 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_4 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_5 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_3_6 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_3 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_4 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_5 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=112 layer=arrow_4_6 sourceFrame=3
+ART_STUDIO_SOURCE_TICK nativeFrame=113 sourceFrame=74
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=flecks_3_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=flecks_3_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_3 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_4 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_5 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_3_6 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_3 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_4 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_5 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=113 layer=arrow_4_6 sourceFrame=4
+ART_STUDIO_SOURCE_TICK nativeFrame=115 sourceFrame=75
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=flecks_3_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=flecks_3_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_3 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_4 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_5 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_3_6 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_3 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_4 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_5 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=115 layer=arrow_4_6 sourceFrame=5
+ART_STUDIO_SOURCE_TICK nativeFrame=116 sourceFrame=76
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=flecks_3_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=flecks_3_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_3 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_4 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_5 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=116 layer=arrow_4_6 sourceFrame=6
+ART_STUDIO_SOURCE_TICK nativeFrame=117 sourceFrame=77
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=flecks_3_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=flecks_3_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=flecks_4_1 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=flecks_4_2 sourceFrame=0
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_3 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_4 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_5 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=117 layer=arrow_4_6 sourceFrame=7
+ART_STUDIO_SOURCE_TICK nativeFrame=118 sourceFrame=78
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=flecks_3_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=flecks_3_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=flecks_4_1 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=flecks_4_2 sourceFrame=1
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_3 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_4 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_5 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=118 layer=arrow_4_6 sourceFrame=8
+ART_STUDIO_SOURCE_TICK nativeFrame=119 sourceFrame=79
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=flecks_3_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=flecks_3_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=flecks_4_1 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_2 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=flecks_4_2 sourceFrame=2
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_3 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_4 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_5 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=119 layer=arrow_4_6 sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=121 sourceFrame=80
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=flecks_3_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=flecks_3_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=flecks_4_1 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_2 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=flecks_4_2 sourceFrame=3
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_3 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_4 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_5 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=121 layer=arrow_4_6 sourceFrame=10
+ART_STUDIO_SOURCE_TICK nativeFrame=122 sourceFrame=81
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=flecks_3_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=flecks_3_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=flecks_4_1 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_2 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=flecks_4_2 sourceFrame=4
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_3 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_4 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_5 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=122 layer=arrow_4_6 sourceFrame=11
+ART_STUDIO_SOURCE_TICK nativeFrame=123 sourceFrame=82
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=flecks_3_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=flecks_3_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=flecks_4_1 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_2 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=flecks_4_2 sourceFrame=5
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_3 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_4 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_5 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=123 layer=arrow_4_6 sourceFrame=12
+ART_STUDIO_SOURCE_TICK nativeFrame=124 sourceFrame=83
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=flecks_4_1 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_2 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=flecks_4_2 sourceFrame=6
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_3 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_4 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_5 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=124 layer=arrow_4_6 sourceFrame=13
+ART_STUDIO_SOURCE_TICK nativeFrame=125 sourceFrame=84
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=flecks_4_1 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_2 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=flecks_4_2 sourceFrame=7
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_3 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_4 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_5 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=125 layer=arrow_4_6 sourceFrame=14
+ART_STUDIO_SOURCE_TICK nativeFrame=127 sourceFrame=85
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=flecks_4_1 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_2 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=flecks_4_2 sourceFrame=8
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_3 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_4 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_5 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=127 layer=arrow_4_6 sourceFrame=15
+ART_STUDIO_SOURCE_TICK nativeFrame=128 sourceFrame=86
+ART_STUDIO_LAYER_TICK nativeFrame=128 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=128 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=128 layer=flecks_4_1 sourceFrame=9
+ART_STUDIO_LAYER_TICK nativeFrame=128 layer=flecks_4_2 sourceFrame=9
+ART_STUDIO_SOURCE_TICK nativeFrame=129 sourceFrame=87
+ART_STUDIO_LAYER_TICK nativeFrame=129 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=129 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=129 layer=flecks_4_1 sourceFrame=10
+ART_STUDIO_LAYER_TICK nativeFrame=129 layer=flecks_4_2 sourceFrame=10
+ART_STUDIO_SOURCE_TICK nativeFrame=130 sourceFrame=88
+ART_STUDIO_LAYER_TICK nativeFrame=130 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=130 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=130 layer=flecks_4_1 sourceFrame=11
+ART_STUDIO_LAYER_TICK nativeFrame=130 layer=flecks_4_2 sourceFrame=11
+ART_STUDIO_SOURCE_TICK nativeFrame=131 sourceFrame=89
+ART_STUDIO_LAYER_TICK nativeFrame=131 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=131 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=131 layer=flecks_4_1 sourceFrame=12
+ART_STUDIO_LAYER_TICK nativeFrame=131 layer=flecks_4_2 sourceFrame=12
+ART_STUDIO_SOURCE_TICK nativeFrame=133 sourceFrame=90
+ART_STUDIO_LAYER_TICK nativeFrame=133 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=133 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=133 layer=flecks_4_1 sourceFrame=13
+ART_STUDIO_LAYER_TICK nativeFrame=133 layer=flecks_4_2 sourceFrame=13
+ART_STUDIO_SOURCE_TICK nativeFrame=134 sourceFrame=91
+ART_STUDIO_LAYER_TICK nativeFrame=134 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=134 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=134 layer=flecks_4_1 sourceFrame=14
+ART_STUDIO_LAYER_TICK nativeFrame=134 layer=flecks_4_2 sourceFrame=14
+ART_STUDIO_SOURCE_TICK nativeFrame=135 sourceFrame=92
+ART_STUDIO_LAYER_TICK nativeFrame=135 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=135 layer=mob_waterroot_idle_s sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=135 layer=flecks_4_1 sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=135 layer=flecks_4_2 sourceFrame=15
+ART_STUDIO_SOURCE_TICK nativeFrame=136 sourceFrame=93
+ART_STUDIO_LAYER_TICK nativeFrame=136 layer=class_linh_cung_skill_06_n sourceFrame=15
+ART_STUDIO_LAYER_TICK nativeFrame=136 layer=mob_waterroot_idle_s sourceFrame=15
+--------------------------------------------------------------------------------
+Done recording movie at path: D:\Project\NGUMACHHUYENAN-tools\review-media\native-temp-c\bach_tien_N.avi
+156 frames at 60 FPS (movie length: 00:00:02:36), recorded in 00:00:16 (12% of real-time speed).
+CPU render time: 0.78 seconds (average: 4.99 ms/frame)
+GPU render time: 0.33 seconds (average: 2.09 ms/frame)
+Encoding time: 3.88 seconds (average: 24.88 ms/frame)
+--------------------------------------------------------------------------------

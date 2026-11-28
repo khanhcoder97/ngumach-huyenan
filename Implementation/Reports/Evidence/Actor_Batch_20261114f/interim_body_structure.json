@@ -1,0 +1,32 @@
+{
+  "scope": "INTERIM_GEOMETRY_ONLY_NOT_NATIVE_OR_VISUAL_APPROVAL",
+  "selected": 17,
+  "generatedVariants": 18,
+  "passed": [
+    "class_huyen_but_skill_01_ne",
+    "class_huyen_but_skill_02_ne",
+    "class_huyen_but_skill_03_n",
+    "class_huyen_but_skill_03_e",
+    "class_huyen_but_skill_03_se",
+    "class_huyen_but_skill_03_s",
+    "class_huyen_but_skill_04_ne",
+    "class_huyen_but_skill_04_e",
+    "class_huyen_but_skill_04_se",
+    "class_huyen_but_skill_04_s",
+    "class_huyen_but_skill_05_n",
+    "class_huyen_but_skill_05_ne",
+    "class_huyen_but_skill_05_e",
+    "class_huyen_but_skill_05_se",
+    "class_huyen_but_skill_05_s"
+  ],
+  "failed": [
+    {
+      "id": "class_huyen_but_skill_03_ne",
+      "reason": "clipped/overlapping frame row1 col0"
+    },
+    {
+      "id": "class_huyen_but_skill_04_n",
+      "reason": "clipped/overlapping frame row0 col2"
+    }
+  ]
+}

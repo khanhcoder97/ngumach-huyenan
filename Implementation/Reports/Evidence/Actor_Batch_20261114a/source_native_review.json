@@ -1,0 +1,532 @@
+{
+  "batch": "20261114a",
+  "reviewDate": "2026-11-14",
+  "manualReviewComplete": true,
+  "scope": "SOURCE_CLIP_VISUAL_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+  "approved": 19,
+  "held": 1,
+  "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+  "entries": [
+    {
+      "id": "class_minh_kiem_run_n",
+      "sourceSha256": "7ca9522d0246dfa42ff1c0d755f4c4f279887900c23f3ee563a2ff0d5c64a9a1",
+      "bindingSha256": "89f97c2696fc2b02ee02c1e292da0e735ad09f9c5f3ccb38a41af283268ffb1b",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_n_v2_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_n.mp4": "47edab73e31df3c6226db0bcbc87cfc8c0395cbcc3eb08e3509e777c754749ec",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_n_actor_samples.png": "f1daa6c1fabf9b8cc6000a22ac1658954ce618672e3082ada1efb3aa4ee8eaa2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4": "59a20d732e11c1f6d5930e65934ec9b8908e2d1d22e55d843cdaddd970138e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png": "ee3a08bd6c30e9fa5e97f9a9a04f64440d2e3ab75a580a64a0f00ee13c09b08f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet plus native pixel-scale temporal captures viewed. Corrected N v2 has opposite contacts0/8; E/SE/S retain readable alternate foreground leg ownership and passing phases. One right-hand straight jian retained, head/contact root stable, source camera/scale and permitted mirror binding checked. Native chain exposes legacy unarmed-base transition work; this approval is source-only."
+    },
+    {
+      "id": "class_minh_kiem_run_ne",
+      "sourceSha256": "3b67087507f17e90c3843299b821316fff9c3ed53f39e09315df3febb2a2041f",
+      "bindingSha256": "e31f199c849b5fa3b282e3ee572008aaab1a519de083d89da5640bfdd2e8645d",
+      "reviewedSourceFrames": 16,
+      "productionApproved": false,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_ne.mp4": "b29c2f6da059354b0e9018e07b9c27cb75da99287d7e47762a3e32589dc04e61",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_ne_actor_samples.png": "f03b7d5f7c9a57dbd44a2ea21faafc086ef497ebcafb7ed946de8eabee85f868",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4": "59a20d732e11c1f6d5930e65934ec9b8908e2d1d22e55d843cdaddd970138e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png": "ee3a08bd6c30e9fa5e97f9a9a04f64440d2e3ab75a580a64a0f00ee13c09b08f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "HOLD: native NE run0/8 foreground/far boot ownership remains unclear; V2 repair still gives a similar rear-sole silhouette. Neither variant approved. NW mirror inherits hold. Native chain also exposes separate unarmed base-clip continuity work."
+    },
+    {
+      "id": "class_minh_kiem_run_e",
+      "sourceSha256": "634f067074b26245e56e8f11e10941bd88c6d6928d8e336df5aca3a6a257cc0b",
+      "bindingSha256": "9d439c9847a455725dbe1aec0f32f7f0917d4b458860792dd28c772715be37e4",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_e_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_e.mp4": "9df30da36ac1e33c520e3b48305bda5a9b185c358f5fad4601373eb00b8caee9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_e_actor_samples.png": "f75adb91e0f615049f68ffca2e855e2ad1a3107f850331c34e7604c5663cc79d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4": "59a20d732e11c1f6d5930e65934ec9b8908e2d1d22e55d843cdaddd970138e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png": "ee3a08bd6c30e9fa5e97f9a9a04f64440d2e3ab75a580a64a0f00ee13c09b08f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet plus native pixel-scale temporal captures viewed. Corrected N v2 has opposite contacts0/8; E/SE/S retain readable alternate foreground leg ownership and passing phases. One right-hand straight jian retained, head/contact root stable, source camera/scale and permitted mirror binding checked. Native chain exposes legacy unarmed-base transition work; this approval is source-only."
+    },
+    {
+      "id": "class_minh_kiem_run_se",
+      "sourceSha256": "fa74ce67dce056424d5f62d9b3319cd3cb46e40dc2d7c252a2830100ecd96b3f",
+      "bindingSha256": "467ef92695b920465c63c18d94ceab2d1f81e6c162d24f8e5ba3c5ceb2a7d298",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_se.mp4": "4a8caed84ebf0c07b87b0f8b421abbf45ee447ba38d33dcb238353e18ee1ddd5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_se_actor_samples.png": "da19c578c953922d47504f63da3a716f95b1770853a09cbe0f3d6717eeedab1e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4": "59a20d732e11c1f6d5930e65934ec9b8908e2d1d22e55d843cdaddd970138e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png": "ee3a08bd6c30e9fa5e97f9a9a04f64440d2e3ab75a580a64a0f00ee13c09b08f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet plus native pixel-scale temporal captures viewed. Corrected N v2 has opposite contacts0/8; E/SE/S retain readable alternate foreground leg ownership and passing phases. One right-hand straight jian retained, head/contact root stable, source camera/scale and permitted mirror binding checked. Native chain exposes legacy unarmed-base transition work; this approval is source-only."
+    },
+    {
+      "id": "class_minh_kiem_run_s",
+      "sourceSha256": "79fa86bc99b2cab623d20a5d0db9c28a9f847ee58a49a69e6715227a1f984210",
+      "bindingSha256": "efd8893775305b6745a11c5b9fee94def52d47455feee39643e07ffca659310b",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_s_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_s.mp4": "780c22b171262bfb15f9051dd940eafa16e75bb8c4a5d68ecca1879f3dab91fc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_raw_s_actor_samples.png": "fa49f70e5e138f5af8ee889d3e0b9c827ba26703bcdde4809c5c8e3c4ed00867",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles.mp4": "59a20d732e11c1f6d5930e65934ec9b8908e2d1d22e55d843cdaddd970138e50",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/run_eight_angles_samples.png": "ee3a08bd6c30e9fa5e97f9a9a04f64440d2e3ab75a580a64a0f00ee13c09b08f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet plus native pixel-scale temporal captures viewed. Corrected N v2 has opposite contacts0/8; E/SE/S retain readable alternate foreground leg ownership and passing phases. One right-hand straight jian retained, head/contact root stable, source camera/scale and permitted mirror binding checked. Native chain exposes legacy unarmed-base transition work; this approval is source-only."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02_n",
+      "sourceSha256": "dc8b2cc01dd43d8e763ccde9ef828b616b4eeb7f7a6fc13302856e1d4a85b8b6",
+      "bindingSha256": "2aabbb94066dcf8b80db517eb315198540f24786d6f8d26e5c582664800d2cbc",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_n_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_n.mp4": "16fd1ccb5c28adb81652fd68d45fad3c85adbe02ecae195c6173b95b91360f62",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_n_actor_samples.png": "552f5114c308350857a145b0006dea6b4d70956fdedb66cc0480d26cf674d437",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4": "f1437e71abffca89e8e0ac2b69401a639ac076b44eaebf5ee7f70e6949f5c0bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png": "7d9c6b42afdc2d187480146205a5268b5e2af9cd652cfced29d9eafd3e16f3c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One diagonal cut with high anticipation, single release and controlled low recovery. One right-hand straight jian/grip, empty left counterbalance, readable planted weight shift, fixed body scale and brown-boot root checked. All five source facings, permitted mirrors and chain viewed; no baked attack VFX."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02_ne",
+      "sourceSha256": "ed3bfa41d0212858459a917f18d200bfa229458ce5968fcc3366688290900f11",
+      "bindingSha256": "322df0284872f387eb6a15a420bc12d35ac30de7e673adc6234451f4bf8b5877",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_ne_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_ne.mp4": "93784d4b917c811071672b36bd3ddf3a7dc23dec538d4f7506a33f0a06a1c779",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_ne_actor_samples.png": "1cc285aaa70b5b2dc6964636ff787f0ab69e93e486561b3dba804b6d8f2d5b07",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4": "f1437e71abffca89e8e0ac2b69401a639ac076b44eaebf5ee7f70e6949f5c0bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png": "7d9c6b42afdc2d187480146205a5268b5e2af9cd652cfced29d9eafd3e16f3c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One diagonal cut with high anticipation, single release and controlled low recovery. One right-hand straight jian/grip, empty left counterbalance, readable planted weight shift, fixed body scale and brown-boot root checked. All five source facings, permitted mirrors and chain viewed; no baked attack VFX."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02_e",
+      "sourceSha256": "14d82ea1192bb83c605584a773ff527cdb97f2b37f06bd8f00e21cf7ab925e18",
+      "bindingSha256": "5e15530d710a8e6b3279befe711f3b6216e94e4256eaec815c8c9c11145c99fc",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_e_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_e.mp4": "8b0efb0ae24491b2343e4fdab92e371e10c242c2ed751c9c63ecd987da347836",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_e_actor_samples.png": "c9ceee4fb1b9f2ec154449387eb7f1177d40a3c9d8e3405b170a75865b774b4f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4": "f1437e71abffca89e8e0ac2b69401a639ac076b44eaebf5ee7f70e6949f5c0bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png": "7d9c6b42afdc2d187480146205a5268b5e2af9cd652cfced29d9eafd3e16f3c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One diagonal cut with high anticipation, single release and controlled low recovery. One right-hand straight jian/grip, empty left counterbalance, readable planted weight shift, fixed body scale and brown-boot root checked. All five source facings, permitted mirrors and chain viewed; no baked attack VFX."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02_se",
+      "sourceSha256": "c291f60075657246de0718d6f74ecce98417c90a6290be86c8cc70c128367cfa",
+      "bindingSha256": "08273b69e44b2fba9f5c87810c5e1b28008e142973f38f063b8568536322f1b6",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_se_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_se.mp4": "0b5490076ce24151d0c6cfbd0f8a09cf0b71394fda8704773063bcab2a656f30",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_se_actor_samples.png": "022ee0aad4d83a4d29e14b0a5e76cd45799478e5e63f006f983c972bde906bd4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4": "f1437e71abffca89e8e0ac2b69401a639ac076b44eaebf5ee7f70e6949f5c0bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png": "7d9c6b42afdc2d187480146205a5268b5e2af9cd652cfced29d9eafd3e16f3c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One diagonal cut with high anticipation, single release and controlled low recovery. One right-hand straight jian/grip, empty left counterbalance, readable planted weight shift, fixed body scale and brown-boot root checked. All five source facings, permitted mirrors and chain viewed; no baked attack VFX."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_02_s",
+      "sourceSha256": "429d8fa4c86682a2a039e0df416b169eabe111b995baa464fe1ce41e0240046f",
+      "bindingSha256": "f5e5419387c91f94f44ef499eef9bbd6775064348cf6bf67ca9f8b91b9e15ea7",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_s_v2_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_s.mp4": "d6ac378bf55d074c6234cb0f669b221076c00fb3e60497e647e9ec4cbfcc42ad",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_raw_s_actor_samples.png": "9ba5aad9592bc5f9ae419638df86729867d636f52476b7014d9a0f1384c86d2d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles.mp4": "f1437e71abffca89e8e0ac2b69401a639ac076b44eaebf5ee7f70e6949f5c0bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_02_eight_angles_samples.png": "7d9c6b42afdc2d187480146205a5268b5e2af9cd652cfced29d9eafd3e16f3c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One diagonal cut with high anticipation, single release and controlled low recovery. One right-hand straight jian/grip, empty left counterbalance, readable planted weight shift, fixed body scale and brown-boot root checked. All five source facings, permitted mirrors and chain viewed; no baked attack VFX."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03_n",
+      "sourceSha256": "96a32fb97ffe76e869dbadc94697d786c8004ef4519c652918b00010b169c6eb",
+      "bindingSha256": "897f048cab277a4dfd1383fbfbe74c47a4f7f51c25f024fce937b0b578cccef7",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_03_n_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_n.mp4": "50dc26ff645131827554403f6de2e33b6fa0ff254377823b434c118897a9a301",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_n_actor_samples.png": "92793b02fc931c0258b2f88c154c2935f8e26111586c956a381451c0e899443b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4": "c9f7aa70b1dabb63d5dbcc41e0ef66fc70c7c67a5625842466d4949067b28f5a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png": "c0120e4162257d1ca213fa9971ec5779cc7d042c97f57d0ec7bbc12fc45f11fe",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One forward linear thrust then withdrawal along its axis; no extra slash or second hit. Rear-view hilt stays at right side/outboard of head; south view uses perspective foreshortening. Grip/empty left hand, grounded lean, blade containment, five facings/mirrors and native chain checked."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03_ne",
+      "sourceSha256": "d2b1ae17b7c7f0529264eb529b31dc238d7938366fb7dbf40f90bc399c77ab76",
+      "bindingSha256": "d551a321796b5475f75b190c05aa7bd5b2fc623f4dd3d44b7bdc199ed96eb015",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_03_ne_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_ne.mp4": "82d21ab98ba70fa3be0206a35f0def08055012ac27886d5a91d3236537d867bf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_ne_actor_samples.png": "e406f3dea7977bc905f3e1f339abf4668640a0c679e351f809efdd1734ed7c93",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4": "c9f7aa70b1dabb63d5dbcc41e0ef66fc70c7c67a5625842466d4949067b28f5a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png": "c0120e4162257d1ca213fa9971ec5779cc7d042c97f57d0ec7bbc12fc45f11fe",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One forward linear thrust then withdrawal along its axis; no extra slash or second hit. Rear-view hilt stays at right side/outboard of head; south view uses perspective foreshortening. Grip/empty left hand, grounded lean, blade containment, five facings/mirrors and native chain checked."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03_e",
+      "sourceSha256": "f69f935eef8ae752a28a91330fff1e62c955789176a5229496129609a20577aa",
+      "bindingSha256": "dff660451a7200011b8bd49bddb5530fcdefb82f9fbeb5d45062aba20655d8a1",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_03_e_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_e.mp4": "3a06e9e0e7a4d57a22c6ecdad661c91b75eb6265ef015110db316f7936f45d45",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_e_actor_samples.png": "20afd5e27ae562f3b5d731c8aa3791e269bbb7585f2e8639f10d82f2bec18f32",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4": "c9f7aa70b1dabb63d5dbcc41e0ef66fc70c7c67a5625842466d4949067b28f5a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png": "c0120e4162257d1ca213fa9971ec5779cc7d042c97f57d0ec7bbc12fc45f11fe",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One forward linear thrust then withdrawal along its axis; no extra slash or second hit. Rear-view hilt stays at right side/outboard of head; south view uses perspective foreshortening. Grip/empty left hand, grounded lean, blade containment, five facings/mirrors and native chain checked."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03_se",
+      "sourceSha256": "d934b43ba7a88baf3418579520bd08f8585bf6d45adaf8b07fbcd3e09e9013ac",
+      "bindingSha256": "2efa50d09eaa43b92550c4beb33a246aa90123db9db972d9d4e4449a1bb85f9d",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_03_se_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_se.mp4": "0a461c4da8d175c646cf7d412e6bd292447a4bbff972d17bfd456db9c4f8bbdc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_se_actor_samples.png": "b7668ace53e024e155769f8495bf458a52f75c1a0cb50952a921f916c7338dc4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4": "c9f7aa70b1dabb63d5dbcc41e0ef66fc70c7c67a5625842466d4949067b28f5a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png": "c0120e4162257d1ca213fa9971ec5779cc7d042c97f57d0ec7bbc12fc45f11fe",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One forward linear thrust then withdrawal along its axis; no extra slash or second hit. Rear-view hilt stays at right side/outboard of head; south view uses perspective foreshortening. Grip/empty left hand, grounded lean, blade containment, five facings/mirrors and native chain checked."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_03_s",
+      "sourceSha256": "01877ca2005bdd231f3341c3579be226f17a1a13a97fa1d004346a438ec8a694",
+      "bindingSha256": "a4e5e561d741502376c52730ba9f34e1ef0afe1aedc3ff84cbe3513d8160d0bf",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_03_s_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_s.mp4": "cd8af0d923ee9d53d4422efbd7a79c7bba63a369f5130120d14c543571846297",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_raw_s_actor_samples.png": "95e781827cfd65374465271e3cdeb3b8476e5fb0f47023254c2d6f16a9c2b9e0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles.mp4": "c9f7aa70b1dabb63d5dbcc41e0ef66fc70c7c67a5625842466d4949067b28f5a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/basic_attack_03_eight_angles_samples.png": "c0120e4162257d1ca213fa9971ec5779cc7d042c97f57d0ec7bbc12fc45f11fe",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One forward linear thrust then withdrawal along its axis; no extra slash or second hit. Rear-view hilt stays at right side/outboard of head; south view uses perspective foreshortening. Grip/empty left hand, grounded lean, blade containment, five facings/mirrors and native chain checked."
+    },
+    {
+      "id": "class_minh_kiem_interact_n",
+      "sourceSha256": "3c715d6ca2670ce1b1f028bb1c99787ba3f55ef2543d8eadee388016786a8e93",
+      "bindingSha256": "46e7bba18df614c47e0c80c3a6e7ca0177310805e9a04fc0beca3a1faaa3a022",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_n_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_n.mp4": "aa437576d401034738f028b7abff9d59e254316a601411687ca82216be779acf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_n_actor_samples.png": "7efc92f4b7a56770d64990650dbd0eef0706c178db9b5e52d2b6346c52265c4a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4": "41efd99cc1439a4fd9f77f4fbdd15d9948841ee9db366cd409b76e29843c0d82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png": "60e728d4d1c3e7df4e70a45c10680d0ffc91f30fb29797537601617f985b650a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed."
+    },
+    {
+      "id": "class_minh_kiem_interact_ne",
+      "sourceSha256": "0e92641ab0a89181cc1650860ca959d7d2259bb82ab1bac45f5a71cab47078b5",
+      "bindingSha256": "f34300870c87f29765913f6b04e3070d0260e7d19d817b183a43999671ad41dc",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_ne_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_ne.mp4": "3a2cde127b586a330f7ec8ef08c0a76553b05dd749c803a3e94e97cfd256030b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_ne_actor_samples.png": "132906fee9da2db0d95b3af67853858572bebd729a534d8ba26f40514791c9ed",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4": "41efd99cc1439a4fd9f77f4fbdd15d9948841ee9db366cd409b76e29843c0d82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png": "60e728d4d1c3e7df4e70a45c10680d0ffc91f30fb29797537601617f985b650a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed."
+    },
+    {
+      "id": "class_minh_kiem_interact_e",
+      "sourceSha256": "eb2711dc4446765d92feede34c0f771b009d7f3dc4d144e0e6abcc242f74678c",
+      "bindingSha256": "43f40e8ecddd40ea7638cb163ccd7c0d92c4cc0f93ec4a81da9b433c13c35d28",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_e_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_e.mp4": "4bc5fd70e2be4ed990b8786c668efc3faa4bed1eab5d94584766567613333674",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_e_actor_samples.png": "2c4e0919176029278147ceac829e6e150983b7480253477d01476efdb066949a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4": "41efd99cc1439a4fd9f77f4fbdd15d9948841ee9db366cd409b76e29843c0d82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png": "60e728d4d1c3e7df4e70a45c10680d0ffc91f30fb29797537601617f985b650a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed."
+    },
+    {
+      "id": "class_minh_kiem_interact_se",
+      "sourceSha256": "5809f825bd07042d711c961ebd7bc176fb4d237b567b2c8234d30248de8aee3c",
+      "bindingSha256": "95e242ed9b8d8b93b242cecd503567eb965dc5c5605a3f7cc8b979725fadab2b",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_se_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_se.mp4": "4da52146e9aeba5e1740345a3fbc41a82fe60b8a061ae6dafabdf37d6bd51d09",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_se_actor_samples.png": "c8bf59cdb100b82a356561e075e180b32aa8417ba90fc6d17da81e4fe35863e4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4": "41efd99cc1439a4fd9f77f4fbdd15d9948841ee9db366cd409b76e29843c0d82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png": "60e728d4d1c3e7df4e70a45c10680d0ffc91f30fb29797537601617f985b650a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed."
+    },
+    {
+      "id": "class_minh_kiem_interact_s",
+      "sourceSha256": "449e82f454e8ee8931ca2fdb331a5f9a6f3bbb6e79e1b15b80f8995ef19791d4",
+      "bindingSha256": "2959352c7380d26ec277efbd0fe3d12ed6629040cf696d22356a039fcce5e892",
+      "reviewedSourceFrames": 16,
+      "productionApproved": true,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_s_v1_20261114a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_s.mp4": "a752f58f017445ce3b7c5f735c5f2b43e4a15b27904ef32ba08baef28270fd9b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_raw_s_actor_samples.png": "d16961c0e9d367c9d48c9fab59f011fd9efc9713737d38e2d2fd87380f2f508a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles.mp4": "41efd99cc1439a4fd9f77f4fbdd15d9948841ee9db366cd409b76e29843c0d82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/interact_eight_angles_samples.png": "60e728d4d1c3e7df4e70a45c10680d0ffc91f30fb29797537601617f985b650a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain.mp4": "dd2430ed84c6daa0bb97188a212df9b754e1b65e37a74a3e27628faeb8e2d7cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114a/mobility_chain_samples.png": "36f9654852ba7a46089ff580fdb5278b9c08825c7ec8533e173069eedbe05b6e"
+      },
+      "nativeReviewed": true,
+      "visualNotes": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed."
+    }
+  ],
+  "notes": "All20 originals and raw native temporal captures viewed; grid stills and8.84s chain sampled. NErun and NWmirror not approved. Old unarmed idle/walk/basic1 still require replacement/armed transitions. Offline60-step video and source timing assertions are not gameplay FPS/combat acceptance."
+}

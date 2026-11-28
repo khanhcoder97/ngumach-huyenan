@@ -1,0 +1,254 @@
+{
+  "batch": "20261118d",
+  "catalogueUnchanged": true,
+  "productionApproved": false,
+  "nativeSourcePoses": 160,
+  "sourceFramesDecoded": 1800,
+  "assemblyFramesDecoded": 768,
+  "sourceViews": [
+    {
+      "id": "class_linh_cung_skill_04_e",
+      "sourceSha256": "1999d2e9d9c170afa16c711c35d4564128e3400c6c3e1908d9f0dea2625cafd9",
+      "projectSha256": "aaced48a2c4146e14563629627c5dcfd36c4e84f9cf0aad308e8a5ebf3d0862a",
+      "movieSha256": "c41c96c00fb342cdc5d5ff843fc11ae29a1bc925e122e2220200a4b24763375e",
+      "montageSha256": "ce7a5b13d3b952166abf6fc61e63524b80e3f882f521b9912228ef33c0213167",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_s",
+      "sourceSha256": "b82b2d1f300b95021988e39080cc3098c0d9cb6d4d44ef5781369282d98f8774",
+      "projectSha256": "6d4bc219f57a7c379d1778cfdec977d2992f21b86d4bab8e01ecc5e65e7a11f9",
+      "movieSha256": "159947b5c63d1c35c6d175d4c120ba8ba5f35ec80bd34de99debb80edd6efa91",
+      "montageSha256": "ef7eb2823633ecb87614ca82ccc036fec140b0946f7a38cf2a62704b2081faae",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_04_fan_open_component",
+      "sourceSha256": "b0f99c3ef21aa0eeee175271ec49bdd4b497fe4988e830f6c987a2af59f99b02",
+      "projectSha256": "e8dfa0cd76a1390dfd155be760a652bc2df6dc27cbb1f19c33ffd2db55a1003b",
+      "movieSha256": "3a1289245c4c34def8db02d1190702400c6522952442c0cc8449f15601e5a4b8",
+      "montageSha256": "9c779776f334ebcf6b7446baaa4a0667800a7ae7f9d73aeef12c66515fd0f7af",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "sk_lc_04_fan_fall_component",
+      "sourceSha256": "563c402cf49e5198562c6432aea9e1af5418ac0e1539f7547e24d5de2ded9b07",
+      "projectSha256": "6ad83c99de5538ec6d0c803cc380191f33cf6f864c9432f2df1aa7bd52eb8ee4",
+      "movieSha256": "d811f6bd9c3b8e048b1590982acfecf5ff38247d33e57815984f9956e8b971ea",
+      "montageSha256": "158aa90d30282c61e5bb2996ff81034b1f072fd6aeb8c3c024e6d57331d342e8",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_n",
+      "sourceSha256": "c7f1cb8bff73a0fed486bf108ec5fe11aa45ae325bc58945cbe2ab04f9cf7034",
+      "projectSha256": "97cf7df2394f3f82a213f5b9b73ae4807c2d51e90aba567ebfdadfadf1d240eb",
+      "movieSha256": "769d6a26a3f1b365d99abcf11b99a1fbb8c5e5fe8d4e32a559f5d6f9e5145705",
+      "montageSha256": "9d24e6d50680b4b3bb9f9f7086665eb456a3a99fa80b5c7c70214af609febab1",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_ne",
+      "sourceSha256": "1550895f479b2fb38657348dd209416d1a7fca0102c0df3b7fa975b49f1186ea",
+      "projectSha256": "ada01d64d91a9e62066fb067a664bfb97eb476fb6c3e8390e20ca333d625e338",
+      "movieSha256": "2356e4e5138b8b90835de664a2571fde94b37249b8a787de2f560feff76c0888",
+      "montageSha256": "3467435e4a35eaf39640e08950faf80745dc2ce46de48491de933526fbfb82a9",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_se",
+      "sourceSha256": "cd1a80c924912a4b52683ec644951ec1c617ab6762f08ba337b7781e97d64998",
+      "projectSha256": "f9915c96c5a86ca0b0254657b21ccb0c38608b3d0c958aa9e2e82ddf86328cff",
+      "movieSha256": "2371f28c1deaaa37db1b037a11cf8634eefd78f902eaa74e3625ac36da514877",
+      "montageSha256": "6a1d392f3a78539679f7c05a13d6a63da70159173f245b4473da88628d3f9591",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_sw",
+      "sourceSha256": "962beb8530a7c4b244971502f1395a47481314d774b1d8b8b2a9f81a6769b798",
+      "projectSha256": "68287e75d764939e1212da482fece0d0db0fc8ba443ffdacbd7d6d3e69cfbf84",
+      "movieSha256": "ba9301f990f9c197cd3207a7bdfc304aaf360c4e55beebe62d2ce87968d3f79b",
+      "montageSha256": "b646e29d6535d543170edf0e9946c8eaac6497e4825d7f1238f47d51d484a643",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_w",
+      "sourceSha256": "59008423a5cb35b99cd0d3711b764eea44992a15cf6e156a9727cdee3f0157c9",
+      "projectSha256": "892998cb98e6528711b4f93a6593f70df7f3bd3b9223fbce8d55a64bdac57fb2",
+      "movieSha256": "8e860b622cb0b315421df905e59a5157205eabfb544c41734e836f04540d65b4",
+      "montageSha256": "e5ba95f32491e86fbbdc190ea2915df817abda38836099861b1faeca06557119",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    },
+    {
+      "id": "class_linh_cung_skill_04_nw",
+      "sourceSha256": "e012e9ae6eb9d7854f09e08bb4fc96d051511b418118236777cc83f238782ab0",
+      "projectSha256": "703dbbcae018b9ac59953b92619806b90e68477c14f124bb4a48eeba5a355c83",
+      "movieSha256": "bfb3f11abfdfe8c23622e98eb244b46a0994ff828b3866d54beedabe7d4ae09e",
+      "montageSha256": "8cc72c2942934438da43dd069fc29012ca8f3f428ae528aea86bdc4ec11802f2",
+      "sourcePosesObserved": 16,
+      "decodedFrames": 180
+    }
+  ],
+  "nativeAssemblies": [
+    {
+      "facing": "N",
+      "projectSha256": "7ea3493969da15282b92d6266cd0d63bb8cc835b284f606ef82b68dfd789429b",
+      "movieSha256": "f7b6a2821f8daea4d716a468af0648114288b99d8a81742db3bc022f97384162",
+      "logSha256": "fef536d9490fec759680184264ddfd8ea2583fd7f47c731ea2cc24fe821080b7",
+      "montageSha256": "91e4f0b54849a4219e3a2c265e867e20ed5a07dab97c06ae151c83d1bbdb5825",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "NE",
+      "projectSha256": "48c4ca8499374e3780d9f40a8c5166f969ac4212ff964ab8ac74b10341c3ed24",
+      "movieSha256": "923da0f9b2edab461372b3604f1efcea1a445ca653c0a5ebb493fcdbeb76929b",
+      "logSha256": "a4c13eebee800364856cee542eda14bba2fc0294fb0e8fc78b89adebb65fcd7a",
+      "montageSha256": "f0828de2b64d3fde333ca6fa11974fba174fb5804393ea5b16d27d8e320287c7",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "E",
+      "projectSha256": "7957f2b981783db9733fbf2066289d82c53fe1e33c8601d873a02eb141698a2a",
+      "movieSha256": "01f3079e5172522e1b07e550d1193c5d51799800591109b0c6f43ff78b3c5497",
+      "logSha256": "37763e7a912ebccdf654a6b4c8b55ed49889f46a31b2b406133996816fa16061",
+      "montageSha256": "025a551ecc4794522de0aed6056ed4e1ca1192e11afefea72f5ffcf5f7bca454",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "SE",
+      "projectSha256": "ae3fb65e5751165899b76b8fc89668423477ece293d801229ceccfc30caa9b2e",
+      "movieSha256": "99627c4b116358ba5f35df66ba6d7bf494d2d2d28a0856ff1889aade172e13f8",
+      "logSha256": "ac0146856332d403a296ad69c3937f6e06b6facd74bdcfb6b8f65b040bc80f52",
+      "montageSha256": "0b9ce5389a272b574b39c0561b3c9a6e0161d1288273ec2aa3c6a1d73769334b",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "S",
+      "projectSha256": "a9da10b5fbedcdee00efdf1d6540edb91b76ee3e028dfc6a86f8ee61b7f6dbe8",
+      "movieSha256": "6a98c026add198967cc2ccecf28c302c62cc4fd3128f11bc3497159dc72ebaad",
+      "logSha256": "8dd11a89d38b1dab1440edefbca55d6fdb88fb1d149fc978c11b55f2d8e97587",
+      "montageSha256": "f7e7a8aa03461f43842fb94de67d2888549dfe837c03766cab7ecaadf54177ec",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "SW",
+      "projectSha256": "7ec451b9622da92e96af5d0e0ce6ce8c439ef725f4a34287732ae1d0cc911b03",
+      "movieSha256": "8dde10472b249745e3e5a73a6ba24d968eb83d75c83ec37ec38eec422db75ab7",
+      "logSha256": "e634b6d634a309680e86c4c1a5d14bb081236e7923932c891d2fc94a5e2f4881",
+      "montageSha256": "81da2967b5bdf5c59c0acddb10e425f540708ce3e0117b791ec9ad718e5d363b",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "W",
+      "projectSha256": "feb566e47b4267ac29bf1dedb26a8d7f434168b46f0599ef8f3e9c07b17cf417",
+      "movieSha256": "7a42ab467054c3c0879a070b2a59739a7a6a7bd316440ca9bbc821d091e1ea75",
+      "logSha256": "04941b0eebf713896f64584e4119e17cbbfa95adc5448cc458714e6424f8ce48",
+      "montageSha256": "0a3c78278dd41eff5d7e5d07e8f59921efa3eb30ff30faef812f897145b90ae9",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    },
+    {
+      "facing": "NW",
+      "projectSha256": "7306dee7a77bf3c3a497e520ec133be2d2c69de372d534f06e459c9a69430213",
+      "movieSha256": "96c9f3a3cf66fddf902bf0dca68b75440ed793ce0a88d45092ab6c2410da28f4",
+      "logSha256": "30da3766b20474f1b0754d58891e0381a3b6af563e5d29ce7694719997adfa85",
+      "montageSha256": "f51a1bf226e3354e0779cc8e6fbacc7c7432e671e32afa3544c6ab9d41a93cf3",
+      "framesDecoded": 96,
+      "renderSourcePhases": 48,
+      "sampleFrames": [
+        1,
+        15,
+        21,
+        35,
+        46,
+        58,
+        68,
+        71
+      ]
+    }
+  ]
+}

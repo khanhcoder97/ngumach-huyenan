@@ -1,0 +1,112 @@
+{
+  "batch": "20261116a",
+  "selected": 5,
+  "expected": 5,
+  "pilot": false,
+  "geometryReady": 4,
+  "catalogueUnchanged": true,
+  "rasterModified": false,
+  "scope": "READ_ONLY_GEOMETRY_ALPHA_NOT_VISUAL_OR_NATIVE_ACCEPTANCE",
+  "entries": [
+    {
+      "id": "class_huyen_but_walk_n",
+      "source": "Candidates_20261116a/class_huyen_but_walk_n_v1_20261116a.png",
+      "sourceSha256": "f43012ce9bb18822ba9925613106510d4bc3d5573985e9570f41169037172aaa",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1090127,
+      "softAlphaPixels": 200220,
+      "solidAlphaPixels": 282120,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_ne",
+      "source": "Candidates_20261116a/class_huyen_but_walk_ne_v1_20261116a.png",
+      "sourceSha256": "81b4ad31fb9097bd52e0788931263d8929d6c414ff95e7dc229c57464ec6b965",
+      "imageSize": [
+        1263,
+        1246
+      ],
+      "alphaZeroPixels": 1218214,
+      "softAlphaPixels": 78779,
+      "solidAlphaPixels": 276705,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_e",
+      "source": "Candidates_20261116a/class_huyen_but_walk_e_v1_20261116a.png",
+      "sourceSha256": "b8f0561c65fa0f8d08ea83aff9d792ee148a24f4b3f856c3db8bf9c9a642f181",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1137661,
+      "softAlphaPixels": 154584,
+      "solidAlphaPixels": 280222,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_se",
+      "source": "Candidates_20261116a/class_huyen_but_walk_se_v1_20261116a.png",
+      "sourceSha256": "3b67a012dfe8dcccf4c629c3232fb390d21563efc33576168c5b705c32812da2",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1129495,
+      "softAlphaPixels": 114368,
+      "solidAlphaPixels": 328604,
+      "cornerAlpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "source": "Candidates_20261116a/class_huyen_but_walk_s_v1_20261116a.png",
+      "sourceSha256": "06f45a9e9734226a15169936540802ffd1ab5344381e38a2cce2d3100ace0924",
+      "imageSize": [
+        1122,
+        1402
+      ],
+      "alphaZeroPixels": 943270,
+      "softAlphaPixels": 274274,
+      "solidAlphaPixels": 355500,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": false,
+      "reason": "clipped/overlapping frame row0 col0"
+    }
+  ]
+}

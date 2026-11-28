@@ -1,0 +1,38 @@
+
+Welcome to .NET 8.0!
+---------------------
+SDK Version: 8.0.404
+
+Telemetry
+---------
+The .NET tools collect usage data in order to help us improve your experience. It is collected by Microsoft and shared with the community. You can opt-out of telemetry by setting the DOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
+
+Read more about .NET CLI Tools telemetry: https://aka.ms/dotnet-cli-telemetry
+
+----------------
+Installed an ASP.NET Core HTTPS development certificate.
+To trust the certificate, run 'dotnet dev-certs https --trust'
+Learn about HTTPS: https://aka.ms/dotnet-https
+
+----------------
+Write your first app: https://aka.ms/dotnet-hello-world
+Find out what's new: https://aka.ms/dotnet-whats-new
+Explore documentation: https://aka.ms/dotnet-docs
+Report issues and find source on GitHub: https://github.com/dotnet/core
+Use 'dotnet --help' to see available commands or visit: https://aka.ms/dotnet-cli
+--------------------------------------------------------------------------------------
+Retrying 'FindPackagesByIdAsync' for source 'https://api.nuget.org/v3-flatcontainer/godot.net.sdk/index.json'.
+There is not enough space on the disk. : 'C:\Users\KHANH SAMA\AppData\Local\NuGet\v3-cache\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\list_godot.net.sdk.dat-new'
+Failed to download package 'Godot.NET.Sdk.4.7.2' from 'https://api.nuget.org/v3-flatcontainer/godot.net.sdk/4.7.2/godot.net.sdk.4.7.2.nupkg'.
+There is not enough space on the disk. : 'C:\Users\KHANH SAMA\AppData\Local\NuGet\v3-cache\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\nupkg_godot.net.sdk.4.7.2.dat-new'
+D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\VisualReboot.csproj : warning : Error occurred while getting package vulnerability data: There is not enough space on the disk. : 'C:\Users\KHANH SAMA\AppData\Local\NuGet\v3-cache\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\vuln_data_base.dat-new'
+  P1NativeCore -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\Portable\bin\Debug\net8.0\Ngumach.P1NativeCore.dll
+  VisualReboot -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\.godot\mono\temp\bin\Debug\VisualReboot.dll
+
+Build succeeded.
+
+D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\VisualReboot.csproj : warning : Error occurred while getting package vulnerability data: There is not enough space on the disk. : 'C:\Users\KHANH SAMA\AppData\Local\NuGet\v3-cache\670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json\vuln_data_base.dat-new'
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:55.43

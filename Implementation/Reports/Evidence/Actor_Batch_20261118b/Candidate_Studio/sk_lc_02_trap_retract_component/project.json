@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "sk_lc_02_trap_retract_component",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "sk_lc_02_trap_retract_component",
+      "Kind": "sprite",
+      "Name": "sk_lc_02_trap_retract_component",
+      "Visible": true,
+      "Z": 0,
+      "Texture": "textures/0cb9b0e57c669d3d35e63d8a43978971e70263933a2f197a59c3bd59b1d25790.png",
+      "Regions": [
+        [
+          0,
+          0,
+          316,
+          312
+        ],
+        [
+          316,
+          0,
+          316,
+          312
+        ],
+        [
+          632,
+          0,
+          315,
+          312
+        ],
+        [
+          947,
+          0,
+          316,
+          312
+        ],
+        [
+          0,
+          312,
+          316,
+          311
+        ],
+        [
+          316,
+          312,
+          316,
+          311
+        ],
+        [
+          632,
+          312,
+          315,
+          311
+        ],
+        [
+          947,
+          312,
+          316,
+          311
+        ],
+        [
+          0,
+          623,
+          316,
+          311
+        ],
+        [
+          316,
+          623,
+          316,
+          311
+        ],
+        [
+          632,
+          623,
+          315,
+          311
+        ],
+        [
+          947,
+          623,
+          316,
+          311
+        ],
+        [
+          0,
+          934,
+          316,
+          312
+        ],
+        [
+          316,
+          934,
+          316,
+          312
+        ],
+        [
+          632,
+          934,
+          315,
+          312
+        ],
+        [
+          947,
+          934,
+          316,
+          312
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 159.0,
+        "PivotY": 200.48,
+        "ScaleX": 0.6422018348623854,
+        "ScaleY": 0.6422018348623854,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "sk_lc_02_trap_retract_component",
+      "Direction": "OMNI",
+      "Loop": false,
+      "DurationsMs": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "Tracks": [
+        {
+          "LayerId": "sk_lc_02_trap_retract_component",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 159.0,
+                "PivotY": 200.48,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 156.0,
+                "PivotY": 199.48,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 155.5,
+                "PivotY": 197.62,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 155.0,
+                "PivotY": 195.76,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 159.0,
+                "PivotY": 171.32,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 156.5,
+                "PivotY": 171.02,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 156.0,
+                "PivotY": 170.12,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 152.5,
+                "PivotY": 174.34,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 159.5,
+                "PivotY": 155.02,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 158.0,
+                "PivotY": 154.24,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 152.0,
+                "PivotY": 151.76,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 152.5,
+                "PivotY": 151.3,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 158.0,
+                "PivotY": 127.96,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 157.5,
+                "PivotY": 129.78,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 154.0,
+                "PivotY": 131.88,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 155.0,
+                "PivotY": 135.8,
+                "ScaleX": 0.6422018348623854,
+                "ScaleY": 0.6422018348623854,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": [],
+      "SourceNote": "Dây Gai · 16 tư thế gốc mỗi lớp. Timeline xem thử trong Studio."
+    }
+  ]
+}

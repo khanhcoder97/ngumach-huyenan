@@ -1,0 +1,19 @@
+{
+  "batch": "20261114a",
+  "selected": 20,
+  "sourceCells": 320,
+  "generatedVariants": 23,
+  "sourceReviewPending": false,
+  "newSourceApprovals": 19,
+  "fullGameComplete": false,
+  "note": "Preview only. Full inspector recomputation/native pose review and approval pins remain required. Existing unarmed Minh Kiem base clips still need armed-transition work.",
+  "unselectedVariants": 3,
+  "gaitHoldReviewPending": [
+    "class_minh_kiem_run_ne"
+  ],
+  "heldIds": [
+    "class_minh_kiem_run_ne"
+  ],
+  "newSourceHolds": 1,
+  "nativeReview": "Implementation/Reports/Evidence/Actor_Batch_20261114a/source_native_review.json"
+}

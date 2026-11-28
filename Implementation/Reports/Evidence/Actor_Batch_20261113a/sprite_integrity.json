@@ -1,0 +1,1228 @@
+{
+  "scope": "RESTORATION_OF_PREEXISTING_FILES_NOT_FULL_GAME_OR_VISUAL_APPROVAL",
+  "summary": {
+    "trackedOldSheets": 46,
+    "present": 46,
+    "originalHashMatches": 46,
+    "validPng": 46,
+    "lfsPointerOnly": 0,
+    "missingRecordSources": [],
+    "runtimeExports": 140,
+    "runtimeOriginalCopies": 140,
+    "grouped": {
+      "class": 24,
+      "mob": 7,
+      "npc": 5,
+      "vfx": 10
+    }
+  },
+  "files": [
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack.png",
+      "exists": true,
+      "expectedSha256": "0b4e5db64243efcea7c85b33b071d8b6c10fd8bac53d483b7dfdbdd279e13f92",
+      "sha256": "0b4e5db64243efcea7c85b33b071d8b6c10fd8bac53d483b7dfdbdd279e13f92",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death.png",
+      "exists": true,
+      "expectedSha256": "d690026528545918f60f420161cc1a941284a0ac6155505aa6c4d7ab42c58100",
+      "sha256": "d690026528545918f60f420161cc1a941284a0ac6155505aa6c4d7ab42c58100",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_se_v1.png",
+      "exists": true,
+      "expectedSha256": "2806b302885bb3f58cfb1455ff1deb99e09810a9fb7ec827b2129e1ef044a3b8",
+      "sha256": "2806b302885bb3f58cfb1455ff1deb99e09810a9fb7ec827b2129e1ef044a3b8",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt.png",
+      "exists": true,
+      "expectedSha256": "4e79a820d1d3bc35179ee0ffddae83051e31db0a80f532cf8fcab60fa69275f7",
+      "sha256": "4e79a820d1d3bc35179ee0ffddae83051e31db0a80f532cf8fcab60fa69275f7",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+      "exists": true,
+      "expectedSha256": "aa52fd7e74007874aa53d4a5bc949816fa3cffc06a70cffd79c2fe6c39ab330c",
+      "sha256": "aa52fd7e74007874aa53d4a5bc949816fa3cffc06a70cffd79c2fe6c39ab330c",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk.png",
+      "exists": true,
+      "expectedSha256": "1b48b2517d9f459a380febf1b8044cd6c35d3e7f2b18a691a56d279c64957e22",
+      "sha256": "1b48b2517d9f459a380febf1b8044cd6c35d3e7f2b18a691a56d279c64957e22",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_basic_attack.png",
+      "exists": true,
+      "expectedSha256": "5e26818c2f3c313a30e56463472817beb181fb552e2939c8e45698c48947b6dc",
+      "sha256": "5e26818c2f3c313a30e56463472817beb181fb552e2939c8e45698c48947b6dc",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_death.png",
+      "exists": true,
+      "expectedSha256": "3176847be305cda731f4549a66b5c924cf9c94cb05efe14c080b2300790c8fd1",
+      "sha256": "3176847be305cda731f4549a66b5c924cf9c94cb05efe14c080b2300790c8fd1",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_death_se_v1.png",
+      "exists": true,
+      "expectedSha256": "c380e6ec236256c8e04de48f1fad27f07351ab8fcd7e6320a6f88193747bae54",
+      "sha256": "c380e6ec236256c8e04de48f1fad27f07351ab8fcd7e6320a6f88193747bae54",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_hurt.png",
+      "exists": true,
+      "expectedSha256": "4ed04d0ef9eaa2485d144f8d0cbf155ca57806de832eec4b236ba27080bf6ead",
+      "sha256": "4ed04d0ef9eaa2485d144f8d0cbf155ca57806de832eec4b236ba27080bf6ead",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle.png",
+      "exists": true,
+      "expectedSha256": "8bf41e9371e90a2886a04b1690e6d2b67a978081b9f88e3b482b8417437b614b",
+      "sha256": "8bf41e9371e90a2886a04b1690e6d2b67a978081b9f88e3b482b8417437b614b",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+      "sha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_walk.png",
+      "exists": true,
+      "expectedSha256": "09551575f587981a204e2860cef58e3fdc63fabb7eb4036bdf1c03778435912b",
+      "sha256": "09551575f587981a204e2860cef58e3fdc63fabb7eb4036bdf1c03778435912b",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_basic_attack.png",
+      "exists": true,
+      "expectedSha256": "df1adc386d0df0dace21bc1544f281784ea79bafbaa56cbcfb47043b54a4aa98",
+      "sha256": "df1adc386d0df0dace21bc1544f281784ea79bafbaa56cbcfb47043b54a4aa98",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_hurt.png",
+      "exists": true,
+      "expectedSha256": "9640ee047b8232a6b98b0ca39f2dc7083ea36259fb777f0f98b6450716f52152",
+      "sha256": "9640ee047b8232a6b98b0ca39f2dc7083ea36259fb777f0f98b6450716f52152",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle.png",
+      "exists": true,
+      "expectedSha256": "01ecb445648c8fdbcde0bbe44e6fbf7f482043a16fcc8a9b07c3ed52983c0b0b",
+      "sha256": "01ecb445648c8fdbcde0bbe44e6fbf7f482043a16fcc8a9b07c3ed52983c0b0b",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369",
+      "sha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_walk.png",
+      "exists": true,
+      "expectedSha256": "475bef0ba0c129b2e6f30f06d95c72f99092377c03fa2a5a502ba00d9b0ac1dc",
+      "sha256": "475bef0ba0c129b2e6f30f06d95c72f99092377c03fa2a5a502ba00d9b0ac1dc",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack.png",
+      "exists": true,
+      "expectedSha256": "aebb417e4dcd620cf2c6d6949afa545a83c02412f8afd626fd497c15cde20684",
+      "sha256": "aebb417e4dcd620cf2c6d6949afa545a83c02412f8afd626fd497c15cde20684",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v2.png",
+      "exists": true,
+      "expectedSha256": "b3ca4a3cc011f5284e1f10b428cbd839b23e5464bf06ad8ad0a97f18c16f5228",
+      "sha256": "b3ca4a3cc011f5284e1f10b428cbd839b23e5464bf06ad8ad0a97f18c16f5228",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_hurt.png",
+      "exists": true,
+      "expectedSha256": "a94c5ae1d4de4dce356dedf2203e5ce6d14d8e9c281fe7564b5876ccad7ee26f",
+      "sha256": "a94c5ae1d4de4dce356dedf2203e5ce6d14d8e9c281fe7564b5876ccad7ee26f",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle.png",
+      "exists": true,
+      "expectedSha256": "1a8e5ab7919587ff405fe5d7d5bd383279f851c7cb823b31f101ae324a77ac53",
+      "sha256": "1a8e5ab7919587ff405fe5d7d5bd383279f851c7cb823b31f101ae324a77ac53",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12",
+      "sha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_walk.png",
+      "exists": true,
+      "expectedSha256": "ecf35ac4bc58801b5af888c783aa900b05e5d83a27dc63f2334802b94fc86bb5",
+      "sha256": "ecf35ac4bc58801b5af888c783aa900b05e5d83a27dc63f2334802b94fc86bb5",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle.png",
+      "exists": true,
+      "expectedSha256": "0a9a7854e41c934deed407809e90a5fc9a22aa5be7136b5086553d248e7d1e0d",
+      "sha256": "0a9a7854e41c934deed407809e90a5fc9a22aa5be7136b5086553d248e7d1e0d",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle_s.png",
+      "exists": true,
+      "expectedSha256": "162aa1182d4e38b9b9b28772f4bd3f956e8b3c7f906fb4c6a4dc3d15390de367",
+      "sha256": "162aa1182d4e38b9b9b28772f4bd3f956e8b3c7f906fb4c6a4dc3d15390de367",
+      "lfsPointerOnly": false,
+      "size": [
+        1278,
+        1230
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "8e52781d451367a52eae4c3b75ca100e32fb5b17b0e6ae26c3de50d70ae96a1d",
+      "sha256": "8e52781d451367a52eae4c3b75ca100e32fb5b17b0e6ae26c3de50d70ae96a1d",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_shore_stalker_idle.png",
+      "exists": true,
+      "expectedSha256": "bf787cffa945932b782b06c2b39e49dd42eb7fd07e32b6c90f0813e042636c27",
+      "sha256": "bf787cffa945932b782b06c2b39e49dd42eb7fd07e32b6c90f0813e042636c27",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_shore_stalker_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "dddb33154142c6b2a91425e9f54aaf373db590829d255e4a687d4fed333073d4",
+      "sha256": "dddb33154142c6b2a91425e9f54aaf373db590829d255e4a687d4fed333073d4",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle.png",
+      "exists": true,
+      "expectedSha256": "c9abccc9550a26f4baba4001da097480f9d4cbec8f4b41b6328aefcf8d0cdf7b",
+      "sha256": "c9abccc9550a26f4baba4001da097480f9d4cbec8f4b41b6328aefcf8d0cdf7b",
+      "lfsPointerOnly": false,
+      "size": [
+        1159,
+        1358
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "fdb8f7ea0a57bd9a05a9ce5420c1e088aa79d00fa2926e4cadd454f23de19948",
+      "sha256": "fdb8f7ea0a57bd9a05a9ce5420c1e088aa79d00fa2926e4cadd454f23de19948",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_idle.png",
+      "exists": true,
+      "expectedSha256": "277e8f589d0cdb2435f5d5aafbba652ede32d8c5c9580ba8189affda370710a4",
+      "sha256": "277e8f589d0cdb2435f5d5aafbba652ede32d8c5c9580ba8189affda370710a4",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_idle_v2.png",
+      "exists": true,
+      "expectedSha256": "acf8126cfdd4ccea34809b1c5bd254bc6de39090ada158da283a29d2879a92f2",
+      "sha256": "acf8126cfdd4ccea34809b1c5bd254bc6de39090ada158da283a29d2879a92f2",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_interact.png",
+      "exists": true,
+      "expectedSha256": "e7a8c2a768bbc6810032b6767c5e96f94801f31542505d6d3d9b0ed5464c7949",
+      "sha256": "e7a8c2a768bbc6810032b6767c5e96f94801f31542505d6d3d9b0ed5464c7949",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_walk.png",
+      "exists": true,
+      "expectedSha256": "48fffd0229d44c0010c19f2e98bccd58c78683816547a8d33f041e336e50ee7e",
+      "sha256": "48fffd0229d44c0010c19f2e98bccd58c78683816547a8d33f041e336e50ee7e",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/npc_ta_van_khanh_idle.png",
+      "exists": true,
+      "expectedSha256": "23d9c3eb080d607ea7ff2656c0453291cb72b973717ca4021327b9622db51685",
+      "sha256": "23d9c3eb080d607ea7ff2656c0453291cb72b973717ca4021327b9622db51685",
+      "lfsPointerOnly": false,
+      "size": [
+        1122,
+        1402
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_vfx.png",
+      "exists": true,
+      "expectedSha256": "d35df472ae11ced39b6a63513f0a07443773b10e446e6daebf014ab9e50b8bee",
+      "sha256": "d35df472ae11ced39b6a63513f0a07443773b10e446e6daebf014ab9e50b8bee",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_vfx_v2.png",
+      "exists": true,
+      "expectedSha256": "dbbd8ef800c7fd22c052c832b5d21660a1bfc9870dec9296f9fceddf08bd6997",
+      "sha256": "dbbd8ef800c7fd22c052c832b5d21660a1bfc9870dec9296f9fceddf08bd6997",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_vfx.png",
+      "exists": true,
+      "expectedSha256": "52ea59b1e61db7665d9814365515a21519b8c5705f24149ef93ecdf020bb2f1b",
+      "sha256": "52ea59b1e61db7665d9814365515a21519b8c5705f24149ef93ecdf020bb2f1b",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_vfx_v2.png",
+      "exists": true,
+      "expectedSha256": "a69f00e116cd749aa0f3217c0920b7eacf7a3b7e2a25f88ea459a2e5be13ca46",
+      "sha256": "a69f00e116cd749aa0f3217c0920b7eacf7a3b7e2a25f88ea459a2e5be13ca46",
+      "lfsPointerOnly": false,
+      "size": [
+        1448,
+        1086
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_vfx.png",
+      "exists": true,
+      "expectedSha256": "ae262e06c103f0121fd065d27e31c432bb80e78c77e9bdcb7798b216002b97ec",
+      "sha256": "ae262e06c103f0121fd065d27e31c432bb80e78c77e9bdcb7798b216002b97ec",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_vfx.png",
+      "exists": true,
+      "expectedSha256": "dce0094d5c1e53fe6c227bcb3de045982c9255871686a7abe0097ef34c75c6ff",
+      "sha256": "dce0094d5c1e53fe6c227bcb3de045982c9255871686a7abe0097ef34c75c6ff",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_02_vfx.png",
+      "exists": true,
+      "expectedSha256": "3f95785383c7100736e6818fde4bd64d15e21a76bf8623c3f3bc4c25b0fa70ac",
+      "sha256": "3f95785383c7100736e6818fde4bd64d15e21a76bf8623c3f3bc4c25b0fa70ac",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_03_vfx.png",
+      "exists": true,
+      "expectedSha256": "795a83086a48b1394c28fd1283d74720071e7ae4bc308f803994e9ddbd056096",
+      "sha256": "795a83086a48b1394c28fd1283d74720071e7ae4bc308f803994e9ddbd056096",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_vfx.png",
+      "exists": true,
+      "expectedSha256": "eef7a44b51d42caa06e3b4a8a37a74f7840666be0645dec27b6e1b4d29cf546c",
+      "sha256": "eef7a44b51d42caa06e3b4a8a37a74f7840666be0645dec27b6e1b4d29cf546c",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_tc_01_vfx.png",
+      "exists": true,
+      "expectedSha256": "d8832795d3c38cda93df3e256fb3bd4e1950a4d86356beb468e2009a4756c5b0",
+      "sha256": "d8832795d3c38cda93df3e256fb3bd4e1950a4d86356beb468e2009a4756c5b0",
+      "lfsPointerOnly": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "validImage": true,
+      "matchesOriginal": true
+    }
+  ],
+  "runtime": [
+    {
+      "id": "class_anh_dao_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_idle_s",
+      "matchesSource": true
+    },
+    {
+      "id": "class_anh_dao_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "class_thach_chuy_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "class_linh_cung_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "class_anh_dao_basic_attack",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "class_thach_chuy_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "class_linh_cung_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_lyan_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_ad_01_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_hb_01_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_basic_attack",
+      "matchesSource": true
+    },
+    {
+      "id": "class_linh_cung_basic_attack",
+      "matchesSource": true
+    },
+    {
+      "id": "class_anh_dao_hurt",
+      "matchesSource": true
+    },
+    {
+      "id": "class_anh_dao_death",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_hurt",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_death",
+      "matchesSource": true
+    },
+    {
+      "id": "class_thach_chuy_hurt",
+      "matchesSource": true
+    },
+    {
+      "id": "class_linh_cung_hurt",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_ta_van_khanh_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_lyan_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_lyan_interact",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mk_01_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mk_02_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mk_04_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_tc_01_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_lc_01_vfx",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "class_anh_dao_death_se",
+      "matchesSource": true
+    },
+    {
+      "id": "class_huyen_but_death_se",
+      "matchesSource": true
+    },
+    {
+      "id": "class_thach_chuy_basic_attack",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_idle_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_shore_stalker_idle_s",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_hurt",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_dodge",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_dodge_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_walk",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_lc_01_projectile_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mk_03_arc_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_tc_01_crack_component",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_death",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_death_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_idle",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_idle_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_shore_stalker_idle_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_shore_stalker_idle_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_shore_stalker_idle_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_shore_stalker_idle_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_telegraph_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_attack_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_recovery_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_hurt_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_death_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_telegraph_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_attack_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_recovery_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_hurt_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_death_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_telegraph_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_attack_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_recovery_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_hurt_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_death_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_telegraph_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_attack_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_recovery_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_hurt_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_death_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_telegraph_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_attack_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_recovery_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_hurt_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_carpling_death_se",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_walk_s",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_interact_s",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_walk_n",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_walk_se",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_interact_n",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_interact_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_interact_e",
+      "matchesSource": true
+    },
+    {
+      "id": "npc_boat_keeper_interact_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_attack_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_recovery_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_attack_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_recovery_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_attack_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_recovery_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_attack_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_recovery_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_attack_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_recovery_01_se",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mob_waterroot_01_ripple_component",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_hurt_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_death_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_hurt_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_death_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_hurt_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_death_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_hurt_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_death_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_hurt_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_death_se",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_mk_01_parry_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_ad_01_cut_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_hb_01_ink_hit_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_tc_01_dust_component",
+      "matchesSource": true
+    },
+    {
+      "id": "sk_lc_01_mark_component",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_walk_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_run_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_turn_s",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_walk_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_run_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_turn_n",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_walk_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_run_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_turn_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_walk_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_run_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_turn_e",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_walk_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_run_se",
+      "matchesSource": true
+    },
+    {
+      "id": "mob_waterroot_turn_se",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_skill_01_s",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_skill_01_n",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_skill_01_ne",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_skill_01_e",
+      "matchesSource": true
+    },
+    {
+      "id": "class_minh_kiem_skill_01_se",
+      "matchesSource": true
+    }
+  ],
+  "note": "Minh Kiem inherited motion16 sources remain in Art_Source/Motion_16F_20261106; not missing from this sheet folder. Existing visual HOLDs and incomplete production coverage remain."
+}

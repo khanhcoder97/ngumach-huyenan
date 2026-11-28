@@ -1,0 +1,479 @@
+{
+  "scope": "SOURCE_CLIP_REVIEW_ONLY",
+  "approvals": [
+    {
+      "id": "mob_waterroot_idle_s",
+      "sourceSha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "bindingSha256": "01ac7036e7f082feee86993e1ff8d4a4c8d7e58eab99404f9784891162cd79cf",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "sourceSha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
+      "bindingSha256": "fc4fcea4d3fc83f23a96ea357d8d91d5a0924881fecd2e21d396f06d09d4a9a7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "sourceSha256": "f3ed3d193dcd55c182f363d80e5dac3c4fb48d093a2b1e430d88ef67ab413fbe",
+      "bindingSha256": "06957ad242ae7ce530bed69f5e2b98a5d6c9b589f6b35e5b270bd84ad604c6a6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "sourceSha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
+      "bindingSha256": "b81af627c1bbebd3e1fc6b73e4bfcc34e089fe9959fcf2eb58944934da959bde",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "sourceSha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
+      "bindingSha256": "7291e464db3d8ea1773b4dee96aa0ab600f3e93f4e6f4c599cd4109fb4682d59",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_s",
+      "sourceSha256": "d419a07558a8830e984138028d851d416bd329d3d4b4be9c86c61826e8d15b29",
+      "bindingSha256": "83dbb3d82092e8aa69a54f45f40037447c630e610f0f0c1a24270744e0a97402",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_s_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_telegraph_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_attack_01_s",
+      "sourceSha256": "7802b2ca3b9a41e42a2da77d57ac8e2a9ac89976b812f88bda7f610867a94afd",
+      "bindingSha256": "4666c27e9d7bc215f2b3f16a5d1366adaaada15b344c354a4a909b2a9d659e32",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_s_v2_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_attack_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_recovery_01_s",
+      "sourceSha256": "6e546ee375564e81ab35a50ad06e838fde2823d3af075a012fd2d0a52afd510a",
+      "bindingSha256": "e84edb8f87638b24da4885b63717319673febbfa4b0fc4030ee0ad49ad22b7fe",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_recovery_01_s_v2_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_recovery_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_hurt_s",
+      "sourceSha256": "c2d4b766e2c1344ef35150adf64a714d0da30f05a1d4f427f85a4d3706eeb94c",
+      "bindingSha256": "01aee24a04df2b3d9a07f9a5ab3e77978563696771d5eb36448c778c487a135e",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_hurt_s_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_death_s",
+      "sourceSha256": "8d7b7a8bac534c2eb9cf1c730e1d5e7a10a26987d9b655d98fc1dddcc63f1301",
+      "bindingSha256": "a3b2806224de2e89891bfb573363ef73323b0ba8e51d998c250cbb6c00f0166c",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_death_s_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_e",
+      "sourceSha256": "0a502ff436e893c41e6ea95d2d1267ab45ac44edc3c93014651a28dcbd1ac43b",
+      "bindingSha256": "60b9e7d97a43dba9a21db67ba4596e36492e3b24ce49e280f8e941ab0e7c480f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_e_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_telegraph_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_e.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_attack_01_e",
+      "sourceSha256": "43283237cd7dc5648949edcf60a4704da7cc8cea48149d550e99d9963c224126",
+      "bindingSha256": "f460c55cb527d689b1939dc5e6eba890cc3673241c42bd43f64a7b9123c0658a",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_e_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_attack_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_e.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_recovery_01_e",
+      "sourceSha256": "e4f74c153039475c37db7e6852128119c04b8e2814ce33df19873b003d63327a",
+      "bindingSha256": "12295e361c3393e517182430f6ad65dd9e3085b7b9077afe6fa65cbf026dd16d",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_recovery_01_e_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_recovery_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_e.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_hurt_e",
+      "sourceSha256": "9f315ccac88015b122bc51a3410e20f87e6b6602b2f04228213061055aad316d",
+      "bindingSha256": "1d0162d8abf603253ddd6f97bd9910ba71bea093db1e0ec695ea87ddcffb73bd",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_hurt_e_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_e.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_death_e",
+      "sourceSha256": "e527804cbc3a1f620c85933a0f163f22858b6ce411991b6e0cf05323df7d97b5",
+      "bindingSha256": "24e47c275b190cc8d6c47be4bc4ff9e49bd7cdceef8005e5842f6087aed7fc7d",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_death_e_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_e.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_n",
+      "sourceSha256": "e1d6eb44abbba55c23cf348a713f1a09a04dd37a05e796dbb0f3eb43f316f76b",
+      "bindingSha256": "8896783da155335272343df6da8ee806c0380de4eae7cf96aa2f6412fb2281e0",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_n_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_telegraph_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_attack_01_n",
+      "sourceSha256": "3dd52d50be78342b437d2d53e44e5da43234b7209d3658b983c048a80d4db510",
+      "bindingSha256": "03fe7f9690eebc2b78cd8e5cd452c31d0003b8d3c8acf269807b27e4103c7737",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_n_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_attack_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_recovery_01_n",
+      "sourceSha256": "6d7d0c99081added69edf632dd2ee2956e254b8a9f699e586e4a2b86bdcfba77",
+      "bindingSha256": "2acf0d37b781e1267911394e02bed02e7e7413b8a05101446fb495a690c6184c",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_recovery_01_n_v2_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_recovery_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_hurt_n",
+      "sourceSha256": "ea7081cc5e92c5a76d62d52b9950985d20a400834302bb19e11171cd8f3313c6",
+      "bindingSha256": "d9d2a98b1e3845cba95734a0701de45290ce2cc7cc911b4127938391a5de0c42",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_hurt_n_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_death_n",
+      "sourceSha256": "87624a0ccdaa553973243517cf864d8a58f252ed4dab95ba6206cc7b40f7530f",
+      "bindingSha256": "b47d994f41484a1e2a7ecaf6e81754e082d6475909aa7d0d72f5eaedae3b66f9",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_death_n_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_ne",
+      "sourceSha256": "32a5b40d92e167fc2ee67833a3affc9255ca088359cfd1934b4217d6b7929d58",
+      "bindingSha256": "74fdc92dc51f1ae36771494ac01a2fb8905c8ac9b2cff2288b9fd6aa68ee27a5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_ne_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_telegraph_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_ne.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_attack_01_ne",
+      "sourceSha256": "338bb5bbb68dc0d7172bec06e47c474748718e2eae9ae524d000d4c90358b899",
+      "bindingSha256": "39cde2686379516a860a72f8acfa6c9631f45663c7ac4f0bb751406f4a7385e8",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_ne_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_attack_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_ne.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_recovery_01_ne",
+      "sourceSha256": "76ce031ccfc2a74c6ae845e511301201e5baae8493b8b03e40ad57273578a78a",
+      "bindingSha256": "f97f489e519adaa8ee5637a52971f0119e405c63a387d9ffd3a72ac2a1492f28",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_recovery_01_ne_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_recovery_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_ne.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_hurt_ne",
+      "sourceSha256": "4b475de5af209f79d85aab586a3397a9b288a3f27ef0c58b3848203d95fd80ab",
+      "bindingSha256": "f86b72b1719ae07af5c7c3c8d2846e9f37fb322c8334f5d49559fe5f2123c840",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_hurt_ne_v2_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_ne.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_death_ne",
+      "sourceSha256": "30ea0a0300f4afeb4e357398e3629a1b0661811f39594daa5fcab8b36124703f",
+      "bindingSha256": "d1f3744bae016b983757ffd57ebae134d05d8b64836a5fec2c7afd0f58dce19a",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_death_ne_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_ne.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_se",
+      "sourceSha256": "eeb22c21f8469aa1e1cf22e9f21142cb3ad637d7f7a1abe2b0d900d795f047d5",
+      "bindingSha256": "f09896c48fed26e626926d58938167d9a50f627935b418cf244e6b9329d8e4fe",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_se_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_telegraph_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_se.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_attack_01_se",
+      "sourceSha256": "7a2ba746fb09ace5f3be71cd39a0822cd290f7b58e4b236502fcb4a68a87ba60",
+      "bindingSha256": "eed717ee79d1e015be7cad591ac0f6473faa1a81226fda79dd3b79aff49db2a1",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_se_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_attack_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_se.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_recovery_01_se",
+      "sourceSha256": "1a889842f5bdefe1389c6e6cdc9430b06fda561af17de4c9a9cd43d672eec14a",
+      "bindingSha256": "3163a6dfd0eb7aedaea8df63931cc61d577b52f7e2615b5524bde3cbeafb9239",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_n.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_recovery_01_se_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_recovery_01_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_se.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_hurt_se",
+      "sourceSha256": "2538b54a31b0ae3116595128ad0369b115095e3b08d8e49e573f70f57a022289",
+      "bindingSha256": "067b27ce1bbd41a949f1d7c6c6951eb33bcfce4edbb3f8119f940e26ecd0e197",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_hurt_se_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_hurt_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_se.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "mob_carpling_death_se",
+      "sourceSha256": "89abc4971bce3f6694d10d5cad9c62fc74e494c036e35e039b5083b3f2c062bc",
+      "bindingSha256": "886b1b4130c0235271c2803514ad870fac6cb280f916753ea16cdb0202ce7df7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_death_se_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_death_all_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/carpling_combat_se.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "npc_boat_keeper_walk_s",
+      "sourceSha256": "c4b8cd6b6a01e311a1e4e1bde8f73bf1f6e2ee68fcabdc13ad6d0c4294e9f4d0",
+      "bindingSha256": "ba26f3f6606b85368c7afae446891eb4b23484e0c5b4e0671c30229bbff1825a",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/boatkeeper_walk_s.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/boatkeeper_walk_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    },
+    {
+      "id": "npc_boat_keeper_interact_s",
+      "sourceSha256": "cc1bab0019d28ee3cef2f6ef642ed4bb27c2af64c97a3a602b06fb4dcbe90900",
+      "bindingSha256": "d55a6414d712046cee92228a6b6b70a31df5cb5e0718d1f5e34a0e6697b8df5a",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/boatkeeper_interact_s.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_s_v1_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/boatkeeper_interact_s.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
+    }
+  ],
+  "fullGameComplete": false
+}

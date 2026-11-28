@@ -4,6 +4,7 @@
       "advisories": [
         "META_MESH_TYPE"
       ],
+      "animationPolicyCompliant": false,
       "assetId": "CHR_MINH_KIEM_WALK",
       "criticalFindings": [
         "META_FILTER_MODE"
@@ -4520,9 +4521,9 @@
       "sha256": "ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8"
     },
     {
-      "bytes": 25133,
+      "bytes": 25448,
       "path": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md",
-      "sha256": "9c9e074f4383d1a86aa827238eb7dfff997f62242c51a9809a88917c3790763d"
+      "sha256": "28b723145b9abe69928bd9ee8430e78a1ad7edc2cead4933f114325568296dee"
     },
     {
       "bytes": 4268,
@@ -4570,9 +4571,9 @@
       "sha256": "383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73"
     },
     {
-      "bytes": 10510,
+      "bytes": 8435,
       "path": "docs/production/Pixel_Art_Production_Standard_vi.md",
-      "sha256": "76ece1bfdc07d794bfa7957053cf98869ef0db0fc25432f3a72635ff995dacb0"
+      "sha256": "865ee5ae8ac533b496ff0ef74a3f898ee75c5dc35159709d9e1451edb3d535e4"
     },
     {
       "bytes": 118934,
@@ -4642,13 +4643,14 @@
     "sourceLicense": "original"
   },
   "repo": {
-    "evidenceDigest": "ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df",
-    "sourceCommit": "dd50ec6fa62b4391b68e727ad692e095ee571178",
+    "evidenceDigest": "756ba1db8a9e471bcdbdf3bad1a0d111f56db284feafd9c46ede04902c7413b5",
+    "sourceCommit": "e597e452e9bcc08bd8316ba35ece79431b6588ce",
     "sourceCommitMeaning": "last commit touching the evidence files (not the report commit)"
   },
   "reportSchema": "opc05b.coverage_report/1",
   "standards": {
     "cellHeight": 64,
+    "cellIsNominalLegacyGrid": true,
     "cellWidth": 48,
     "directions": [
       "N",
@@ -4660,20 +4662,25 @@
       "W",
       "NW"
     ],
+    "framesPerDirectionMax": 20,
+    "framesPerDirectionMin": 16,
+    "physicsHz": 60,
     "pixelsPerUnit": 20,
     "quote": {
-      "cell": "cell 48×64 source px",
+      "cell": "Nominal legacy grid only; new trimmed pages use explicit frame rects/pivots",
       "directions": "N, NE, E, SE, S, SW, W, NW",
-      "walk": "Walk: 6 frame/hướng ở 8 fps"
+      "walk": "16 source poses over 0.8s; renderer60FPS"
     },
+    "renderTargetFps": 60,
     "source": "docs/production/Pixel_Art_Production_Standard_vi.md",
-    "walkFps": 8,
-    "walkFrames": 6
+    "walkDurationSeconds": 0.8,
+    "walkFps": 20.0,
+    "walkFrames": 16
   },
   "verification": {
     "enginePlayback": {
-      "reason": "No Unity/.NET runtime in this environment",
-      "requiredEvidence": "Unity import log + PlayMode capture tied to an exact commit",
+      "reason": "Historical Unity handoff audit only; this script does not execute an engine. Godot actor-library evidence is separate.",
+      "requiredEvidence": "Native evidence for the engine/art package actually being integrated, tied to source hashes/commit",
       "status": "not_verified"
     },
     "png": {

@@ -1,0 +1,11 @@
+REGISTER_SOURCE_BEGIN sk_first
+REGISTER_SOURCE_COMPLETE sk_first
+REGISTER_SOURCE_BEGIN sk_bad
+REGISTER_SOURCE_BEGIN sk_new
+REGISTER_SOURCE_COMPLETE sk_new
+{"selected": 1, "expected": 50, "preparedThisCall": 1, "registered": 1, "catalogueUnchanged": true, "productionApproved": false}
+.......................................................................................................................
+----------------------------------------------------------------------
+Ran 119 tests in 2.152s
+
+OK

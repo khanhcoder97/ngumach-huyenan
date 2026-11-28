@@ -1,0 +1,115 @@
+{
+  "scope": "ATTACHMENT_ONLY_REQUIRES_NATIVE_REVIEW",
+  "entries": [
+    {
+      "id": "sk_mk_01_guard_ready_component",
+      "source": "Sheets/sk_mk_01_guard_ready_component_v1_20261114d.png",
+      "sourceSha256": "e0f6e4bd3b7bc59da80ff59a9c4cf3917f66fcf580b89bedb33133184cec33d9",
+      "method": "SYMMETRIC_GLYPH_OR_RIM_CENTER",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "sourcePivots": null,
+      "rasterModified": false
+    },
+    {
+      "id": "sk_mk_02_aim_component",
+      "source": "Sheets/sk_mk_02_aim_component_v1_20261114d.png",
+      "sourceSha256": "c11a91a5fb2a53a24e230ec43766b5380d11ac98f6cb3dfa9016b0df195b3029",
+      "method": "RIGHTMOST_AIM_TIP",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          240,
+          192.0
+        ],
+        [
+          174,
+          191.5
+        ],
+        [
+          181,
+          191.5
+        ],
+        [
+          192,
+          191.5
+        ],
+        [
+          265,
+          141.0
+        ],
+        [
+          204,
+          140.0
+        ],
+        [
+          211,
+          140.0
+        ],
+        [
+          220,
+          140.0
+        ],
+        [
+          280,
+          140.5
+        ],
+        [
+          211,
+          141.0
+        ],
+        [
+          211,
+          142.0
+        ],
+        [
+          209,
+          142.0
+        ],
+        [
+          250,
+          138.5
+        ],
+        [
+          173,
+          139.5
+        ],
+        [
+          172,
+          138.0
+        ],
+        [
+          178,
+          139.0
+        ]
+      ],
+      "rasterModified": false
+    },
+    {
+      "id": "sk_mk_04_sustain_component",
+      "source": "Sheets/sk_mk_04_sustain_component_v1_20261114d.png",
+      "sourceSha256": "0fb20b8c2044dc0d5655b4e6009622b3170152b33b35fe82df7b766f819d1f39",
+      "method": "SYMMETRIC_GLYPH_OR_RIM_CENTER",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "sourcePivots": null,
+      "rasterModified": false
+    },
+    {
+      "id": "sk_ad_01_bleed_status_component",
+      "source": "Sheets/sk_ad_01_bleed_status_component_v1_20261114d.png",
+      "sourceSha256": "de037ba91f9e8b8829777d4340f94036dc993a57a080f61d43047a960df6f7b1",
+      "method": "SYMMETRIC_GLYPH_OR_RIM_CENTER",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "sourcePivots": null,
+      "rasterModified": false
+    },
+    {
+      "id": "sk_ad_04_expire_component",
+      "source": "Sheets/sk_ad_04_expire_component_v1_20261114d.png",
+      "sourceSha256": "54aca5a97e36d067d750458a9a6d505d0a9c339c0aa448b10d59fc877d75be0d",
+      "method": "SYMMETRIC_GLYPH_OR_RIM_CENTER",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "sourcePivots": null,
+      "rasterModified": false
+    }
+  ]
+}

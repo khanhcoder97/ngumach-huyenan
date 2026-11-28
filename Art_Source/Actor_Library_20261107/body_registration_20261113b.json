@@ -1,0 +1,286 @@
+{
+  "scope": "FIXED_SOURCE_HEIGHT_GEOMETRY_NOT_VISUAL_OR_ENCOUNTER_APPROVAL",
+  "reviewHeightPx": 88,
+  "sourcePages": 15,
+  "entries": [
+    {
+      "id": "mob_waterroot_telegraph_02_n",
+      "sourceSha256": "c254a8d0c2aca54311422ff9c8ff0819729ff3a5bb2fedd5f3b6a8eda5cc92b5",
+      "bodyReferenceHeight": 158,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "method": "NEUTRAL_FIRST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_attack_02_n",
+      "sourceSha256": "7b1ae7f7b2ed944c76761f1bcbcd428ae3b86735b9976fa6ea915636e40ec5b3",
+      "bodyReferenceHeight": 188.0675940462138,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [],
+      "method": "ONE_FIXED_SCALE_LEAST_SQUARES_BOTH_CHARGED_BOUNDARIES",
+      "boundaryReferenceIds": [
+        "mob_waterroot_telegraph_02_n",
+        "mob_waterroot_attack_02_n",
+        "mob_waterroot_recovery_02_n"
+      ]
+    },
+    {
+      "id": "mob_waterroot_recovery_02_n",
+      "sourceSha256": "7529788cd992c4a1b1ba02792d695695c799306c9db7578bee118c813d5ab8a9",
+      "bodyReferenceHeight": 159,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "method": "NEUTRAL_LAST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_telegraph_02_ne",
+      "sourceSha256": "3203d8e16f91013dc3ba8bd5a6946b9e631cdfade1c9512427f813d066ac4f2b",
+      "bodyReferenceHeight": 169,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "method": "NEUTRAL_FIRST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_attack_02_ne",
+      "sourceSha256": "cd5d9ca31e62fa222ed1019c583794c297e597a44990faebd0bc420b5af61f87",
+      "bodyReferenceHeight": 167.86563547106795,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [],
+      "method": "ONE_FIXED_SCALE_LEAST_SQUARES_BOTH_CHARGED_BOUNDARIES",
+      "boundaryReferenceIds": [
+        "mob_waterroot_telegraph_02_ne",
+        "mob_waterroot_attack_02_ne",
+        "mob_waterroot_recovery_02_ne"
+      ]
+    },
+    {
+      "id": "mob_waterroot_recovery_02_ne",
+      "sourceSha256": "0bf968710fa20094f72fe76c146c4a3463d6e4b7878a9fe46f6ca48192632559",
+      "bodyReferenceHeight": 160,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "method": "NEUTRAL_LAST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_telegraph_02_e",
+      "sourceSha256": "071646bc539b7d47f8841e5cc24491f9431861fd1c84cbd49849b377d04e5e4c",
+      "bodyReferenceHeight": 160,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "method": "NEUTRAL_FIRST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_attack_02_e",
+      "sourceSha256": "9eb02c150a1dfeb8888579f10eb3ea8d61a7ba463aa7fee8b9cce4d346b1b3a8",
+      "bodyReferenceHeight": 160.35376196131418,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [],
+      "method": "ONE_FIXED_SCALE_LEAST_SQUARES_BOTH_CHARGED_BOUNDARIES",
+      "boundaryReferenceIds": [
+        "mob_waterroot_telegraph_02_e",
+        "mob_waterroot_attack_02_e",
+        "mob_waterroot_recovery_02_e"
+      ]
+    },
+    {
+      "id": "mob_waterroot_recovery_02_e",
+      "sourceSha256": "245e266cb28cab05193c67f1ccbaa8953a0322d3514260d0cff42d786bcdf417",
+      "bodyReferenceHeight": 137,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "method": "NEUTRAL_LAST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_telegraph_02_se",
+      "sourceSha256": "a65e915d3621812d73c6a38a49aa729d8931075854f6e936cc725e27d228ef71",
+      "bodyReferenceHeight": 157,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "method": "NEUTRAL_FIRST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_attack_02_se",
+      "sourceSha256": "16e0648243fc38c2b6a378aef0e0d659cc98a5f4163058b2c0e34b7db71247ab",
+      "bodyReferenceHeight": 181.36164848426915,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [],
+      "method": "ONE_FIXED_SCALE_LEAST_SQUARES_BOTH_CHARGED_BOUNDARIES",
+      "boundaryReferenceIds": [
+        "mob_waterroot_telegraph_02_se",
+        "mob_waterroot_attack_02_se",
+        "mob_waterroot_recovery_02_se"
+      ]
+    },
+    {
+      "id": "mob_waterroot_recovery_02_se",
+      "sourceSha256": "06ad5b7c9f0d0ba1f592e97c32efc37f9a4f981f43786fe47e58dfa93077b626",
+      "bodyReferenceHeight": 156,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "method": "NEUTRAL_LAST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_telegraph_02_s",
+      "sourceSha256": "f153e443cbbc14ced6840d81ce6a88eeb2e928ba69f1d9d3f244c6f03d0dcf19",
+      "bodyReferenceHeight": 155,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "method": "NEUTRAL_FIRST_THREE",
+      "boundaryReferenceIds": []
+    },
+    {
+      "id": "mob_waterroot_attack_02_s",
+      "sourceSha256": "95cdf50a45ef954f9b708eb912bf19a02f93e2960776348ffc8de5e0a366c1ed",
+      "bodyReferenceHeight": 157.3496838550053,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [],
+      "method": "ONE_FIXED_SCALE_LEAST_SQUARES_BOTH_CHARGED_BOUNDARIES",
+      "boundaryReferenceIds": [
+        "mob_waterroot_telegraph_02_s",
+        "mob_waterroot_attack_02_s",
+        "mob_waterroot_recovery_02_s"
+      ]
+    },
+    {
+      "id": "mob_waterroot_recovery_02_s",
+      "sourceSha256": "808e09f23cd64e8f418393534f68d58dcb53db53e04306e93f33174258634289",
+      "bodyReferenceHeight": 155,
+      "pivotMode": "FOOT",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "method": "NEUTRAL_LAST_THREE",
+      "boundaryReferenceIds": []
+    }
+  ],
+  "phaseJoins": [
+    {
+      "direction": "N",
+      "before": "mob_waterroot_telegraph_02_n",
+      "after": "mob_waterroot_attack_02_n",
+      "renderedEndHeightPx": 51.79746835443038,
+      "renderedStartHeightPx": 56.15002442900979,
+      "heightJumpPx": 4.352556074579411
+    },
+    {
+      "direction": "N",
+      "before": "mob_waterroot_attack_02_n",
+      "after": "mob_waterroot_recovery_02_n",
+      "renderedEndHeightPx": 48.66335450514181,
+      "renderedStartHeightPx": 53.685534591194966,
+      "heightJumpPx": 5.0221800860531545
+    },
+    {
+      "direction": "NE",
+      "before": "mob_waterroot_telegraph_02_ne",
+      "after": "mob_waterroot_attack_02_ne",
+      "renderedEndHeightPx": 52.071005917159766,
+      "renderedStartHeightPx": 58.18939637400376,
+      "heightJumpPx": 6.118390456843997
+    },
+    {
+      "direction": "NE",
+      "before": "mob_waterroot_attack_02_ne",
+      "after": "mob_waterroot_recovery_02_ne",
+      "renderedEndHeightPx": 54.5197948008684,
+      "renderedStartHeightPx": 61.05,
+      "heightJumpPx": 6.530205199131601
+    },
+    {
+      "direction": "E",
+      "before": "mob_waterroot_telegraph_02_e",
+      "after": "mob_waterroot_attack_02_e",
+      "renderedEndHeightPx": 61.05,
+      "renderedStartHeightPx": 65.30560849907843,
+      "heightJumpPx": 4.255608499078434
+    },
+    {
+      "direction": "E",
+      "before": "mob_waterroot_attack_02_e",
+      "after": "mob_waterroot_recovery_02_e",
+      "renderedEndHeightPx": 58.17138236052365,
+      "renderedStartHeightPx": 62.948905109489054,
+      "heightJumpPx": 4.777522748965403
+    },
+    {
+      "direction": "SE",
+      "before": "mob_waterroot_telegraph_02_se",
+      "after": "mob_waterroot_attack_02_se",
+      "renderedEndHeightPx": 64.45859872611464,
+      "renderedStartHeightPx": 66.47491407780024,
+      "heightJumpPx": 2.0163153516855914
+    },
+    {
+      "direction": "SE",
+      "before": "mob_waterroot_attack_02_se",
+      "after": "mob_waterroot_recovery_02_se",
+      "renderedEndHeightPx": 56.285328708210415,
+      "renderedStartHeightPx": 58.666666666666664,
+      "heightJumpPx": 2.3813379584562497
+    },
+    {
+      "direction": "S",
+      "before": "mob_waterroot_telegraph_02_s",
+      "after": "mob_waterroot_attack_02_s",
+      "renderedEndHeightPx": 65.29032258064517,
+      "renderedStartHeightPx": 67.1116696346898,
+      "heightJumpPx": 1.8213470540446366
+    },
+    {
+      "direction": "S",
+      "before": "mob_waterroot_attack_02_s",
+      "after": "mob_waterroot_recovery_02_s",
+      "renderedEndHeightPx": 59.841238757598404,
+      "renderedStartHeightPx": 61.883870967741935,
+      "heightJumpPx": 2.0426322101435304
+    }
+  ],
+  "maximumHeightJumpPx": 6.530205199131601,
+  "note": "Foot pivots track source ground; compression remains authored. Boundary height is a scalar diagnostic, not silhouette/pose continuity proof. Native review required."
+}

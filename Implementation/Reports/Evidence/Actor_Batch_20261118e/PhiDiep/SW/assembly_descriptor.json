@@ -1,0 +1,43 @@
+{
+  "projectSha256": "44543afc4489d6fd22a19e48333ed9213a4bd46ffc18bd184f6108a1e8b20d91",
+  "retreatStartMs": 200,
+  "releaseMs": 320,
+  "releaseSourcePose": 8,
+  "modes": [
+    {
+      "name": "Lùi đủ",
+      "stopMs": 480,
+      "start": [
+        -18.384776310850235,
+        44.38477631085024
+      ],
+      "finish": [
+        83.4386001800126,
+        -57.438600180012614
+      ],
+      "releaseOrigin": [
+        -10.218599618073377,
+        -19.23230947283571
+      ],
+      "retreatDistance": 144
+    },
+    {
+      "name": "Lùi ngắn",
+      "stopMs": 285,
+      "start": [
+        -18.384776310850235,
+        44.38477631085024
+      ],
+      "finish": [
+        4.068827449542631,
+        21.931172550457372
+      ],
+      "releaseOrigin": [
+        -27.84125191093556,
+        -1.609657179973528
+      ],
+      "retreatDistance": 31.75
+    }
+  ],
+  "artOnly": true
+}

@@ -1,0 +1,37 @@
+{
+  "batch": "20261118a",
+  "id": "sk_lc_01_projectile_component",
+  "version": 2,
+  "expectedSourcePages": 7,
+  "scope": "LINH_CUNG_KHOA_MACH_FIVE_AUTHORED_FACINGS_AND_TWO_NEW_EFFECTS_REUSING_REVIEWED_TARGET_MARK",
+  "seconds": 0.8,
+  "timing": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "loop": true,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_projectile_component_v1_20261112.png"
+  ],
+  "authoringUse": {
+    "role": "PROJECTILE",
+    "canonicalForward": "E",
+    "attach": "BOW_RELEASE_TO_CONFIRMED_TARGET",
+    "origin": "SHAFT_AXIS_NEAR_TIP"
+  },
+  "prompt": "Use case: original game VFX revision using Input1 as visual mechanical reference for a Linh Cung Khóa Mạch travelling leaf-arrow. Use the original thin direction and sage/jade palette but redraw with crisper solid pixel clusters. Draw EXACTLY a 4-column by 4-row RGBA transparent atlas with 16 distinct quiet loop drawings of ONE slender horizontal leaf-headed arrow facing directly RIGHT. Readable small pale cream-green triangular point at the far right, straight dark green shaft and two thin jade leaf-shaped fins or strands curling back along the shaft. Clean crisp dark edges and small leaf-vein highlights. Wide length, depth well below one quarter its length. Take the thick foggy edges out of the style. Nose tip and shaft axis are stationary at the same coordinates within every cell, with each whole arrow separated by wide alpha-zero gutters. Only the narrow leaf veins and short trailing wisps undulate subtly, a stable silhouette that connects 15 to 0 smoothly. No second spear, motion repetition, trajectory progression, ground, impact flash, character, UI, caption, neon haze, confetti, grid or shadows. Use 16 different frame drawings while keeping the nose axis fixed. The mark and dissipation are separate, do not include them. True RGBA, preserve the wide transparent margins."
+}

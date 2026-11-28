@@ -1,0 +1,34 @@
+{
+  "batch": "20261118a",
+  "id": "class_linh_cung_skill_01_s",
+  "version": 1,
+  "expectedSourcePages": 7,
+  "scope": "LINH_CUNG_KHOA_MACH_FIVE_AUTHORED_FACINGS_AND_TWO_NEW_EFFECTS_REUSING_REVIEWED_TARGET_MARK",
+  "direction": "S",
+  "seconds": 0.96,
+  "timing": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png"
+  ],
+  "inputRole": "OWNER_IDLE_IDENTITY_AND_UNAPPROVED_E_ACTION_TIMING_REFERENCE",
+  "prompt": "Use case: original baked-body game animation using the supplied owner-selected Linh Cung idle atlas as identity and style reference. Input2 is the east action pose/timing reference. Re-author silhouettes in the target facing, using Input1 for camera and hold. Keep the same character: refined rounded chibi pixel clusters, dark brown high ponytail and small olive tie, olive-green tunic, pale sage short shoulder cape, brown leather bracers and boots, back quiver with cream fletchings, carved brown compact recurved bow with subdued green plant ornament. Use the same strictly SOUTH frontal camera from owner idle rows9–10. Bow stays in character's anatomical left hand, screen-right. Foreshorten nocked arrow toward bottom centre, large near arrowhead, narrow shaft and right string fist beside cheek. Do not turn sideways during release. Exactly 16 genuinely distinct full-body hand-animated sprites, 4x4 row-major chronological grid on RGBA transparent background. Empty gutters, feet and bow, string, hair and quiver all completely in frame. One connected bow held at grip by the same left bow hand throughout; the right hand is the only string hand. Two arms total. One short visible taut string between the two bow tips when drawn, attaches to the drawing fingers at cheek level. ONE ordinary non-glowing arrow nocked during stretch; show one launch of SK-LC-01 Khóa Mạch, do not include a flying arrow in the atlas. Frames0–1 ready bow low next to waist matching owner sheet; 2–4 lift and nock one arrow, left bow arm extends along the fixed firing axis at chest height; 5–7 pull string to the cheek with visible elbow-back tension; 8 release fingers once and release string to a straight line, arrow leaves the drawing; 9–11 right hand follows through behind cheek then recovers; 12–15 bow lowers naturally to same starting hand and stance. Both boots stay planted in a stable stance; natural cloak and hair follow-through. No walking cycle, second shot, frame duplicates, repeated bow, extra hands, extra string, wrong-facing pose, green graphics, target, impact, leaves, long glow, labels, checkerboard or floor. Any travelling leaf-arrow and confirmed target mark are separate VFX. Keep coherent medium-resolution crisp pixel clusters and readable silhouette at gameplay size.",
+  "state": "READY_FOR_IMAGEGEN"
+}

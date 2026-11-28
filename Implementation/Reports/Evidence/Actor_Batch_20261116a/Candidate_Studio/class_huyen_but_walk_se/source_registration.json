@@ -1,0 +1,629 @@
+{
+  "record": {
+    "id": "class_huyen_but_walk_se",
+    "source": "Candidates_20261116a/class_huyen_but_walk_se_v1_20261116a.png",
+    "prompt": "Candidates_20261116a/class_huyen_but_walk_se_v1_20261116a.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261116a",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_se_v1_20261115i.png"
+    ],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      },
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_se_v1_20261115i.png",
+        "sourceSha256": "38af6b784835876086696ac6f2947e48c97696ae34c2ca8b45daa980642f96a0"
+      }
+    ],
+    "sourceSha256": "3b67a012dfe8dcccf4c629c3232fb390d21563efc33576168c5b705c32812da2",
+    "sourceFrameDurationsMs": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_IDENTITY_WITH_PREVIOUSLY_REVIEWED_IDLE_SOURCE_FOR_FACING_NOT_OWNER_APPROVAL",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        215.5,
+        291
+      ],
+      [
+        198.0,
+        291
+      ],
+      [
+        180.5,
+        291
+      ],
+      [
+        169.5,
+        287
+      ],
+      [
+        217.5,
+        277
+      ],
+      [
+        199.5,
+        277
+      ],
+      [
+        182.5,
+        280
+      ],
+      [
+        169.5,
+        280
+      ],
+      [
+        217.0,
+        266
+      ],
+      [
+        200.5,
+        263
+      ],
+      [
+        181.5,
+        262
+      ],
+      [
+        171.0,
+        262
+      ],
+      [
+        219.5,
+        250
+      ],
+      [
+        201.5,
+        254
+      ],
+      [
+        183.5,
+        260
+      ],
+      [
+        171.5,
+        260
+      ]
+    ],
+    "bodyReferenceHeight": 241,
+    "registrationMethod": "NEUTRAL_HEAD_PROJECTED_X_COOL_BOOT_Y"
+  },
+  "page": {
+    "id": "class_huyen_but_walk_se",
+    "file": "sheets/class_huyen_but_walk_se_v1_20261116a.png",
+    "source": "Candidates_20261116a/class_huyen_but_walk_se_v1_20261116a.png",
+    "sha256": "3b67a012dfe8dcccf4c629c3232fb390d21563efc33576168c5b705c32812da2",
+    "imageSize": [
+      1261,
+      1247
+    ],
+    "directions": [
+      {
+        "direction": "SE",
+        "flip": false,
+        "referenceHeight": 241,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              116,
+              50,
+              246,
+              291
+            ],
+            "pivot": [
+              215.5,
+              291
+            ]
+          },
+          {
+            "rect": [
+              315,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              101,
+              50,
+              229,
+              291
+            ],
+            "pivot": [
+              198.0,
+              291
+            ]
+          },
+          {
+            "rect": [
+              630,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              83,
+              50,
+              211,
+              291
+            ],
+            "pivot": [
+              180.5,
+              291
+            ]
+          },
+          {
+            "rect": [
+              946,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              71,
+              50,
+              195,
+              287
+            ],
+            "pivot": [
+              169.5,
+              287
+            ]
+          },
+          {
+            "rect": [
+              0,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              119,
+              44,
+              243,
+              277
+            ],
+            "pivot": [
+              217.5,
+              277
+            ]
+          },
+          {
+            "rect": [
+              315,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              102,
+              44,
+              227,
+              277
+            ],
+            "pivot": [
+              199.5,
+              277
+            ]
+          },
+          {
+            "rect": [
+              630,
+              312,
+              316,
+              312
+            ],
+            "bounds": [
+              84,
+              44,
+              207,
+              280
+            ],
+            "pivot": [
+              182.5,
+              280
+            ]
+          },
+          {
+            "rect": [
+              946,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              71,
+              44,
+              195,
+              280
+            ],
+            "pivot": [
+              169.5,
+              280
+            ]
+          },
+          {
+            "rect": [
+              0,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              119,
+              29,
+              239,
+              266
+            ],
+            "pivot": [
+              217.0,
+              266
+            ]
+          },
+          {
+            "rect": [
+              315,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              101,
+              27,
+              224,
+              263
+            ],
+            "pivot": [
+              200.5,
+              263
+            ]
+          },
+          {
+            "rect": [
+              630,
+              624,
+              316,
+              311
+            ],
+            "bounds": [
+              83,
+              27,
+              208,
+              262
+            ],
+            "pivot": [
+              181.5,
+              262
+            ]
+          },
+          {
+            "rect": [
+              946,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              72,
+              31,
+              196,
+              262
+            ],
+            "pivot": [
+              171.0,
+              262
+            ]
+          },
+          {
+            "rect": [
+              0,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              120,
+              20,
+              245,
+              250
+            ],
+            "pivot": [
+              219.5,
+              250
+            ]
+          },
+          {
+            "rect": [
+              315,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              102,
+              21,
+              229,
+              254
+            ],
+            "pivot": [
+              201.5,
+              254
+            ]
+          },
+          {
+            "rect": [
+              630,
+              935,
+              316,
+              312
+            ],
+            "bounds": [
+              85,
+              22,
+              211,
+              260
+            ],
+            "pivot": [
+              183.5,
+              260
+            ]
+          },
+          {
+            "rect": [
+              946,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              73,
+              21,
+              196,
+              260
+            ],
+            "pivot": [
+              171.5,
+              260
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 236.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ]
+  },
+  "headLandmarks": [
+    {
+      "span": 121,
+      "centerX": 177.5,
+      "top": 50,
+      "searchRect": [
+        116,
+        50,
+        246,
+        151
+      ]
+    },
+    {
+      "span": 118,
+      "centerX": 160.0,
+      "top": 50,
+      "searchRect": [
+        101,
+        50,
+        229,
+        151
+      ]
+    },
+    {
+      "span": 119,
+      "centerX": 142.5,
+      "top": 50,
+      "searchRect": [
+        83,
+        50,
+        211,
+        151
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 131.5,
+      "top": 50,
+      "searchRect": [
+        71,
+        50,
+        195,
+        150
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 179.5,
+      "top": 44,
+      "searchRect": [
+        119,
+        44,
+        243,
+        142
+      ]
+    },
+    {
+      "span": 119,
+      "centerX": 161.5,
+      "top": 44,
+      "searchRect": [
+        102,
+        44,
+        227,
+        142
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 144.5,
+      "top": 44,
+      "searchRect": [
+        84,
+        44,
+        207,
+        143
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 131.5,
+      "top": 44,
+      "searchRect": [
+        71,
+        44,
+        195,
+        143
+      ]
+    },
+    {
+      "span": 120,
+      "centerX": 179.0,
+      "top": 29,
+      "searchRect": [
+        119,
+        29,
+        239,
+        129
+      ]
+    },
+    {
+      "span": 123,
+      "centerX": 162.5,
+      "top": 27,
+      "searchRect": [
+        101,
+        27,
+        224,
+        126
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 143.5,
+      "top": 27,
+      "searchRect": [
+        83,
+        27,
+        208,
+        126
+      ]
+    },
+    {
+      "span": 122,
+      "centerX": 133.0,
+      "top": 31,
+      "searchRect": [
+        72,
+        31,
+        196,
+        128
+      ]
+    },
+    {
+      "span": 123,
+      "centerX": 181.5,
+      "top": 20,
+      "searchRect": [
+        120,
+        20,
+        245,
+        117
+      ]
+    },
+    {
+      "span": 123,
+      "centerX": 163.5,
+      "top": 21,
+      "searchRect": [
+        102,
+        21,
+        229,
+        119
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 145.5,
+      "top": 22,
+      "searchRect": [
+        85,
+        22,
+        211,
+        122
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 133.5,
+      "top": 21,
+      "searchRect": [
+        73,
+        21,
+        196,
+        121
+      ]
+    }
+  ],
+  "method": "NEUTRAL_HEAD_PROJECTED_X_COOL_BOOT_Y",
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

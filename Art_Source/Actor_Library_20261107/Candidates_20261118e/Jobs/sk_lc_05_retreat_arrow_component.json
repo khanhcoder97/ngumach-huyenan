@@ -1,0 +1,35 @@
+{
+  "batch": "20261118e",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_PHI_DIEP_EIGHT_AUTHORED_FACINGS_AND_RETREAT_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_05_retreat_arrow_component",
+  "prompt": "Produce a new isolated high-definition pixel effect for one Phi Diệp countershot, a full length slender wooden arrow with a bright pale mint tip and a very short fading sage leaf streak. Use the reference only for pixel scale, clean transparency, and palette. Single arrow pointing exactly RIGHT, horizontally centered. The foremost point stays at the same coordinate for all cells, around x=76%, y=50%, while the trail behind it varies. No stippled bloom or outline red. A hooked ivory tip above a dark jade outline makes it readable over tan ground. Motion: initial pointed launch with no wide flare, 2-5 trail grows to two tapered leaves hugging the line, 6-9 fast straight, 10-13 trail unravels toward left behind the still solid tip, 14-15 tail ends as two distinct tiny leaf flecks. No detached impact burst, burst ring, fanned volley, enemy, body or object to the right of the tip. Exactly 4 columns by 4 rows with sixteen distinct valid frames, large true transparent gutters, no dividers, borders, checkerboard, text, ground or shadows. PNG RGBA source for nearest-neighbor top-down game use.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118c/sk_lc_03_volley_arrow_component_v1_20261118c.png"
+  ],
+  "seconds": 0.4,
+  "timing": [
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25
+  ],
+  "authoringUse": {
+    "role": "COUNTERSHOT",
+    "facing": "E",
+    "pivot": "BRIGHT_TIP"
+  }
+}

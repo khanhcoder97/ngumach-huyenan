@@ -1,0 +1,41 @@
+{
+  "batch": "20261118b",
+  "scope": "STUDIO_NATIVE_ART_REVIEW",
+  "productionApproved": false,
+  "nativeAuditSha256": "e32a1bd34d334f4f073db2db4f392b6f88b27a91caa2d5327941211a6170c86f",
+  "sourcePosesViewed": 192,
+  "nativeReviewImages": {
+    "assembly_review": "4879304f6016a241929b6c48a4e3ee26a44bb199648c4eb4d87cb0b643f49eb3",
+    "raw_cardinal": "d38d3f4c47ad7152e2a5347bc95f45d466dde17989f2eff27a3cdb3896a5d213",
+    "raw_diagonal": "71127e3a5a8b9c5409146c9d0d08e544446d6e8c96610114b3f00faa4164c03f",
+    "raw_effects": "632548c053300a86a652db0f9593299679557e95a4ec24edbeb57592a5dc6c5b"
+  },
+  "originalLoopWrapReviewed": [
+    14,
+    15,
+    0,
+    1
+  ],
+  "rejectedSourceRevisions": [
+    {
+      "id": "sk_lc_02_trap_grow_component",
+      "sourceSha256": "776767df19673813d87e77c9fd944f66f67a7d8bc969ce67af1dfdaf48a13021",
+      "reason": "Grey-green matte spans multiple cells."
+    },
+    {
+      "id": "class_linh_cung_skill_02_n",
+      "sourceSha256": "80029481dd1fbf16532a11320a02828c5136cf4cf717b24272f9107f204b1f5c",
+      "reason": "Free hand reaches behind the boot line."
+    },
+    {
+      "id": "class_linh_cung_skill_02_ne",
+      "sourceSha256": "e79a5e99d240aec32378b2ae5158f0a9cc12a44e84d287e2ef5d8b4eba4bfff8",
+      "reason": "Mottled background matte is visible across gutters."
+    },
+    {
+      "id": "class_linh_cung_skill_02_nw",
+      "sourceSha256": "fbc6df7c59177b1ca2a411373b773dbaf76a40819dc0f2e4ff3e8fe5d1633586",
+      "reason": "Release hand visually merges with the bow grip."
+    }
+  ]
+}

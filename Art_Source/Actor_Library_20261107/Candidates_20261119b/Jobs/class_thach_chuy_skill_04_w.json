@@ -1,0 +1,33 @@
+{
+  "batch": "20261119b",
+  "expectedSourcePages": 18,
+  "scope": "THACH_CHUY_SIX_SKILLS_WEST_SOUTHWEST_NORTHWEST_AUTHORED_FACINGS",
+  "version": 1,
+  "id": "class_thach_chuy_skill_04_w",
+  "direction": "W",
+  "prompt": "Create an original production-ready pixel art sprite sheet for Thạch Chùy, skill Khiêu Chiến. Image 1 supplies the project-owned character identity, short dark hair, ochre circlet, bronze-brown lamellar chest, grey steel pauldrons and bracers, rust red sash and sturdy brown boots. Image 2 provides the sequence and painterly cluster scale only, seen from an opposite heading. Draw new poses from the requested camera. The character keeps a compact chibi build and exactly one permanently connected grey cuboid hammer head and short wooden shaft. The two gloved hands grip the SHAFT below the head, with credible occlusion and no mirrored body markings derived from a flip. Camera fixed: true left profile facing screen LEFT. Show only the leftward near eye. Do not angle toward the viewer. His far right anatomical shoulder and hands may hide naturally on windup.\nA non-damaging call-out. 0–3 ready, bend knees and draw breath; 4–6 lift the same hammer briefly to chest and lightly tap the close ground once; 7 shoulders tense and jaw starts opening, 8–10 projected shout in the same facing and visible near jaw whenever naturally seen, 11 close jaw; 12–15 easy recovery to guard. In rear three-quarter angles, show shoulder and head posture and just the visible jaw rim. No full face turn, speech text, hands off shaft, overhead attack or damage effect.\nExactly 16 separately drawn full body poses in a strict 4-column by 4-row sheet, row-major and evenly spaced. Neutral at frame 0 and recovery with one distinct easing pose at 15. Crisp stepped pixels, full feet and weapon with wide empty margins. Use only muted brown, gold, steel and skin tones of the supplied identity. True transparent RGBA, including clear cutout gaps and wide transparent gutters. Subtle intentional motion in cape, body, legs and hand grip. Avoid duplicates, detached layers, extra hammer, painted motion trails, VFX, terrain, shadows, captions, dividers, background fill and checkerboard.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v2_20261116c.png"
+  ],
+  "timing": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "seconds": 0.8,
+  "inputRole": "OWNER_THACH_CHUY_IDENTITY_AND_EXISTING_CHOREOGRAPHY_REFERENCE"
+}

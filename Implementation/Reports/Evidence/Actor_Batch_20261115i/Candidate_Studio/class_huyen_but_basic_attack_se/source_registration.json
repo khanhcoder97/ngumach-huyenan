@@ -1,0 +1,623 @@
+{
+  "record": {
+    "id": "class_huyen_but_basic_attack_se",
+    "source": "Candidates_20261115i/class_huyen_but_basic_attack_se_v1_20261115i.png",
+    "prompt": "Candidates_20261115i/class_huyen_but_basic_attack_se_v1_20261115i.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261115i",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "14b7d04e329ca5cc964508e97f9daf58dd21c92eb1e9ac016dfe9e4e36df4697",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        228.0,
+        277
+      ],
+      [
+        193.0,
+        277
+      ],
+      [
+        159.5,
+        277
+      ],
+      [
+        126.0,
+        277
+      ],
+      [
+        222.0,
+        259
+      ],
+      [
+        190.5,
+        257
+      ],
+      [
+        156.0,
+        259
+      ],
+      [
+        121.5,
+        259
+      ],
+      [
+        221.5,
+        242
+      ],
+      [
+        190.0,
+        242
+      ],
+      [
+        156.5,
+        242
+      ],
+      [
+        125.0,
+        242
+      ],
+      [
+        225.0,
+        226
+      ],
+      [
+        194.0,
+        225
+      ],
+      [
+        161.5,
+        226
+      ],
+      [
+        132.0,
+        226
+      ]
+    ],
+    "bodyReferenceHeight": 200,
+    "registrationMethod": "COOL_BOOT_FOOT_ROOT"
+  },
+  "page": {
+    "id": "class_huyen_but_basic_attack_se",
+    "file": "sheets/class_huyen_but_basic_attack_se_v1_20261115i.png",
+    "source": "Candidates_20261115i/class_huyen_but_basic_attack_se_v1_20261115i.png",
+    "sha256": "14b7d04e329ca5cc964508e97f9daf58dd21c92eb1e9ac016dfe9e4e36df4697",
+    "imageSize": [
+      1328,
+      1184
+    ],
+    "directions": [
+      {
+        "direction": "SE",
+        "flip": false,
+        "referenceHeight": 200,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              332,
+              296
+            ],
+            "bounds": [
+              172,
+              77,
+              275,
+              277
+            ],
+            "pivot": [
+              228.0,
+              277
+            ]
+          },
+          {
+            "rect": [
+              332,
+              0,
+              332,
+              296
+            ],
+            "bounds": [
+              136,
+              77,
+              243,
+              277
+            ],
+            "pivot": [
+              193.0,
+              277
+            ]
+          },
+          {
+            "rect": [
+              664,
+              0,
+              332,
+              296
+            ],
+            "bounds": [
+              74,
+              77,
+              216,
+              277
+            ],
+            "pivot": [
+              159.5,
+              277
+            ]
+          },
+          {
+            "rect": [
+              996,
+              0,
+              332,
+              296
+            ],
+            "bounds": [
+              46,
+              77,
+              188,
+              277
+            ],
+            "pivot": [
+              126.0,
+              277
+            ]
+          },
+          {
+            "rect": [
+              0,
+              296,
+              332,
+              296
+            ],
+            "bounds": [
+              167,
+              58,
+              284,
+              259
+            ],
+            "pivot": [
+              222.0,
+              259
+            ]
+          },
+          {
+            "rect": [
+              332,
+              296,
+              332,
+              296
+            ],
+            "bounds": [
+              132,
+              58,
+              265,
+              259
+            ],
+            "pivot": [
+              190.5,
+              257
+            ]
+          },
+          {
+            "rect": [
+              664,
+              296,
+              332,
+              296
+            ],
+            "bounds": [
+              94,
+              58,
+              257,
+              259
+            ],
+            "pivot": [
+              156.0,
+              259
+            ]
+          },
+          {
+            "rect": [
+              996,
+              296,
+              332,
+              296
+            ],
+            "bounds": [
+              59,
+              60,
+              237,
+              259
+            ],
+            "pivot": [
+              121.5,
+              259
+            ]
+          },
+          {
+            "rect": [
+              0,
+              592,
+              332,
+              296
+            ],
+            "bounds": [
+              164,
+              41,
+              323,
+              242
+            ],
+            "pivot": [
+              221.5,
+              242
+            ]
+          },
+          {
+            "rect": [
+              332,
+              592,
+              332,
+              296
+            ],
+            "bounds": [
+              130,
+              41,
+              253,
+              242
+            ],
+            "pivot": [
+              190.0,
+              242
+            ]
+          },
+          {
+            "rect": [
+              664,
+              592,
+              332,
+              296
+            ],
+            "bounds": [
+              97,
+              41,
+              207,
+              242
+            ],
+            "pivot": [
+              156.5,
+              242
+            ]
+          },
+          {
+            "rect": [
+              996,
+              592,
+              332,
+              296
+            ],
+            "bounds": [
+              51,
+              41,
+              179,
+              242
+            ],
+            "pivot": [
+              125.0,
+              242
+            ]
+          },
+          {
+            "rect": [
+              0,
+              888,
+              332,
+              296
+            ],
+            "bounds": [
+              162,
+              25,
+              275,
+              226
+            ],
+            "pivot": [
+              225.0,
+              226
+            ]
+          },
+          {
+            "rect": [
+              332,
+              888,
+              332,
+              296
+            ],
+            "bounds": [
+              139,
+              25,
+              242,
+              226
+            ],
+            "pivot": [
+              194.0,
+              225
+            ]
+          },
+          {
+            "rect": [
+              664,
+              888,
+              332,
+              296
+            ],
+            "bounds": [
+              107,
+              25,
+              207,
+              226
+            ],
+            "pivot": [
+              161.5,
+              226
+            ]
+          },
+          {
+            "rect": [
+              996,
+              888,
+              332,
+              296
+            ],
+            "bounds": [
+              75,
+              26,
+              178,
+              226
+            ],
+            "pivot": [
+              132.0,
+              226
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 201.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ]
+  },
+  "headLandmarks": [
+    {
+      "span": 101,
+      "centerX": 222.5,
+      "top": 77,
+      "searchRect": [
+        172,
+        77,
+        275,
+        161
+      ]
+    },
+    {
+      "span": 100,
+      "centerX": 191.0,
+      "top": 77,
+      "searchRect": [
+        136,
+        77,
+        243,
+        161
+      ]
+    },
+    {
+      "span": 99,
+      "centerX": 157.5,
+      "top": 77,
+      "searchRect": [
+        74,
+        77,
+        216,
+        161
+      ]
+    },
+    {
+      "span": 98,
+      "centerX": 125.0,
+      "top": 77,
+      "searchRect": [
+        46,
+        77,
+        188,
+        161
+      ]
+    },
+    {
+      "span": 97,
+      "centerX": 224.5,
+      "top": 58,
+      "searchRect": [
+        167,
+        58,
+        284,
+        142
+      ]
+    },
+    {
+      "span": 99,
+      "centerX": 190.5,
+      "top": 58,
+      "searchRect": [
+        132,
+        58,
+        265,
+        142
+      ]
+    },
+    {
+      "span": 103,
+      "centerX": 155.5,
+      "top": 58,
+      "searchRect": [
+        94,
+        58,
+        257,
+        142
+      ]
+    },
+    {
+      "span": 116,
+      "centerX": 117.0,
+      "top": 60,
+      "searchRect": [
+        59,
+        60,
+        237,
+        144
+      ]
+    },
+    {
+      "span": 111,
+      "centerX": 219.5,
+      "top": 41,
+      "searchRect": [
+        164,
+        41,
+        323,
+        125
+      ]
+    },
+    {
+      "span": 111,
+      "centerX": 185.5,
+      "top": 41,
+      "searchRect": [
+        130,
+        41,
+        253,
+        125
+      ]
+    },
+    {
+      "span": 97,
+      "centerX": 158.5,
+      "top": 41,
+      "searchRect": [
+        97,
+        41,
+        207,
+        125
+      ]
+    },
+    {
+      "span": 98,
+      "centerX": 126.0,
+      "top": 41,
+      "searchRect": [
+        51,
+        41,
+        179,
+        125
+      ]
+    },
+    {
+      "span": 99,
+      "centerX": 223.5,
+      "top": 25,
+      "searchRect": [
+        162,
+        25,
+        275,
+        109
+      ]
+    },
+    {
+      "span": 101,
+      "centerX": 189.5,
+      "top": 25,
+      "searchRect": [
+        139,
+        25,
+        242,
+        109
+      ]
+    },
+    {
+      "span": 100,
+      "centerX": 157.0,
+      "top": 25,
+      "searchRect": [
+        107,
+        25,
+        207,
+        109
+      ]
+    },
+    {
+      "span": 99,
+      "centerX": 125.5,
+      "top": 26,
+      "searchRect": [
+        75,
+        26,
+        178,
+        110
+      ]
+    }
+  ],
+  "method": "COOL_BOOT_FOOT_ROOT",
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

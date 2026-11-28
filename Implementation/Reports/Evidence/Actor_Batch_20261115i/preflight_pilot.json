@@ -1,0 +1,412 @@
+{
+  "batch": "20261115i",
+  "selected": 20,
+  "expected": 25,
+  "pilot": true,
+  "geometryReady": 19,
+  "catalogueUnchanged": true,
+  "rasterModified": false,
+  "scope": "READ_ONLY_GEOMETRY_ALPHA_NOT_VISUAL_OR_NATIVE_ACCEPTANCE",
+  "entries": [
+    {
+      "id": "class_huyen_but_idle_n",
+      "source": "Candidates_20261115i/class_huyen_but_idle_n_v1_20261115i.png",
+      "sourceSha256": "6e05a88d8e01cec2b0281a04f12fc0d82f7597d706560ce3d5a50975afec28c3",
+      "imageSize": [
+        1199,
+        1312
+      ],
+      "alphaZeroPixels": 1140574,
+      "softAlphaPixels": 171978,
+      "solidAlphaPixels": 260536,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_idle_ne",
+      "source": "Candidates_20261115i/class_huyen_but_idle_ne_v1_20261115i.png",
+      "sourceSha256": "7183a81a9c9044dd092b0ae45fe85315065d3521b60ae572e9c5586208850a74",
+      "imageSize": [
+        1122,
+        1402
+      ],
+      "alphaZeroPixels": 1115393,
+      "softAlphaPixels": 87772,
+      "solidAlphaPixels": 369879,
+      "cornerAlpha": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_idle_e",
+      "source": "Candidates_20261115i/class_huyen_but_idle_e_v1_20261115i.png",
+      "sourceSha256": "a8c82f1595b47ff484c487494b1a0043c1394417e7971315c43b27a7a16465c0",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1248637,
+      "softAlphaPixels": 92632,
+      "solidAlphaPixels": 231198,
+      "cornerAlpha": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_idle_se",
+      "source": "Candidates_20261115i/class_huyen_but_idle_se_v1_20261115i.png",
+      "sourceSha256": "38af6b784835876086696ac6f2947e48c97696ae34c2ca8b45daa980642f96a0",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1188121,
+      "softAlphaPixels": 76783,
+      "solidAlphaPixels": 307563,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_idle_s",
+      "source": "Candidates_20261115i/class_huyen_but_idle_s_v1_20261115i.png",
+      "sourceSha256": "90d509d231981030365e968b43646f984910d3dd0193fb6d9c35863289ba124f",
+      "imageSize": [
+        1122,
+        1402
+      ],
+      "alphaZeroPixels": 1084148,
+      "softAlphaPixels": 148933,
+      "solidAlphaPixels": 339963,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_n",
+      "source": "Candidates_20261115i/class_huyen_but_walk_n_v1_20261115i.png",
+      "sourceSha256": "2b09833e3eb4195f62e7bf1400a7064e7433122fd2f966b64b632f62048b5f13",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1125242,
+      "softAlphaPixels": 153918,
+      "solidAlphaPixels": 293307,
+      "cornerAlpha": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": false,
+      "reason": "clipped/overlapping frame row2 col0"
+    },
+    {
+      "id": "class_huyen_but_walk_ne",
+      "source": "Candidates_20261115i/class_huyen_but_walk_ne_v1_20261115i.png",
+      "sourceSha256": "d7baf795865aa9201d33155dbd1a22f235c7bb35d9ff5d194aecc95d7bea522b",
+      "imageSize": [
+        1278,
+        1230
+      ],
+      "alphaZeroPixels": 1261560,
+      "softAlphaPixels": 69718,
+      "solidAlphaPixels": 240662,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_e",
+      "source": "Candidates_20261115i/class_huyen_but_walk_e_v1_20261115i.png",
+      "sourceSha256": "b2f07a904d19e85398fb5a5e2239ab8cb16d87d91e447339c2e410d44ff3ee7d",
+      "imageSize": [
+        1448,
+        1086
+      ],
+      "alphaZeroPixels": 1238600,
+      "softAlphaPixels": 69880,
+      "solidAlphaPixels": 264048,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_se",
+      "source": "Candidates_20261115i/class_huyen_but_walk_se_v1_20261115i.png",
+      "sourceSha256": "e6e2929a4d98d04434a7122fc0e60ab261266fef525882af2688ed4adce1ce64",
+      "imageSize": [
+        1265,
+        1244
+      ],
+      "alphaZeroPixels": 1148942,
+      "softAlphaPixels": 83538,
+      "solidAlphaPixels": 341180,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "source": "Candidates_20261115i/class_huyen_but_walk_s_v1_20261115i.png",
+      "sourceSha256": "34c521ef145efab128eacaec40803325692de30996ba2e2c1d1e957a280809eb",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1134636,
+      "softAlphaPixels": 92226,
+      "solidAlphaPixels": 345605,
+      "cornerAlpha": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_basic_attack_n",
+      "source": "Candidates_20261115i/class_huyen_but_basic_attack_n_v1_20261115i.png",
+      "sourceSha256": "df824ad3fe1fc8d28ecb241b2d64e124557f925c77c84d98b8cbccc4b1046156",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1239662,
+      "softAlphaPixels": 95980,
+      "solidAlphaPixels": 236825,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_basic_attack_ne",
+      "source": "Candidates_20261115i/class_huyen_but_basic_attack_ne_v1_20261115i.png",
+      "sourceSha256": "813d60f3c317cac178376d27132f8b5c452b43dedd8322029f43841e90689f45",
+      "imageSize": [
+        1312,
+        1199
+      ],
+      "alphaZeroPixels": 1220561,
+      "softAlphaPixels": 82046,
+      "solidAlphaPixels": 270481,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_basic_attack_e",
+      "source": "Candidates_20261115i/class_huyen_but_basic_attack_e_v1_20261115i.png",
+      "sourceSha256": "c08b399a5697a15cf5b4a2a027628bda93fb63ec96832467704781ab272ad4e2",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1055849,
+      "softAlphaPixels": 223511,
+      "solidAlphaPixels": 293107,
+      "cornerAlpha": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_basic_attack_se",
+      "source": "Candidates_20261115i/class_huyen_but_basic_attack_se_v1_20261115i.png",
+      "sourceSha256": "14b7d04e329ca5cc964508e97f9daf58dd21c92eb1e9ac016dfe9e4e36df4697",
+      "imageSize": [
+        1328,
+        1184
+      ],
+      "alphaZeroPixels": 1236254,
+      "softAlphaPixels": 82578,
+      "solidAlphaPixels": 253520,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_basic_attack_s",
+      "source": "Candidates_20261115i/class_huyen_but_basic_attack_s_v1_20261115i.png",
+      "sourceSha256": "1546ce6910c49e4a5400da517ee7adf1b631c72855d8271fe66237c3a1ff9113",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1163546,
+      "softAlphaPixels": 123325,
+      "solidAlphaPixels": 285596,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_hurt_n",
+      "source": "Candidates_20261115i/class_huyen_but_hurt_n_v1_20261115i.png",
+      "sourceSha256": "3fde32aa63d42db5d6a79dbb9af1239cfd151e31696f94d9c9e1a07b6620cc10",
+      "imageSize": [
+        1275,
+        1234
+      ],
+      "alphaZeroPixels": 1199978,
+      "softAlphaPixels": 87744,
+      "solidAlphaPixels": 285628,
+      "cornerAlpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_hurt_ne",
+      "source": "Candidates_20261115i/class_huyen_but_hurt_ne_v1_20261115i.png",
+      "sourceSha256": "28e59233cb331801b34eec19f24cb8e75b435a7c82c66be084b7f881a9dfa221",
+      "imageSize": [
+        1122,
+        1402
+      ],
+      "alphaZeroPixels": 1146371,
+      "softAlphaPixels": 83556,
+      "solidAlphaPixels": 343117,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_hurt_e",
+      "source": "Candidates_20261115i/class_huyen_but_hurt_e_v1_20261115i.png",
+      "sourceSha256": "7ad10559d985b0d294ac6e476868ec30f848d15f4a0f3e4a3b60941a51efe7ae",
+      "imageSize": [
+        1262,
+        1246
+      ],
+      "alphaZeroPixels": 1139333,
+      "softAlphaPixels": 155221,
+      "solidAlphaPixels": 277898,
+      "cornerAlpha": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_hurt_se",
+      "source": "Candidates_20261115i/class_huyen_but_hurt_se_v1_20261115i.png",
+      "sourceSha256": "0a8e97737d4d4993ec1d777bd7ea951de7f87191999b2e69ed3345a4eb18fcdd",
+      "imageSize": [
+        1261,
+        1247
+      ],
+      "alphaZeroPixels": 1215432,
+      "softAlphaPixels": 77897,
+      "solidAlphaPixels": 279138,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    },
+    {
+      "id": "class_huyen_but_hurt_s",
+      "source": "Candidates_20261115i/class_huyen_but_hurt_s_v1_20261115i.png",
+      "sourceSha256": "e8f458da5bd8181e288dbdf11df2e293a03a6ce8071b172466aa5c21424ae341",
+      "imageSize": [
+        1122,
+        1402
+      ],
+      "alphaZeroPixels": 1013198,
+      "softAlphaPixels": 231490,
+      "solidAlphaPixels": 328356,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "geometryReady": true,
+      "sourceFrames": 16
+    }
+  ]
+}

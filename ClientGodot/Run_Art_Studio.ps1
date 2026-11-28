@@ -1,0 +1,27 @@
+param(
+    [switch]$SkipBuild,
+    [switch]$SelfTest,
+    [string]$Project,
+    [string]$Entry,
+    [string]$Component,
+    [ValidateRange(0,119)][int]$Frame=0,
+    [string]$Direction,
+    [switch]$Play,
+    [switch]$Loop,
+    [string]$Capture,
+    [string]$GodotPath,
+    [string]$DotnetPath
+)
+$ErrorActionPreference='Stop'
+$options=@{SkipBuild=$SkipBuild;StudioSelfTest=$SelfTest}
+if($Project){$options.StudioProject=$Project}
+if($Entry){$options.StudioEntry=$Entry}
+if($Component){$options.StudioComponent=$Component}
+$options.StudioFrame=$Frame
+if($Direction){$options.StudioDirection=$Direction}
+if($Play){$options.StudioPlay=$true}
+if($Loop){$options.StudioLoop=$true}
+if($Capture){$options.Capture=$Capture}
+if($GodotPath){$options.GodotPath=$GodotPath}
+if($DotnetPath){$options.DotnetPath=$DotnetPath}
+& (Join-Path $PSScriptRoot 'Run_PaperDoll_Lab.ps1') @options

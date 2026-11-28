@@ -1,0 +1,16 @@
+{
+  "scene": "PaperDollLab",
+  "scope": "TWO_PREVIEW_ACTORS_ONLY_NOT_WORLD_CROWD_OR_COMBAT",
+  "targetFps": 60,
+  "sourceCells": 16,
+  "staticWearableImages": 16,
+  "display": "Windows",
+  "gpu": "GeForce 820M",
+  "warmupSeconds": 2,
+  "measurementSeconds": 12.002834,
+  "samples": 721,
+  "medianMs": 16.651,
+  "p95Ms": 16.748,
+  "meanFps": 60.058489138326436,
+  "productionApproved": false
+}

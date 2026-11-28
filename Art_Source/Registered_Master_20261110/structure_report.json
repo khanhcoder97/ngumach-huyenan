@@ -1,0 +1,29 @@
+{
+  "kind": "REGISTERED_LAYER_SOURCE_STRUCTURE_NOT_ART_ACCEPTANCE",
+  "files": [
+    {
+      "file": "minh_kiem_m_registered_master.aseprite",
+      "frames": 16,
+      "layers": 20,
+      "celCount": 320,
+      "uniqueBodyPoses": 16,
+      "uniqueIvoryOutfitPoses": 16,
+      "uniqueIndigoOutfitPoses": 16,
+      "sourceFlattenMatches": true,
+      "productionApproved": false
+    },
+    {
+      "file": "minh_kiem_f_registered_master.aseprite",
+      "frames": 16,
+      "layers": 20,
+      "celCount": 320,
+      "uniqueBodyPoses": 16,
+      "uniqueIvoryOutfitPoses": 16,
+      "uniqueIndigoOutfitPoses": 16,
+      "sourceFlattenMatches": true,
+      "productionApproved": false
+    }
+  ],
+  "approvedNativeGameplayClips": 0,
+  "note": "Checks native layer/frame source and lossless reference reconstruction; not aesthetic approval, eight-direction completeness or gameplay."
+}

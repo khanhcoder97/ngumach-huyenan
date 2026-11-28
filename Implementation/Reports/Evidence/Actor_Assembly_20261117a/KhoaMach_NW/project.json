@@ -1,0 +1,5269 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "ProductionApproved": false,
+  "Name": "Khóa Mạch · hướng Tây Bắc · ghép thử",
+  "Layers": [
+    {
+      "Id": "class_linh_cung_skill_01_nw",
+      "Name": "class_linh_cung_skill_01_nw",
+      "Kind": "sprite",
+      "Z": 0,
+      "Visible": true,
+      "Texture": "textures/f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06.png",
+      "Regions": [
+        [
+          0,
+          0,
+          315,
+          312
+        ],
+        [
+          315,
+          0,
+          315,
+          312
+        ],
+        [
+          630,
+          0,
+          316,
+          312
+        ],
+        [
+          946,
+          0,
+          315,
+          312
+        ],
+        [
+          0,
+          312,
+          315,
+          312
+        ],
+        [
+          315,
+          312,
+          315,
+          312
+        ],
+        [
+          630,
+          312,
+          316,
+          312
+        ],
+        [
+          946,
+          312,
+          315,
+          312
+        ],
+        [
+          0,
+          624,
+          315,
+          311
+        ],
+        [
+          315,
+          624,
+          315,
+          311
+        ],
+        [
+          630,
+          624,
+          316,
+          311
+        ],
+        [
+          946,
+          624,
+          315,
+          311
+        ],
+        [
+          0,
+          935,
+          315,
+          312
+        ],
+        [
+          315,
+          935,
+          315,
+          312
+        ],
+        [
+          630,
+          935,
+          316,
+          312
+        ],
+        [
+          946,
+          935,
+          315,
+          312
+        ]
+      ],
+      "Rest": {
+        "X": 105,
+        "Y": 88,
+        "PivotX": 170.5,
+        "PivotY": 293,
+        "ScaleX": 0.5384615384615384,
+        "ScaleY": 0.5384615384615384,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    },
+    {
+      "Id": "mob_waterroot_idle_s",
+      "Name": "mob_waterroot_idle_s",
+      "Kind": "sprite",
+      "Z": 0,
+      "Visible": true,
+      "Texture": "textures/9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75.png",
+      "Regions": [
+        [
+          0,
+          0,
+          348,
+          344
+        ],
+        [
+          348,
+          0,
+          282,
+          344
+        ],
+        [
+          630,
+          0,
+          278,
+          344
+        ],
+        [
+          908,
+          0,
+          353,
+          344
+        ],
+        [
+          0,
+          344,
+          348,
+          283
+        ],
+        [
+          348,
+          344,
+          282,
+          283
+        ],
+        [
+          630,
+          344,
+          278,
+          283
+        ],
+        [
+          908,
+          344,
+          353,
+          283
+        ],
+        [
+          0,
+          627,
+          348,
+          285
+        ],
+        [
+          348,
+          627,
+          282,
+          285
+        ],
+        [
+          630,
+          627,
+          278,
+          285
+        ],
+        [
+          908,
+          627,
+          353,
+          285
+        ],
+        [
+          0,
+          912,
+          348,
+          335
+        ],
+        [
+          348,
+          912,
+          282,
+          335
+        ],
+        [
+          630,
+          912,
+          278,
+          335
+        ],
+        [
+          908,
+          912,
+          353,
+          335
+        ]
+      ],
+      "Rest": {
+        "X": -86.90744138157035,
+        "Y": -67.67114526604013,
+        "PivotX": 208.34572190194245,
+        "PivotY": 287.35426849804725,
+        "ScaleX": 0.5789473684210527,
+        "ScaleY": 0.5789473684210527,
+        "Alpha": 1,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    },
+    {
+      "Id": "sk_lc_01_projectile_component",
+      "Name": "sk_lc_01_projectile_component",
+      "Kind": "sprite",
+      "Z": 4,
+      "Visible": true,
+      "Texture": "textures/d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852.png",
+      "Regions": [
+        [
+          0,
+          0,
+          314,
+          314
+        ],
+        [
+          314,
+          0,
+          313,
+          314
+        ],
+        [
+          627,
+          0,
+          313,
+          314
+        ],
+        [
+          940,
+          0,
+          314,
+          314
+        ],
+        [
+          0,
+          314,
+          314,
+          313
+        ],
+        [
+          314,
+          314,
+          313,
+          313
+        ],
+        [
+          627,
+          314,
+          313,
+          313
+        ],
+        [
+          940,
+          314,
+          314,
+          313
+        ],
+        [
+          0,
+          627,
+          314,
+          313
+        ],
+        [
+          314,
+          627,
+          313,
+          313
+        ],
+        [
+          627,
+          627,
+          313,
+          313
+        ],
+        [
+          940,
+          627,
+          314,
+          313
+        ],
+        [
+          0,
+          940,
+          314,
+          314
+        ],
+        [
+          314,
+          940,
+          313,
+          314
+        ],
+        [
+          627,
+          940,
+          313,
+          314
+        ],
+        [
+          940,
+          940,
+          314,
+          314
+        ]
+      ],
+      "Rest": {
+        "X": 35.53846153846155,
+        "Y": -26.153846153846146,
+        "PivotX": 252,
+        "PivotY": 159.0,
+        "ScaleX": 0.2564102564102564,
+        "ScaleY": 0.2564102564102564,
+        "Alpha": 0,
+        "Angle": -147,
+        "SourceFrame": 0
+      }
+    },
+    {
+      "Id": "sk_lc_01_leaf_dissipate_component",
+      "Name": "sk_lc_01_leaf_dissipate_component",
+      "Kind": "sprite",
+      "Z": 5,
+      "Visible": true,
+      "Texture": "textures/ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b.png",
+      "Regions": [
+        [
+          0,
+          0,
+          314,
+          314
+        ],
+        [
+          314,
+          0,
+          313,
+          314
+        ],
+        [
+          627,
+          0,
+          313,
+          314
+        ],
+        [
+          940,
+          0,
+          314,
+          314
+        ],
+        [
+          0,
+          314,
+          314,
+          313
+        ],
+        [
+          314,
+          314,
+          313,
+          313
+        ],
+        [
+          627,
+          314,
+          313,
+          313
+        ],
+        [
+          940,
+          314,
+          314,
+          313
+        ],
+        [
+          0,
+          627,
+          314,
+          313
+        ],
+        [
+          314,
+          627,
+          313,
+          313
+        ],
+        [
+          627,
+          627,
+          313,
+          313
+        ],
+        [
+          940,
+          627,
+          314,
+          313
+        ],
+        [
+          0,
+          940,
+          314,
+          314
+        ],
+        [
+          314,
+          940,
+          313,
+          314
+        ],
+        [
+          627,
+          940,
+          313,
+          314
+        ],
+        [
+          940,
+          940,
+          314,
+          314
+        ]
+      ],
+      "Rest": {
+        "X": -86.90744138157035,
+        "Y": -105.67114526604013,
+        "PivotX": 226,
+        "PivotY": 160,
+        "ScaleX": 0.41025641025641024,
+        "ScaleY": 0.41025641025641024,
+        "Alpha": 0,
+        "Angle": -147,
+        "SourceFrame": 0
+      }
+    },
+    {
+      "Id": "sk_lc_01_mark_component",
+      "Name": "sk_lc_01_mark_component",
+      "Kind": "sprite",
+      "Z": 2,
+      "Visible": true,
+      "Texture": "textures/7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05.png",
+      "Regions": [
+        [
+          0,
+          0,
+          316,
+          312
+        ],
+        [
+          316,
+          0,
+          316,
+          312
+        ],
+        [
+          632,
+          0,
+          315,
+          312
+        ],
+        [
+          947,
+          0,
+          316,
+          312
+        ],
+        [
+          0,
+          312,
+          316,
+          311
+        ],
+        [
+          316,
+          312,
+          316,
+          311
+        ],
+        [
+          632,
+          312,
+          315,
+          311
+        ],
+        [
+          947,
+          312,
+          316,
+          311
+        ],
+        [
+          0,
+          623,
+          316,
+          311
+        ],
+        [
+          316,
+          623,
+          316,
+          311
+        ],
+        [
+          632,
+          623,
+          315,
+          311
+        ],
+        [
+          947,
+          623,
+          316,
+          311
+        ],
+        [
+          0,
+          934,
+          316,
+          312
+        ],
+        [
+          316,
+          934,
+          316,
+          312
+        ],
+        [
+          632,
+          934,
+          315,
+          312
+        ],
+        [
+          947,
+          934,
+          316,
+          312
+        ]
+      ],
+      "Rest": {
+        "X": -86.90744138157035,
+        "Y": -102.67114526604013,
+        "PivotX": 162.5,
+        "PivotY": 175.5,
+        "ScaleX": 0.625,
+        "ScaleY": 0.625,
+        "Alpha": 0,
+        "Angle": 0,
+        "SourceFrame": 0
+      }
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "khoa_mach_contact",
+      "Direction": "NW",
+      "Loop": false,
+      "Tracks": [
+        {
+          "LayerId": "class_linh_cung_skill_01_nw",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 170.5,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 162.5,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 162.5,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.0,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 144.0,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 144.0,
+                "PivotY": 293,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 173.5,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 166.0,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 164.5,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 164.5,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 149.0,
+                "PivotY": 285,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 180.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 180.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 180.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 16,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 17,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 158.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 18,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 158.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 19,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 158.0,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 20,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 141.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 21,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 141.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 22,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 141.5,
+                "PivotY": 282,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 23,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 178.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 24,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 178.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 25,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 178.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 26,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 169.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 27,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 169.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 28,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 169.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 29,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 30,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 31,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 32,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 165.0,
+                "PivotY": 279,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 33,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 34,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 35,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 36,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 37,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 38,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 39,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 40,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 41,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 42,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 43,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 44,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 45,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 46,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 47,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 48,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 49,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 50,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 51,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 52,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 53,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 54,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 55,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 56,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 57,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 58,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 59,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 60,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 61,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 62,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 63,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 64,
+              "Pose": {
+                "X": 105,
+                "Y": 88,
+                "PivotX": 151.0,
+                "PivotY": 280,
+                "ScaleX": 0.5384615384615384,
+                "ScaleY": 0.5384615384615384,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        },
+        {
+          "LayerId": "mob_waterroot_idle_s",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 208.34572190194245,
+                "PivotY": 287.35426849804725,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 208.34572190194245,
+                "PivotY": 287.35426849804725,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 136.20145307256627,
+                "PivotY": 286.0,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 136.20145307256627,
+                "PivotY": 286.0,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 136.20145307256627,
+                "PivotY": 286.0,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.5,
+                "PivotY": 284.7283808509614,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.5,
+                "PivotY": 284.7283808509614,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 143.42148270104173,
+                "PivotY": 280.67057435216395,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 143.42148270104173,
+                "PivotY": 280.67057435216395,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 215.40894771394295,
+                "PivotY": 213.34413366536543,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 215.40894771394295,
+                "PivotY": 213.34413366536543,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 215.40894771394295,
+                "PivotY": 213.34413366536543,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 148.55725519762285,
+                "PivotY": 210.69330334469998,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 148.55725519762285,
+                "PivotY": 210.69330334469998,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 148.55725519762285,
+                "PivotY": 210.69330334469998,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 148.55725519762285,
+                "PivotY": 210.69330334469998,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 16,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 148.55725519762285,
+                "PivotY": 210.69330334469998,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 17,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.0372006176754,
+                "PivotY": 206.49930510992505,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 18,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.0372006176754,
+                "PivotY": 206.49930510992505,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 19,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.0372006176754,
+                "PivotY": 206.49930510992505,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 20,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.0372006176754,
+                "PivotY": 206.49930510992505,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 21,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.0372006176754,
+                "PivotY": 206.49930510992505,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 22,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.02428585422535,
+                "PivotY": 200.7469699198167,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 23,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.02428585422535,
+                "PivotY": 200.7469699198167,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 24,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.02428585422535,
+                "PivotY": 200.7469699198167,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 25,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.02428585422535,
+                "PivotY": 200.7469699198167,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 26,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.02428585422535,
+                "PivotY": 200.7469699198167,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 27,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 28,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 29,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 30,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 31,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 32,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 218.47673679693798,
+                "PivotY": 202.7333614713471,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 33,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 34,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 35,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 36,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 37,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 38,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 39,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 146.34060211047,
+                "PivotY": 209.5786057075354,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 40,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.6785589182795,
+                "PivotY": 213.55123744145158,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 41,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.6785589182795,
+                "PivotY": 213.55123744145158,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 42,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.6785589182795,
+                "PivotY": 213.55123744145158,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 43,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.6785589182795,
+                "PivotY": 213.55123744145158,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 44,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.6785589182795,
+                "PivotY": 213.55123744145158,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 45,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.13587251454223,
+                "PivotY": 216.63356595607536,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 46,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.13587251454223,
+                "PivotY": 216.63356595607536,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 47,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.13587251454223,
+                "PivotY": 216.63356595607536,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 48,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.13587251454223,
+                "PivotY": 216.63356595607536,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 49,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.13587251454223,
+                "PivotY": 216.63356595607536,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 50,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 212.49821155926887,
+                "PivotY": 217.42735817875482,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 51,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 212.49821155926887,
+                "PivotY": 217.42735817875482,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 52,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 212.49821155926887,
+                "PivotY": 217.42735817875482,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 53,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.0467435375914,
+                "PivotY": 216.59665336938437,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 54,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 142.0467435375914,
+                "PivotY": 216.59665336938437,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 55,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.25972133902684,
+                "PivotY": 218.19825800074955,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 56,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 141.25972133902684,
+                "PivotY": 218.19825800074955,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 57,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 143.2222601833175,
+                "PivotY": 217.64813229952895,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 58,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 143.2222601833175,
+                "PivotY": 217.64813229952895,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 59,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 143.2222601833175,
+                "PivotY": 217.64813229952895,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 60,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 208.34572190194245,
+                "PivotY": 287.35426849804725,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 61,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 208.34572190194245,
+                "PivotY": 287.35426849804725,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 62,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 136.20145307256627,
+                "PivotY": 286.0,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 63,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 136.20145307256627,
+                "PivotY": 286.0,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 64,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -67.67114526604013,
+                "PivotX": 138.5,
+                "PivotY": 284.7283808509614,
+                "ScaleX": 0.5789473684210527,
+                "ScaleY": 0.5789473684210527,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            }
+          ]
+        },
+        {
+          "LayerId": "sk_lc_01_projectile_component",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 31.71202707221055,
+                "Y": -28.63876175110221,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 24.059158139708558,
+                "Y": -33.60859294561433,
+                "PivotX": 250,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 16.406289207206562,
+                "Y": -38.57842414012646,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 8.75342027470457,
+                "Y": -43.54825533463858,
+                "PivotX": 251,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 1.1005513422025786,
+                "Y": -48.51808652915071,
+                "PivotX": 252,
+                "PivotY": 158.5,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 16,
+              "Pose": {
+                "X": -6.552317590299417,
+                "Y": -53.48791772366283,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 17,
+              "Pose": {
+                "X": -14.205186522801412,
+                "Y": -58.45774891817495,
+                "PivotX": 252,
+                "PivotY": 159,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 18,
+              "Pose": {
+                "X": -21.858055455303408,
+                "Y": -63.427580112687075,
+                "PivotX": 253,
+                "PivotY": 159,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 19,
+              "Pose": {
+                "X": -29.510924387805403,
+                "Y": -68.3974113071992,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 20,
+              "Pose": {
+                "X": -37.16379332030739,
+                "Y": -73.36724250171133,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 21,
+              "Pose": {
+                "X": -44.81666225280938,
+                "Y": -78.33707369622346,
+                "PivotX": 253,
+                "PivotY": 159,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 22,
+              "Pose": {
+                "X": -52.46953118531138,
+                "Y": -83.30690489073558,
+                "PivotX": 252,
+                "PivotY": 159,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 23,
+              "Pose": {
+                "X": -60.12240011781337,
+                "Y": -88.27673608524769,
+                "PivotX": 252,
+                "PivotY": 160.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 24,
+              "Pose": {
+                "X": -67.77526905031537,
+                "Y": -93.24656727975982,
+                "PivotX": 252,
+                "PivotY": 159,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 25,
+              "Pose": {
+                "X": -75.42813798281736,
+                "Y": -98.21639847427194,
+                "PivotX": 252,
+                "PivotY": 160.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 26,
+              "Pose": {
+                "X": -83.08100691531935,
+                "Y": -103.18622966878407,
+                "PivotX": 253,
+                "PivotY": 160.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 27,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 28,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 29,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 30,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 31,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 32,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 33,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 34,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 35,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 36,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 37,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 38,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 39,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 40,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 41,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 42,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 43,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 44,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 45,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 46,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 47,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 48,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 49,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 50,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 51,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 52,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 53,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 54,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 55,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 56,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 57,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 58,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 59,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 60,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 61,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 62,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 63,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 64,
+              "Pose": {
+                "X": 35.53846153846155,
+                "Y": -26.153846153846146,
+                "PivotX": 252,
+                "PivotY": 159.0,
+                "ScaleX": 0.2564102564102564,
+                "ScaleY": 0.2564102564102564,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            }
+          ]
+        },
+        {
+          "LayerId": "sk_lc_01_leaf_dissipate_component",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 16,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 17,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 18,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 19,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 20,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 21,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 22,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 23,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 24,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 25,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 26,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 27,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 28,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 29,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 30,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 159,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 31,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 159,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 32,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 228,
+                "PivotY": 159,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 33,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 34,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 35,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 36,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 37,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 38,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 39,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 227,
+                "PivotY": 158,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 40,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 41,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 42,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 43,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 44,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 225,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 45,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 223,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 46,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 222,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 47,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 222,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 48,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 222,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 49,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 222,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 1,
+                "Angle": -147,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 50,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 51,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 52,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 53,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 54,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 55,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 56,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 57,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 58,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 59,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 60,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 61,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 62,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 63,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 64,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -105.67114526604013,
+                "PivotX": 226,
+                "PivotY": 160,
+                "ScaleX": 0.41025641025641024,
+                "ScaleY": 0.41025641025641024,
+                "Alpha": 0,
+                "Angle": -147,
+                "SourceFrame": 0
+              }
+            }
+          ]
+        },
+        {
+          "LayerId": "sk_lc_01_mark_component",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 16,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 17,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 18,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 19,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 20,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 21,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 22,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 23,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 24,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 25,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 26,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 27,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 28,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 29,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 30,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 31,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 172.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 32,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 172.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 33,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 172.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 34,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 171.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 35,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 171.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 36,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 171.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 37,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 171.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 38,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 171.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 39,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.0,
+                "PivotY": 167.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 40,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.0,
+                "PivotY": 167.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 41,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.0,
+                "PivotY": 167.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 42,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 161.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 43,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 161.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 44,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 161.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 45,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 157.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 46,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 157.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 47,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 157.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 48,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 153.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 49,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 153.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 50,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 153.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 51,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 155.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 52,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 159.0,
+                "PivotY": 155.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 53,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 159.0,
+                "PivotY": 155.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 54,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 159.5,
+                "PivotY": 157.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 55,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.0,
+                "PivotY": 160.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 56,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 162.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 57,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 158.5,
+                "PivotY": 162.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 58,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 163.0,
+                "PivotY": 164.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 59,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 159.0,
+                "PivotY": 162.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 60,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 159.0,
+                "PivotY": 162.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 61,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.0,
+                "PivotY": 161.0,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 62,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 157.5,
+                "PivotY": 159.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 1,
+                "Angle": 0,
+                "SourceFrame": 15
+              }
+            },
+            {
+              "Frame": 63,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 64,
+              "Pose": {
+                "X": -86.90744138157035,
+                "Y": -102.67114526604013,
+                "PivotX": 162.5,
+                "PivotY": 175.5,
+                "ScaleX": 0.625,
+                "ScaleY": 0.625,
+                "Alpha": 0,
+                "Angle": 0,
+                "SourceFrame": 0
+              }
+            }
+          ]
+        }
+      ],
+      "DurationsMs": [
+        60,
+        40,
+        20,
+        60,
+        20,
+        40,
+        60,
+        60,
+        40,
+        20,
+        60,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        20,
+        25,
+        15,
+        10,
+        10,
+        15,
+        25,
+        20,
+        5,
+        25,
+        10,
+        15,
+        5,
+        20,
+        25,
+        15,
+        10,
+        25,
+        25,
+        25,
+        25,
+        10,
+        15,
+        25,
+        20,
+        60,
+        20,
+        40,
+        60,
+        60,
+        40,
+        20,
+        60,
+        20,
+        40,
+        60,
+        60,
+        40,
+        40
+      ],
+      "Markers": [
+        {
+          "Name": "bow_release",
+          "Kind": "vfx",
+          "Frame": 11,
+          "X": 35.53846153846155,
+          "Y": -26.153846153846146,
+          "Radius": 0
+        },
+        {
+          "Name": "confirmed_contact_preview",
+          "Kind": "vfx",
+          "Frame": 27,
+          "X": -86.90744138157035,
+          "Y": -105.67114526604013,
+          "Radius": 0
+        }
+      ],
+      "SourceNote": "One bow release, one projectile and one target mark. The contact and timing are authored for Studio inspection."
+    }
+  ]
+}

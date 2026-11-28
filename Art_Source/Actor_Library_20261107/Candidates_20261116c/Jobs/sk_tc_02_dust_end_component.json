@@ -1,0 +1,35 @@
+{
+  "batch": "20261116c",
+  "id": "sk_tc_02_dust_end_component",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "seconds": 0.4,
+  "timing": [
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25,
+    25
+  ],
+  "loop": false,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png"
+  ],
+  "prompt": "Use case: stylized-concept. Production standalone PIXEL-ART VFX COMPONENT for Thach Chuy earth/stone skills in Ngu Mach Huyen An. Input owner character is PALETTE/STYLE guidance only; draw NOcharacter,body,hand,weapon or UI frame. Refined crisp coherent pixel clusters,earth ochre/bronze,slate-grey/tan,pale cream readable cores,dark clean edges. No neon fire,lava,water,lightning,photorealism,painted fog or bloom blur.\nExact4columns4rows=16genuinely authored chronological animation drawings of ONE component. Fixed elevated top-down orthographic camera,ground circles are low projected ellipses,not isometric platforms. Complete effect inside central65%of each cell with broad fully transparent alpha0gutters and outerpadding. Actual RGBA alpha0background/corners: no floor,shadow,grey/white matte,checkerboard,grid,text,labels or contact shadows. Everyphase has a visible solid clean core;lastframe keeps a tiny readable cluster rather than empty frame. Do not duplicate8pose sequences or simply resize/translate one drawing. ONE activation/development/ending through16phases,not repeated pulses;preserve intentional changing shapes and coherent disappearance.\nCOMPONENT dust_end;ATTACH CASTER_FOOT. Small low radial dust fragments settle after a shockwave; preserve a clear center and little readable outer contour while particles fade. No second impact or tall rock. Final tiny visible cluster then renderer may hide.\nMechanic source: Skill_VFX_Cards_v1_vi.md SK-TC-02 and Combat_Skills_VFX_Animation_Spec_vi.md. Only presentation artwork: no gameplay damage,state,collision,lifetime or server timing is implemented by the sheet. No invented extras.\nREGISTRATION REQUIREMENT: All sixteen cells have exactly equal size. Preserve one fixed cell-relative ground origin,centered at cell center,not a different baseline or cell placement per row. Effects may expand/fragment around it,never drift or travel. Only one activation,not a repeated ring cycle.\nPOWDER SHAPE: mostly thin tan dust curls and sparse tiny sand/stone grains settling OUTWARD once after the shockwave; no chunky rock heap,solid boulder ring,opaque smoke column or second impact flash. Keep the ground/center fully transparent. The final source cell has a few small visible settling grains.",
+  "layoutVerified": true,
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_02_dust_end_component_v1_20261116c.png",
+  "sourceSha256": "b823e3bdc96a95e99908edbd575cc555ed9613d173779e0ee0841cd20b673c80",
+  "state": "GENERATED_PENDING_REVIEW"
+}

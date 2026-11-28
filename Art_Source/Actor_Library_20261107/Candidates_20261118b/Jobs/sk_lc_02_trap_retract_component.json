@@ -1,0 +1,34 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_02_trap_retract_component",
+  "seconds": 0.64,
+  "timing": [
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118b/sk_lc_02_trap_armed_component_v1_20261118b.png"
+  ],
+  "authoringUse": {
+    "role": "RETRACT",
+    "attach": "GROUND"
+  },
+  "prompt": "Use case: original 16-frame game VFX of the Dây Gai trap folding shut. Image 1 is the exact armed trap reference. Four columns by four rows, RGBA transparent, one clear distinct full effect per cell, row-major chronology. Fixed oblique overhead camera, same ground center in every frame, no frame padding changes. Frame 1 begins with the same low oval ring and exactly three woody squat thorn spears as image 1: rear left, rear right, front center. Frames 2–5 the spears turn inward and shorten, ring stays flat and begins to loosen. Frames 6–10 the vines recoil along the ground toward their shared center, curving in shorter curls, tips become small and fold into the shrinking footprint. Frames 11–14 collapse to one jade seed and two tiny leaves. Frames 15–16 keep shrinking to one small but still recognizable opaque jade seed fragment, rich warm outline. Fade-out after last frame will be done in the engine. Render precise moss and jade pixel clusters with restrained pale tips and thin dark bark outlines. Do not invent a new ring; preserve the anchored shape of the source frame. No bright blast, dust, flash, debris cloud, tall spikes, soil, full background, character, title, label, borders, grid. Equal transparent gutters and consistently centered ground anchor."
+}

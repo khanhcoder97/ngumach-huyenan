@@ -1,0 +1,248 @@
+{
+  "batch": "20261114c",
+  "manualReviewComplete": true,
+  "reviewDate": "2026-11-14",
+  "reviewScale": "All8fulloriginals and8focusednative temporal mosaics;threeeightanglegridstillsand8.84s chain temporal/still. Source/nativeonly;notclass/gameplayacceptance.",
+  "entries": [
+    {
+      "id": "class_minh_kiem_run_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114c.png",
+      "sourceSha256": "7e271271cfd526637e4ae71cdd1bd74c97029dbc0dfdca06ea44bfc19af366de",
+      "bindingSha256": "bf19663dce14e3c82d0e9eb1d34fb3e596d3d2e7316d4451bb721063d294d47d",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: native sequence still does not clearly reverse anatomical lead-leg ownership between opposite contacts. Do not approve from sixteen unequal pixels/hashes. Next repair should use separately validated contact key-pose guides before regenerating another full cycle.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne.mp4": "e54de0c4f775b6a414936ef7145f537395634e51f7ddb5599da98474de8aafd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne.png": "ba3b5320fd35bd9b4f26787d1aa4b4bdcef400f4718ec35d51ceff5c26b4481a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne_actor_samples.png": "d3e92d9d6d131b1a22a8c19440ac357fd9ab36f355896bc5eff6dee31531eada",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_raw_ne_samples.png": "163c958d40c61a5dd13b5e9587954f07d401a3c1f5949e4406cfc0efbcc2b4bb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_eight_angles.mp4": "7d7439f03244a96325f5373e9aa3f9759ec65b23699c5259ad3bae8e3b3fe9c7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/run_eight_angles.png": "bff5a60348fc1c949f0307853f654dcc9287ce8a367df0a80f8186d954a8c5ac",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v1_20261114c.png",
+      "sourceSha256": "2486e8105531f8a98fc027e7b46758e88176a02e47ab8b5b331d4f7687f75c82",
+      "bindingSha256": "1c6b9760dbb4c675acdfa47b110a2f73ad1c647c3a9225c27f016826eb086fd3",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: native sequence still does not clearly reverse anatomical lead-leg ownership between opposite contacts. Do not approve from sixteen unequal pixels/hashes. Next repair should use separately validated contact key-pose guides before regenerating another full cycle.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne.mp4": "031475965c3511e095f6242fb889950779db496547139baec89951a243fd4b18",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne.png": "8540d902728337d0977b861161765789ea28e838556309451e55565edd23d003",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne_actor_samples.png": "5b2bfa46c81efee354eeb774dcb4b60b668f60b94fdec87fc1cff0e5ff51c836",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_ne_samples.png": "8ef23e4d092c82265ba7e4604c798a30010964058a61d0030ad964ddd0f44a5e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4": "49f43441fa12f4860c2055349042ca51c269d0c742806364cb3782bbba30cf19",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png": "8d0071772b4d7e1dda2efa78ef39661782de16cd8d8f380251961fb61d58780b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_e_v1_20261114c.png",
+      "sourceSha256": "2e531ec94f092c440a41901abf1732c25766219dd334af7818c8be61d9e3d33e",
+      "bindingSha256": "03211dac3f270b3f76964bc695466512eaa70b2f2d9cb0934cde114a13f42ce3",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native repair: contact halves show near right leg forward/low then trailing back/low while far left leg leads higher; hip-to-calf ownership and overlap now readable. Low right-hand jian, no missing/cropped boot.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e.mp4": "50f84e5a0978fa45201c9f468750a401b0851228ce2d466a7ec0f1db4e30de4f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e.png": "158746b1f6ba8f8edab2d95734af0d0ba30939d1091a8f22b3ba7dc4caff59aa",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e_actor_samples.png": "a14374681185cd6b8219895072fafdbd4d20e869540a64e64054e123cbff584c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_e_samples.png": "7d47982ee600b37cefb5f1b735891388054e30685da836fbebf3425fd74a3b82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4": "49f43441fa12f4860c2055349042ca51c269d0c742806364cb3782bbba30cf19",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png": "8d0071772b4d7e1dda2efa78ef39661782de16cd8d8f380251961fb61d58780b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_walk_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_se_v1_20261114c.png",
+      "sourceSha256": "a390f99f292772a7b80caf5c99cce90cf5a9143befba9f7af52149794ef5bd8d",
+      "bindingSha256": "ae64ac1f504f4269c800041ce857105f5f0763f5cd8d16aa7cf95c0469564223",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": false,
+      "visualNotes": "HOLD: native sequence still does not clearly reverse anatomical lead-leg ownership between opposite contacts. Do not approve from sixteen unequal pixels/hashes. Next repair should use separately validated contact key-pose guides before regenerating another full cycle.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se.mp4": "ae8aeb734d60eb15ccfccd0ea839550430f0399d34d9e498ba21bb4cb3ed4292",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se.png": "1f036fa1b5a4baefc80680d3ab60687f75670886b66d5d4bf648e03b1ba0fad9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se_actor_samples.png": "ec4d14b29f2c5fedfb61544e6f081b9967ff7e62e242617214d14fb8fc409ab1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_raw_se_samples.png": "26ed00dcd17e1e6884d01d590eccee61bb1517baf117d78ce37021d5adffc5af",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.mp4": "49f43441fa12f4860c2055349042ca51c269d0c742806364cb3782bbba30cf19",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/walk_eight_angles.png": "8d0071772b4d7e1dda2efa78ef39661782de16cd8d8f380251961fb61d58780b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v1_20261114c.png",
+      "sourceSha256": "0ef20f37733957614beb85b17d6ff4e8200ad427ee5b169bc832076ab0956fc1",
+      "bindingSha256": "fb5138d4b3139aafa422fb486b7ac77ff5ad6b08bedaa8c980b7229598ae5cb2",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native repair: RIGHT palm stays on anatomical right side; far-front sword occlusion preserves EMPTY LEFT palm through crossing poses. One low waist-level sweep and recovery; feet planted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n.mp4": "097b52f937d7f7ab028dea37d42a24f14e145b1769915b6c3dc20a05e7d55f67",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n.png": "c92a80e49f7b05d11281325d11f4a6588b750d2e8d2163fdd14cccf3940c8922",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n_actor_samples.png": "6b94377545420a02977761e815d43b39fe6f45a4e7159cec1e8f5c393445bc9f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_n_samples.png": "8103cb91e79ff3a62881b1bb00667ee637601913c80f8d9d075b754e6ceb5d93",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4": "e7b61ea1189591b3fe3171bb3aef80dec04842f00259235cbcd42545532cbcc3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png": "574abee098e58b4abee12032fcbea75e39131d0e0b2284bc8c164520e9dc060d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_ne_v1_20261114c.png",
+      "sourceSha256": "e23f2a767a16514ff9e977c7d9f1f188097b52ab089de3e5dbdbb5df18b4855b",
+      "bindingSha256": "052ab9c55def69552a00d9aaf7fc41a0ba369125b5114d228b635ad4506b28f7",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native repair: long blade now chambers backward, changes angle through the waist-level arc and follows through forward, distinct from a linear thrust. Right-hand grip connected, empty left hand, planted knees and low-armed recovery; Eexplicit crop regions retain full blade.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne.mp4": "dc18eee01b101dad1c4528b80e6f9bd6d57801765f901502aa7a56b7f5c9a382",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne.png": "d164d214c07f0c01156bcaab376b01e727f89d64cd2aa566637960c89e65b75f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne_actor_samples.png": "48a7ed5195297842f088f8175aaa2e1ced266ae7ef6c120a0fc198ccc5d73fad",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_ne_samples.png": "9c9e9454849c1b17b55d7eb38baa8ec2f94d51b7d156c3703dff67d8184f262f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4": "e7b61ea1189591b3fe3171bb3aef80dec04842f00259235cbcd42545532cbcc3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png": "574abee098e58b4abee12032fcbea75e39131d0e0b2284bc8c164520e9dc060d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114c.png",
+      "sourceSha256": "c6ca7226ae1074c492e0705749fe9e84c5edafebaea487529b79463e58d57420",
+      "bindingSha256": "1ed55499c25d7efa721172334e1d6c3ee811227bac14f28d34afc85beec96e2c",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native repair: long blade now chambers backward, changes angle through the waist-level arc and follows through forward, distinct from a linear thrust. Right-hand grip connected, empty left hand, planted knees and low-armed recovery; Eexplicit crop regions retain full blade.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e.mp4": "90de51c026271f458c7ea6137bd401ab46de196997f6806d2c62e6e95fcff1c8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e.png": "bdb2670bce06fa76059d39c6e3dca8765e92da262e35c8a97969298d210f4bf3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e_actor_samples.png": "8435a1ec21727749bede299295bb0d48b873cc9ee6ec0a0596152dc5f611f79d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_e_samples.png": "a786089377f9714bb06232cc46b49d6d3add063e646ce379ff9185402ca3dbc6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4": "e7b61ea1189591b3fe3171bb3aef80dec04842f00259235cbcd42545532cbcc3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png": "574abee098e58b4abee12032fcbea75e39131d0e0b2284bc8c164520e9dc060d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_se",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_se_v1_20261114c.png",
+      "sourceSha256": "996fe9f79204d7ec9ee26a5b9c1dd61340515791e9ef53afd2bc30f2d674991e",
+      "bindingSha256": "e753d5c6dfa700cfc5788a207421073961a01f731cb24835a85e55a67a8175a9",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Source/native repair: long blade now chambers backward, changes angle through the waist-level arc and follows through forward, distinct from a linear thrust. Right-hand grip connected, empty left hand, planted knees and low-armed recovery; Eexplicit crop regions retain full blade.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se.mp4": "b86b7dd74ca100678f0be549935a9a60375734e22c5dcfca21dade307739a4c5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se.png": "e6052f3fd389fb43a9d214d535e5ff6a597d8d9d45083207fd7f2f809c481637",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se_actor_samples.png": "3e66077d16c04f4946a0266c93b20f39125d9dd79c6be437d752acefb4eacf11",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_raw_se_samples.png": "893c35a2bf29ffda14ed0ed6745c20910b9ce1aa8d16417b46765f6b6371aee7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.mp4": "e7b61ea1189591b3fe3171bb3aef80dec04842f00259235cbcd42545532cbcc3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/basic_attack_eight_angles.png": "574abee098e58b4abee12032fcbea75e39131d0e0b2284bc8c164520e9dc060d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.mp4": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114c/mobility_chain.png": "a5fe41412c2327c59090aaa0ffad6241f63a7b7a8ef859309c0d6141d8b3ef24"
+      }
+    }
+  ]
+}

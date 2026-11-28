@@ -1,0 +1,33 @@
+{
+  "batch": "20261118b",
+  "expectedSourcePages": 12,
+  "scope": "LINH_CUNG_DAY_GAI_EIGHT_CAST_FACINGS_AND_FOUR_GROUND_EFFECTS",
+  "version": 2,
+  "id": "class_linh_cung_skill_02_ne",
+  "direction": "NE",
+  "seconds": 1.12,
+  "timing": [
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70,
+    70
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118b/class_linh_cung_skill_02_ne_v1_20261118b.png"
+  ],
+  "inputRole": "OWNER_IDLE_AND_NORTHEAST_MATTE_REPAIR_TARGET",
+  "prompt": "Edit solely the RGBA transparency of image 2, the second attachment. It is a 4×4 set of sixteen back-right facing crouch and seed-placement poses. Remove the complete visible gray black red mottled matte around the characters, between their hands and bow, and in every empty gutter. Exactly isolate the sixteen original sprites on alpha-zero transparent canvas, like the clean sprite reference image 1. Keep ALL pixels of their visible chibi silhouette, fine dark contours, skin, hair, coat, quiver, bow, hands and boots. Keep 16 poses, order, camera axis, placement, palette and equal cell dimensions. No stylistic redrawing or motion edits. Clean RGBA with actual transparency, alpha zero behind and between every sprite. No floor, white pixels, fog, checkerboard or tinted studio background. No text."
+}

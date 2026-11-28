@@ -1,0 +1,8282 @@
+{
+  "scope": "GEOMETRY_ONLY_NOT_VISUAL_APPROVAL",
+  "sourcePages": 21,
+  "entries": [
+    {
+      "id": "class_anh_dao_walk_e",
+      "source": "Sheets/class_anh_dao_walk_e_v1_20261113j.png",
+      "sourceSha256": "0b3f6659a4039d17092f46903843305a5963a674b93bf1f95404a638fc13c873",
+      "bodyReferenceHeight": 230.6048387096774,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 133,
+      "headSearchRect": [
+        120,
+        31,
+        253,
+        126
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_e",
+        "headSpan": 124,
+        "height": 215.0,
+        "horizontalOffset": -9.413151364764275,
+        "headHorizontalOffset": 0.5868486352357252,
+        "bootHorizontalOffset": 2.086848635235725,
+        "waist": {
+          "position": [
+            197.0,
+            195.0
+          ],
+          "searchRect": [
+            139,
+            147,
+            234,
+            215
+          ],
+          "goldPixels": 114
+        },
+        "head": {
+          "span": 124,
+          "centerX": 187.0,
+          "top": 36,
+          "searchRect": [
+            125,
+            36,
+            250,
+            126
+          ]
+        },
+        "boots": {
+          "centerX": 185.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1632
+          ]
+        },
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          187.12944248779317,
+          259.0
+        ],
+        [
+          178.12944248779317,
+          258.0
+        ],
+        [
+          180.12944248779317,
+          258.0
+        ],
+        [
+          180.62944248779317,
+          258.0
+        ],
+        [
+          186.62944248779317,
+          252.0
+        ],
+        [
+          179.62944248779317,
+          252.0
+        ],
+        [
+          181.12944248779317,
+          251.0
+        ],
+        [
+          180.62944248779317,
+          247.0
+        ],
+        [
+          186.62944248779317,
+          249.0
+        ],
+        [
+          180.62944248779317,
+          252.0
+        ],
+        [
+          181.62944248779317,
+          253.0
+        ],
+        [
+          182.62944248779317,
+          253.0
+        ],
+        [
+          188.12944248779317,
+          253.0
+        ],
+        [
+          181.62944248779317,
+          252.0
+        ],
+        [
+          182.12944248779317,
+          253.0
+        ],
+        [
+          182.12944248779317,
+          252.0
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 133,
+          "centerX": 186.5,
+          "top": 31,
+          "searchRect": [
+            120,
+            31,
+            253,
+            126
+          ]
+        },
+        {
+          "span": 135,
+          "centerX": 177.5,
+          "top": 30,
+          "searchRect": [
+            110,
+            30,
+            245,
+            124
+          ]
+        },
+        {
+          "span": 135,
+          "centerX": 179.5,
+          "top": 30,
+          "searchRect": [
+            112,
+            30,
+            247,
+            125
+          ]
+        },
+        {
+          "span": 132,
+          "centerX": 180.0,
+          "top": 30,
+          "searchRect": [
+            114,
+            30,
+            246,
+            124
+          ]
+        },
+        {
+          "span": 134,
+          "centerX": 186.0,
+          "top": 24,
+          "searchRect": [
+            119,
+            24,
+            253,
+            119
+          ]
+        },
+        {
+          "span": 134,
+          "centerX": 179.0,
+          "top": 24,
+          "searchRect": [
+            112,
+            24,
+            246,
+            119
+          ]
+        },
+        {
+          "span": 135,
+          "centerX": 180.5,
+          "top": 23,
+          "searchRect": [
+            113,
+            23,
+            248,
+            120
+          ]
+        },
+        {
+          "span": 134,
+          "centerX": 180.0,
+          "top": 19,
+          "searchRect": [
+            113,
+            19,
+            247,
+            117
+          ]
+        },
+        {
+          "span": 134,
+          "centerX": 186.0,
+          "top": 21,
+          "searchRect": [
+            119,
+            21,
+            255,
+            116
+          ]
+        },
+        {
+          "span": 132,
+          "centerX": 180.0,
+          "top": 24,
+          "searchRect": [
+            114,
+            24,
+            248,
+            118
+          ]
+        },
+        {
+          "span": 134,
+          "centerX": 181.0,
+          "top": 25,
+          "searchRect": [
+            114,
+            25,
+            250,
+            119
+          ]
+        },
+        {
+          "span": 132,
+          "centerX": 182.0,
+          "top": 25,
+          "searchRect": [
+            116,
+            25,
+            250,
+            119
+          ]
+        },
+        {
+          "span": 133,
+          "centerX": 187.5,
+          "top": 25,
+          "searchRect": [
+            121,
+            25,
+            260,
+            119
+          ]
+        },
+        {
+          "span": 132,
+          "centerX": 181.0,
+          "top": 24,
+          "searchRect": [
+            115,
+            24,
+            248,
+            119
+          ]
+        },
+        {
+          "span": 133,
+          "centerX": 181.5,
+          "top": 25,
+          "searchRect": [
+            115,
+            25,
+            251,
+            120
+          ]
+        },
+        {
+          "span": 131,
+          "centerX": 181.5,
+          "top": 24,
+          "searchRect": [
+            116,
+            24,
+            247,
+            118
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            198,
+            194
+          ],
+          "searchRect": [
+            135,
+            150,
+            237,
+            223
+          ],
+          "goldPixels": 133
+        },
+        {
+          "position": [
+            187.0,
+            194.0
+          ],
+          "searchRect": [
+            126,
+            151,
+            228,
+            225
+          ],
+          "goldPixels": 128
+        },
+        {
+          "position": [
+            189,
+            195
+          ],
+          "searchRect": [
+            128,
+            151,
+            230,
+            225
+          ],
+          "goldPixels": 131
+        },
+        {
+          "position": [
+            190.0,
+            193.0
+          ],
+          "searchRect": [
+            129,
+            148,
+            230,
+            221
+          ],
+          "goldPixels": 136
+        },
+        {
+          "position": [
+            194,
+            191
+          ],
+          "searchRect": [
+            135,
+            144,
+            236,
+            218
+          ],
+          "goldPixels": 123
+        },
+        {
+          "position": [
+            187,
+            190
+          ],
+          "searchRect": [
+            128,
+            144,
+            229,
+            218
+          ],
+          "goldPixels": 127
+        },
+        {
+          "position": [
+            191.5,
+            186.0
+          ],
+          "searchRect": [
+            129,
+            144,
+            231,
+            218
+          ],
+          "goldPixels": 128
+        },
+        {
+          "position": [
+            192,
+            185
+          ],
+          "searchRect": [
+            129,
+            139,
+            230,
+            213
+          ],
+          "goldPixels": 105
+        },
+        {
+          "position": [
+            198,
+            183
+          ],
+          "searchRect": [
+            135,
+            141,
+            236,
+            215
+          ],
+          "goldPixels": 109
+        },
+        {
+          "position": [
+            192,
+            185
+          ],
+          "searchRect": [
+            129,
+            142,
+            230,
+            215
+          ],
+          "goldPixels": 119
+        },
+        {
+          "position": [
+            194.0,
+            184.0
+          ],
+          "searchRect": [
+            130,
+            145,
+            231,
+            219
+          ],
+          "goldPixels": 122
+        },
+        {
+          "position": [
+            193,
+            187
+          ],
+          "searchRect": [
+            131,
+            143,
+            232,
+            216
+          ],
+          "goldPixels": 113
+        },
+        {
+          "position": [
+            195,
+            189
+          ],
+          "searchRect": [
+            136,
+            144,
+            238,
+            217
+          ],
+          "goldPixels": 135
+        },
+        {
+          "position": [
+            189,
+            188
+          ],
+          "searchRect": [
+            130,
+            142,
+            231,
+            215
+          ],
+          "goldPixels": 139
+        },
+        {
+          "position": [
+            193.0,
+            189.0
+          ],
+          "searchRect": [
+            130,
+            144,
+            232,
+            217
+          ],
+          "goldPixels": 132
+        },
+        {
+          "position": [
+            191.0,
+            189.0
+          ],
+          "searchRect": [
+            131,
+            141,
+            231,
+            213
+          ],
+          "goldPixels": 138
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          188.13519813519812,
+          259
+        ],
+        [
+          189.04719101123595,
+          256
+        ],
+        [
+          188.78529411764706,
+          258
+        ],
+        [
+          178.73385518591,
+          256
+        ],
+        [
+          186.64458804523426,
+          251
+        ],
+        [
+          193.2895086321381,
+          251
+        ],
+        [
+          209.16640253565768,
+          255
+        ],
+        [
+          198.52519083969466,
+          253
+        ],
+        [
+          212.34405144694534,
+          249
+        ],
+        [
+          188.86237188872622,
+          250
+        ],
+        [
+          184.08812949640287,
+          249
+        ],
+        [
+          184.08965517241379,
+          250
+        ],
+        [
+          190.87292817679557,
+          249
+        ],
+        [
+          145.96514745308312,
+          251
+        ],
+        [
+          143.5877659574468,
+          251
+        ],
+        [
+          161.9448669201521,
+          250
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        -2.0,
+        0.0,
+        -2.0,
+        -1.0,
+        -1.0,
+        4.0,
+        6.0,
+        0.0,
+        -2.0,
+        -4.0,
+        -3.0,
+        -4.0,
+        -1.0,
+        -2.0,
+        -2.0
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_run_n",
+      "source": "Sheets/class_anh_dao_run_n_v1_20261113j.png",
+      "sourceSha256": "087e3320386eaf81468f73683a2bade1524ea825a31d362a94e299ef40137549",
+      "bodyReferenceHeight": 202.47272727272727,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 116,
+      "headSearchRect": [
+        121,
+        45,
+        278,
+        134
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_n",
+        "headSpan": 110,
+        "height": 192.0,
+        "horizontalOffset": 1.7869379014989306,
+        "headHorizontalOffset": 4.786937901498931,
+        "bootHorizontalOffset": 4.286937901498931,
+        "waist": {
+          "position": [
+            191.0,
+            177.0
+          ],
+          "searchRect": [
+            146,
+            149,
+            229,
+            209
+          ],
+          "goldPixels": 162
+        },
+        "head": {
+          "span": 110,
+          "centerX": 188.0,
+          "top": 50,
+          "searchRect": [
+            133,
+            50,
+            273,
+            130
+          ]
+        },
+        "boots": {
+          "centerX": 188.5,
+          "cutoffY": 202.8,
+          "componentSizes": [
+            2031
+          ]
+        },
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          193.04804360521706,
+          257.0
+        ],
+        [
+          177.04804360521706,
+          256.125
+        ],
+        [
+          177.54804360521706,
+          253.25
+        ],
+        [
+          177.54804360521706,
+          249.375
+        ],
+        [
+          193.54804360521706,
+          236.5
+        ],
+        [
+          177.54804360521706,
+          239.625
+        ],
+        [
+          177.54804360521706,
+          238.75
+        ],
+        [
+          177.54804360521706,
+          237.875
+        ],
+        [
+          193.54804360521706,
+          241.0
+        ],
+        [
+          177.54804360521706,
+          240.875
+        ],
+        [
+          178.04804360521706,
+          238.75
+        ],
+        [
+          178.04804360521706,
+          237.625
+        ],
+        [
+          193.54804360521706,
+          240.5
+        ],
+        [
+          177.04804360521706,
+          243.375
+        ],
+        [
+          177.54804360521706,
+          246.25
+        ],
+        [
+          177.04804360521706,
+          248.125
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 116,
+          "centerX": 188.0,
+          "top": 45,
+          "searchRect": [
+            121,
+            45,
+            278,
+            134
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 172.0,
+          "top": 45,
+          "searchRect": [
+            103,
+            45,
+            262,
+            132
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 43,
+          "searchRect": [
+            104,
+            43,
+            261,
+            127
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 40,
+          "searchRect": [
+            104,
+            40,
+            263,
+            122
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 188.5,
+          "top": 28,
+          "searchRect": [
+            117,
+            28,
+            278,
+            113
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 32,
+          "searchRect": [
+            100,
+            32,
+            262,
+            115
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 32,
+          "searchRect": [
+            100,
+            32,
+            261,
+            120
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 32,
+          "searchRect": [
+            100,
+            32,
+            263,
+            120
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 188.5,
+          "top": 36,
+          "searchRect": [
+            118,
+            36,
+            278,
+            122
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 35,
+          "searchRect": [
+            104,
+            35,
+            262,
+            118
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 173.0,
+          "top": 32,
+          "searchRect": [
+            103,
+            32,
+            262,
+            115
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 173.0,
+          "top": 30,
+          "searchRect": [
+            105,
+            30,
+            262,
+            116
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 188.5,
+          "top": 32,
+          "searchRect": [
+            117,
+            32,
+            278,
+            118
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 172.0,
+          "top": 34,
+          "searchRect": [
+            101,
+            34,
+            262,
+            119
+          ]
+        },
+        {
+          "span": 115,
+          "centerX": 172.5,
+          "top": 36,
+          "searchRect": [
+            102,
+            36,
+            261,
+            120
+          ]
+        },
+        {
+          "span": 116,
+          "centerX": 172.0,
+          "top": 37,
+          "searchRect": [
+            102,
+            37,
+            262,
+            124
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            191,
+            174
+          ],
+          "searchRect": [
+            143,
+            149,
+            232,
+            213
+          ],
+          "goldPixels": 131
+        },
+        {
+          "position": [
+            174,
+            174
+          ],
+          "searchRect": [
+            127,
+            149,
+            216,
+            213
+          ],
+          "goldPixels": 151
+        },
+        {
+          "position": [
+            174.5,
+            169.0
+          ],
+          "searchRect": [
+            128,
+            146,
+            216,
+            209
+          ],
+          "goldPixels": 142
+        },
+        {
+          "position": [
+            178.0,
+            165.0
+          ],
+          "searchRect": [
+            128,
+            143,
+            216,
+            206
+          ],
+          "goldPixels": 146
+        },
+        {
+          "position": [
+            185,
+            152
+          ],
+          "searchRect": [
+            144,
+            131,
+            232,
+            194
+          ],
+          "goldPixels": 135
+        },
+        {
+          "position": [
+            174.0,
+            157.0
+          ],
+          "searchRect": [
+            128,
+            135,
+            216,
+            198
+          ],
+          "goldPixels": 146
+        },
+        {
+          "position": [
+            176,
+            161
+          ],
+          "searchRect": [
+            128,
+            135,
+            216,
+            198
+          ],
+          "goldPixels": 133
+        },
+        {
+          "position": [
+            174.0,
+            162.0
+          ],
+          "searchRect": [
+            128,
+            135,
+            216,
+            198
+          ],
+          "goldPixels": 128
+        },
+        {
+          "position": [
+            189.5,
+            159.0
+          ],
+          "searchRect": [
+            144,
+            139,
+            232,
+            202
+          ],
+          "goldPixels": 154
+        },
+        {
+          "position": [
+            175,
+            160
+          ],
+          "searchRect": [
+            128,
+            138,
+            216,
+            201
+          ],
+          "goldPixels": 157
+        },
+        {
+          "position": [
+            178.0,
+            156.0
+          ],
+          "searchRect": [
+            128,
+            136,
+            217,
+            200
+          ],
+          "goldPixels": 128
+        },
+        {
+          "position": [
+            177,
+            154
+          ],
+          "searchRect": [
+            128,
+            134,
+            217,
+            198
+          ],
+          "goldPixels": 133
+        },
+        {
+          "position": [
+            181,
+            154
+          ],
+          "searchRect": [
+            144,
+            135,
+            232,
+            198
+          ],
+          "goldPixels": 119
+        },
+        {
+          "position": [
+            173.5,
+            159.0
+          ],
+          "searchRect": [
+            127,
+            138,
+            216,
+            202
+          ],
+          "goldPixels": 160
+        },
+        {
+          "position": [
+            176.5,
+            164.0
+          ],
+          "searchRect": [
+            128,
+            139,
+            216,
+            202
+          ],
+          "goldPixels": 136
+        },
+        {
+          "position": [
+            175.0,
+            164.0
+          ],
+          "searchRect": [
+            127,
+            141,
+            216,
+            205
+          ],
+          "goldPixels": 138
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          198.06451612903226,
+          257
+        ],
+        [
+          173.89439655172413,
+          253
+        ],
+        [
+          159.7191011235955,
+          243
+        ],
+        [
+          156.9221183800623,
+          236
+        ],
+        [
+          175.59815950920245,
+          231
+        ],
+        [
+          164.5,
+          231
+        ],
+        [
+          173.85753424657534,
+          243
+        ],
+        [
+          174.587012987013,
+          242
+        ],
+        [
+          160.15364583333334,
+          241
+        ],
+        [
+          153.4564315352697,
+          233
+        ],
+        [
+          169.0695067264574,
+          231
+        ],
+        [
+          173.50632911392404,
+          235
+        ],
+        [
+          193.04761904761904,
+          237
+        ],
+        [
+          163.27129337539432,
+          237
+        ],
+        [
+          173.20169851380044,
+          237
+        ],
+        [
+          181.35064935064935,
+          245
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        -3.125,
+        -10.25,
+        -13.375,
+        -5.5,
+        -8.625,
+        4.25,
+        4.125,
+        0.0,
+        -7.875,
+        -7.75,
+        -2.625,
+        -3.5,
+        -6.375,
+        -9.25,
+        -3.125
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_run_ne",
+      "source": "Sheets/class_anh_dao_run_ne_v1_20261113j.png",
+      "sourceSha256": "023ce5094b5b762134756e28ec9349cf16fc4eba01466d4f81b068395625b7b5",
+      "bodyReferenceHeight": 248.83464566929135,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 138,
+      "headSearchRect": [
+        95,
+        40,
+        267,
+        145
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_ne",
+        "headSpan": 127,
+        "height": 229.0,
+        "horizontalOffset": 8.034822601839693,
+        "headHorizontalOffset": 3.034822601839693,
+        "bootHorizontalOffset": 7.034822601839693,
+        "waist": {
+          "position": [
+            168.5,
+            221.0
+          ],
+          "searchRect": [
+            125,
+            161,
+            221,
+            231
+          ],
+          "goldPixels": 198
+        },
+        "head": {
+          "span": 127,
+          "centerX": 173.5,
+          "top": 47,
+          "searchRect": [
+            110,
+            47,
+            259,
+            143
+          ]
+        },
+        "boots": {
+          "centerX": 169.5,
+          "cutoffY": 229.4,
+          "componentSizes": [
+            1144,
+            730
+          ]
+        },
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          179.29768125239275,
+          292.0
+        ],
+        [
+          145.29768125239275,
+          292.875
+        ],
+        [
+          146.79768125239275,
+          290.75
+        ],
+        [
+          147.79768125239275,
+          287.625
+        ],
+        [
+          176.29768125239275,
+          282.5
+        ],
+        [
+          142.29768125239275,
+          279.375
+        ],
+        [
+          145.79768125239275,
+          278.25
+        ],
+        [
+          148.79768125239275,
+          276.125
+        ],
+        [
+          171.29768125239275,
+          286.0
+        ],
+        [
+          141.79768125239275,
+          286.125
+        ],
+        [
+          144.79768125239275,
+          286.25
+        ],
+        [
+          149.79768125239275,
+          282.375
+        ],
+        [
+          175.29768125239275,
+          281.5
+        ],
+        [
+          141.79768125239275,
+          279.625
+        ],
+        [
+          144.29768125239275,
+          281.75
+        ],
+        [
+          147.29768125239275,
+          280.875
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 138,
+          "centerX": 176.0,
+          "top": 40,
+          "searchRect": [
+            95,
+            40,
+            267,
+            145
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 142.0,
+          "top": 40,
+          "searchRect": [
+            66,
+            40,
+            232,
+            146
+          ]
+        },
+        {
+          "span": 143,
+          "centerX": 143.5,
+          "top": 37,
+          "searchRect": [
+            67,
+            37,
+            239,
+            141
+          ]
+        },
+        {
+          "span": 145,
+          "centerX": 144.5,
+          "top": 33,
+          "searchRect": [
+            65,
+            33,
+            237,
+            131
+          ]
+        },
+        {
+          "span": 142,
+          "centerX": 173.0,
+          "top": 27,
+          "searchRect": [
+            96,
+            27,
+            268,
+            128
+          ]
+        },
+        {
+          "span": 144,
+          "centerX": 139.0,
+          "top": 23,
+          "searchRect": [
+            67,
+            23,
+            235,
+            125
+          ]
+        },
+        {
+          "span": 143,
+          "centerX": 142.5,
+          "top": 21,
+          "searchRect": [
+            67,
+            21,
+            238,
+            128
+          ]
+        },
+        {
+          "span": 139,
+          "centerX": 145.5,
+          "top": 18,
+          "searchRect": [
+            67,
+            18,
+            240,
+            124
+          ]
+        },
+        {
+          "span": 142,
+          "centerX": 168.0,
+          "top": 27,
+          "searchRect": [
+            96,
+            27,
+            273,
+            135
+          ]
+        },
+        {
+          "span": 143,
+          "centerX": 138.5,
+          "top": 28,
+          "searchRect": [
+            67,
+            28,
+            237,
+            135
+          ]
+        },
+        {
+          "span": 143,
+          "centerX": 141.5,
+          "top": 29,
+          "searchRect": [
+            70,
+            29,
+            243,
+            135
+          ]
+        },
+        {
+          "span": 145,
+          "centerX": 146.5,
+          "top": 26,
+          "searchRect": [
+            72,
+            26,
+            243,
+            124
+          ]
+        },
+        {
+          "span": 148,
+          "centerX": 172.0,
+          "top": 26,
+          "searchRect": [
+            97,
+            26,
+            271,
+            129
+          ]
+        },
+        {
+          "span": 147,
+          "centerX": 138.5,
+          "top": 25,
+          "searchRect": [
+            65,
+            25,
+            239,
+            121
+          ]
+        },
+        {
+          "span": 148,
+          "centerX": 141.0,
+          "top": 28,
+          "searchRect": [
+            65,
+            28,
+            241,
+            132
+          ]
+        },
+        {
+          "span": 146,
+          "centerX": 144.0,
+          "top": 28,
+          "searchRect": [
+            68,
+            28,
+            244,
+            130
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            207.0,
+            218.0
+          ],
+          "searchRect": [
+            123,
+            164,
+            228,
+            240
+          ],
+          "goldPixels": 188
+        },
+        {
+          "position": [
+            170.0,
+            218.0
+          ],
+          "searchRect": [
+            90,
+            162,
+            193,
+            237
+          ],
+          "goldPixels": 204
+        },
+        {
+          "position": [
+            159.5,
+            210.0
+          ],
+          "searchRect": [
+            89,
+            165,
+            197,
+            244
+          ],
+          "goldPixels": 202
+        },
+        {
+          "position": [
+            119,
+            183
+          ],
+          "searchRect": [
+            89,
+            163,
+            199,
+            243
+          ],
+          "goldPixels": 219
+        },
+        {
+          "position": [
+            148.0,
+            178.0
+          ],
+          "searchRect": [
+            119,
+            154,
+            226,
+            232
+          ],
+          "goldPixels": 198
+        },
+        {
+          "position": [
+            112.0,
+            174.0
+          ],
+          "searchRect": [
+            84,
+            152,
+            193,
+            231
+          ],
+          "goldPixels": 260
+        },
+        {
+          "position": [
+            114.5,
+            190.0
+          ],
+          "searchRect": [
+            88,
+            149,
+            196,
+            228
+          ],
+          "goldPixels": 214
+        },
+        {
+          "position": [
+            177,
+            196
+          ],
+          "searchRect": [
+            92,
+            143,
+            198,
+            219
+          ],
+          "goldPixels": 175
+        },
+        {
+          "position": [
+            139.0,
+            203.0
+          ],
+          "searchRect": [
+            114,
+            154,
+            221,
+            232
+          ],
+          "goldPixels": 228
+        },
+        {
+          "position": [
+            112.5,
+            199.0
+          ],
+          "searchRect": [
+            84,
+            156,
+            192,
+            235
+          ],
+          "goldPixels": 234
+        },
+        {
+          "position": [
+            116.5,
+            201.0
+          ],
+          "searchRect": [
+            87,
+            157,
+            195,
+            236
+          ],
+          "goldPixels": 260
+        },
+        {
+          "position": [
+            168,
+            195
+          ],
+          "searchRect": [
+            91,
+            156,
+            201,
+            236
+          ],
+          "goldPixels": 199
+        },
+        {
+          "position": [
+            150,
+            179
+          ],
+          "searchRect": [
+            115,
+            159,
+            228,
+            240
+          ],
+          "goldPixels": 193
+        },
+        {
+          "position": [
+            103,
+            192
+          ],
+          "searchRect": [
+            82,
+            157,
+            194,
+            238
+          ],
+          "goldPixels": 211
+        },
+        {
+          "position": [
+            108.0,
+            203.0
+          ],
+          "searchRect": [
+            84,
+            161,
+            197,
+            242
+          ],
+          "goldPixels": 240
+        },
+        {
+          "position": [
+            114.5,
+            208.0
+          ],
+          "searchRect": [
+            88,
+            159,
+            199,
+            239
+          ],
+          "goldPixels": 246
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          188.36748633879782,
+          292
+        ],
+        [
+          141.16639741518577,
+          293
+        ],
+        [
+          125.93604651162791,
+          285
+        ],
+        [
+          103.81236203090508,
+          268
+        ],
+        [
+          135.4459161147903,
+          268
+        ],
+        [
+          97.78170478170478,
+          266
+        ],
+        [
+          104.4873417721519,
+          277
+        ],
+        [
+          165.42121684867394,
+          271
+        ],
+        [
+          117.93740458015267,
+          286
+        ],
+        [
+          96.11946050096338,
+          284
+        ],
+        [
+          92.44444444444444,
+          282
+        ],
+        [
+          100.6007326007326,
+          261
+        ],
+        [
+          140.17457305502847,
+          273
+        ],
+        [
+          120.93413173652695,
+          255
+        ],
+        [
+          141.4124830393487,
+          277
+        ],
+        [
+          150.4045977011494,
+          272
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        0.125,
+        -5.75,
+        -19.625,
+        -14.5,
+        -13.375,
+        -1.25,
+        -5.125,
+        0.0,
+        -2.125,
+        -4.25,
+        -21.375,
+        -8.5,
+        -24.625,
+        -4.75,
+        -8.875
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_run_e",
+      "source": "Sheets/class_anh_dao_run_e_v1_20261113j.png",
+      "sourceSha256": "6013059fe946e692560ea22cbf348b7f3781abb0cbc516cc2f90c26859928ec7",
+      "bodyReferenceHeight": 234.07258064516128,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 135,
+      "headSearchRect": [
+        118,
+        34,
+        257,
+        127
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_e",
+        "headSpan": 124,
+        "height": 215.0,
+        "horizontalOffset": -9.413151364764275,
+        "headHorizontalOffset": 0.5868486352357252,
+        "bootHorizontalOffset": 2.086848635235725,
+        "waist": {
+          "position": [
+            197.0,
+            195.0
+          ],
+          "searchRect": [
+            139,
+            147,
+            234,
+            215
+          ],
+          "goldPixels": 114
+        },
+        "head": {
+          "span": 124,
+          "centerX": 187.0,
+          "top": 36,
+          "searchRect": [
+            125,
+            36,
+            250,
+            126
+          ]
+        },
+        "boots": {
+          "centerX": 185.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1632
+          ]
+        },
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          190.13890778836148,
+          256.0
+        ],
+        [
+          188.63890778836148,
+          256.5
+        ],
+        [
+          181.13890778836148,
+          257.0
+        ],
+        [
+          184.13890778836148,
+          254.5
+        ],
+        [
+          185.13890778836148,
+          246.0
+        ],
+        [
+          186.63890778836148,
+          247.5
+        ],
+        [
+          181.63890778836148,
+          248.0
+        ],
+        [
+          184.13890778836148,
+          248.5
+        ],
+        [
+          186.63890778836148,
+          249.0
+        ],
+        [
+          187.13890778836148,
+          246.5
+        ],
+        [
+          180.13890778836148,
+          246.0
+        ],
+        [
+          182.13890778836148,
+          244.5
+        ],
+        [
+          186.63890778836148,
+          248.0
+        ],
+        [
+          189.13890778836148,
+          248.5
+        ],
+        [
+          182.63890778836148,
+          249.0
+        ],
+        [
+          184.63890778836148,
+          250.5
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 135,
+          "centerX": 189.5,
+          "top": 34,
+          "searchRect": [
+            118,
+            34,
+            257,
+            127
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 188.0,
+          "top": 34,
+          "searchRect": [
+            117,
+            34,
+            257,
+            126
+          ]
+        },
+        {
+          "span": 141,
+          "centerX": 180.5,
+          "top": 34,
+          "searchRect": [
+            110,
+            34,
+            251,
+            122
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 183.5,
+          "top": 31,
+          "searchRect": [
+            115,
+            31,
+            252,
+            120
+          ]
+        },
+        {
+          "span": 139,
+          "centerX": 184.5,
+          "top": 22,
+          "searchRect": [
+            114,
+            22,
+            254,
+            109
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 186.0,
+          "top": 23,
+          "searchRect": [
+            116,
+            23,
+            254,
+            118
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 181.0,
+          "top": 23,
+          "searchRect": [
+            113,
+            23,
+            249,
+            118
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 183.5,
+          "top": 23,
+          "searchRect": [
+            111,
+            23,
+            252,
+            119
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 186.0,
+          "top": 23,
+          "searchRect": [
+            117,
+            23,
+            255,
+            118
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 186.5,
+          "top": 21,
+          "searchRect": [
+            118,
+            21,
+            255,
+            116
+          ]
+        },
+        {
+          "span": 141,
+          "centerX": 179.5,
+          "top": 21,
+          "searchRect": [
+            109,
+            21,
+            250,
+            110
+          ]
+        },
+        {
+          "span": 141,
+          "centerX": 181.5,
+          "top": 20,
+          "searchRect": [
+            111,
+            20,
+            252,
+            116
+          ]
+        },
+        {
+          "span": 142,
+          "centerX": 186.0,
+          "top": 24,
+          "searchRect": [
+            113,
+            24,
+            257,
+            111
+          ]
+        },
+        {
+          "span": 135,
+          "centerX": 188.5,
+          "top": 25,
+          "searchRect": [
+            102,
+            25,
+            256,
+            118
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 182.0,
+          "top": 26,
+          "searchRect": [
+            113,
+            26,
+            251,
+            120
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 184.0,
+          "top": 28,
+          "searchRect": [
+            104,
+            28,
+            253,
+            118
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            182.0,
+            190.0
+          ],
+          "searchRect": [
+            138,
+            155,
+            240,
+            229
+          ],
+          "goldPixels": 116
+        },
+        {
+          "position": [
+            186,
+            178
+          ],
+          "searchRect": [
+            135,
+            158,
+            240,
+            234
+          ],
+          "goldPixels": 105
+        },
+        {
+          "position": [
+            164.5,
+            180.0
+          ],
+          "searchRect": [
+            126,
+            160,
+            234,
+            238
+          ],
+          "goldPixels": 146
+        },
+        {
+          "position": [
+            177.0,
+            169.0
+          ],
+          "searchRect": [
+            131,
+            154,
+            235,
+            229
+          ],
+          "goldPixels": 88
+        },
+        {
+          "position": [
+            181.5,
+            162.0
+          ],
+          "searchRect": [
+            131,
+            147,
+            237,
+            223
+          ],
+          "goldPixels": 110
+        },
+        {
+          "position": [
+            184.0,
+            163.0
+          ],
+          "searchRect": [
+            134,
+            145,
+            237,
+            220
+          ],
+          "goldPixels": 114
+        },
+        {
+          "position": [
+            172,
+            173
+          ],
+          "searchRect": [
+            129,
+            145,
+            232,
+            220
+          ],
+          "goldPixels": 105
+        },
+        {
+          "position": [
+            183,
+            169
+          ],
+          "searchRect": [
+            131,
+            146,
+            235,
+            221
+          ],
+          "goldPixels": 103
+        },
+        {
+          "position": [
+            183,
+            169
+          ],
+          "searchRect": [
+            133,
+            147,
+            238,
+            223
+          ],
+          "goldPixels": 111
+        },
+        {
+          "position": [
+            174,
+            173
+          ],
+          "searchRect": [
+            134,
+            144,
+            238,
+            219
+          ],
+          "goldPixels": 117
+        },
+        {
+          "position": [
+            173.5,
+            159.0
+          ],
+          "searchRect": [
+            125,
+            147,
+            233,
+            225
+          ],
+          "goldPixels": 116
+        },
+        {
+          "position": [
+            178.0,
+            162.0
+          ],
+          "searchRect": [
+            127,
+            146,
+            235,
+            224
+          ],
+          "goldPixels": 104
+        },
+        {
+          "position": [
+            180,
+            163
+          ],
+          "searchRect": [
+            132,
+            151,
+            239,
+            229
+          ],
+          "goldPixels": 115
+        },
+        {
+          "position": [
+            185.0,
+            166.0
+          ],
+          "searchRect": [
+            137,
+            146,
+            239,
+            220
+          ],
+          "goldPixels": 102
+        },
+        {
+          "position": [
+            182,
+            169
+          ],
+          "searchRect": [
+            129,
+            150,
+            234,
+            226
+          ],
+          "goldPixels": 119
+        },
+        {
+          "position": [
+            180.0,
+            168.0
+          ],
+          "searchRect": [
+            131,
+            152,
+            236,
+            228
+          ],
+          "goldPixels": 108
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          177.66037735849056,
+          256
+        ],
+        [
+          216.59649122807016,
+          253
+        ],
+        [
+          169.07021791767554,
+          244
+        ],
+        [
+          167.68915662650602,
+          243
+        ],
+        [
+          223.78436018957345,
+          229
+        ],
+        [
+          214.49397590361446,
+          251
+        ],
+        [
+          213.29853862212943,
+          251
+        ],
+        [
+          205.21540880503144,
+          253
+        ],
+        [
+          182.41157556270096,
+          249
+        ],
+        [
+          147.78385416666666,
+          248
+        ],
+        [
+          139.8651026392962,
+          234
+        ],
+        [
+          177.96263736263737,
+          249
+        ],
+        [
+          230.32805429864254,
+          233
+        ],
+        [
+          224.75803402646503,
+          248
+        ],
+        [
+          195.36472602739727,
+          250
+        ],
+        [
+          179.8771526980482,
+          243
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        -3.5,
+        -13.0,
+        -11.5,
+        -17.0,
+        3.5,
+        3.0,
+        4.5,
+        0.0,
+        1.5,
+        -12.0,
+        4.5,
+        -15.0,
+        -0.5,
+        1.0,
+        -7.5
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_run_se",
+      "source": "Sheets/class_anh_dao_run_se_v2_20261113j.png",
+      "sourceSha256": "39973341691dd9d45c46d270f0ba7956d93f1bd7629a796c9b20218bf9a4905c",
+      "bodyReferenceHeight": 225.91735537190084,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 136,
+      "headSearchRect": [
+        124,
+        37,
+        278,
+        130
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_se",
+        "headSpan": 121,
+        "height": 201.0,
+        "horizontalOffset": -3.568265682656829,
+        "headHorizontalOffset": -8.068265682656829,
+        "bootHorizontalOffset": -4.068265682656829,
+        "waist": {
+          "position": [
+            190.0,
+            213.0
+          ],
+          "searchRect": [
+            148,
+            165,
+            240,
+            232
+          ],
+          "goldPixels": 154
+        },
+        "head": {
+          "span": 121,
+          "centerX": 194.5,
+          "top": 57,
+          "searchRect": [
+            134,
+            57,
+            255,
+            141
+          ]
+        },
+        "boots": {
+          "centerX": 190.5,
+          "cutoffY": 217.0,
+          "componentSizes": [
+            749,
+            418
+          ]
+        },
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          200.93153609222043,
+          260.0
+        ],
+        [
+          180.93153609222043,
+          259.25
+        ],
+        [
+          178.93153609222043,
+          259.5
+        ],
+        [
+          174.43153609222043,
+          253.75
+        ],
+        [
+          200.43153609222043,
+          249.0
+        ],
+        [
+          180.43153609222043,
+          248.25
+        ],
+        [
+          182.93153609222043,
+          250.5
+        ],
+        [
+          178.43153609222043,
+          247.75
+        ],
+        [
+          201.93153609222043,
+          255.0
+        ],
+        [
+          181.93153609222043,
+          255.75
+        ],
+        [
+          181.93153609222043,
+          253.5
+        ],
+        [
+          175.43153609222043,
+          246.25
+        ],
+        [
+          200.43153609222043,
+          245.0
+        ],
+        [
+          179.93153609222043,
+          243.75
+        ],
+        [
+          182.93153609222043,
+          248.5
+        ],
+        [
+          179.43153609222043,
+          245.25
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 136,
+          "centerX": 210.0,
+          "top": 37,
+          "searchRect": [
+            124,
+            37,
+            278,
+            130
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 190.0,
+          "top": 36,
+          "searchRect": [
+            104,
+            36,
+            258,
+            130
+          ]
+        },
+        {
+          "span": 140,
+          "centerX": 188.0,
+          "top": 36,
+          "searchRect": [
+            108,
+            36,
+            258,
+            127
+          ]
+        },
+        {
+          "span": 145,
+          "centerX": 183.5,
+          "top": 30,
+          "searchRect": [
+            105,
+            30,
+            256,
+            114
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 209.5,
+          "top": 25,
+          "searchRect": [
+            124,
+            25,
+            278,
+            111
+          ]
+        },
+        {
+          "span": 139,
+          "centerX": 189.5,
+          "top": 24,
+          "searchRect": [
+            106,
+            24,
+            259,
+            105
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 192.0,
+          "top": 26,
+          "searchRect": [
+            102,
+            26,
+            261,
+            120
+          ]
+        },
+        {
+          "span": 139,
+          "centerX": 187.5,
+          "top": 23,
+          "searchRect": [
+            107,
+            23,
+            257,
+            119
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 211.0,
+          "top": 30,
+          "searchRect": [
+            127,
+            30,
+            279,
+            124
+          ]
+        },
+        {
+          "span": 136,
+          "centerX": 191.0,
+          "top": 31,
+          "searchRect": [
+            107,
+            31,
+            259,
+            121
+          ]
+        },
+        {
+          "span": 140,
+          "centerX": 191.0,
+          "top": 29,
+          "searchRect": [
+            106,
+            29,
+            261,
+            113
+          ]
+        },
+        {
+          "span": 141,
+          "centerX": 184.5,
+          "top": 22,
+          "searchRect": [
+            108,
+            22,
+            255,
+            103
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 209.5,
+          "top": 21,
+          "searchRect": [
+            125,
+            21,
+            278,
+            107
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 189.0,
+          "top": 20,
+          "searchRect": [
+            104,
+            20,
+            258,
+            101
+          ]
+        },
+        {
+          "span": 138,
+          "centerX": 192.0,
+          "top": 25,
+          "searchRect": [
+            107,
+            25,
+            261,
+            116
+          ]
+        },
+        {
+          "span": 137,
+          "centerX": 188.5,
+          "top": 22,
+          "searchRect": [
+            107,
+            22,
+            257,
+            117
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            208.0,
+            198.0
+          ],
+          "searchRect": [
+            158,
+            159,
+            261,
+            234
+          ],
+          "goldPixels": 112
+        },
+        {
+          "position": [
+            183.0,
+            193.0
+          ],
+          "searchRect": [
+            138,
+            158,
+            241,
+            233
+          ],
+          "goldPixels": 122
+        },
+        {
+          "position": [
+            181.0,
+            178.0
+          ],
+          "searchRect": [
+            134,
+            162,
+            241,
+            239
+          ],
+          "goldPixels": 140
+        },
+        {
+          "position": [
+            176,
+            167
+          ],
+          "searchRect": [
+            128,
+            160,
+            238,
+            240
+          ],
+          "goldPixels": 155
+        },
+        {
+          "position": [
+            196.0,
+            156.0
+          ],
+          "searchRect": [
+            157,
+            148,
+            261,
+            223
+          ],
+          "goldPixels": 126
+        },
+        {
+          "position": [
+            175,
+            156
+          ],
+          "searchRect": [
+            136,
+            149,
+            242,
+            225
+          ],
+          "goldPixels": 151
+        },
+        {
+          "position": [
+            182,
+            163
+          ],
+          "searchRect": [
+            139,
+            150,
+            244,
+            226
+          ],
+          "goldPixels": 147
+        },
+        {
+          "position": [
+            181.0,
+            165.0
+          ],
+          "searchRect": [
+            134,
+            148,
+            240,
+            224
+          ],
+          "goldPixels": 144
+        },
+        {
+          "position": [
+            203,
+            189
+          ],
+          "searchRect": [
+            159,
+            152,
+            262,
+            227
+          ],
+          "goldPixels": 123
+        },
+        {
+          "position": [
+            180.0,
+            170.0
+          ],
+          "searchRect": [
+            139,
+            153,
+            242,
+            228
+          ],
+          "goldPixels": 116
+        },
+        {
+          "position": [
+            176.0,
+            167.0
+          ],
+          "searchRect": [
+            137,
+            155,
+            244,
+            232
+          ],
+          "goldPixels": 144
+        },
+        {
+          "position": [
+            172,
+            160
+          ],
+          "searchRect": [
+            130,
+            148,
+            238,
+            226
+          ],
+          "goldPixels": 131
+        },
+        {
+          "position": [
+            194.0,
+            158.0
+          ],
+          "searchRect": [
+            157,
+            144,
+            261,
+            219
+          ],
+          "goldPixels": 142
+        },
+        {
+          "position": [
+            177.0,
+            155.0
+          ],
+          "searchRect": [
+            136,
+            144,
+            241,
+            220
+          ],
+          "goldPixels": 142
+        },
+        {
+          "position": [
+            179.0,
+            160.0
+          ],
+          "searchRect": [
+            139,
+            149,
+            244,
+            225
+          ],
+          "goldPixels": 120
+        },
+        {
+          "position": [
+            184.0,
+            182.0
+          ],
+          "searchRect": [
+            136,
+            145,
+            240,
+            220
+          ],
+          "goldPixels": 124
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          230.97098646034817,
+          260
+        ],
+        [
+          172.21145374449338,
+          260
+        ],
+        [
+          169.27906976744185,
+          253
+        ],
+        [
+          148.49074074074073,
+          230
+        ],
+        [
+          147.29245283018867,
+          231
+        ],
+        [
+          178.09122807017545,
+          218
+        ],
+        [
+          206.46376811594203,
+          250
+        ],
+        [
+          192.6580310880829,
+          253
+        ],
+        [
+          199.34330985915494,
+          255
+        ],
+        [
+          167.05410821643287,
+          246
+        ],
+        [
+          173.5771812080537,
+          231
+        ],
+        [
+          150.26642335766422,
+          214
+        ],
+        [
+          148.92012779552715,
+          226
+        ],
+        [
+          184.14671814671814,
+          215
+        ],
+        [
+          214.97987927565393,
+          242
+        ],
+        [
+          192.09782608695653,
+          249
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        0.75,
+        -6.5,
+        -23.75,
+        -18.0,
+        -30.25,
+        -0.5,
+        5.25,
+        0.0,
+        -9.75,
+        -22.5,
+        -32.25,
+        -19.0,
+        -28.75,
+        -6.5,
+        3.75
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_run_s",
+      "source": "Sheets/class_anh_dao_run_s_v1_20261113j.png",
+      "sourceSha256": "f0537e9a48eed5aa4a157ae9e7c9e0ac9ad6e9d054261ecc796ab4231d855ca2",
+      "bodyReferenceHeight": 220.09734513274336,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 119,
+      "headSearchRect": [
+        90,
+        71,
+        252,
+        163
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_s",
+        "headSpan": 113,
+        "height": 209.0,
+        "horizontalOffset": -13.048929663608561,
+        "headHorizontalOffset": -5.548929663608561,
+        "bootHorizontalOffset": -6.548929663608561,
+        "waist": {
+          "position": [
+            193,
+            210
+          ],
+          "searchRect": [
+            142,
+            176,
+            228,
+            238
+          ],
+          "goldPixels": 81
+        },
+        "head": {
+          "span": 113,
+          "centerX": 185.5,
+          "top": 75,
+          "searchRect": [
+            108,
+            75,
+            242,
+            162
+          ]
+        },
+        "boots": {
+          "centerX": 186.5,
+          "cutoffY": 241.4,
+          "componentSizes": [
+            938,
+            867
+          ]
+        },
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      "method": "HEAD_PACKING_STABILISATION_WITH_CONTACT_TRACED_VIRTUAL_GROUND",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          178.6564369029255,
+          292.0
+        ],
+        [
+          157.1564369029255,
+          290.875
+        ],
+        [
+          156.6564369029255,
+          291.75
+        ],
+        [
+          155.6564369029255,
+          289.625
+        ],
+        [
+          179.6564369029255,
+          262.5
+        ],
+        [
+          157.1564369029255,
+          264.375
+        ],
+        [
+          157.1564369029255,
+          263.25
+        ],
+        [
+          157.6564369029255,
+          262.125
+        ],
+        [
+          180.1564369029255,
+          262.0
+        ],
+        [
+          158.6564369029255,
+          263.125
+        ],
+        [
+          157.1564369029255,
+          262.25
+        ],
+        [
+          157.1564369029255,
+          262.375
+        ],
+        [
+          181.1564369029255,
+          263.5
+        ],
+        [
+          159.1564369029255,
+          261.625
+        ],
+        [
+          158.1564369029255,
+          260.75
+        ],
+        [
+          156.6564369029255,
+          260.875
+        ]
+      ],
+      "headLandmarks": [
+        {
+          "span": 119,
+          "centerX": 184.5,
+          "top": 71,
+          "searchRect": [
+            90,
+            71,
+            252,
+            163
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 163.0,
+          "top": 69,
+          "searchRect": [
+            70,
+            69,
+            228,
+            162
+          ]
+        },
+        {
+          "span": 119,
+          "centerX": 162.5,
+          "top": 69,
+          "searchRect": [
+            72,
+            69,
+            230,
+            155
+          ]
+        },
+        {
+          "span": 121,
+          "centerX": 161.5,
+          "top": 66,
+          "searchRect": [
+            73,
+            66,
+            230,
+            153
+          ]
+        },
+        {
+          "span": 119,
+          "centerX": 185.5,
+          "top": 38,
+          "searchRect": [
+            94,
+            38,
+            253,
+            132
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 163.0,
+          "top": 39,
+          "searchRect": [
+            74,
+            39,
+            230,
+            133
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 163.0,
+          "top": 37,
+          "searchRect": [
+            74,
+            37,
+            231,
+            132
+          ]
+        },
+        {
+          "span": 117,
+          "centerX": 163.5,
+          "top": 35,
+          "searchRect": [
+            75,
+            35,
+            232,
+            132
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 186.0,
+          "top": 34,
+          "searchRect": [
+            96,
+            34,
+            255,
+            129
+          ]
+        },
+        {
+          "span": 119,
+          "centerX": 164.5,
+          "top": 36,
+          "searchRect": [
+            76,
+            36,
+            231,
+            123
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 163.0,
+          "top": 36,
+          "searchRect": [
+            73,
+            36,
+            230,
+            121
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 163.0,
+          "top": 37,
+          "searchRect": [
+            73,
+            37,
+            234,
+            130
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 187.0,
+          "top": 39,
+          "searchRect": [
+            94,
+            39,
+            253,
+            133
+          ]
+        },
+        {
+          "span": 120,
+          "centerX": 165.0,
+          "top": 38,
+          "searchRect": [
+            74,
+            38,
+            233,
+            132
+          ]
+        },
+        {
+          "span": 118,
+          "centerX": 164.0,
+          "top": 38,
+          "searchRect": [
+            76,
+            38,
+            231,
+            131
+          ]
+        },
+        {
+          "span": 121,
+          "centerX": 162.5,
+          "top": 39,
+          "searchRect": [
+            75,
+            39,
+            233,
+            133
+          ]
+        }
+      ],
+      "waistLandmarks": [
+        {
+          "position": [
+            195,
+            205
+          ],
+          "searchRect": [
+            139,
+            178,
+            229,
+            243
+          ],
+          "goldPixels": 109
+        },
+        {
+          "position": [
+            177.5,
+            214.0
+          ],
+          "searchRect": [
+            118,
+            175,
+            207,
+            240
+          ],
+          "goldPixels": 108
+        },
+        {
+          "position": [
+            158.0,
+            209.0
+          ],
+          "searchRect": [
+            117,
+            176,
+            207,
+            241
+          ],
+          "goldPixels": 164
+        },
+        {
+          "position": [
+            162,
+            207
+          ],
+          "searchRect": [
+            115,
+            174,
+            207,
+            241
+          ],
+          "goldPixels": 177
+        },
+        {
+          "position": [
+            193,
+            171
+          ],
+          "searchRect": [
+            140,
+            145,
+            230,
+            210
+          ],
+          "goldPixels": 129
+        },
+        {
+          "position": [
+            177.0,
+            179.0
+          ],
+          "searchRect": [
+            117,
+            147,
+            208,
+            213
+          ],
+          "goldPixels": 124
+        },
+        {
+          "position": [
+            173.0,
+            172.0
+          ],
+          "searchRect": [
+            118,
+            143,
+            207,
+            208
+          ],
+          "goldPixels": 114
+        },
+        {
+          "position": [
+            179,
+            180
+          ],
+          "searchRect": [
+            119,
+            140,
+            207,
+            204
+          ],
+          "goldPixels": 97
+        },
+        {
+          "position": [
+            196.0,
+            174.0
+          ],
+          "searchRect": [
+            141,
+            140,
+            230,
+            205
+          ],
+          "goldPixels": 122
+        },
+        {
+          "position": [
+            184,
+            174
+          ],
+          "searchRect": [
+            119,
+            143,
+            209,
+            208
+          ],
+          "goldPixels": 103
+        },
+        {
+          "position": [
+            174.0,
+            168.0
+          ],
+          "searchRect": [
+            118,
+            142,
+            207,
+            207
+          ],
+          "goldPixels": 114
+        },
+        {
+          "position": [
+            170,
+            171
+          ],
+          "searchRect": [
+            117,
+            145,
+            208,
+            211
+          ],
+          "goldPixels": 141
+        },
+        {
+          "position": [
+            191.5,
+            173.0
+          ],
+          "searchRect": [
+            142,
+            145,
+            231,
+            210
+          ],
+          "goldPixels": 148
+        },
+        {
+          "position": [
+            173.0,
+            176.0
+          ],
+          "searchRect": [
+            119,
+            146,
+            210,
+            212
+          ],
+          "goldPixels": 142
+        },
+        {
+          "position": [
+            173,
+            177
+          ],
+          "searchRect": [
+            119,
+            144,
+            208,
+            209
+          ],
+          "goldPixels": 133
+        },
+        {
+          "position": [
+            173,
+            178
+          ],
+          "searchRect": [
+            116,
+            147,
+            208,
+            214
+          ],
+          "goldPixels": 123
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          194.60757314974182,
+          292
+        ],
+        [
+          169.6541095890411,
+          292
+        ],
+        [
+          155.26904761904763,
+          275
+        ],
+        [
+          160.2,
+          274
+        ],
+        [
+          176.7582644628099,
+          263
+        ],
+        [
+          151.28269230769232,
+          264
+        ],
+        [
+          149.4375,
+          263
+        ],
+        [
+          144.5363247863248,
+          267
+        ],
+        [
+          169.49358974358975,
+          262
+        ],
+        [
+          152.12442396313364,
+          245
+        ],
+        [
+          177.38063063063063,
+          239
+        ],
+        [
+          176.36237623762375,
+          260
+        ],
+        [
+          197.7706093189964,
+          264
+        ],
+        [
+          177.10211946050097,
+          263
+        ],
+        [
+          177.54980842911877,
+          260
+        ],
+        [
+          178.28904847396768,
+          264
+        ]
+      ],
+      "contactSourceFrames": [
+        0,
+        8
+      ],
+      "bootToVirtualGroundPx": [
+        0.0,
+        1.125,
+        -16.75,
+        -15.625,
+        0.5,
+        -0.375,
+        -0.25,
+        4.875,
+        0.0,
+        -18.125,
+        -23.25,
+        -2.375,
+        0.5,
+        1.375,
+        -0.75,
+        3.125
+      ],
+      "assumption": "Visible contacts0/8; linear head-to-root offset between contacts, closed at16. Stable head landmarks remove atlas packing drift; gold waist measurements are diagnostics only. Airborne feet never define the root. This debug root is not a physical plane for every projected foot; native gait/transition review remains required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_n",
+      "source": "Sheets/class_anh_dao_basic_attack_02_n_v1_20261113j.png",
+      "sourceSha256": "5e2a5cdd9bec623fb08a95a58980d86f4848f3b83b722cfa209980c3061dc88a",
+      "bodyReferenceHeight": 197.23636363636365,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 113,
+      "headSearchRect": [
+        131,
+        47,
+        277,
+        129
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_n",
+        "headSpan": 110,
+        "height": 192.0,
+        "horizontalOffset": 1.7869379014989306,
+        "headHorizontalOffset": 4.786937901498931,
+        "bootHorizontalOffset": 4.286937901498931,
+        "waist": {
+          "position": [
+            191.0,
+            177.0
+          ],
+          "searchRect": [
+            146,
+            149,
+            229,
+            209
+          ],
+          "goldPixels": 162
+        },
+        "head": {
+          "span": 110,
+          "centerX": 188.0,
+          "top": 50,
+          "searchRect": [
+            133,
+            50,
+            273,
+            130
+          ]
+        },
+        "boots": {
+          "centerX": 188.5,
+          "cutoffY": 202.8,
+          "componentSizes": [
+            2031
+          ]
+        },
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          193.40385438972163,
+          243
+        ],
+        [
+          163.90385438972163,
+          244
+        ],
+        [
+          168.40385438972163,
+          243
+        ],
+        [
+          168.40385438972163,
+          243
+        ],
+        [
+          193.90385438972163,
+          235
+        ],
+        [
+          164.40385438972163,
+          235
+        ],
+        [
+          168.40385438972163,
+          235
+        ],
+        [
+          167.40385438972163,
+          235
+        ],
+        [
+          193.40385438972163,
+          234
+        ],
+        [
+          163.90385438972163,
+          234
+        ],
+        [
+          168.40385438972163,
+          233
+        ],
+        [
+          167.40385438972163,
+          234
+        ],
+        [
+          193.40385438972163,
+          233
+        ],
+        [
+          163.90385438972163,
+          233
+        ],
+        [
+          167.90385438972163,
+          233
+        ],
+        [
+          167.40385438972163,
+          232
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 189.0,
+          "cutoffY": 203.0,
+          "componentSizes": [
+            2207
+          ]
+        },
+        {
+          "centerX": 159.5,
+          "cutoffY": 203.8,
+          "componentSizes": [
+            2106
+          ]
+        },
+        {
+          "centerX": 164.0,
+          "cutoffY": 203.20000000000002,
+          "componentSizes": [
+            2092
+          ]
+        },
+        {
+          "centerX": 164.0,
+          "cutoffY": 203.20000000000002,
+          "componentSizes": [
+            2181
+          ]
+        },
+        {
+          "centerX": 189.5,
+          "cutoffY": 194.8,
+          "componentSizes": [
+            2199
+          ]
+        },
+        {
+          "centerX": 160.0,
+          "cutoffY": 194.8,
+          "componentSizes": [
+            2209
+          ]
+        },
+        {
+          "centerX": 164.0,
+          "cutoffY": 194.8,
+          "componentSizes": [
+            2148
+          ]
+        },
+        {
+          "centerX": 163.0,
+          "cutoffY": 194.8,
+          "componentSizes": [
+            2254
+          ]
+        },
+        {
+          "centerX": 189.0,
+          "cutoffY": 194.0,
+          "componentSizes": [
+            2126
+          ]
+        },
+        {
+          "centerX": 159.5,
+          "cutoffY": 194.0,
+          "componentSizes": [
+            2086
+          ]
+        },
+        {
+          "centerX": 164.0,
+          "cutoffY": 194.0,
+          "componentSizes": [
+            1993
+          ]
+        },
+        {
+          "centerX": 163.0,
+          "cutoffY": 194.60000000000002,
+          "componentSizes": [
+            2010
+          ]
+        },
+        {
+          "centerX": 189.0,
+          "cutoffY": 193.60000000000002,
+          "componentSizes": [
+            2080
+          ]
+        },
+        {
+          "centerX": 159.5,
+          "cutoffY": 193.60000000000002,
+          "componentSizes": [
+            2083
+          ]
+        },
+        {
+          "centerX": 163.5,
+          "cutoffY": 193.60000000000002,
+          "componentSizes": [
+            2049
+          ]
+        },
+        {
+          "centerX": 163.0,
+          "cutoffY": 192.8,
+          "componentSizes": [
+            2121
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          189.81672025723472,
+          243
+        ],
+        [
+          160.28440366972478,
+          244
+        ],
+        [
+          164.5115005476451,
+          243
+        ],
+        [
+          164.10895361380798,
+          243
+        ],
+        [
+          189.87064116985377,
+          235
+        ],
+        [
+          160.81050228310502,
+          235
+        ],
+        [
+          164.51302378255946,
+          235
+        ],
+        [
+          163.97297297297297,
+          235
+        ],
+        [
+          189.4808362369338,
+          234
+        ],
+        [
+          160.02433371958284,
+          234
+        ],
+        [
+          164.51180257510728,
+          233
+        ],
+        [
+          164.01450892857142,
+          234
+        ],
+        [
+          189.81103286384976,
+          233
+        ],
+        [
+          160.30526315789473,
+          233
+        ],
+        [
+          164.68,
+          233
+        ],
+        [
+          164.01101321585904,
+          232
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_ne",
+      "source": "Sheets/class_anh_dao_basic_attack_02_ne_v1_20261113j.png",
+      "sourceSha256": "cb89f37246cb89e7304ebbb7f5ec7c0bbc5177ea280186c4fac0774197eca724",
+      "bodyReferenceHeight": 248.83464566929135,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 138,
+      "headSearchRect": [
+        95,
+        40,
+        263,
+        140
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_ne",
+        "headSpan": 127,
+        "height": 229.0,
+        "horizontalOffset": 8.034822601839693,
+        "headHorizontalOffset": 3.034822601839693,
+        "bootHorizontalOffset": 7.034822601839693,
+        "waist": {
+          "position": [
+            168.5,
+            221.0
+          ],
+          "searchRect": [
+            125,
+            161,
+            221,
+            231
+          ],
+          "goldPixels": 198
+        },
+        "head": {
+          "span": 127,
+          "centerX": 173.5,
+          "top": 47,
+          "searchRect": [
+            110,
+            47,
+            259,
+            143
+          ]
+        },
+        "boots": {
+          "centerX": 169.5,
+          "cutoffY": 229.4,
+          "componentSizes": [
+            1144,
+            730
+          ]
+        },
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          168.1441379453061,
+          279
+        ],
+        [
+          135.1441379453061,
+          280
+        ],
+        [
+          150.6441379453061,
+          276
+        ],
+        [
+          147.6441379453061,
+          279
+        ],
+        [
+          174.1441379453061,
+          269
+        ],
+        [
+          144.1441379453061,
+          272
+        ],
+        [
+          154.1441379453061,
+          275
+        ],
+        [
+          148.1441379453061,
+          276
+        ],
+        [
+          172.6441379453061,
+          273
+        ],
+        [
+          142.6441379453061,
+          274
+        ],
+        [
+          151.1441379453061,
+          275
+        ],
+        [
+          146.1441379453061,
+          275
+        ],
+        [
+          169.1441379453061,
+          274
+        ],
+        [
+          140.6441379453061,
+          275
+        ],
+        [
+          148.1441379453061,
+          274
+        ],
+        [
+          140.1441379453061,
+          274
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 160.5,
+          "cutoffY": 230.4,
+          "componentSizes": [
+            2377
+          ]
+        },
+        {
+          "centerX": 127.5,
+          "cutoffY": 231.20000000000002,
+          "componentSizes": [
+            2341
+          ]
+        },
+        {
+          "centerX": 143.0,
+          "cutoffY": 227.8,
+          "componentSizes": [
+            2438
+          ]
+        },
+        {
+          "centerX": 140.0,
+          "cutoffY": 230.0,
+          "componentSizes": [
+            1398,
+            1054
+          ]
+        },
+        {
+          "centerX": 166.5,
+          "cutoffY": 220.8,
+          "componentSizes": [
+            2357
+          ]
+        },
+        {
+          "centerX": 136.5,
+          "cutoffY": 222.60000000000002,
+          "componentSizes": [
+            2589
+          ]
+        },
+        {
+          "centerX": 146.5,
+          "cutoffY": 225.0,
+          "componentSizes": [
+            2180
+          ]
+        },
+        {
+          "centerX": 140.5,
+          "cutoffY": 225.4,
+          "componentSizes": [
+            2540
+          ]
+        },
+        {
+          "centerX": 165.0,
+          "cutoffY": 223.20000000000002,
+          "componentSizes": [
+            2317
+          ]
+        },
+        {
+          "centerX": 135.0,
+          "cutoffY": 224.20000000000002,
+          "componentSizes": [
+            1894
+          ]
+        },
+        {
+          "centerX": 143.5,
+          "cutoffY": 225.4,
+          "componentSizes": [
+            1362,
+            999
+          ]
+        },
+        {
+          "centerX": 138.5,
+          "cutoffY": 226.20000000000002,
+          "componentSizes": [
+            2265
+          ]
+        },
+        {
+          "centerX": 161.5,
+          "cutoffY": 225.0,
+          "componentSizes": [
+            2321
+          ]
+        },
+        {
+          "centerX": 133.0,
+          "cutoffY": 225.8,
+          "componentSizes": [
+            1455,
+            975
+          ]
+        },
+        {
+          "centerX": 140.5,
+          "cutoffY": 225.20000000000002,
+          "componentSizes": [
+            2380
+          ]
+        },
+        {
+          "centerX": 132.5,
+          "cutoffY": 225.4,
+          "componentSizes": [
+            2509
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          166.95797413793105,
+          279
+        ],
+        [
+          135.82932416953037,
+          280
+        ],
+        [
+          144.6,
+          276
+        ],
+        [
+          122.27903469079939,
+          279
+        ],
+        [
+          164.52901353965183,
+          269
+        ],
+        [
+          135.68543689320387,
+          272
+        ],
+        [
+          147.4858934169279,
+          275
+        ],
+        [
+          147.12328767123287,
+          276
+        ],
+        [
+          170.87973997833151,
+          273
+        ],
+        [
+          141.17997750281214,
+          274
+        ],
+        [
+          149.0086393088553,
+          275
+        ],
+        [
+          143.7674672489083,
+          275
+        ],
+        [
+          167.78557312252966,
+          274
+        ],
+        [
+          139.31475748194015,
+          275
+        ],
+        [
+          147.35066371681415,
+          274
+        ],
+        [
+          139.3558994197292,
+          274
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_e",
+      "source": "Sheets/class_anh_dao_basic_attack_02_e_v1_20261113j.png",
+      "sourceSha256": "fa587bbad81a816d390b87440e3ee0d2a982fca42b713c103664f8862850142e",
+      "bodyReferenceHeight": 223.66935483870967,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 129,
+      "headSearchRect": [
+        123,
+        32,
+        252,
+        124
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_e",
+        "headSpan": 124,
+        "height": 215.0,
+        "horizontalOffset": -9.413151364764275,
+        "headHorizontalOffset": 0.5868486352357252,
+        "bootHorizontalOffset": 2.086848635235725,
+        "waist": {
+          "position": [
+            197.0,
+            195.0
+          ],
+          "searchRect": [
+            139,
+            147,
+            234,
+            215
+          ],
+          "goldPixels": 114
+        },
+        "head": {
+          "span": 124,
+          "centerX": 187.0,
+          "top": 36,
+          "searchRect": [
+            125,
+            36,
+            250,
+            126
+          ]
+        },
+        "boots": {
+          "centerX": 185.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1632
+          ]
+        },
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          185.67099575762427,
+          252
+        ],
+        [
+          160.17099575762427,
+          252
+        ],
+        [
+          172.67099575762427,
+          252
+        ],
+        [
+          166.67099575762427,
+          252
+        ],
+        [
+          186.17099575762427,
+          246
+        ],
+        [
+          161.17099575762427,
+          246
+        ],
+        [
+          172.67099575762427,
+          246
+        ],
+        [
+          163.17099575762427,
+          246
+        ],
+        [
+          187.17099575762427,
+          246
+        ],
+        [
+          160.67099575762427,
+          246
+        ],
+        [
+          172.17099575762427,
+          246
+        ],
+        [
+          163.67099575762427,
+          246
+        ],
+        [
+          187.17099575762427,
+          246
+        ],
+        [
+          159.17099575762427,
+          245
+        ],
+        [
+          171.17099575762427,
+          245
+        ],
+        [
+          161.67099575762427,
+          245
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 183.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1931
+          ]
+        },
+        {
+          "centerX": 158.0,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1240,
+            549
+          ]
+        },
+        {
+          "centerX": 170.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1354,
+            752
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            2207
+          ]
+        },
+        {
+          "centerX": 184.0,
+          "cutoffY": 201.4,
+          "componentSizes": [
+            1963
+          ]
+        },
+        {
+          "centerX": 159.0,
+          "cutoffY": 202.20000000000002,
+          "componentSizes": [
+            2472
+          ]
+        },
+        {
+          "centerX": 170.5,
+          "cutoffY": 202.20000000000002,
+          "componentSizes": [
+            2544
+          ]
+        },
+        {
+          "centerX": 161.0,
+          "cutoffY": 202.20000000000002,
+          "componentSizes": [
+            2582
+          ]
+        },
+        {
+          "centerX": 185.0,
+          "cutoffY": 201.20000000000002,
+          "componentSizes": [
+            2552
+          ]
+        },
+        {
+          "centerX": 158.5,
+          "cutoffY": 201.4,
+          "componentSizes": [
+            2497
+          ]
+        },
+        {
+          "centerX": 170.0,
+          "cutoffY": 201.20000000000002,
+          "componentSizes": [
+            2203
+          ]
+        },
+        {
+          "centerX": 161.5,
+          "cutoffY": 201.20000000000002,
+          "componentSizes": [
+            1860
+          ]
+        },
+        {
+          "centerX": 185.0,
+          "cutoffY": 201.4,
+          "componentSizes": [
+            1702
+          ]
+        },
+        {
+          "centerX": 157.0,
+          "cutoffY": 200.60000000000002,
+          "componentSizes": [
+            1884
+          ]
+        },
+        {
+          "centerX": 169.0,
+          "cutoffY": 200.60000000000002,
+          "componentSizes": [
+            1892
+          ]
+        },
+        {
+          "centerX": 159.5,
+          "cutoffY": 200.60000000000002,
+          "componentSizes": [
+            1933
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          185.71680376028203,
+          252
+        ],
+        [
+          155.38510911424905,
+          252
+        ],
+        [
+          168.4546460176991,
+          252
+        ],
+        [
+          161.20148331273177,
+          252
+        ],
+        [
+          185.30865603644648,
+          246
+        ],
+        [
+          156.2027972027972,
+          246
+        ],
+        [
+          169.68366164542294,
+          246
+        ],
+        [
+          158.66326530612244,
+          246
+        ],
+        [
+          181.34804539722572,
+          246
+        ],
+        [
+          155.5136186770428,
+          246
+        ],
+        [
+          169.67591424968475,
+          246
+        ],
+        [
+          160.29705505761845,
+          246
+        ],
+        [
+          185.24184782608697,
+          246
+        ],
+        [
+          157.96378504672896,
+          245
+        ],
+        [
+          171.90465116279069,
+          245
+        ],
+        [
+          162.74657534246575,
+          245
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_se",
+      "source": "Sheets/class_anh_dao_basic_attack_02_se_v1_20261113j.png",
+      "sourceSha256": "7034e3cd0e517a4e84e3bce442ed442e85c69bd972e4984e1955a769ad7ef86f",
+      "bodyReferenceHeight": 201.0,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 121,
+      "headSearchRect": [
+        133,
+        54,
+        254,
+        140
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_se",
+        "headSpan": 121,
+        "height": 201.0,
+        "horizontalOffset": -3.568265682656829,
+        "headHorizontalOffset": -8.068265682656829,
+        "bootHorizontalOffset": -4.068265682656829,
+        "waist": {
+          "position": [
+            190.0,
+            213.0
+          ],
+          "searchRect": [
+            148,
+            165,
+            240,
+            232
+          ],
+          "goldPixels": 154
+        },
+        "head": {
+          "span": 121,
+          "centerX": 194.5,
+          "top": 57,
+          "searchRect": [
+            134,
+            57,
+            255,
+            141
+          ]
+        },
+        "boots": {
+          "centerX": 190.5,
+          "cutoffY": 217.0,
+          "componentSizes": [
+            749,
+            418
+          ]
+        },
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          187.93173431734317,
+          259
+        ],
+        [
+          174.93173431734317,
+          259
+        ],
+        [
+          176.93173431734317,
+          258
+        ],
+        [
+          177.93173431734317,
+          258
+        ],
+        [
+          188.93173431734317,
+          239
+        ],
+        [
+          175.43173431734317,
+          239
+        ],
+        [
+          176.93173431734317,
+          239
+        ],
+        [
+          178.93173431734317,
+          239
+        ],
+        [
+          188.43173431734317,
+          240
+        ],
+        [
+          175.43173431734317,
+          240
+        ],
+        [
+          177.43173431734317,
+          241
+        ],
+        [
+          182.93173431734317,
+          241
+        ],
+        [
+          188.43173431734317,
+          240
+        ],
+        [
+          175.43173431734317,
+          240
+        ],
+        [
+          177.43173431734317,
+          239
+        ],
+        [
+          177.43173431734317,
+          240
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 192.0,
+          "cutoffY": 217.20000000000002,
+          "componentSizes": [
+            1199,
+            483
+          ]
+        },
+        {
+          "centerX": 179.0,
+          "cutoffY": 217.4,
+          "componentSizes": [
+            1407,
+            323
+          ]
+        },
+        {
+          "centerX": 181.0,
+          "cutoffY": 216.4,
+          "componentSizes": [
+            1084,
+            734
+          ]
+        },
+        {
+          "centerX": 182.0,
+          "cutoffY": 216.8,
+          "componentSizes": [
+            909,
+            727
+          ]
+        },
+        {
+          "centerX": 193.0,
+          "cutoffY": 197.4,
+          "componentSizes": [
+            1880
+          ]
+        },
+        {
+          "centerX": 179.5,
+          "cutoffY": 197.20000000000002,
+          "componentSizes": [
+            1822
+          ]
+        },
+        {
+          "centerX": 181.0,
+          "cutoffY": 197.0,
+          "componentSizes": [
+            1878
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 196.60000000000002,
+          "componentSizes": [
+            1843
+          ]
+        },
+        {
+          "centerX": 192.5,
+          "cutoffY": 198.0,
+          "componentSizes": [
+            1962
+          ]
+        },
+        {
+          "centerX": 179.5,
+          "cutoffY": 198.20000000000002,
+          "componentSizes": [
+            953,
+            751
+          ]
+        },
+        {
+          "centerX": 181.5,
+          "cutoffY": 199.0,
+          "componentSizes": [
+            1199,
+            530
+          ]
+        },
+        {
+          "centerX": 187.0,
+          "cutoffY": 199.4,
+          "componentSizes": [
+            1521
+          ]
+        },
+        {
+          "centerX": 192.5,
+          "cutoffY": 198.20000000000002,
+          "componentSizes": [
+            1058,
+            592
+          ]
+        },
+        {
+          "centerX": 179.5,
+          "cutoffY": 198.20000000000002,
+          "componentSizes": [
+            1043,
+            616
+          ]
+        },
+        {
+          "centerX": 181.5,
+          "cutoffY": 197.60000000000002,
+          "componentSizes": [
+            1165,
+            568
+          ]
+        },
+        {
+          "centerX": 181.5,
+          "cutoffY": 198.20000000000002,
+          "componentSizes": [
+            1135,
+            573
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          188.08301404853128,
+          259
+        ],
+        [
+          174.25274725274724,
+          259
+        ],
+        [
+          177.1089108910891,
+          258
+        ],
+        [
+          173.94728434504793,
+          258
+        ],
+        [
+          182.06203007518798,
+          239
+        ],
+        [
+          168.4922480620155,
+          239
+        ],
+        [
+          170.207476635514,
+          239
+        ],
+        [
+          172.56761904761905,
+          239
+        ],
+        [
+          184.6524064171123,
+          240
+        ],
+        [
+          172.49137931034483,
+          240
+        ],
+        [
+          176.804992199688,
+          241
+        ],
+        [
+          180.72760511882998,
+          241
+        ],
+        [
+          186.6988727858293,
+          240
+        ],
+        [
+          172.81742043551088,
+          240
+        ],
+        [
+          176.57004160887655,
+          239
+        ],
+        [
+          175.35147744945567,
+          240
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_s",
+      "source": "Sheets/class_anh_dao_basic_attack_02_s_v1_20261113j.png",
+      "sourceSha256": "4357f38e89f4bfe525955b8f45a8ac6c873273fb28e9296db05c4bca791a3fcb",
+      "bodyReferenceHeight": 209.0,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 113,
+      "headSearchRect": [
+        111,
+        72,
+        243,
+        162
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_s",
+        "headSpan": 113,
+        "height": 209.0,
+        "horizontalOffset": -13.048929663608561,
+        "headHorizontalOffset": -5.548929663608561,
+        "bootHorizontalOffset": -6.548929663608561,
+        "waist": {
+          "position": [
+            193,
+            210
+          ],
+          "searchRect": [
+            142,
+            176,
+            228,
+            238
+          ],
+          "goldPixels": 81
+        },
+        "head": {
+          "span": 113,
+          "centerX": 185.5,
+          "top": 75,
+          "searchRect": [
+            108,
+            75,
+            242,
+            162
+          ]
+        },
+        "boots": {
+          "centerX": 186.5,
+          "cutoffY": 241.4,
+          "componentSizes": [
+            938,
+            867
+          ]
+        },
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          180.95107033639144,
+          288
+        ],
+        [
+          153.95107033639144,
+          288
+        ],
+        [
+          155.45107033639144,
+          288
+        ],
+        [
+          153.45107033639144,
+          288
+        ],
+        [
+          175.95107033639144,
+          257
+        ],
+        [
+          153.95107033639144,
+          256
+        ],
+        [
+          146.45107033639144,
+          256
+        ],
+        [
+          151.45107033639144,
+          257
+        ],
+        [
+          176.45107033639144,
+          257
+        ],
+        [
+          147.45107033639144,
+          260
+        ],
+        [
+          153.45107033639144,
+          258
+        ],
+        [
+          150.95107033639144,
+          259
+        ],
+        [
+          180.95107033639144,
+          261
+        ],
+        [
+          154.45107033639144,
+          262
+        ],
+        [
+          155.45107033639144,
+          261
+        ],
+        [
+          153.95107033639144,
+          262
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 187.5,
+          "cutoffY": 244.0,
+          "componentSizes": [
+            2227
+          ]
+        },
+        {
+          "centerX": 160.5,
+          "cutoffY": 243.8,
+          "componentSizes": [
+            2283
+          ]
+        },
+        {
+          "centerX": 162.0,
+          "cutoffY": 244.20000000000002,
+          "componentSizes": [
+            1183,
+            1065
+          ]
+        },
+        {
+          "centerX": 160.0,
+          "cutoffY": 243.4,
+          "componentSizes": [
+            1236,
+            1179
+          ]
+        },
+        {
+          "centerX": 182.5,
+          "cutoffY": 213.20000000000002,
+          "componentSizes": [
+            1724
+          ]
+        },
+        {
+          "centerX": 160.5,
+          "cutoffY": 212.60000000000002,
+          "componentSizes": [
+            1126,
+            895
+          ]
+        },
+        {
+          "centerX": 153.0,
+          "cutoffY": 212.4,
+          "componentSizes": [
+            1952
+          ]
+        },
+        {
+          "centerX": 158.0,
+          "cutoffY": 212.4,
+          "componentSizes": [
+            2325
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 213.60000000000002,
+          "componentSizes": [
+            1978
+          ]
+        },
+        {
+          "centerX": 154.0,
+          "cutoffY": 216.20000000000002,
+          "componentSizes": [
+            1067,
+            608
+          ]
+        },
+        {
+          "centerX": 160.0,
+          "cutoffY": 214.60000000000002,
+          "componentSizes": [
+            1833
+          ]
+        },
+        {
+          "centerX": 157.5,
+          "cutoffY": 216.4,
+          "componentSizes": [
+            2309
+          ]
+        },
+        {
+          "centerX": 187.5,
+          "cutoffY": 216.8,
+          "componentSizes": [
+            2359
+          ]
+        },
+        {
+          "centerX": 161.0,
+          "cutoffY": 217.4,
+          "componentSizes": [
+            2346
+          ]
+        },
+        {
+          "centerX": 162.0,
+          "cutoffY": 216.8,
+          "componentSizes": [
+            2340
+          ]
+        },
+        {
+          "centerX": 160.5,
+          "cutoffY": 217.8,
+          "componentSizes": [
+            2422
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          180.42897998093423,
+          288
+        ],
+        [
+          156.33094994892747,
+          288
+        ],
+        [
+          156.60824742268042,
+          288
+        ],
+        [
+          153.71948818897638,
+          288
+        ],
+        [
+          183.49659863945578,
+          257
+        ],
+        [
+          157.6357308584687,
+          256
+        ],
+        [
+          156.0311778290993,
+          256
+        ],
+        [
+          153.9860788863109,
+          257
+        ],
+        [
+          181.90956340956342,
+          257
+        ],
+        [
+          152.63211845102506,
+          260
+        ],
+        [
+          156.90051282051283,
+          258
+        ],
+        [
+          157.87286324786325,
+          259
+        ],
+        [
+          185.96603396603396,
+          261
+        ],
+        [
+          154.99621212121212,
+          262
+        ],
+        [
+          154.47358490566037,
+          261
+        ],
+        [
+          154.7623106060606,
+          262
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_n",
+      "source": "Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+      "sourceSha256": "b8a8a34e6b498bf5efbd8c45ad61c545095fec4d6bc6f78bc7c117862ea57d44",
+      "bodyReferenceHeight": 195.4909090909091,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 112,
+      "headSearchRect": [
+        131,
+        44,
+        281,
+        127
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_n",
+        "headSpan": 110,
+        "height": 192.0,
+        "horizontalOffset": 1.7869379014989306,
+        "headHorizontalOffset": 4.786937901498931,
+        "bootHorizontalOffset": 4.286937901498931,
+        "waist": {
+          "position": [
+            191.0,
+            177.0
+          ],
+          "searchRect": [
+            146,
+            149,
+            229,
+            209
+          ],
+          "goldPixels": 162
+        },
+        "head": {
+          "span": 110,
+          "centerX": 188.0,
+          "top": 50,
+          "searchRect": [
+            133,
+            50,
+            273,
+            130
+          ]
+        },
+        "boots": {
+          "centerX": 188.5,
+          "cutoffY": 202.8,
+          "componentSizes": [
+            2031
+          ]
+        },
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          191.86488222698074,
+          243
+        ],
+        [
+          167.36488222698074,
+          243
+        ],
+        [
+          168.86488222698074,
+          243
+        ],
+        [
+          169.36488222698074,
+          243
+        ],
+        [
+          193.36488222698074,
+          237
+        ],
+        [
+          161.36488222698074,
+          237
+        ],
+        [
+          171.36488222698074,
+          237
+        ],
+        [
+          169.36488222698074,
+          237
+        ],
+        [
+          191.86488222698074,
+          236
+        ],
+        [
+          161.86488222698074,
+          236
+        ],
+        [
+          172.86488222698074,
+          236
+        ],
+        [
+          168.86488222698074,
+          236
+        ],
+        [
+          194.36488222698074,
+          236
+        ],
+        [
+          161.36488222698074,
+          236
+        ],
+        [
+          173.36488222698074,
+          236
+        ],
+        [
+          169.86488222698074,
+          236
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 187.5,
+          "cutoffY": 202.4,
+          "componentSizes": [
+            2282
+          ]
+        },
+        {
+          "centerX": 163.0,
+          "cutoffY": 202.4,
+          "componentSizes": [
+            2360
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 202.4,
+          "componentSizes": [
+            2268
+          ]
+        },
+        {
+          "centerX": 165.0,
+          "cutoffY": 202.4,
+          "componentSizes": [
+            2227
+          ]
+        },
+        {
+          "centerX": 189.0,
+          "cutoffY": 196.20000000000002,
+          "componentSizes": [
+            2213
+          ]
+        },
+        {
+          "centerX": 157.0,
+          "cutoffY": 196.20000000000002,
+          "componentSizes": [
+            2267
+          ]
+        },
+        {
+          "centerX": 167.0,
+          "cutoffY": 196.20000000000002,
+          "componentSizes": [
+            2304
+          ]
+        },
+        {
+          "centerX": 165.0,
+          "cutoffY": 196.20000000000002,
+          "componentSizes": [
+            2256
+          ]
+        },
+        {
+          "centerX": 187.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2252
+          ]
+        },
+        {
+          "centerX": 157.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2232
+          ]
+        },
+        {
+          "centerX": 168.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2190
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2208
+          ]
+        },
+        {
+          "centerX": 190.0,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2221
+          ]
+        },
+        {
+          "centerX": 157.0,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2209
+          ]
+        },
+        {
+          "centerX": 169.0,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2201
+          ]
+        },
+        {
+          "centerX": 165.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2216
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          189.11099252934898,
+          243
+        ],
+        [
+          156.69851380042462,
+          243
+        ],
+        [
+          168.07288317256163,
+          243
+        ],
+        [
+          165.17956989247313,
+          243
+        ],
+        [
+          188.8961038961039,
+          237
+        ],
+        [
+          157.0653594771242,
+          237
+        ],
+        [
+          167.99237472766885,
+          237
+        ],
+        [
+          165.16160520607374,
+          237
+        ],
+        [
+          189.19827586206895,
+          236
+        ],
+        [
+          156.59418729817008,
+          236
+        ],
+        [
+          168.35560344827587,
+          236
+        ],
+        [
+          165.580404685836,
+          236
+        ],
+        [
+          189.68988764044943,
+          236
+        ],
+        [
+          157.33107344632768,
+          236
+        ],
+        [
+          168.56433408577877,
+          236
+        ],
+        [
+          165.4002254791432,
+          236
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_ne",
+      "source": "Sheets/class_anh_dao_basic_attack_03_ne_v1_20261113j.png",
+      "sourceSha256": "0e35054fc6b40d4266780b55d0465590ebf51176838f835942d6761735b67fcb",
+      "bodyReferenceHeight": 234.40944881889763,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 130,
+      "headSearchRect": [
+        109,
+        43,
+        264,
+        140
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_ne",
+        "headSpan": 127,
+        "height": 229.0,
+        "horizontalOffset": 8.034822601839693,
+        "headHorizontalOffset": 3.034822601839693,
+        "bootHorizontalOffset": 7.034822601839693,
+        "waist": {
+          "position": [
+            168.5,
+            221.0
+          ],
+          "searchRect": [
+            125,
+            161,
+            221,
+            231
+          ],
+          "goldPixels": 198
+        },
+        "head": {
+          "span": 127,
+          "centerX": 173.5,
+          "top": 47,
+          "searchRect": [
+            110,
+            47,
+            259,
+            143
+          ]
+        },
+        "boots": {
+          "centerX": 169.5,
+          "cutoffY": 229.4,
+          "componentSizes": [
+            1144,
+            730
+          ]
+        },
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          176.70099951369417,
+          275
+        ],
+        [
+          145.20099951369417,
+          275
+        ],
+        [
+          148.20099951369417,
+          275
+        ],
+        [
+          157.70099951369417,
+          273
+        ],
+        [
+          184.70099951369417,
+          270
+        ],
+        [
+          151.20099951369417,
+          268
+        ],
+        [
+          150.20099951369417,
+          269
+        ],
+        [
+          155.20099951369417,
+          269
+        ],
+        [
+          184.70099951369417,
+          270
+        ],
+        [
+          150.20099951369417,
+          270
+        ],
+        [
+          149.70099951369417,
+          272
+        ],
+        [
+          155.70099951369417,
+          272
+        ],
+        [
+          180.20099951369417,
+          272
+        ],
+        [
+          151.70099951369417,
+          272
+        ],
+        [
+          150.70099951369417,
+          273
+        ],
+        [
+          153.70099951369417,
+          272
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 169.5,
+          "cutoffY": 227.8,
+          "componentSizes": [
+            2130
+          ]
+        },
+        {
+          "centerX": 138.0,
+          "cutoffY": 227.8,
+          "componentSizes": [
+            1170,
+            851
+          ]
+        },
+        {
+          "centerX": 141.0,
+          "cutoffY": 227.20000000000002,
+          "componentSizes": [
+            1230,
+            876
+          ]
+        },
+        {
+          "centerX": 150.5,
+          "cutoffY": 225.4,
+          "componentSizes": [
+            1265,
+            920
+          ]
+        },
+        {
+          "centerX": 177.5,
+          "cutoffY": 222.4,
+          "componentSizes": [
+            1233,
+            907
+          ]
+        },
+        {
+          "centerX": 144.0,
+          "cutoffY": 220.60000000000002,
+          "componentSizes": [
+            1285,
+            904
+          ]
+        },
+        {
+          "centerX": 143.0,
+          "cutoffY": 221.20000000000002,
+          "componentSizes": [
+            2054
+          ]
+        },
+        {
+          "centerX": 148.0,
+          "cutoffY": 220.60000000000002,
+          "componentSizes": [
+            2178
+          ]
+        },
+        {
+          "centerX": 177.5,
+          "cutoffY": 221.8,
+          "componentSizes": [
+            2128
+          ]
+        },
+        {
+          "centerX": 143.0,
+          "cutoffY": 222.20000000000002,
+          "componentSizes": [
+            2013
+          ]
+        },
+        {
+          "centerX": 142.5,
+          "cutoffY": 224.20000000000002,
+          "componentSizes": [
+            1189,
+            805
+          ]
+        },
+        {
+          "centerX": 148.5,
+          "cutoffY": 224.20000000000002,
+          "componentSizes": [
+            2046
+          ]
+        },
+        {
+          "centerX": 173.0,
+          "cutoffY": 224.0,
+          "componentSizes": [
+            2223
+          ]
+        },
+        {
+          "centerX": 144.5,
+          "cutoffY": 224.4,
+          "componentSizes": [
+            2246
+          ]
+        },
+        {
+          "centerX": 143.5,
+          "cutoffY": 225.20000000000002,
+          "componentSizes": [
+            2145
+          ]
+        },
+        {
+          "centerX": 146.5,
+          "cutoffY": 224.4,
+          "componentSizes": [
+            2334
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          175.4435196195006,
+          275
+        ],
+        [
+          144.26591760299627,
+          275
+        ],
+        [
+          146.51328502415458,
+          275
+        ],
+        [
+          152.23333333333332,
+          273
+        ],
+        [
+          179.25364077669903,
+          270
+        ],
+        [
+          147.14625,
+          268
+        ],
+        [
+          149.64129032258066,
+          269
+        ],
+        [
+          154.87951807228916,
+          269
+        ],
+        [
+          183.2729693741678,
+          270
+        ],
+        [
+          150.68498659517425,
+          270
+        ],
+        [
+          147.80940892641738,
+          272
+        ],
+        [
+          153.82415005861665,
+          272
+        ],
+        [
+          174.74459320288364,
+          272
+        ],
+        [
+          145.74430641821945,
+          272
+        ],
+        [
+          147.28,
+          273
+        ],
+        [
+          150.77001013171227,
+          272
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_e",
+      "source": "Sheets/class_anh_dao_basic_attack_03_e_v1_20261113j.png",
+      "sourceSha256": "b5ab108a64fe7eb3c250c0e58ff7aa8e29ff9c1d1d8314422d291b2007788c89",
+      "bodyReferenceHeight": 216.73387096774192,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 125,
+      "headSearchRect": [
+        126,
+        36,
+        251,
+        126
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_e",
+        "headSpan": 124,
+        "height": 215.0,
+        "horizontalOffset": -9.413151364764275,
+        "headHorizontalOffset": 0.5868486352357252,
+        "bootHorizontalOffset": 2.086848635235725,
+        "waist": {
+          "position": [
+            197.0,
+            195.0
+          ],
+          "searchRect": [
+            139,
+            147,
+            234,
+            215
+          ],
+          "goldPixels": 114
+        },
+        "head": {
+          "span": 124,
+          "centerX": 187.0,
+          "top": 36,
+          "searchRect": [
+            125,
+            36,
+            250,
+            126
+          ]
+        },
+        "boots": {
+          "centerX": 185.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1632
+          ]
+        },
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          184.60367805971345,
+          251
+        ],
+        [
+          169.10367805971345,
+          251
+        ],
+        [
+          174.60367805971345,
+          251
+        ],
+        [
+          182.10367805971345,
+          251
+        ],
+        [
+          192.10367805971345,
+          244
+        ],
+        [
+          174.60367805971345,
+          244
+        ],
+        [
+          173.10367805971345,
+          244
+        ],
+        [
+          175.60367805971345,
+          244
+        ],
+        [
+          186.10367805971345,
+          245
+        ],
+        [
+          170.10367805971345,
+          246
+        ],
+        [
+          172.10367805971345,
+          245
+        ],
+        [
+          177.60367805971345,
+          246
+        ],
+        [
+          186.60367805971345,
+          245
+        ],
+        [
+          169.10367805971345,
+          245
+        ],
+        [
+          172.10367805971345,
+          245
+        ],
+        [
+          177.60367805971345,
+          245
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 182.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1637
+          ]
+        },
+        {
+          "centerX": 167.0,
+          "cutoffY": 207.0,
+          "componentSizes": [
+            1716
+          ]
+        },
+        {
+          "centerX": 172.5,
+          "cutoffY": 207.0,
+          "componentSizes": [
+            2315
+          ]
+        },
+        {
+          "centerX": 180.0,
+          "cutoffY": 207.0,
+          "componentSizes": [
+            2369
+          ]
+        },
+        {
+          "centerX": 190.0,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            2345
+          ]
+        },
+        {
+          "centerX": 172.5,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            2212
+          ]
+        },
+        {
+          "centerX": 171.0,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            1821
+          ]
+        },
+        {
+          "centerX": 173.5,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            1847
+          ]
+        },
+        {
+          "centerX": 184.0,
+          "cutoffY": 201.0,
+          "componentSizes": [
+            1817
+          ]
+        },
+        {
+          "centerX": 168.0,
+          "cutoffY": 201.8,
+          "componentSizes": [
+            1747
+          ]
+        },
+        {
+          "centerX": 170.0,
+          "cutoffY": 201.0,
+          "componentSizes": [
+            1513
+          ]
+        },
+        {
+          "centerX": 175.5,
+          "cutoffY": 201.8,
+          "componentSizes": [
+            829,
+            370
+          ]
+        },
+        {
+          "centerX": 184.5,
+          "cutoffY": 200.8,
+          "componentSizes": [
+            1417
+          ]
+        },
+        {
+          "centerX": 167.0,
+          "cutoffY": 200.8,
+          "componentSizes": [
+            1478
+          ]
+        },
+        {
+          "centerX": 170.0,
+          "cutoffY": 200.8,
+          "componentSizes": [
+            1474
+          ]
+        },
+        {
+          "centerX": 175.5,
+          "cutoffY": 200.8,
+          "componentSizes": [
+            1524
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          187.3163152053274,
+          251
+        ],
+        [
+          169.38530066815144,
+          251
+        ],
+        [
+          171.5627118644068,
+          251
+        ],
+        [
+          177.01135073779795,
+          251
+        ],
+        [
+          186.3784090909091,
+          244
+        ],
+        [
+          169.09837962962962,
+          244
+        ],
+        [
+          171.31715575620768,
+          244
+        ],
+        [
+          183.1545711592837,
+          244
+        ],
+        [
+          187.89874739039666,
+          245
+        ],
+        [
+          169.66903073286053,
+          246
+        ],
+        [
+          172.1541019955654,
+          245
+        ],
+        [
+          177.70165094339623,
+          246
+        ],
+        [
+          187.2808302808303,
+          245
+        ],
+        [
+          170.6781883194279,
+          245
+        ],
+        [
+          173.60926365795726,
+          245
+        ],
+        [
+          178.2953431372549,
+          245
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_se",
+      "source": "Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+      "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+      "bodyReferenceHeight": 217.61157024793388,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 131,
+      "headSearchRect": [
+        128,
+        47,
+        262,
+        136
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_se",
+        "headSpan": 121,
+        "height": 201.0,
+        "horizontalOffset": -3.568265682656829,
+        "headHorizontalOffset": -8.068265682656829,
+        "bootHorizontalOffset": -4.068265682656829,
+        "waist": {
+          "position": [
+            190.0,
+            213.0
+          ],
+          "searchRect": [
+            148,
+            165,
+            240,
+            232
+          ],
+          "goldPixels": 154
+        },
+        "head": {
+          "span": 121,
+          "centerX": 194.5,
+          "top": 57,
+          "searchRect": [
+            134,
+            57,
+            255,
+            141
+          ]
+        },
+        "boots": {
+          "centerX": 190.5,
+          "cutoffY": 217.0,
+          "componentSizes": [
+            749,
+            418
+          ]
+        },
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          192.59551401299137,
+          261
+        ],
+        [
+          176.09551401299137,
+          262
+        ],
+        [
+          197.09551401299137,
+          261
+        ],
+        [
+          196.09551401299137,
+          261
+        ],
+        [
+          185.09551401299137,
+          243
+        ],
+        [
+          178.59551401299137,
+          243
+        ],
+        [
+          197.09551401299137,
+          243
+        ],
+        [
+          198.59551401299137,
+          243
+        ],
+        [
+          180.59551401299137,
+          244
+        ],
+        [
+          178.59551401299137,
+          244
+        ],
+        [
+          198.59551401299137,
+          244
+        ],
+        [
+          197.09551401299137,
+          244
+        ],
+        [
+          186.09551401299137,
+          244
+        ],
+        [
+          180.59551401299137,
+          244
+        ],
+        [
+          199.09551401299137,
+          244
+        ],
+        [
+          198.09551401299137,
+          244
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 197.0,
+          "cutoffY": 217.4,
+          "componentSizes": [
+            1576
+          ]
+        },
+        {
+          "centerX": 180.5,
+          "cutoffY": 218.20000000000002,
+          "componentSizes": [
+            1078,
+            820
+          ]
+        },
+        {
+          "centerX": 201.5,
+          "cutoffY": 217.20000000000002,
+          "componentSizes": [
+            2373
+          ]
+        },
+        {
+          "centerX": 200.5,
+          "cutoffY": 217.20000000000002,
+          "componentSizes": [
+            2362
+          ]
+        },
+        {
+          "centerX": 189.5,
+          "cutoffY": 199.4,
+          "componentSizes": [
+            1640,
+            509
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 199.60000000000002,
+          "componentSizes": [
+            1276,
+            772
+          ]
+        },
+        {
+          "centerX": 201.5,
+          "cutoffY": 199.4,
+          "componentSizes": [
+            2255
+          ]
+        },
+        {
+          "centerX": 203.0,
+          "cutoffY": 199.4,
+          "componentSizes": [
+            913,
+            875
+          ]
+        },
+        {
+          "centerX": 185.0,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            2235
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            2266
+          ]
+        },
+        {
+          "centerX": 203.0,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            2181
+          ]
+        },
+        {
+          "centerX": 201.5,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            2066
+          ]
+        },
+        {
+          "centerX": 190.5,
+          "cutoffY": 200.20000000000002,
+          "componentSizes": [
+            1386,
+            418
+          ]
+        },
+        {
+          "centerX": 185.0,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            1400,
+            481
+          ]
+        },
+        {
+          "centerX": 203.5,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            1429,
+            475
+          ]
+        },
+        {
+          "centerX": 202.5,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            1444,
+            373
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          185.9375,
+          261
+        ],
+        [
+          173.9454094292804,
+          262
+        ],
+        [
+          194.0185676392573,
+          261
+        ],
+        [
+          193.572,
+          261
+        ],
+        [
+          180.29713423831072,
+          243
+        ],
+        [
+          174.65074626865672,
+          243
+        ],
+        [
+          192.29559748427673,
+          243
+        ],
+        [
+          181.1219512195122,
+          243
+        ],
+        [
+          173.16692426584234,
+          244
+        ],
+        [
+          173.29601226993864,
+          244
+        ],
+        [
+          193.83735909822866,
+          244
+        ],
+        [
+          194.82495667244368,
+          244
+        ],
+        [
+          183.42638036809817,
+          244
+        ],
+        [
+          178.59476117103236,
+          244
+        ],
+        [
+          197.63650075414782,
+          244
+        ],
+        [
+          196.36882716049382,
+          244
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_s",
+      "source": "Sheets/class_anh_dao_basic_attack_03_s_v1_20261113j.png",
+      "sourceSha256": "a13d22a37faa5faa743b636506c16efff84f97b75096ca8214b0b4db95064c4d",
+      "bodyReferenceHeight": 212.69911504424778,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 115,
+      "headSearchRect": [
+        104,
+        72,
+        242,
+        162
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_s",
+        "headSpan": 113,
+        "height": 209.0,
+        "horizontalOffset": -13.048929663608561,
+        "headHorizontalOffset": -5.548929663608561,
+        "bootHorizontalOffset": -6.548929663608561,
+        "waist": {
+          "position": [
+            193,
+            210
+          ],
+          "searchRect": [
+            142,
+            176,
+            228,
+            238
+          ],
+          "goldPixels": 81
+        },
+        "head": {
+          "span": 113,
+          "centerX": 185.5,
+          "top": 75,
+          "searchRect": [
+            108,
+            75,
+            242,
+            162
+          ]
+        },
+        "boots": {
+          "centerX": 186.5,
+          "cutoffY": 241.4,
+          "componentSizes": [
+            938,
+            867
+          ]
+        },
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          177.83516007685856,
+          288
+        ],
+        [
+          157.83516007685856,
+          289
+        ],
+        [
+          167.33516007685856,
+          289
+        ],
+        [
+          172.33516007685856,
+          289
+        ],
+        [
+          177.33516007685856,
+          258
+        ],
+        [
+          160.33516007685856,
+          258
+        ],
+        [
+          167.33516007685856,
+          258
+        ],
+        [
+          175.83516007685856,
+          258
+        ],
+        [
+          176.83516007685856,
+          260
+        ],
+        [
+          157.33516007685856,
+          261
+        ],
+        [
+          167.83516007685856,
+          261
+        ],
+        [
+          176.83516007685856,
+          260
+        ],
+        [
+          177.83516007685856,
+          260
+        ],
+        [
+          161.33516007685856,
+          260
+        ],
+        [
+          171.33516007685856,
+          261
+        ],
+        [
+          180.83516007685856,
+          261
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 184.5,
+          "cutoffY": 244.0,
+          "componentSizes": [
+            2060
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 244.8,
+          "componentSizes": [
+            1043,
+            997
+          ]
+        },
+        {
+          "centerX": 174.0,
+          "cutoffY": 244.60000000000002,
+          "componentSizes": [
+            2026
+          ]
+        },
+        {
+          "centerX": 179.0,
+          "cutoffY": 244.60000000000002,
+          "componentSizes": [
+            2141
+          ]
+        },
+        {
+          "centerX": 184.0,
+          "cutoffY": 213.60000000000002,
+          "componentSizes": [
+            2100
+          ]
+        },
+        {
+          "centerX": 167.0,
+          "cutoffY": 213.4,
+          "componentSizes": [
+            1047,
+            1020
+          ]
+        },
+        {
+          "centerX": 174.0,
+          "cutoffY": 213.20000000000002,
+          "componentSizes": [
+            1161,
+            984
+          ]
+        },
+        {
+          "centerX": 182.5,
+          "cutoffY": 213.20000000000002,
+          "componentSizes": [
+            1133,
+            1065
+          ]
+        },
+        {
+          "centerX": 183.5,
+          "cutoffY": 215.60000000000002,
+          "componentSizes": [
+            2223
+          ]
+        },
+        {
+          "centerX": 164.0,
+          "cutoffY": 215.60000000000002,
+          "componentSizes": [
+            2277
+          ]
+        },
+        {
+          "centerX": 174.5,
+          "cutoffY": 215.60000000000002,
+          "componentSizes": [
+            2297
+          ]
+        },
+        {
+          "centerX": 183.5,
+          "cutoffY": 215.60000000000002,
+          "componentSizes": [
+            1123,
+            1118
+          ]
+        },
+        {
+          "centerX": 184.5,
+          "cutoffY": 215.8,
+          "componentSizes": [
+            2159
+          ]
+        },
+        {
+          "centerX": 168.0,
+          "cutoffY": 216.0,
+          "componentSizes": [
+            1149,
+            1017
+          ]
+        },
+        {
+          "centerX": 178.0,
+          "cutoffY": 216.8,
+          "componentSizes": [
+            2140
+          ]
+        },
+        {
+          "centerX": 187.5,
+          "cutoffY": 217.0,
+          "componentSizes": [
+            2037
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          179.24124881740775,
+          288
+        ],
+        [
+          165.5835995740149,
+          289
+        ],
+        [
+          172.92872117400418,
+          289
+        ],
+        [
+          177.30666666666667,
+          289
+        ],
+        [
+          182.93167701863354,
+          258
+        ],
+        [
+          166.1679292929293,
+          258
+        ],
+        [
+          172.25204200700117,
+          258
+        ],
+        [
+          181.55741626794259,
+          258
+        ],
+        [
+          182.6703910614525,
+          260
+        ],
+        [
+          164.07062780269058,
+          261
+        ],
+        [
+          170.63258785942492,
+          261
+        ],
+        [
+          178.84563758389262,
+          260
+        ],
+        [
+          179.8641304347826,
+          260
+        ],
+        [
+          163.3569530558016,
+          260
+        ],
+        [
+          172.41003787878788,
+          261
+        ],
+        [
+          181.90218423551758,
+          261
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_interact_n",
+      "source": "Sheets/class_anh_dao_interact_n_v1_20261113j.png",
+      "sourceSha256": "f2ccb7db551d008b2709b233dbee38cb4282df20a5e4363ee76b3d5c6f45dd3b",
+      "bodyReferenceHeight": 198.98181818181817,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 114,
+      "headSearchRect": [
+        132,
+        45,
+        278,
+        128
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_n",
+        "headSpan": 110,
+        "height": 192.0,
+        "horizontalOffset": 1.7869379014989306,
+        "headHorizontalOffset": 4.786937901498931,
+        "bootHorizontalOffset": 4.286937901498931,
+        "waist": {
+          "position": [
+            191.0,
+            177.0
+          ],
+          "searchRect": [
+            146,
+            149,
+            229,
+            209
+          ],
+          "goldPixels": 162
+        },
+        "head": {
+          "span": 110,
+          "centerX": 188.0,
+          "top": 50,
+          "searchRect": [
+            133,
+            50,
+            273,
+            130
+          ]
+        },
+        "boots": {
+          "centerX": 188.5,
+          "cutoffY": 202.8,
+          "componentSizes": [
+            2031
+          ]
+        },
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          191.94282655246252,
+          244
+        ],
+        [
+          175.44282655246252,
+          244
+        ],
+        [
+          181.44282655246252,
+          244
+        ],
+        [
+          186.44282655246252,
+          244
+        ],
+        [
+          196.44282655246252,
+          230
+        ],
+        [
+          183.94282655246252,
+          230
+        ],
+        [
+          192.44282655246252,
+          230
+        ],
+        [
+          196.94282655246252,
+          230
+        ],
+        [
+          203.94282655246252,
+          235
+        ],
+        [
+          184.94282655246252,
+          235
+        ],
+        [
+          187.94282655246252,
+          236
+        ],
+        [
+          187.94282655246252,
+          237
+        ],
+        [
+          193.44282655246252,
+          237
+        ],
+        [
+          178.94282655246252,
+          236
+        ],
+        [
+          184.44282655246252,
+          236
+        ],
+        [
+          187.44282655246252,
+          237
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 187.5,
+          "cutoffY": 203.4,
+          "componentSizes": [
+            2245
+          ]
+        },
+        {
+          "centerX": 171.0,
+          "cutoffY": 204.8,
+          "componentSizes": [
+            2271
+          ]
+        },
+        {
+          "centerX": 177.0,
+          "cutoffY": 204.0,
+          "componentSizes": [
+            2311
+          ]
+        },
+        {
+          "centerX": 182.0,
+          "cutoffY": 204.60000000000002,
+          "componentSizes": [
+            2299
+          ]
+        },
+        {
+          "centerX": 192.0,
+          "cutoffY": 191.4,
+          "componentSizes": [
+            2273
+          ]
+        },
+        {
+          "centerX": 179.5,
+          "cutoffY": 191.6,
+          "componentSizes": [
+            2287
+          ]
+        },
+        {
+          "centerX": 188.0,
+          "cutoffY": 192.4,
+          "componentSizes": [
+            2200
+          ]
+        },
+        {
+          "centerX": 192.5,
+          "cutoffY": 192.8,
+          "componentSizes": [
+            2199
+          ]
+        },
+        {
+          "centerX": 199.5,
+          "cutoffY": 197.8,
+          "componentSizes": [
+            2211
+          ]
+        },
+        {
+          "centerX": 180.5,
+          "cutoffY": 197.20000000000002,
+          "componentSizes": [
+            2214
+          ]
+        },
+        {
+          "centerX": 183.5,
+          "cutoffY": 197.4,
+          "componentSizes": [
+            2289
+          ]
+        },
+        {
+          "centerX": 183.5,
+          "cutoffY": 196.20000000000002,
+          "componentSizes": [
+            2351
+          ]
+        },
+        {
+          "centerX": 189.0,
+          "cutoffY": 196.0,
+          "componentSizes": [
+            2281
+          ]
+        },
+        {
+          "centerX": 174.5,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2267
+          ]
+        },
+        {
+          "centerX": 180.0,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            2195
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 196.4,
+          "componentSizes": [
+            2163
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          190.72268907563026,
+          244
+        ],
+        [
+          173.3975903614458,
+          244
+        ],
+        [
+          179.0221975582686,
+          244
+        ],
+        [
+          182.14128035320087,
+          244
+        ],
+        [
+          190.46272189349114,
+          230
+        ],
+        [
+          175.68574908647992,
+          230
+        ],
+        [
+          182.70863309352518,
+          230
+        ],
+        [
+          187.78528347406512,
+          230
+        ],
+        [
+          194.2644721906924,
+          235
+        ],
+        [
+          177.78587443946188,
+          235
+        ],
+        [
+          182.40760295670538,
+          236
+        ],
+        [
+          185.12863534675614,
+          237
+        ],
+        [
+          189.37273823884198,
+          237
+        ],
+        [
+          173.35714285714286,
+          236
+        ],
+        [
+          179.87334801762114,
+          236
+        ],
+        [
+          182.1869822485207,
+          237
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_interact_ne",
+      "source": "Sheets/class_anh_dao_interact_ne_v1_20261113j.png",
+      "sourceSha256": "a21378eedd5902591d371a22d791ecc2236d141cbfc35dc836db80017d32f811",
+      "bodyReferenceHeight": 232.60629921259843,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 129,
+      "headSearchRect": [
+        111,
+        46,
+        260,
+        142
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_ne",
+        "headSpan": 127,
+        "height": 229.0,
+        "horizontalOffset": 8.034822601839693,
+        "headHorizontalOffset": 3.034822601839693,
+        "bootHorizontalOffset": 7.034822601839693,
+        "waist": {
+          "position": [
+            168.5,
+            221.0
+          ],
+          "searchRect": [
+            125,
+            161,
+            221,
+            231
+          ],
+          "goldPixels": 198
+        },
+        "head": {
+          "span": 127,
+          "centerX": 173.5,
+          "top": 47,
+          "searchRect": [
+            110,
+            47,
+            259,
+            143
+          ]
+        },
+        "boots": {
+          "centerX": 169.5,
+          "cutoffY": 229.4,
+          "componentSizes": [
+            1144,
+            730
+          ]
+        },
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          175.64560720974268,
+          275
+        ],
+        [
+          147.64560720974268,
+          275
+        ],
+        [
+          146.64560720974268,
+          275
+        ],
+        [
+          149.64560720974268,
+          275
+        ],
+        [
+          161.64560720974268,
+          268
+        ],
+        [
+          134.64560720974268,
+          268
+        ],
+        [
+          130.64560720974268,
+          268
+        ],
+        [
+          128.14560720974268,
+          268
+        ],
+        [
+          141.64560720974268,
+          271
+        ],
+        [
+          126.14560720974268,
+          271
+        ],
+        [
+          133.14560720974268,
+          271
+        ],
+        [
+          143.14560720974268,
+          271
+        ],
+        [
+          172.64560720974268,
+          274
+        ],
+        [
+          152.64560720974268,
+          274
+        ],
+        [
+          152.14560720974268,
+          274
+        ],
+        [
+          159.14560720974268,
+          274
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 168.5,
+          "cutoffY": 228.4,
+          "componentSizes": [
+            2002
+          ]
+        },
+        {
+          "centerX": 140.5,
+          "cutoffY": 229.0,
+          "componentSizes": [
+            1925
+          ]
+        },
+        {
+          "centerX": 139.5,
+          "cutoffY": 228.60000000000002,
+          "componentSizes": [
+            1117,
+            787
+          ]
+        },
+        {
+          "centerX": 142.5,
+          "cutoffY": 228.4,
+          "componentSizes": [
+            1020,
+            683
+          ]
+        },
+        {
+          "centerX": 154.5,
+          "cutoffY": 221.4,
+          "componentSizes": [
+            1099,
+            435
+          ]
+        },
+        {
+          "centerX": 127.5,
+          "cutoffY": 222.0,
+          "componentSizes": [
+            1122,
+            427
+          ]
+        },
+        {
+          "centerX": 123.5,
+          "cutoffY": 222.8,
+          "componentSizes": [
+            1826
+          ]
+        },
+        {
+          "centerX": 121.0,
+          "cutoffY": 223.20000000000002,
+          "componentSizes": [
+            1017,
+            733
+          ]
+        },
+        {
+          "centerX": 134.5,
+          "cutoffY": 225.8,
+          "componentSizes": [
+            947,
+            876
+          ]
+        },
+        {
+          "centerX": 119.0,
+          "cutoffY": 225.0,
+          "componentSizes": [
+            1863
+          ]
+        },
+        {
+          "centerX": 126.0,
+          "cutoffY": 224.20000000000002,
+          "componentSizes": [
+            1013,
+            812
+          ]
+        },
+        {
+          "centerX": 136.0,
+          "cutoffY": 223.60000000000002,
+          "componentSizes": [
+            1994
+          ]
+        },
+        {
+          "centerX": 165.5,
+          "cutoffY": 225.60000000000002,
+          "componentSizes": [
+            2225
+          ]
+        },
+        {
+          "centerX": 145.5,
+          "cutoffY": 225.8,
+          "componentSizes": [
+            2093
+          ]
+        },
+        {
+          "centerX": 145.0,
+          "cutoffY": 226.4,
+          "componentSizes": [
+            1818
+          ]
+        },
+        {
+          "centerX": 152.0,
+          "cutoffY": 226.20000000000002,
+          "componentSizes": [
+            2224
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          175.3811230585424,
+          275
+        ],
+        [
+          148.72033898305085,
+          275
+        ],
+        [
+          148.9064039408867,
+          275
+        ],
+        [
+          152.23461538461538,
+          275
+        ],
+        [
+          161.46314496314497,
+          268
+        ],
+        [
+          135.45454545454547,
+          268
+        ],
+        [
+          132.3078677309008,
+          268
+        ],
+        [
+          129.28787878787878,
+          268
+        ],
+        [
+          143.91095890410958,
+          271
+        ],
+        [
+          127.80710659898477,
+          271
+        ],
+        [
+          132.64312267657994,
+          271
+        ],
+        [
+          143.5962962962963,
+          271
+        ],
+        [
+          173.1138497652582,
+          274
+        ],
+        [
+          153.52699530516432,
+          274
+        ],
+        [
+          152.56138392857142,
+          274
+        ],
+        [
+          159.48354143019296,
+          274
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_interact_e",
+      "source": "Sheets/class_anh_dao_interact_e_v1_20261113j.png",
+      "sourceSha256": "d4a8b0c143d4731cff2000f56cee8ddfe0cb5b84bde931e41ed33c8781b31d23",
+      "bodyReferenceHeight": 221.93548387096774,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 128,
+      "headSearchRect": [
+        123,
+        36,
+        251,
+        126
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_e",
+        "headSpan": 124,
+        "height": 215.0,
+        "horizontalOffset": -9.413151364764275,
+        "headHorizontalOffset": 0.5868486352357252,
+        "bootHorizontalOffset": 2.086848635235725,
+        "waist": {
+          "position": [
+            197.0,
+            195.0
+          ],
+          "searchRect": [
+            139,
+            147,
+            234,
+            215
+          ],
+          "goldPixels": 114
+        },
+        "head": {
+          "span": 124,
+          "centerX": 187.0,
+          "top": 36,
+          "searchRect": [
+            125,
+            36,
+            250,
+            126
+          ]
+        },
+        "boots": {
+          "centerX": 185.5,
+          "cutoffY": 207.20000000000002,
+          "componentSizes": [
+            1632
+          ]
+        },
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          187.15416633314655,
+          252
+        ],
+        [
+          162.15416633314655,
+          252
+        ],
+        [
+          164.65416633314655,
+          252
+        ],
+        [
+          157.65416633314655,
+          252
+        ],
+        [
+          171.65416633314655,
+          245
+        ],
+        [
+          151.65416633314655,
+          244
+        ],
+        [
+          155.65416633314655,
+          244
+        ],
+        [
+          151.65416633314655,
+          244
+        ],
+        [
+          163.15416633314655,
+          247
+        ],
+        [
+          155.15416633314655,
+          247
+        ],
+        [
+          160.65416633314655,
+          247
+        ],
+        [
+          162.65416633314655,
+          247
+        ],
+        [
+          180.15416633314655,
+          247
+        ],
+        [
+          166.65416633314655,
+          248
+        ],
+        [
+          174.15416633314655,
+          248
+        ],
+        [
+          174.65416633314655,
+          248
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 185.0,
+          "cutoffY": 208.0,
+          "componentSizes": [
+            1749
+          ]
+        },
+        {
+          "centerX": 160.0,
+          "cutoffY": 207.60000000000002,
+          "componentSizes": [
+            1577
+          ]
+        },
+        {
+          "centerX": 162.5,
+          "cutoffY": 207.4,
+          "componentSizes": [
+            1062,
+            697
+          ]
+        },
+        {
+          "centerX": 155.5,
+          "cutoffY": 207.60000000000002,
+          "componentSizes": [
+            1241,
+            556
+          ]
+        },
+        {
+          "centerX": 169.5,
+          "cutoffY": 200.60000000000002,
+          "componentSizes": [
+            1198,
+            607
+          ]
+        },
+        {
+          "centerX": 149.5,
+          "cutoffY": 199.8,
+          "componentSizes": [
+            1114,
+            768
+          ]
+        },
+        {
+          "centerX": 153.5,
+          "cutoffY": 200.60000000000002,
+          "componentSizes": [
+            1071,
+            840
+          ]
+        },
+        {
+          "centerX": 149.5,
+          "cutoffY": 201.4,
+          "componentSizes": [
+            1024,
+            803
+          ]
+        },
+        {
+          "centerX": 161.0,
+          "cutoffY": 203.60000000000002,
+          "componentSizes": [
+            993,
+            800
+          ]
+        },
+        {
+          "centerX": 153.0,
+          "cutoffY": 203.20000000000002,
+          "componentSizes": [
+            875,
+            868
+          ]
+        },
+        {
+          "centerX": 158.5,
+          "cutoffY": 202.60000000000002,
+          "componentSizes": [
+            943,
+            495
+          ]
+        },
+        {
+          "centerX": 160.5,
+          "cutoffY": 201.8,
+          "componentSizes": [
+            1025,
+            345
+          ]
+        },
+        {
+          "centerX": 178.0,
+          "cutoffY": 202.20000000000002,
+          "componentSizes": [
+            1014,
+            376
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 203.20000000000002,
+          "componentSizes": [
+            1095,
+            466
+          ]
+        },
+        {
+          "centerX": 172.0,
+          "cutoffY": 203.0,
+          "componentSizes": [
+            1629
+          ]
+        },
+        {
+          "centerX": 172.5,
+          "cutoffY": 203.4,
+          "componentSizes": [
+            1647
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          187.0,
+          252
+        ],
+        [
+          164.0883668903803,
+          252
+        ],
+        [
+          163.77738095238095,
+          252
+        ],
+        [
+          157.8838782412627,
+          252
+        ],
+        [
+          170.49466192170817,
+          245
+        ],
+        [
+          149.59505061867267,
+          244
+        ],
+        [
+          152.72154696132597,
+          244
+        ],
+        [
+          150.7572706935123,
+          244
+        ],
+        [
+          161.00110987791342,
+          247
+        ],
+        [
+          152.10479375696767,
+          247
+        ],
+        [
+          160.97488584474885,
+          247
+        ],
+        [
+          163.31243001119822,
+          247
+        ],
+        [
+          178.49661399548532,
+          247
+        ],
+        [
+          166.53214285714284,
+          248
+        ],
+        [
+          174.28286384976525,
+          248
+        ],
+        [
+          176.1179245283019,
+          248
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_interact_se",
+      "source": "Sheets/class_anh_dao_interact_se_v1_20261113j.png",
+      "sourceSha256": "d873fadb72efd232843e1e0920b37a0ba232118820941eddb4262189e9be0de6",
+      "bodyReferenceHeight": 201.0,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 121,
+      "headSearchRect": [
+        134,
+        54,
+        255,
+        139
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_se",
+        "headSpan": 121,
+        "height": 201.0,
+        "horizontalOffset": -3.568265682656829,
+        "headHorizontalOffset": -8.068265682656829,
+        "bootHorizontalOffset": -4.068265682656829,
+        "waist": {
+          "position": [
+            190.0,
+            213.0
+          ],
+          "searchRect": [
+            148,
+            165,
+            240,
+            232
+          ],
+          "goldPixels": 154
+        },
+        "head": {
+          "span": 121,
+          "centerX": 194.5,
+          "top": 57,
+          "searchRect": [
+            134,
+            57,
+            255,
+            141
+          ]
+        },
+        "boots": {
+          "centerX": 190.5,
+          "cutoffY": 217.0,
+          "componentSizes": [
+            749,
+            418
+          ]
+        },
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          187.43173431734317,
+          257
+        ],
+        [
+          181.93173431734317,
+          258
+        ],
+        [
+          171.43173431734317,
+          258
+        ],
+        [
+          167.93173431734317,
+          258
+        ],
+        [
+          171.93173431734317,
+          236
+        ],
+        [
+          166.93173431734317,
+          236
+        ],
+        [
+          159.43173431734317,
+          236
+        ],
+        [
+          151.93173431734317,
+          236
+        ],
+        [
+          171.93173431734317,
+          241
+        ],
+        [
+          169.93173431734317,
+          241
+        ],
+        [
+          171.93173431734317,
+          242
+        ],
+        [
+          173.93173431734317,
+          242
+        ],
+        [
+          184.43173431734317,
+          245
+        ],
+        [
+          181.43173431734317,
+          245
+        ],
+        [
+          179.93173431734317,
+          245
+        ],
+        [
+          178.93173431734317,
+          245
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 191.5,
+          "cutoffY": 215.60000000000002,
+          "componentSizes": [
+            1237,
+            545
+          ]
+        },
+        {
+          "centerX": 186.0,
+          "cutoffY": 216.4,
+          "componentSizes": [
+            1273,
+            500
+          ]
+        },
+        {
+          "centerX": 175.5,
+          "cutoffY": 216.4,
+          "componentSizes": [
+            1400,
+            333
+          ]
+        },
+        {
+          "centerX": 172.0,
+          "cutoffY": 216.4,
+          "componentSizes": [
+            1404,
+            369
+          ]
+        },
+        {
+          "centerX": 176.0,
+          "cutoffY": 194.8,
+          "componentSizes": [
+            1522,
+            369
+          ]
+        },
+        {
+          "centerX": 171.0,
+          "cutoffY": 195.0,
+          "componentSizes": [
+            1524,
+            321
+          ]
+        },
+        {
+          "centerX": 163.5,
+          "cutoffY": 195.20000000000002,
+          "componentSizes": [
+            1481,
+            301
+          ]
+        },
+        {
+          "centerX": 156.0,
+          "cutoffY": 195.4,
+          "componentSizes": [
+            1876
+          ]
+        },
+        {
+          "centerX": 176.0,
+          "cutoffY": 200.0,
+          "componentSizes": [
+            1543
+          ]
+        },
+        {
+          "centerX": 174.0,
+          "cutoffY": 200.4,
+          "componentSizes": [
+            1292,
+            442
+          ]
+        },
+        {
+          "centerX": 176.0,
+          "cutoffY": 199.60000000000002,
+          "componentSizes": [
+            1343,
+            480
+          ]
+        },
+        {
+          "centerX": 178.0,
+          "cutoffY": 198.60000000000002,
+          "componentSizes": [
+            1331,
+            491
+          ]
+        },
+        {
+          "centerX": 188.5,
+          "cutoffY": 201.60000000000002,
+          "componentSizes": [
+            1215,
+            543
+          ]
+        },
+        {
+          "centerX": 185.5,
+          "cutoffY": 202.60000000000002,
+          "componentSizes": [
+            1280,
+            549
+          ]
+        },
+        {
+          "centerX": 184.0,
+          "cutoffY": 202.4,
+          "componentSizes": [
+            1202,
+            559
+          ]
+        },
+        {
+          "centerX": 183.0,
+          "cutoffY": 203.0,
+          "componentSizes": [
+            1284,
+            573
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          186.93014705882354,
+          257
+        ],
+        [
+          180.72809278350516,
+          258
+        ],
+        [
+          174.0384024577573,
+          258
+        ],
+        [
+          170.68740031897926,
+          258
+        ],
+        [
+          174.86301369863014,
+          236
+        ],
+        [
+          168.49653979238755,
+          236
+        ],
+        [
+          160.90526315789472,
+          236
+        ],
+        [
+          156.87157534246575,
+          236
+        ],
+        [
+          167.98557692307693,
+          241
+        ],
+        [
+          170.7798036465638,
+          241
+        ],
+        [
+          172.72937771345875,
+          242
+        ],
+        [
+          174.15921787709496,
+          242
+        ],
+        [
+          182.843653250774,
+          245
+        ],
+        [
+          180.2801161103048,
+          245
+        ],
+        [
+          178.56876790830947,
+          245
+        ],
+        [
+          178.57381615598885,
+          245
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    },
+    {
+      "id": "class_anh_dao_interact_s",
+      "source": "Sheets/class_anh_dao_interact_s_v1_20261113j.png",
+      "sourceSha256": "c07a038c9437660db10d4049c38d8b95bdea605f8c4d8790fc6863dcdfadd68f",
+      "bodyReferenceHeight": 209.0,
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "pivotMode": "SOURCE_FOOT_PIVOTS",
+      "headSpan": 113,
+      "headSearchRect": [
+        108,
+        73,
+        243,
+        161
+      ],
+      "idleReference": {
+        "id": "class_anh_dao_idle_s",
+        "headSpan": 113,
+        "height": 209.0,
+        "horizontalOffset": -13.048929663608561,
+        "headHorizontalOffset": -5.548929663608561,
+        "bootHorizontalOffset": -6.548929663608561,
+        "waist": {
+          "position": [
+            193,
+            210
+          ],
+          "searchRect": [
+            142,
+            176,
+            228,
+            238
+          ],
+          "goldPixels": 81
+        },
+        "head": {
+          "span": 113,
+          "centerX": 185.5,
+          "top": 75,
+          "searchRect": [
+            108,
+            75,
+            242,
+            162
+          ]
+        },
+        "boots": {
+          "centerX": 186.5,
+          "cutoffY": 241.4,
+          "componentSizes": [
+            938,
+            867
+          ]
+        },
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      "method": "BOTH_BOOT_MIDPOINT_WITH_VISIBLE_GROUNDED_SOLE",
+      "scope": "VISUAL_ATTACHMENT_REQUIRES_NATIVE_REVIEW_NOT_PHYSICS_OR_ROOT_MOTION",
+      "rasterModified": false,
+      "sourceFootPivots": [
+        [
+          178.45107033639144,
+          284
+        ],
+        [
+          156.95107033639144,
+          285
+        ],
+        [
+          158.95107033639144,
+          285
+        ],
+        [
+          161.45107033639144,
+          285
+        ],
+        [
+          179.45107033639144,
+          252
+        ],
+        [
+          154.95107033639144,
+          252
+        ],
+        [
+          157.95107033639144,
+          255
+        ],
+        [
+          161.95107033639144,
+          255
+        ],
+        [
+          178.45107033639144,
+          252
+        ],
+        [
+          154.45107033639144,
+          253
+        ],
+        [
+          156.95107033639144,
+          252
+        ],
+        [
+          159.95107033639144,
+          253
+        ],
+        [
+          175.95107033639144,
+          259
+        ],
+        [
+          158.95107033639144,
+          259
+        ],
+        [
+          162.45107033639144,
+          259
+        ],
+        [
+          165.95107033639144,
+          259
+        ]
+      ],
+      "bootLandmarks": [
+        {
+          "centerX": 185.0,
+          "cutoffY": 241.0,
+          "componentSizes": [
+            2181
+          ]
+        },
+        {
+          "centerX": 163.5,
+          "cutoffY": 241.60000000000002,
+          "componentSizes": [
+            1157,
+            1071
+          ]
+        },
+        {
+          "centerX": 165.5,
+          "cutoffY": 241.8,
+          "componentSizes": [
+            2119
+          ]
+        },
+        {
+          "centerX": 168.0,
+          "cutoffY": 242.0,
+          "componentSizes": [
+            2193
+          ]
+        },
+        {
+          "centerX": 186.0,
+          "cutoffY": 209.4,
+          "componentSizes": [
+            2086
+          ]
+        },
+        {
+          "centerX": 161.5,
+          "cutoffY": 210.0,
+          "componentSizes": [
+            990,
+            937
+          ]
+        },
+        {
+          "centerX": 164.5,
+          "cutoffY": 212.8,
+          "componentSizes": [
+            978,
+            880
+          ]
+        },
+        {
+          "centerX": 168.5,
+          "cutoffY": 214.20000000000002,
+          "componentSizes": [
+            933,
+            811
+          ]
+        },
+        {
+          "centerX": 185.0,
+          "cutoffY": 210.20000000000002,
+          "componentSizes": [
+            1020,
+            879
+          ]
+        },
+        {
+          "centerX": 161.0,
+          "cutoffY": 211.0,
+          "componentSizes": [
+            1016,
+            983
+          ]
+        },
+        {
+          "centerX": 163.5,
+          "cutoffY": 209.20000000000002,
+          "componentSizes": [
+            1071,
+            1002
+          ]
+        },
+        {
+          "centerX": 166.5,
+          "cutoffY": 210.20000000000002,
+          "componentSizes": [
+            1089,
+            1058
+          ]
+        },
+        {
+          "centerX": 182.5,
+          "cutoffY": 215.20000000000002,
+          "componentSizes": [
+            1684,
+            495
+          ]
+        },
+        {
+          "centerX": 165.5,
+          "cutoffY": 215.20000000000002,
+          "componentSizes": [
+            1124,
+            1067
+          ]
+        },
+        {
+          "centerX": 169.0,
+          "cutoffY": 215.20000000000002,
+          "componentSizes": [
+            2186
+          ]
+        },
+        {
+          "centerX": 172.5,
+          "cutoffY": 215.20000000000002,
+          "componentSizes": [
+            2237
+          ]
+        }
+      ],
+      "visibleFootLandmarks": [
+        [
+          178.9829383886256,
+          284
+        ],
+        [
+          156.873795761079,
+          285
+        ],
+        [
+          165.56054279749478,
+          285
+        ],
+        [
+          167.79510703363914,
+          285
+        ],
+        [
+          184.85207100591717,
+          252
+        ],
+        [
+          162.52126366950182,
+          252
+        ],
+        [
+          168.53619302949062,
+          255
+        ],
+        [
+          169.2985468956407,
+          255
+        ],
+        [
+          188.80509554140127,
+          252
+        ],
+        [
+          164.20099875156055,
+          253
+        ],
+        [
+          165.9964412811388,
+          252
+        ],
+        [
+          169.47573964497042,
+          253
+        ],
+        [
+          180.82488038277512,
+          259
+        ],
+        [
+          159.06972301814707,
+          259
+        ],
+        [
+          164.55179282868525,
+          259
+        ],
+        [
+          167.2197265625,
+          259
+        ]
+      ],
+      "assumption": "Grounded actions use both boot silhouettes for horizontal centering and visible lowest soles for vertical contact. Preserve authored head nod/weapon motion; neither foot alone may yank the horizontal root. Native review required."
+    }
+  ]
+}

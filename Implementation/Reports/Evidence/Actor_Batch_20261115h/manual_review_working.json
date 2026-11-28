@@ -1,0 +1,103 @@
+{
+  "batch": "20261115h",
+  "manualReviewComplete": true,
+  "reviewDate": "2026-11-15",
+  "reviewScale": "ORIGINAL_16_NATIVE_PHASES_8_FACINGS_AND_REAL_LOOP_WRAPS",
+  "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_CLASS_OR_GAMEPLAY_ACCEPTANCE",
+  "entries": [
+    {
+      "id": "class_huyen_but_run_n",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_n_v1_20261115h.png",
+      "sourceSha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9",
+      "bindingSha256": "47dbc8b94f3d7cdc681c12ebb8335deae1825d341f7b193d9727d4f50e4b7526",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source N: inspected original,16native phases,actual14/15/0/1 wrap and eight-facing comparison after resource import. Opposite0/8 lower boots now separate; stable head-projected root,one right brush,empty left,no rear-view face. Full world movement/collision and action transitions unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.mp4": "00381819f1708aa4c20e6f29211cb9dc94966b05018bfff47774d99cfcc8d09a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n.png": "27becb1e01970d070346fe391d777949c9f3881f215a47331a4faa102c402b61",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_poses.png": "5cabeb55dcddc8d16654f79918cf6c759ace9e29c03ce31675edd2e8cd7fa42e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_samples.png": "b0c8726f8b5b9a356da8dda318a0c1b06b733b8ea8c14731c30ec83514ea5c33",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_source_samples.png": "b0e06be5d0c4f7d7f759bd00cd1159ad873f164eb54e13e7355199989c1fffc7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.mp4": "aa1f8a4f875cdf0776c59ed0bdc3dc524043712fb824a4e6d8d54114bf1d8583",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.png": "51466ca4fb18d8f0582ce6edbb01541ee84d29a96aa2b111ba0e83831b07f1ec",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles_samples.png": "eee35a1b91344a9a1379269a5bbfa0cb220dc49c1d6426f0e0d8e005b0502085",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_n_loop_seam.png": "7600014f235d939b6cfb3136ed386909e3fd1ac31083602c7dbf485db8081bbb"
+      }
+    },
+    {
+      "id": "class_huyen_but_run_e",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_e_v4_20261115h.png",
+      "sourceSha256": "687602dc0bff4b5675c3bb415c8b0ca0c04a1486d0773ed98cf0c6afc4fd4331",
+      "bindingSha256": "4cb32ef1c1911a935abb3448ba7ce919d2e9c73018d3bcc353bf7fd2807486c4",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS v4 source E: inspected original/all16native phases plus regenerated actual14/15/0/1 wrap,eight-facing E/W comparison and temporal samples. Brush arm back at0,forward at8,returns by14/15; v4restores missing cream bristles/ferrule at12. One right brush/two arms retained,near/far boot silhouettes readable. Earlier v1/v2/v3errors archived. Source review does not certify world travel or stable live60FPS.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_loop_seam.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.mp4": "eecbdecbc3f68f7b096d03c3d0ca142074f6605afdfb4b51ad5f58ae9a309e6e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e.png": "2b0837fa11d790947274ce47f17db60bce4294791c162d981bd6d4c7dd3fb185",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_poses.png": "e33b636deaa6669d251edb6c24507beabddb81f38d38ad5e9856bc197a30af4d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_samples.png": "c8b2ab0e0fd06494b3d3e13967cbbb04235bf91a020f5d49d324e03a9c270c56",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_source_samples.png": "810a67fc0f369effd034d0f8738341e16d811db59231dd8d7f507a5cefd85d83",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.mp4": "aa1f8a4f875cdf0776c59ed0bdc3dc524043712fb824a4e6d8d54114bf1d8583",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles.png": "51466ca4fb18d8f0582ce6edbb01541ee84d29a96aa2b111ba0e83831b07f1ec",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/run_eight_angles_samples.png": "eee35a1b91344a9a1379269a5bbfa0cb220dc49c1d6426f0e0d8e005b0502085",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_run_e_loop_seam.png": "c6ccecab070400315edc0314d021a6799c63f69a1346061452b8f4c8f5db7137"
+      }
+    },
+    {
+      "id": "class_huyen_but_interact_ne",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_ne_v1_20261115h.png",
+      "sourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
+      "bindingSha256": "8fe8e2bdd8003e58077b1cbc7bff234fc9ebaddfddc626a01d616cc99646ea8a",
+      "productionApproved": true,
+      "nativeReviewed": true,
+      "reviewedSourceFrames": 16,
+      "visualNotes": "PASS source NE: inspected original/all16native phases plus NE/NW eight-facing and temporal comparison after import. Obsolete hanging far-hand removed during open-palm phases; right brush hand remains,far arm occludes naturally,no third hand. Clear rear-three-quarter back plane and stable root. Cross-action/style continuity and full dialogue gameplay unaccepted.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.mp4": "d091098f7728a4b36ffa2811a8eaeb13b60f632505c2e120c2fc0974a588f4bd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne.png": "487be53be00fea3c02619f550c2b170a2dd4500bd096041d621bfbfa0a648080",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_poses.png": "ba0175e959ef1a097397c42964ebb8887ed29f1dc85357c40e15ff78c8a03442",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_samples.png": "df233a9fbc0a5c330c0a3ae8ffe045a6aac76c89a0a5d63624208b2a5688d474",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/raw_class_huyen_but_interact_ne_source_samples.png": "65d92e5983137ecfd2ce68c5b976dbbf82d6d311cc788f6e84802c6727bc6bba",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles.mp4": "19a36f89653d8583a6de0e62d58b663385dec47631666abe1225f6033cc445cc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles.png": "341ea906cc128c0a62bb1cb6d170ce35e7e55a9d61205b68c30be4e4abbe0b4e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115h/interact_eight_angles_samples.png": "e1b3eecf765aae1fcdaef725165204b1a79630b1b227878edd69f0ceb2a12cb4"
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "scope": "FIVE_FACING_STUDIO_PHASE_VIEW",
+  "projectSha256": "9eafa6d3e4f951fe8f20842be579c2c9b25f15c78099cf32452b119c0882eac0",
+  "views": [
+    {
+      "direction": "S",
+      "montage": "preview_S.phases.png",
+      "montageSha256": "911a9219d65a65e5e34e35d44c8f457d9d2639f911c0236d206a1a02112f53ee",
+      "movieSha256": "8cd45cca6302c6ee6d539df2ec06c0324a66ed925f1d25f997d72cc27ef1e003"
+    },
+    {
+      "direction": "SE",
+      "montage": "preview_SE.phases.png",
+      "montageSha256": "32e787029c592c692e3a3710cbbff6aad7e79917b70092929a59250cb594f1bd",
+      "movieSha256": "820da524a8c3de981c65b4e86d49c1b98001dde90d783e94b58a3ca0a23694c4"
+    },
+    {
+      "direction": "E",
+      "montage": "preview_E.phases.png",
+      "montageSha256": "e1e426209b85a5f637432ec635807f71ed613625ecb692bffc74225c42babc0e",
+      "movieSha256": "4e0b47775fe4ec83300f5cb2f885b8925b8c8d93da39f8d29bc7da52e4287303"
+    },
+    {
+      "direction": "NE",
+      "montage": "preview_NE.phases.png",
+      "montageSha256": "ed445a49f23f55a87a85acfd5a4c197a924fcfdd680f61cf9042252d804efa9b",
+      "movieSha256": "db3400a4900a4a27eea3a5174c6b86b348273be7e7185b0176d45299ffe38e83"
+    },
+    {
+      "direction": "N",
+      "montage": "preview_N.phases.png",
+      "montageSha256": "47ed76a9a3cda02e3e02d214372d8b039b91180d8406006c1dbae976f6913610",
+      "movieSha256": "c8b9d836af26e4aaa7dcde8902339245c642a115c71ef28b9c150792e6fb4874"
+    }
+  ],
+  "notes": [
+    "Character and hammer fit the v2 crop in all five facing views.",
+    "The region retains its south opening and stays aligned to the feet across directions.",
+    "Three temporary footholds blend into the steady stone outline. End loses stones around the same footprint.",
+    "The final body pose is held for Studio. Linked idle and map cue timing await integration.",
+    "North still needs a phase-11 stance root check in a fixed-camera comparison."
+  ],
+  "productionApproved": false
+}

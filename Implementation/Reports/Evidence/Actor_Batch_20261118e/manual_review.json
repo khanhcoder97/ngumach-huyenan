@@ -1,0 +1,29 @@
+{
+  "batch": "20261118e",
+  "scope": "STUDIO_NATIVE_ART_REVIEW",
+  "productionApproved": false,
+  "nativeAuditSha256": "c32443f9910d11582eaa5f5cfc78b4a798c1420fc091d27c85105af85935e697",
+  "sourcePosesViewed": 160,
+  "nativeFullFacingsReviewed": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "nativeShortFacingsReviewed": [
+    "E",
+    "NW"
+  ],
+  "atlasGridOverrides": [
+    "E"
+  ],
+  "notes": [
+    "All full paths have fixed aim and two ground-locked mark positions.",
+    "The short east and northwest paths stop root translation while the bow continues to the countershot.",
+    "The Rễ Nước is a preview target. In the northern view it is partly occluded behind the head at the start."
+  ]
+}

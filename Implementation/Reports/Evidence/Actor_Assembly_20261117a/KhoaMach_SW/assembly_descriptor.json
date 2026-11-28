@@ -1,0 +1,41 @@
+{
+  "sources": {
+    "class_linh_cung_skill_01_sw": {
+      "source": "Candidates_20261118a/class_linh_cung_skill_01_sw_v2_20261118a.png",
+      "sha256": "8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a",
+      "texture": "textures/8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a.png"
+    },
+    "sk_lc_01_projectile_component": {
+      "source": "Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "sha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "texture": "textures/d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852.png"
+    },
+    "sk_lc_01_leaf_dissipate_component": {
+      "source": "Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.png",
+      "sha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "texture": "textures/ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b.png"
+    },
+    "mob_waterroot_idle_s": {
+      "source": "Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "sha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "texture": "textures/9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75.png"
+    },
+    "sk_lc_01_mark_component": {
+      "source": "Sheets/sk_lc_01_mark_component_v2_20261112f.png",
+      "sha256": "7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05",
+      "texture": "textures/7606ea4f6f0ff889f53d03d1059fdbda62a170ed953de6715ed3f3d5c4816c05.png"
+    }
+  },
+  "projectSha256": "ba477130b21b6fa9f87b60c27e2997f53cc04624d14b0df07c705a21539c6ce2",
+  "releaseMs": 480,
+  "contactMs": 800,
+  "releasePosition": [
+    45.76086956521739,
+    -32.768115942028984
+  ],
+  "contactPosition": [
+    -83.5689917533691,
+    54.46597699940753
+  ],
+  "productionApproved": false
+}

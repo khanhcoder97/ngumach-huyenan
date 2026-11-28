@@ -1,0 +1,119 @@
+{
+  "batch": "20261114d",
+  "reviewDate": "2026-11-14",
+  "reviewScale": "Whole original PNG plus native point-filtered Studio source samples; assembly placement reviewed separately. Offline movie clock is not measured gameplay FPS.",
+  "manualReviewComplete": true,
+  "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+  "entries": [
+    {
+      "id": "sk_mk_01_guard_ready_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_guard_ready_component_v1_20261114d.png",
+      "sourceSha256": "e0f6e4bd3b7bc59da80ff59a9c4cf3917f66fcf580b89bedb33133184cec33d9",
+      "bindingSha256": "4288169e6145e413bcb35928b277470aec10a6df176ded66c8126831ff4cd619",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Original and native temporal source review: two silver angular guard brackets remain open and stable, restrained authored glint/breathing over16 source poses. No parry flash, filled disk or clipping. Guard registration separately checked on eight-facing actor assembly.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component.mp4": "e62cc89c85fe37a43e9a565ff456fe659b97b0e3533cc0fbc9bf9d78b73a3c2b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component.png": "7b990671d03f0a34e4ec460917489b7096f972d094410150695be4e48a8daea4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component_source_samples.png": "ea24bca01eb0095d6c34f3cbef8d740ee6dfd2a3aec4abe80d9daa8a43eda98d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_01_guard_ready_component_samples.png": "6905aef2c4c5c67e9a4cac0902a8781a95b87e34fcd695da2d28a00c767e5ee6"
+      }
+    },
+    {
+      "id": "sk_mk_02_aim_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_02_aim_component_v1_20261114d.png",
+      "sourceSha256": "c11a91a5fb2a53a24e230ec43766b5380d11ac98f6cb3dfa9016b0df195b3029",
+      "bindingSha256": "19e132e596a19ebc3363cd9b0c14ab0318904d97cede18780d4e23cda5b02c42",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Original and native source review: hollow right-facing aim rhombus forms then diminishes without becoming an impact burst. Sixteen source poses stay attached by the front tip; no front-tip drift from bounding-box-centre changes. Not a projectile.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component.mp4": "40aa80730f089cecfce99e132eec99a68d7f75ee2b6dd860d78bc5f583166f3a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component.png": "124e623931473f44b586a064528548cfb1d8fa6304cca972cf6485f5df767e83",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component_source_samples.png": "d753d07244f77c5fd7572785056f40c5d19c7be90a35f08b1b737fdb7a882e04",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_02_aim_component_samples.png": "088f33b73ea555b900ac986be26bf6cb764f6ac51b5d54890abe0fe0dc9999c9"
+      }
+    },
+    {
+      "id": "sk_mk_04_sustain_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_sustain_component_v1_20261114d.png",
+      "sourceSha256": "0fb20b8c2044dc0d5655b4e6009622b3170152b33b35fe82df7b766f819d1f39",
+      "bindingSha256": "8a65dd85e116d90881cbf42c4a0d760b76702234937a104c08bcd48116c65bae",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Original and native source review: hollow low steel-blue rim remains stable while restrained cyan glint travels over sixteen poses; no gain/impact/shatter event invented by loop. Centre remains registered; separate loop clock required.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component.mp4": "53952b1dbd264aaa1fc9518458ba5f323d88b1ab4540b45b86866b291bb22bcd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component.png": "ab23ffa8928354e9667875ad97fd0e86a952f536aa4929a7c32c2027a6ad967d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component_source_samples.png": "fd0ceb338fc3339e0a646568e5041c8e17de8fd03f1559b54b9ddb750ae840ed",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_mk_04_sustain_component_samples.png": "d73397c9ccbbb30c4afc3c1041ddcb48d96582d9bf7f00af1011e0a4b188b94d"
+      }
+    },
+    {
+      "id": "sk_ad_01_bleed_status_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_bleed_status_component_v1_20261114d.png",
+      "sourceSha256": "de037ba91f9e8b8829777d4340f94036dc993a57a080f61d43047a960df6f7b1",
+      "bindingSha256": "f59400670bcfacbe673c4a8dcf09bdd60410eda7e7d9a098be1ef0e6eb8f3687",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Original and native source review: exactly three diagonal maroon status notches remain legible; subtle travelling highlight, no fourth notch or gore. Sixteen authored source poses; three drawn marks do not imply three damage stacks.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component.mp4": "ab4182317881f975724d93c60b2b1f97b89bbdd9a91cb41fbce57c991be96886",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component.png": "041f2d1c5ed761b7324c2c495f27cb73b31fc27846962c0e995cd379cac71295",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component_source_samples.png": "23963b3aa50a802c6b926179fa30c99c2e679dbfa66a3a6f119ce3588c006415",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_01_bleed_status_component_samples.png": "701e4ca7796d84b9604330b76e8666fccdb6f81c152c63b4e99dbfd344a638ff"
+      }
+    },
+    {
+      "id": "sk_ad_04_expire_component",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_04_expire_component_v1_20261114d.png",
+      "sourceSha256": "54aca5a97e36d067d750458a9a6d505d0a9c339c0aa448b10d59fc877d75be0d",
+      "bindingSha256": "42068e2714b8fce14e172611c6f680780bf92f0ccb930900c7085e2624f683f9",
+      "reviewedSourceFrames": 16,
+      "nativeReviewed": true,
+      "productionApproved": true,
+      "visualNotes": "Original and native source review: existing three shallow-U marks fragment progressively to sparse embers over16 authored source poses. No regrowth or explosion. Half-open presentation window removes final surviving specks; image source remains unchanged.",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component.mp4": "9d0bac26a9cc24e60f65457fb4a3ada078eb1894729a2b837f0ce6b0c2527c7f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component.png": "e83f768b4164b49c52767858c1e1a4715f5a71182a1f6f58d2beaae00105896c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component_source_samples.png": "00e51614087d139904d50fb39bdc506d33cec211eba4c674115841a840bfbd54",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114d/raw_sk_ad_04_expire_component_samples.png": "5c2766399449bd097236b44e4e08f83d1bb61cc01ad7a675d1b541fccfb5d6f0"
+      }
+    }
+  ]
+}

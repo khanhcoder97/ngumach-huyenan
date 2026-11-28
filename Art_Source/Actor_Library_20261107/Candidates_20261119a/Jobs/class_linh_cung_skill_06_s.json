@@ -1,0 +1,33 @@
+{
+  "batch": "20261119a",
+  "expectedSourcePages": 11,
+  "scope": "LINH_CUNG_BACH_TIEN_EIGHT_AUTHORED_FACINGS_AND_THREE_ZONE_EFFECTS",
+  "version": 1,
+  "id": "class_linh_cung_skill_06_s",
+  "direction": "S",
+  "prompt": "Create a NEW original 16-pose top-down chibi pixel art sheet of Linh Cung casting the Bách Tiễn Quy Tông arrow-rain ultimate. Image 1 is approved identity. Image 2 is only exact camera and bow-hand reference. Rich crisp pixel clusters, warm chestnut ponytail, sage leaf cape, olive tunic, brown boots, short ivory quiver feathers, wooden recurve in her left hand. Every pose faces the same heading. Front aimed toward the BOTTOM. Show both eyes and foreshortened bow, her left hand is on screen RIGHT.\nFour columns and four rows of evenly spaced individually drawn RGBA cells, read left to right and top to bottom. Keep feet planted at the same lower ground anchor. Camera, palette, facial proportions, hairstyle and bow remain consistent. Key poses from zero: 0 quiet guard; 1 brace knees; 2 set shoulders and lift the bottom limb of the bow; 3 turn the bow to a steeper angle from waist; 4 raise bow upward in a smooth arc; 5 bow hand extends above shoulder height, right fingers take the string; 6 lift chin very slightly and begin long skyward draw; 7 bow and pulling hand at full high draw; 8 longer hold with elbows and cape shifting, no identical pose; 9 open right fingers for a single skyward release, left fist grips center of the same bow; 10 follow-through toward sky, cape lags; 11 let arm bend; 12 lower bow toward shoulder; 13 return chin and shoulders; 14 settle cape; 15 low guard one breath later. Clearly different silhouette from a horizontal shot. Forward hand never swaps. Keep enough top margin above the raised bow and enough spacing horizontally. No arrow drawn into the body sheets, no magic, no VFX, no background, no floor, no matte, no caption, no grid lines or checkerboard. Transparent black-free gutters and holes of the bow. Whole bow and boots in each cell, useful at 36-pixel in-game height.",
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118d/class_linh_cung_skill_04_s_v1_20261118d.png"
+  ],
+  "timing": [
+    70,
+    70,
+    65,
+    65,
+    70,
+    70,
+    75,
+    75,
+    80,
+    85,
+    85,
+    65,
+    65,
+    65,
+    70,
+    80
+  ],
+  "seconds": 1.155,
+  "inputRole": "APPROVED_LINH_CUNG_IDENTITY_AND_CAST_FACING"
+}

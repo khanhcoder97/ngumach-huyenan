@@ -1,0 +1,451 @@
+{
+  "record": {
+    "id": "class_thach_chuy_skill_06_s",
+    "source": "Candidates_20261116c/class_thach_chuy_skill_06_s_v1_20261116c.png",
+    "prompt": "Candidates_20261116c/class_thach_chuy_skill_06_s_v1_20261116c.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261116c",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png"
+    ],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+        "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+      },
+      {
+        "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+        "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51"
+      }
+    ],
+    "sourceSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+    "sourceFrameDurationsMs": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        189.0,
+        294
+      ],
+      [
+        170.0,
+        294
+      ],
+      [
+        149.0,
+        294
+      ],
+      [
+        129.0,
+        294
+      ],
+      [
+        188.0,
+        276
+      ],
+      [
+        172.0,
+        276
+      ],
+      [
+        150.0,
+        275
+      ],
+      [
+        126.5,
+        275
+      ],
+      [
+        187.5,
+        262
+      ],
+      [
+        166.5,
+        262
+      ],
+      [
+        146.5,
+        262
+      ],
+      [
+        125.0,
+        261
+      ],
+      [
+        193.0,
+        256
+      ],
+      [
+        170.5,
+        256
+      ],
+      [
+        149.5,
+        256
+      ],
+      [
+        129.5,
+        256
+      ]
+    ],
+    "bodyReferenceHeight": 207,
+    "registrationMethod": "SOUTH_SANCTUARY_VISIBLE_BOOTS_PENDING_NATIVE_REVIEW"
+  },
+  "page": {
+    "id": "class_thach_chuy_skill_06_s",
+    "file": "sheets/class_thach_chuy_skill_06_s_v1_20261116c.png",
+    "source": "Candidates_20261116c/class_thach_chuy_skill_06_s_v1_20261116c.png",
+    "sha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+    "imageSize": [
+      1261,
+      1247
+    ],
+    "directions": [
+      {
+        "direction": "S",
+        "flip": false,
+        "referenceHeight": 207,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              101,
+              87,
+              253,
+              294
+            ],
+            "pivot": [
+              189.0,
+              294
+            ]
+          },
+          {
+            "rect": [
+              315,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              71,
+              86,
+              235,
+              294
+            ],
+            "pivot": [
+              170.0,
+              294
+            ]
+          },
+          {
+            "rect": [
+              630,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              39,
+              87,
+              212,
+              294
+            ],
+            "pivot": [
+              149.0,
+              294
+            ]
+          },
+          {
+            "rect": [
+              946,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              24,
+              84,
+              188,
+              294
+            ],
+            "pivot": [
+              129.0,
+              294
+            ]
+          },
+          {
+            "rect": [
+              0,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              91,
+              57,
+              248,
+              277
+            ],
+            "pivot": [
+              188.0,
+              276
+            ]
+          },
+          {
+            "rect": [
+              315,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              62,
+              77,
+              235,
+              277
+            ],
+            "pivot": [
+              172.0,
+              276
+            ]
+          },
+          {
+            "rect": [
+              630,
+              312,
+              316,
+              312
+            ],
+            "bounds": [
+              47,
+              95,
+              219,
+              277
+            ],
+            "pivot": [
+              150.0,
+              275
+            ]
+          },
+          {
+            "rect": [
+              946,
+              312,
+              315,
+              312
+            ],
+            "bounds": [
+              55,
+              109,
+              200,
+              302
+            ],
+            "pivot": [
+              126.5,
+              275
+            ]
+          },
+          {
+            "rect": [
+              0,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              112,
+              95,
+              262,
+              282
+            ],
+            "pivot": [
+              187.5,
+              262
+            ]
+          },
+          {
+            "rect": [
+              315,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              93,
+              88,
+              241,
+              282
+            ],
+            "pivot": [
+              166.5,
+              262
+            ]
+          },
+          {
+            "rect": [
+              630,
+              624,
+              316,
+              311
+            ],
+            "bounds": [
+              72,
+              79,
+              223,
+              282
+            ],
+            "pivot": [
+              146.5,
+              262
+            ]
+          },
+          {
+            "rect": [
+              946,
+              624,
+              315,
+              311
+            ],
+            "bounds": [
+              52,
+              72,
+              198,
+              278
+            ],
+            "pivot": [
+              125.0,
+              261
+            ]
+          },
+          {
+            "rect": [
+              0,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              107,
+              53,
+              258,
+              258
+            ],
+            "pivot": [
+              193.0,
+              256
+            ]
+          },
+          {
+            "rect": [
+              315,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              78,
+              50,
+              239,
+              258
+            ],
+            "pivot": [
+              170.5,
+              256
+            ]
+          },
+          {
+            "rect": [
+              630,
+              935,
+              316,
+              312
+            ],
+            "bounds": [
+              56,
+              50,
+              214,
+              258
+            ],
+            "pivot": [
+              149.5,
+              256
+            ]
+          },
+          {
+            "rect": [
+              946,
+              935,
+              315,
+              312
+            ],
+            "bounds": [
+              37,
+              51,
+              193,
+              258
+            ],
+            "pivot": [
+              129.5,
+              256
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 206.5,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80,
+      80
+    ]
+  },
+  "bodyRootDiagnostics": [],
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

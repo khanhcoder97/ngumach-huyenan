@@ -1,0 +1,37 @@
+{
+  "batch": "20261116c",
+  "id": "class_thach_chuy_skill_05_se",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "direction": "SE",
+  "seconds": 0.8,
+  "timing": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.png"
+  ],
+  "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+  "layoutVerified": true,
+  "prompt": "Use case: identity-preserve. Production whole baked-body chibi pixel-art animation for CLASS_THACH_CHUY in Ngu Mach Huyen An. Input1 OWNER identity: short dark-brown hair,thin ochre/gold headband,round expressive face,bronze/ochre chest armour,rounded steel shoulder plates/gauntlets,brown trousers/boots,deep red waist sash. Match refined shaded pixel clusters and rounded coherent proportions of the owner. Input2 is UNAPPROVED earlier motion guidance,not owner approval. Preserve identity/costume; no detached blocky paperdoll parts. ONE heavy squat cuboid grey stone/steel hammer head attached to ONE short dark wooden shaft with bronze fittings; hands grip shaft,not the head. Gauntlets are body hands,not extra hammer heads. Two arms/two hands only,continuous shoulders/elbows/wrists,consistent grip and weapon dimensions.\nExact4columns4rows=16genuinely authored wholebody poses,row-major chronology,ONE fixed facing/elevated TOP-DOWN orthographic camera. Whole head,boots,gauntlets,sash,shaft/hammer head stay inside central65%of EVERY cell,wide alpha0gutters and outerpadding. Genuine transparent RGBA alpha0background/corners; no foggy semitransparent sheet,shadow,floor,grid,labels,numbers,text,debris,cracks,rings,VFX or particles. Separate VFX is authored separately. Stable body scale and world root; knees/torso may bend naturally. Do not pad8poses,repeat a strike,warp one drawing,turn camera,duplicate weapons,disconnect hands or hide all contact mechanics. Each of16poses is an intentional animation drawing. Presentation source only,no automatic damage,physics,invulnerability or terrain changes.\nSKILL 5 Phá Nham: ONE shoulder-braced dash body action,not a walking loop.0neutral;1-4crouch/brace shoulder behind the hammer,held in front with clear connected two-hand grip;5-9one powerful forward drive/push pose with one reaching leg;10-12controlled deceleration;13-15recover. Camera remains fixed and world-root translation is NOT drawn in the PNG: server movement is separate. Do not spin,teleport,phase through terrain or bake hit/dust VFX into body. Single hammer retained through all16.\nLOCKED FACING: SOUTHEAST front-three-quarter,faces lower-right. Both face and near chest plane readable,not back-quarter.\nMechanic source: docs/production/Skill_VFX_Cards_v1_vi.md SK-TC-05 and Combat_Skills_VFX_Animation_Spec_vi.md. Preserve design mechanics; the animation source duration is preview timing,not server cooldown/hit timing. No new accessories or graphic style.\nNEUTRAL CONTINUITY LOCK: Input2 is an UNAPPROVED Trấn Sơn sheet in the SAME facing,used only to match the camera,costume,body proportions and hammer grip in its FIRST cell. Start and finish in that neutral grip. Do not mirror the hammer head to the opposite side. Keep the same facing and one permanently connected shaft/head throughout the distinct skill choreography above. Rear views naturally hide the far hand/forward shaft behind torso; never paint hidden hands across the back. No camera turn or new weapon. Preserve the skill-specific mechanics above; source animation is not server movement,damage,collision or cooldown.",
+  "selectedSource": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_05_se_v1_20261116c.png",
+  "sourceSha256": "ce74fdcfdf82ef929874164fcab9ac1b213f6fd3cfe50b35478318b9921a19cd",
+  "state": "GENERATED_PENDING_REVIEW"
+}

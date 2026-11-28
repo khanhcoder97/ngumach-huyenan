@@ -1,11 +1,15 @@
+> 10/11/2026: Áo/quần đổi thành một bộ ngoại hình theo Registered_PaperDoll_Master_20261110_vi.md. Item, EQUIP_CHEST/EQUIP_LEGS, chỉ số và protocol giữ nguyên; outfit phủ cả thân trên/dưới.
+
 # ĐẶC TẢ NHÂN VẬT, TRANG BỊ VÀ TÚI ĐỒ
+
+> Quyết định chủ dự án07/11/2026: nhân vật người chơi chuyển sang base nam/nữ + bộ phận trang phục/vũ khí/diện mạo tách lớp. Xem [pipeline modular](Modular_Character_Appearance_20261107_vi.md). Mười profile class/giới tính dùng chung hai rig khi tương thích; các sprite class đã vẽ liền đồ chỉ còn reference/fallback. Chuẩn16–20pose thực/clip/hướng và render60FPS giữ nguyên.
 ## Ngũ Mạch: Huyền Ấn — bản sản xuất v1.0
 
 ### 1. Vòng đời nhân vật
 
 Tài khoản giữ tối đa 4 nhân vật theo cấu hình máy chủ. Nhân vật thuộc một môn phái cố định khi tạo; lớp quyết định vũ khí chuyên dụng, bộ kỹ năng và cây 8 node nội tại (hai nhánh × bốn node, cấp mở 20/40/60/80); người chơi có tối đa 2 slot passive đang trang bị. Data effect, cap, prerequisite và giá reset ở `Class_Passive_Production_Data_vi.csv`. Lớp không khóa ngoại hình hay giới tính. Tạo nhân vật gồm chọn tên, lớp, diện mạo, tóm tắt vai trò và xác nhận. Tên dài 3–16 ký tự, chuẩn hóa Unicode, cấm ký tự điều khiển/ký tự vô hình và kiểm tra trùng ở server.
 
-Diện mạo gốc lưu trên nhân vật (`bodyFrame`, `facePreset`, `skinTone`, `hairStyle`, `hairColor`, `faceMark`, `accessoryPreset`); ngoại trang mở khóa dùng `cosmeticUnlockLedger` cấp tài khoản và loadout trang bị ngoại hình riêng theo nhân vật. Vanity không cộng stat, không đổi collision/hitbox/tầm đánh/animation combat. Preview/thay diện mạo, nhuộm, buff, auto-use và NPC service được đặc tả tại `Appearance_Buff_NPC_Service_Overlay_Spec_vi.md`.
+Diện mạo gốc lưu trên nhân vật (`bodyFrame`, `facePreset`, `eyePreset`, `eyePalette`, `skinTone`, `hairStyle`, `hairColor`, `faceMark`, `accessoryPreset`); ngoại trang mở khóa dùng `cosmeticUnlockLedger` cấp tài khoản và loadout trang bị ngoại hình riêng theo nhân vật. Vanity không cộng stat, không đổi collision/hitbox/tầm đánh/animation combat. Preview/thay diện mạo, nhuộm, buff, auto-use và NPC service được đặc tả tại `Appearance_Buff_NPC_Service_Overlay_Spec_vi.md`.
 
 **Năm môn phái mới**
 
@@ -43,15 +47,15 @@ Giá trị trên là baseline để làm vertical slice, mọi hệ số phải 
 | Slot | ID | Nhóm chỉ số thường gặp | Ngoại hình |
 |---|---|---|---|
 | Nón | EQUIP_HAT | giáp, HP, kháng | tùy chọn ẩn nón |
-| Áo | EQUIP_CHEST | giáp, HP, thuộc tính | thân trên |
-| Quần | EQUIP_LEGS | giáp, thể chất | thân dưới |
+| Áo | EQUIP_CHEST | giáp, HP, thuộc tính | chọn bộ ngoại hình áo + quần |
+| Quần | EQUIP_LEGS | giáp, thể chất | giữ stat; không phủ riêng khi outfit đang mặc |
 | Vũ khí | EQUIP_WEAPON | công, chỉ số lớp, hiệu ứng đòn | thay weapon sprite/anchor set |
 | Găng | EQUIP_GLOVES | tốc đánh, chính xác | tay |
 | Giày | EQUIP_BOOTS | tốc chạy, né | chân |
-| Dây chuyền | EQUIP_NECK | HP/MP, kháng | icon UI |
-| Nhẫn trái | EQUIP_RING_L | crit, chính xác | icon UI |
-| Nhẫn phải | EQUIP_RING_R | HP/MP/kháng | icon UI |
-| Ngọc bội | EQUIP_PENDANT | hiệu ứng tiện ích, kháng | icon UI |
+| Dây chuyền | EQUIP_NECK | HP/MP, kháng | chi tiết ngực nhỏ theo master, xem rõ trong preview |
+| Nhẫn trái | EQUIP_RING_L | crit, chính xác | chi tiết tay trái theo anchor giải phẫu |
+| Nhẫn phải | EQUIP_RING_R | HP/MP/kháng | chi tiết tay phải theo anchor giải phẫu |
+| Ngọc bội | EQUIP_PENDANT | hiệu ứng tiện ích, kháng | chi tiết hông theo master |
 | Phi phong | EQUIP_CLOAK | phòng thủ/thuộc tính | lớp vải sau lưng |
 | Ấn hộ mệnh | EQUIP_SEAL | bonus build, socket đặc biệt | hiệu ứng nhỏ ở nhân vật |
 

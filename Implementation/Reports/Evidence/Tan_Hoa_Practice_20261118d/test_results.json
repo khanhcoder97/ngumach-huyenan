@@ -1,0 +1,45 @@
+{
+  "scenario": "LOCAL_BEN_MUA_LINH_CUNG_FAN",
+  "godot": "4.7.2 stable mono",
+  "renderer": "OpenGL Compatibility / GeForce 820M",
+  "resolution": [
+    1280,
+    720
+  ],
+  "fixedSimulationFramesPerSecond": 60,
+  "tests": {
+    "headless": [
+      "LINH_CUNG_PRACTICE PASS assertions=55 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=49 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=66 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=57 facings=8 authoringFrames=128"
+    ],
+    "native": [
+      "LINH_CUNG_PRACTICE PASS assertions=59 facings=8 authoringFrames=128",
+      "LINH_CUNG_TRAP PASS assertions=53 facings=8 authoringFrames=128",
+      "LINH_CUNG_VOLLEY PASS assertions=69 facings=8 authoringFrames=128",
+      "LINH_CUNG_FAN PASS assertions=60 facings=8 authoringFrames=128"
+    ],
+    "camera": [
+      "CAMERA_SELF_TEST PASS assertions=48"
+    ],
+    "scene": [
+      "SCENE_SELF_TEST PASS assertions=9"
+    ]
+  },
+  "frames": [
+    {
+      "file": "practice_fan_open.png",
+      "sha256": "2cf6e2b61df188aeee3d33ba12cab92b1983b9af83cf21fc0c6de063a0e517af"
+    },
+    {
+      "file": "practice_fan_leaves.png",
+      "sha256": "36034b8ae7dc3903165a76256aa02c482b8f852aef206e15835a0eb4f710428e"
+    },
+    {
+      "file": "practice_fan_close.png",
+      "sha256": "5fa3b6ea3be58b59fad9c8da0d0c8fbb1fff6b51e964f23a6ca13fd1ea0b3cf2"
+    }
+  ],
+  "renderPerformanceProfile": "wide_walking.json"
+}

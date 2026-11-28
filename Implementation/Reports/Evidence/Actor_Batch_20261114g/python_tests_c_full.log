@@ -1,0 +1,69 @@
+..........EEE...............................................................................................
+======================================================================
+ERROR: test_new_version_archives_selection_without_deleting_original (test_candidate_recovery.CandidateRecovery.test_new_version_archives_selection_without_deleting_original)
+----------------------------------------------------------------------
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\test_candidate_recovery.py", line 25, in test_new_version_archives_selection_without_deleting_original
+    first=writer.record(self.job);original=Path(first['file']).read_bytes();Image.new('RGBA',(8,8),(40,120,220,255)).save(self.native)
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 51, in record
+    assert m['remainingSourcePages']>=0;save(path,m)
+                                        ~~~~^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 9, in save
+    pending.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+======================================================================
+ERROR: test_replay_preserves_calibration_and_single_selection (test_candidate_recovery.CandidateRecovery.test_replay_preserves_calibration_and_single_selection)
+----------------------------------------------------------------------
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\test_candidate_recovery.py", line 17, in test_replay_preserves_calibration_and_single_selection
+    writer.record(self.job);m=writer.read(self.manifest);m['records'][0]['status']='NATIVE_REVIEW_HOLD';m['records'][0]['sourcePivots']=[[4,4]]*16;writer.save(self.manifest,m)
+    ~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 51, in record
+    assert m['remainingSourcePages']>=0;save(path,m)
+                                        ~~~~^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 9, in save
+    pending.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+======================================================================
+ERROR: test_same_version_cannot_replace_different_native_bytes (test_candidate_recovery.CandidateRecovery.test_same_version_cannot_replace_different_native_bytes)
+----------------------------------------------------------------------
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\test_candidate_recovery.py", line 20, in test_same_version_cannot_replace_different_native_bytes
+    first=writer.record(self.job);original=Path(first['file']).read_bytes()
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 51, in record
+    assert m['remainingSourcePages']>=0;save(path,m)
+                                        ~~~~^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\record_generated_candidate.py", line 9, in save
+    pending.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+
+----------------------------------------------------------------------
+Ran 108 tests in 1.372s
+
+FAILED (errors=3)

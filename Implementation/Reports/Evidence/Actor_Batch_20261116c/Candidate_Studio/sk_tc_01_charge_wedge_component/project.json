@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "sk_tc_01_charge_wedge_component",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "sprite",
+      "Name": "sk_tc_01_charge_wedge_component",
+      "Kind": "sprite",
+      "Texture": "textures/e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e.png",
+      "Regions": [
+        [
+          0,
+          0,
+          374,
+          296
+        ],
+        [
+          374,
+          0,
+          344,
+          296
+        ],
+        [
+          718,
+          0,
+          346,
+          296
+        ],
+        [
+          1064,
+          0,
+          384,
+          296
+        ],
+        [
+          0,
+          296,
+          374,
+          254
+        ],
+        [
+          374,
+          296,
+          344,
+          254
+        ],
+        [
+          718,
+          296,
+          346,
+          254
+        ],
+        [
+          1064,
+          296,
+          384,
+          254
+        ],
+        [
+          0,
+          550,
+          374,
+          260
+        ],
+        [
+          374,
+          550,
+          344,
+          260
+        ],
+        [
+          718,
+          550,
+          346,
+          260
+        ],
+        [
+          1064,
+          550,
+          384,
+          260
+        ],
+        [
+          0,
+          810,
+          374,
+          276
+        ],
+        [
+          374,
+          810,
+          344,
+          276
+        ],
+        [
+          718,
+          810,
+          346,
+          276
+        ],
+        [
+          1064,
+          810,
+          384,
+          276
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 204.4,
+        "PivotY": 176.5,
+        "ScaleX": 0.6334841628959276,
+        "ScaleY": 0.6334841628959276,
+        "Angle": 0,
+        "Alpha": 1,
+        "SourceFrame": 0
+      },
+      "Z": 0,
+      "Visible": true
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "sk_tc_01_charge_wedge_component",
+      "Direction": "OMNI",
+      "Loop": false,
+      "SourceNote": "CANDIDATE_NOT_APPROVED; source/body root review only",
+      "DurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "Tracks": [
+        {
+          "LayerId": "sprite",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 204.4,
+                "PivotY": 176.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 149.04,
+                "PivotY": 177.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 133.04,
+                "PivotY": 178.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 111.4,
+                "PivotY": 176.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 123.72,
+                "PivotY": 130.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 86.84,
+                "PivotY": 129.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 89.0,
+                "PivotY": 130.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 83.88,
+                "PivotY": 129.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 108.68,
+                "PivotY": 123.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 82.12,
+                "PivotY": 126.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 88.08,
+                "PivotY": 126.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 92.0,
+                "PivotY": 126.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 125.88,
+                "PivotY": 117.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 125.56,
+                "PivotY": 117.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 143.28,
+                "PivotY": 118.5,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 143.08,
+                "PivotY": 116.0,
+                "ScaleX": 0.6334841628959276,
+                "ScaleY": 0.6334841628959276,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": []
+    }
+  ]
+}

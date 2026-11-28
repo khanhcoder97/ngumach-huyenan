@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\inspect_actor_library.py", line 390, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--export',action='store_true');p.add_argument('--check',action='store_true');p.add_argument('--require-complete',action='store_true');a=p.parse_args();main(a.export,a.require_complete,a.check)
+                                                                                                                                                                                                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\inspect_actor_library.py", line 368, in main
+    save(ART/'structure_report.json',result)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\inspect_actor_library.py", line 365, in save
+    if check:assert path.read_text(encoding='utf8')==rendered,'stale metadata: '+str(path)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: stale metadata: D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Art_Source\Actor_Library_20261107\structure_report.json

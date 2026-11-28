@@ -1,0 +1,36 @@
+{
+  "batch": "20261118c",
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_LIEN_CHAU_EIGHT_AUTHORED_FACINGS_AND_TWO_PROJECTILE_EFFECTS",
+  "version": 1,
+  "id": "sk_lc_03_volley_nock_component",
+  "seconds": 0.48,
+  "timing": [
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30
+  ],
+  "loop": true,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png"
+  ],
+  "authoringUse": {
+    "role": "QUICK_NOCK_LIGHT",
+    "attach": "BOW_SOCKET",
+    "instances": 5
+  },
+  "prompt": "An original tiny 2D pixel game VFX sprite, the jade archery charge bead for Linh Cung's Liên Châu. The reference image supplies only original leaf-archery palette and crisp material texture. Render four columns by four rows on genuinely transparent RGBA, 16 different frames in chronological order. One compact pale jade four-point seed-shaped sparkle ONLY in the center of each cell, warm white inner facet, green midtone, dark moss rim. One bead per cell. This bead will be separately instanced five times by the game. Keep the bead center at the same point, softly oscillate in size and highlights like a tiny flower-seed lantern, and wrap smoothly from frame 16 back to frame 1. Keep a strong point of light at small gameplay size. Sparse shape, sprite width ~45–65px within each large cell, no shadow, ellipse, extra points, arrow, tail, cloud, fog, label, UI tile, checkerboard, full sprite character, solid background or grid."
+}

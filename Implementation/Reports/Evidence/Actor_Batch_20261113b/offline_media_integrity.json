@@ -1,0 +1,138 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 8,
+  "supersededVideos": 5,
+  "files": [
+    {
+      "file": "line_component.mp4",
+      "bytes": 148308,
+      "sha256": "b000e88e2e1e253191b9f387948cbfe8bdd9a7a91fe2cc2c422cdc5844debce4",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "retract_component.mp4",
+      "bytes": 165646,
+      "sha256": "a403be5b1ce468567366b53f53c8300b00b8c13c0d59f061a7956db3a664d7b6",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "spike_component.mp4",
+      "bytes": 168089,
+      "sha256": "58e7992194705e19a231ae478047fa722029b127a47c4c44a331ed4c2f90ead4",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Review_Layout/waterroot_chain_02_e.mp4",
+      "bytes": 682147,
+      "sha256": "f4d8809d0b29031609afd1fb458be49f0cfbb45b7941aacd4786c85676b347ff",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Review_Layout/waterroot_chain_02_n.mp4",
+      "bytes": 614049,
+      "sha256": "6ae735ddb11bfa961ef28e44d9335c909cd4e8559e38269e969f2c2417d89998",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Studio_Startup/line_component.mp4",
+      "bytes": 147898,
+      "sha256": "86b3c2dac6d9bbf8070ca816bdd27153a6764a597b2aca93bff2a3d1d313f629",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Studio_Startup/retract_component.mp4",
+      "bytes": 165235,
+      "sha256": "0518cd69a149bc91d0816854f808c251a7b0d735e9107f7153c48560ec25d18b",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Studio_Startup/spike_component.mp4",
+      "bytes": 160462,
+      "sha256": "94d75d0b1cccde20c339cff49d3634e6015cb9d0e2946e2f5cc2f6efcad92764",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_attack_02.mp4",
+      "bytes": 1254682,
+      "sha256": "79ed730c382c6671e38f6116a5f6389f003b88bf5aaae01bf026cd97711243f8",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_chain_02_e.mp4",
+      "bytes": 615902,
+      "sha256": "5b38105aaee394a731cb2fed5e773e18916acb1a01bb7be8b810029d720fa62d",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_chain_02_n.mp4",
+      "bytes": 554633,
+      "sha256": "2811aabc4310331030bb6aa78f5422e0aa5e061f7f82557465f44e7f48608455",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_recovery_02.mp4",
+      "bytes": 1230472,
+      "sha256": "b5cda22f6c5eb8728292b0e537cda96ea523731612c525d219628e532ba8ea4d",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_telegraph_02.mp4",
+      "bytes": 1004995,
+      "sha256": "4c27ffcf50573a69e7811efd6eb159bb72f4c0ffa577a190dac38487ff0ba9fd",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

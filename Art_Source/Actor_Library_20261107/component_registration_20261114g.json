@@ -1,0 +1,969 @@
+{
+  "scope": "GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW",
+  "entries": [
+    {
+      "id": "sk_hb_04_rain_component",
+      "source": "Sheets/sk_hb_04_rain_component_v1_20261114g.png",
+      "sourceSha256": "2e5b8863eaf8393b218321f99d9c9bf254c75b3ce0483db247e97938709517f1",
+      "method": "MEASURED_PARTICLE_FIELD_COLUMN_AND_ROW_ORIGINS",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          173.5,
+          185.5
+        ],
+        [
+          161.0,
+          185.5
+        ],
+        [
+          155.5,
+          185.5
+        ],
+        [
+          143.5,
+          185.5
+        ],
+        [
+          173.5,
+          159.5
+        ],
+        [
+          161.0,
+          159.5
+        ],
+        [
+          155.5,
+          159.5
+        ],
+        [
+          143.5,
+          159.5
+        ],
+        [
+          173.5,
+          135.0
+        ],
+        [
+          161.0,
+          135.0
+        ],
+        [
+          155.5,
+          135.0
+        ],
+        [
+          143.5,
+          135.0
+        ],
+        [
+          173.5,
+          113.0
+        ],
+        [
+          161.0,
+          113.0
+        ],
+        [
+          155.5,
+          113.0
+        ],
+        [
+          143.5,
+          113.0
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": null,
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_05_departure_component",
+      "source": "Sheets/sk_hb_05_departure_component_v1_20261114g.png",
+      "sourceSha256": "d914a82d99a4d8714a59d06e3564b6399437ac4421105bb25ea90a36a97ae2c1",
+      "method": "MEASURED_PARTICLE_FIELD_COLUMN_AND_ROW_ORIGINS",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          199.5,
+          228.0
+        ],
+        [
+          142.5,
+          228.0
+        ],
+        [
+          145.5,
+          228.0
+        ],
+        [
+          145.0,
+          228.0
+        ],
+        [
+          199.5,
+          135.5
+        ],
+        [
+          142.5,
+          135.5
+        ],
+        [
+          145.5,
+          135.5
+        ],
+        [
+          145.0,
+          135.5
+        ],
+        [
+          199.5,
+          130.0
+        ],
+        [
+          142.5,
+          130.0
+        ],
+        [
+          145.5,
+          130.0
+        ],
+        [
+          145.0,
+          130.0
+        ],
+        [
+          199.5,
+          122.5
+        ],
+        [
+          142.5,
+          122.5
+        ],
+        [
+          145.5,
+          122.5
+        ],
+        [
+          145.0,
+          122.5
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          341,
+          621,
+          911,
+          1269
+        ],
+        "rows": [
+          0,
+          338,
+          603,
+          871,
+          1240
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_05_trail_component",
+      "source": "Sheets/sk_hb_05_trail_component_v1_20261114g.png",
+      "sourceSha256": "c721fb847002bdac2645eb41902db13628aba07912038613dd34a3c7754bc11b",
+      "method": "MEASURED_PARTICLE_FIELD_COLUMN_AND_ROW_ORIGINS",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          189.5,
+          225.0
+        ],
+        [
+          139.0,
+          225.0
+        ],
+        [
+          148.0,
+          225.0
+        ],
+        [
+          146.5,
+          225.0
+        ],
+        [
+          189.5,
+          142.0
+        ],
+        [
+          139.0,
+          142.0
+        ],
+        [
+          148.0,
+          142.0
+        ],
+        [
+          146.5,
+          142.0
+        ],
+        [
+          189.5,
+          137.0
+        ],
+        [
+          139.0,
+          137.0
+        ],
+        [
+          148.0,
+          137.0
+        ],
+        [
+          146.5,
+          137.0
+        ],
+        [
+          189.5,
+          121.5
+        ],
+        [
+          139.0,
+          121.5
+        ],
+        [
+          148.0,
+          121.5
+        ],
+        [
+          146.5,
+          121.5
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          333,
+          621,
+          913,
+          1263
+        ],
+        "rows": [
+          0,
+          335,
+          606,
+          886,
+          1246
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_05_expire_component",
+      "source": "Sheets/sk_hb_05_expire_component_v2_20261114g.png",
+      "sourceSha256": "54c1e34da29d4b419125ead5d3bb035c16697193bba78e39e0755721cc43c56c",
+      "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          189.5,
+          268.0
+        ],
+        [
+          169.5,
+          268.0
+        ],
+        [
+          147.5,
+          268.0
+        ],
+        [
+          127.5,
+          268.0
+        ],
+        [
+          189.5,
+          221.0
+        ],
+        [
+          169.5,
+          221.0
+        ],
+        [
+          147.5,
+          221.0
+        ],
+        [
+          127.5,
+          221.0
+        ],
+        [
+          189.5,
+          158.5
+        ],
+        [
+          169.5,
+          158.5
+        ],
+        [
+          147.5,
+          158.5
+        ],
+        [
+          127.5,
+          158.5
+        ],
+        [
+          189.5,
+          104.25
+        ],
+        [
+          169.5,
+          104.25
+        ],
+        [
+          147.5,
+          104.25
+        ],
+        [
+          127.5,
+          104.25
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": null,
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_06_tell_component",
+      "source": "Sheets/sk_hb_06_tell_component_v1_20261114g.png",
+      "sourceSha256": "ee1dc17a803cf2abda64d31e060095240ec91eda8ea0fa6359f87f942e2cec24",
+      "method": "CENTROID_OF_THREE_PERSISTENT_JADE_NODES",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          214.2701387588461,
+          282.31854790930703
+        ],
+        [
+          138.9754175422228,
+          281.2093016158024
+        ],
+        [
+          141.95033560476074,
+          277.916044537551
+        ],
+        [
+          141.96650225304703,
+          276.5279308515313
+        ],
+        [
+          214.81556982797125,
+          146.82819471142722
+        ],
+        [
+          141.11857095082073,
+          145.64525001336924
+        ],
+        [
+          144.3069313671131,
+          142.21901653468584
+        ],
+        [
+          143.16101677563358,
+          144.2491327457034
+        ],
+        [
+          214.9506392043742,
+          139.64635584619143
+        ],
+        [
+          141.16842935831644,
+          139.41051992326527
+        ],
+        [
+          141.47412927023166,
+          139.36226988736425
+        ],
+        [
+          141.99179666390876,
+          138.77106278480514
+        ],
+        [
+          214.11921739698926,
+          138.7974924396742
+        ],
+        [
+          139.21874249002283,
+          138.67111516140213
+        ],
+        [
+          143.0525231888534,
+          136.38934736724562
+        ],
+        [
+          142.00626310010065,
+          138.41931428818705
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          355,
+          632,
+          914,
+          1263
+        ],
+        "rows": [
+          0,
+          383,
+          636,
+          888,
+          1246
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted.",
+      "nodeLandmarks": [
+        [
+          [
+            214.78626634201797,
+            218.9523292412892
+          ],
+          [
+            148.07044576889288,
+            312.089532994988
+          ],
+          [
+            279.95370416562736,
+            315.9137814916438
+          ]
+        ],
+        [
+          [
+            137.86378404804665,
+            214.30532308935415
+          ],
+          [
+            70.23632935260842,
+            314.18445489750815
+          ],
+          [
+            208.82613922601328,
+            315.138126860545
+          ]
+        ],
+        [
+          [
+            141.33527722029507,
+            213.18126558903302
+          ],
+          [
+            74.61690407043747,
+            309.73735767298206
+          ],
+          [
+            209.8988255235497,
+            310.82951035063786
+          ]
+        ],
+        [
+          [
+            145.2007873525659,
+            208.0682507079949
+          ],
+          [
+            72.2534148466457,
+            309.6640529245854
+          ],
+          [
+            208.44530455992953,
+            311.8514889220137
+          ]
+        ],
+        [
+          [
+            217.15584366352022,
+            75.97696084006218
+          ],
+          [
+            143.1601401226073,
+            181.2525626589933
+          ],
+          [
+            284.1307256977863,
+            183.2550606352262
+          ]
+        ],
+        [
+          [
+            140.3081885068878,
+            73.08188100167162
+          ],
+          [
+            73.7993268408841,
+            182.2512593112712
+          ],
+          [
+            209.24819750469027,
+            181.6026097271649
+          ]
+        ],
+        [
+          [
+            145.36641086432078,
+            65.29841527327177
+          ],
+          [
+            75.87236850828397,
+            180.50169054320378
+          ],
+          [
+            211.68201472873454,
+            180.8569437875819
+          ]
+        ],
+        [
+          [
+            145.14437606753785,
+            67.34263776857006
+          ],
+          [
+            72.89082414373561,
+            181.58381428424198
+          ],
+          [
+            211.44785011562732,
+            183.8209461842982
+          ]
+        ],
+        [
+          [
+            217.38493289962133,
+            63.191488571148696
+          ],
+          [
+            144.32474814641856,
+            177.70135596546976
+          ],
+          [
+            283.14223656708276,
+            178.04622300195587
+          ]
+        ],
+        [
+          [
+            142.28767117556242,
+            61.937035843838515
+          ],
+          [
+            71.56196277805768,
+            177.0674412331995
+          ],
+          [
+            209.6556541213292,
+            179.2270826927578
+          ]
+        ],
+        [
+          [
+            141.74983970208476,
+            62.68967580846725
+          ],
+          [
+            73.28093983148361,
+            177.75550647711665
+          ],
+          [
+            209.39160827712658,
+            177.64162737650886
+          ]
+        ],
+        [
+          [
+            144.41334193443876,
+            61.73892366615369
+          ],
+          [
+            72.09010162960149,
+            177.79745993839808
+          ],
+          [
+            209.47194642768605,
+            176.77680474986366
+          ]
+        ],
+        [
+          [
+            217.0948587115448,
+            63.142023244711005
+          ],
+          [
+            142.17628386163892,
+            175.923146788369
+          ],
+          [
+            283.08650961778403,
+            177.3273072859426
+          ]
+        ],
+        [
+          [
+            139.56034375836384,
+            64.33140760759585
+          ],
+          [
+            71.86587248189338,
+            176.18984578039868
+          ],
+          [
+            206.23001122981134,
+            175.49209209621185
+          ]
+        ],
+        [
+          [
+            145.16866180753325,
+            59.95998455374813
+          ],
+          [
+            74.38482309824185,
+            173.19739698027573
+          ],
+          [
+            209.60408466078508,
+            176.01066056771305
+          ]
+        ],
+        [
+          [
+            144.46942146902813,
+            63.51635125415805
+          ],
+          [
+            72.47775296340835,
+            176.0446762765952
+          ],
+          [
+            209.07161486786546,
+            175.69691533380796
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "sk_hb_06_wave_component",
+      "source": "Sheets/sk_hb_06_wave_component_v1_20261114g.png",
+      "sourceSha256": "2ddaa7c9ff53bf064d2b8c7c39a202fe62a939a174f26214aa4831b683b9b9ca",
+      "method": "SYMMETRIC_ELLIPSE_FOOTPRINT_NATIVE_REVIEW_REQUIRED",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "sourcePivots": [],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          342,
+          624,
+          910,
+          1263
+        ],
+        "rows": [
+          0,
+          373,
+          625,
+          876,
+          1246
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_06_ally_heal_component",
+      "source": "Sheets/sk_hb_06_ally_heal_component_v1_20261114g.png",
+      "sourceSha256": "61182e1acd53668aa85736d082f1555c757de86b6abdef07f71fd6bc89fa18fd",
+      "method": "MEASURED_EARLY_RIBBON_FLOOR_ROWS_THEN_FIXED_EMITTER_PITCH",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          186.0,
+          291
+        ],
+        [
+          157.0,
+          291
+        ],
+        [
+          135.5,
+          291
+        ],
+        [
+          124.0,
+          291
+        ],
+        [
+          186.0,
+          255
+        ],
+        [
+          157.0,
+          255
+        ],
+        [
+          135.5,
+          255
+        ],
+        [
+          124.0,
+          255
+        ],
+        [
+          186.0,
+          220
+        ],
+        [
+          157.0,
+          220
+        ],
+        [
+          135.5,
+          220
+        ],
+        [
+          124.0,
+          220
+        ],
+        [
+          186.0,
+          185
+        ],
+        [
+          157.0,
+          185
+        ],
+        [
+          135.5,
+          185
+        ],
+        [
+          124.0,
+          185
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": null,
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted.",
+      "nodeLandmarks": []
+    },
+    {
+      "id": "sk_hb_06_cleanse_component",
+      "source": "Sheets/sk_hb_06_cleanse_component_v1_20261114g.png",
+      "sourceSha256": "9cd4e658aa0c4b7a511c6cc521f56f3d94c5ef70717bdf15b66e5eb184caa7af",
+      "method": "MEASURED_PARTICLE_FIELD_COLUMN_AND_ROW_ORIGINS",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          200.0,
+          243.5
+        ],
+        [
+          138.5,
+          243.5
+        ],
+        [
+          149.5,
+          243.5
+        ],
+        [
+          142.0,
+          243.5
+        ],
+        [
+          200.0,
+          134.5
+        ],
+        [
+          138.5,
+          134.5
+        ],
+        [
+          149.5,
+          134.5
+        ],
+        [
+          142.0,
+          134.5
+        ],
+        [
+          200.0,
+          126.0
+        ],
+        [
+          138.5,
+          126.0
+        ],
+        [
+          149.5,
+          126.0
+        ],
+        [
+          142.0,
+          126.0
+        ],
+        [
+          200.0,
+          119.0
+        ],
+        [
+          138.5,
+          119.0
+        ],
+        [
+          149.5,
+          119.0
+        ],
+        [
+          142.0,
+          119.0
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          343,
+          615,
+          909,
+          1263
+        ],
+        "rows": [
+          0,
+          350,
+          614,
+          893,
+          1246
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted."
+    },
+    {
+      "id": "sk_hb_06_expire_component",
+      "source": "Sheets/sk_hb_06_expire_component_v3_20261114g.png",
+      "sourceSha256": "681d0373ac15b49f9fb467915cf7a26f09dad7376b17a10c1ce2a7c891fe0a3c",
+      "method": "INITIAL_RIM_COLUMNS_PER_ROW_AND_EXTRAPOLATED_FADE_ORIGIN",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          208.5,
+          274.5
+        ],
+        [
+          138.0,
+          274.5
+        ],
+        [
+          139.5,
+          274.5
+        ],
+        [
+          139.5,
+          274.5
+        ],
+        [
+          208.5,
+          114.0
+        ],
+        [
+          138.0,
+          114.0
+        ],
+        [
+          139.5,
+          114.0
+        ],
+        [
+          139.5,
+          114.0
+        ],
+        [
+          208.5,
+          117.0
+        ],
+        [
+          138.0,
+          117.0
+        ],
+        [
+          139.5,
+          117.0
+        ],
+        [
+          139.5,
+          117.0
+        ],
+        [
+          208.5,
+          111.75
+        ],
+        [
+          138.0,
+          111.75
+        ],
+        [
+          139.5,
+          111.75
+        ],
+        [
+          139.5,
+          111.75
+        ]
+      ],
+      "bodyReferenceHeight": null,
+      "headLandmarks": [],
+      "gridEdges": {
+        "columns": [
+          0,
+          353,
+          632,
+          912,
+          1263
+        ],
+        "rows": [
+          0,
+          397,
+          633,
+          876,
+          1246
+        ]
+      },
+      "rasterModified": false,
+      "productionApproved": false,
+      "note": "Source registration only. Inspect native anchors, alternating contacts, handedness, alpha and return seams before approval; world movement unaccepted.",
+      "semanticGridReview": "MANUAL_COMPLETE_THREE_NODE_TRIANGLES_ROW_BOUNDARY876"
+    }
+  ]
+}

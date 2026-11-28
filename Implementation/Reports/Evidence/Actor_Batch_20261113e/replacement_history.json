@@ -1,0 +1,135 @@
+{
+  "oldActiveRecords": [
+    {
+      "id": "class_minh_kiem_hurt",
+      "source": "Sheets/class_minh_kiem_hurt_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_hurt_v1_20261112.txt",
+      "columns": 8,
+      "rows": 10,
+      "direction": null,
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_NATIVE_MOTION_QA",
+      "batch": "20261112",
+      "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+      "inputRole": "IDENTITY_REFERENCE"
+    },
+    {
+      "id": "class_minh_kiem_dodge",
+      "source": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_dodge_partial_v1_20261112.txt",
+      "columns": 8,
+      "rows": 8,
+      "direction": null,
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_NATIVE_MOTION_QA",
+      "batch": "20261112",
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+      "inputRole": "IDENTITY_REFERENCE"
+    },
+    {
+      "id": "class_minh_kiem_dodge_s",
+      "source": "Sheets/class_minh_kiem_dodge_s_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_dodge_s_v1_20261112.txt",
+      "columns": 4,
+      "rows": 4,
+      "direction": "S",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_NATIVE_MOTION_QA",
+      "batch": "20261112",
+      "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+      "inputRole": "IDENTITY_REFERENCE"
+    },
+    {
+      "id": "class_minh_kiem_death",
+      "source": "Sheets/class_minh_kiem_death_partial_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_death_partial_v1_20261112.txt",
+      "columns": 8,
+      "rows": 8,
+      "direction": null,
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_NATIVE_MOTION_QA",
+      "batch": "20261112",
+      "authoredDirections": [
+        "S",
+        "SE",
+        "E",
+        "N"
+      ],
+      "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+      "inputRole": "IDENTITY_REFERENCE"
+    },
+    {
+      "id": "class_minh_kiem_death_ne",
+      "source": "Sheets/class_minh_kiem_death_ne_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_death_ne_v1_20261112.txt",
+      "columns": 4,
+      "rows": 4,
+      "direction": "NE",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_NATIVE_MOTION_QA",
+      "batch": "20261112",
+      "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+      "inputRole": "IDENTITY_REFERENCE"
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "source": "Sheets/npc_boat_keeper_walk_ne_v1_20261112d.png",
+      "prompt": "Prompts/npc_boat_keeper_walk_ne_v1_20261112d.txt",
+      "columns": 4,
+      "rows": 4,
+      "direction": "NE",
+      "generator": "built-in image_gen",
+      "status": "NATIVE_GAIT_VISUAL_HOLD",
+      "batch": "20261112d",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+      "inputRole": "IDENTITY_REFERENCE",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+      ]
+    },
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "source": "Sheets/npc_boat_keeper_walk_e_v2_20261112d.png",
+      "prompt": "Prompts/npc_boat_keeper_walk_e_v2_20261112d.txt",
+      "columns": 4,
+      "rows": 4,
+      "direction": "E",
+      "generator": "built-in image_gen",
+      "status": "NATIVE_GAIT_VISUAL_HOLD",
+      "batch": "20261112d",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
+      "inputRole": "GAIT_CORRECTION_EDIT",
+      "additionalReferences": [],
+      "replacesSource": "Sheets/npc_boat_keeper_walk_e_v1_20261112d.png"
+    }
+  ],
+  "newSelectedIds": [
+    "class_minh_kiem_hurt_e",
+    "class_minh_kiem_death_e",
+    "class_minh_kiem_dodge_e",
+    "class_minh_kiem_hurt_ne",
+    "class_minh_kiem_death_ne",
+    "class_minh_kiem_dodge_ne",
+    "class_minh_kiem_hurt_n",
+    "class_minh_kiem_death_n",
+    "class_minh_kiem_dodge_n",
+    "npc_boat_keeper_walk_e",
+    "npc_boat_keeper_walk_ne",
+    "class_minh_kiem_hurt_se",
+    "class_minh_kiem_death_se",
+    "class_minh_kiem_dodge_se",
+    "class_minh_kiem_hurt_s",
+    "class_minh_kiem_death_s",
+    "class_minh_kiem_dodge_s"
+  ],
+  "selectedPages": 17,
+  "selectedCells": 272,
+  "oldRasterFilesPreserved": true,
+  "oldVariantsThisBatch": 4
+}

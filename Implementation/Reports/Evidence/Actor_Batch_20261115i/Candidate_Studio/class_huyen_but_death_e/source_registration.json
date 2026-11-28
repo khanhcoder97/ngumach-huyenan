@@ -1,0 +1,623 @@
+{
+  "record": {
+    "id": "class_huyen_but_death_e",
+    "source": "Candidates_20261115i/class_huyen_but_death_e_v1_20261115i.png",
+    "prompt": "Candidates_20261115i/class_huyen_but_death_e_v1_20261115i.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261115i",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "7c3e57c30a8376acd4730ecc8a3b7e84233b47e431869fdab90b4c1ef032441e",
+    "sourceFrameDurationsMs": [
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        171.0,
+        295
+      ],
+      [
+        171.0,
+        295
+      ],
+      [
+        169.5,
+        300
+      ],
+      [
+        166.0,
+        299
+      ],
+      [
+        170.5,
+        302
+      ],
+      [
+        166.5,
+        298
+      ],
+      [
+        159.0,
+        303
+      ],
+      [
+        155.0,
+        305
+      ],
+      [
+        160.5,
+        296
+      ],
+      [
+        158.0,
+        298
+      ],
+      [
+        152.5,
+        297
+      ],
+      [
+        150.5,
+        293
+      ],
+      [
+        159.0,
+        259
+      ],
+      [
+        155.0,
+        258
+      ],
+      [
+        151.0,
+        259
+      ],
+      [
+        149.5,
+        259
+      ]
+    ],
+    "bodyReferenceHeight": 227,
+    "registrationMethod": "COOL_BODY_CONTACT_FOOTPRINT_DEATH_PENDING_NATIVE_WORLD_ROOT_REVIEW"
+  },
+  "page": {
+    "id": "class_huyen_but_death_e",
+    "file": "sheets/class_huyen_but_death_e_v1_20261115i.png",
+    "source": "Candidates_20261115i/class_huyen_but_death_e_v1_20261115i.png",
+    "sha256": "7c3e57c30a8376acd4730ecc8a3b7e84233b47e431869fdab90b4c1ef032441e",
+    "imageSize": [
+      1263,
+      1246
+    ],
+    "directions": [
+      {
+        "direction": "E",
+        "flip": false,
+        "referenceHeight": 227,
+        "frames": [
+          {
+            "rect": [
+              0,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              116,
+              69,
+              215,
+              296
+            ],
+            "pivot": [
+              171.0,
+              295
+            ]
+          },
+          {
+            "rect": [
+              316,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              114,
+              78,
+              219,
+              297
+            ],
+            "pivot": [
+              171.0,
+              295
+            ]
+          },
+          {
+            "rect": [
+              632,
+              0,
+              315,
+              312
+            ],
+            "bounds": [
+              109,
+              90,
+              222,
+              301
+            ],
+            "pivot": [
+              169.5,
+              300
+            ]
+          },
+          {
+            "rect": [
+              947,
+              0,
+              316,
+              312
+            ],
+            "bounds": [
+              99,
+              104,
+              225,
+              306
+            ],
+            "pivot": [
+              166.0,
+              299
+            ]
+          },
+          {
+            "rect": [
+              0,
+              312,
+              316,
+              311
+            ],
+            "bounds": [
+              98,
+              103,
+              234,
+              303
+            ],
+            "pivot": [
+              170.5,
+              302
+            ]
+          },
+          {
+            "rect": [
+              316,
+              312,
+              316,
+              311
+            ],
+            "bounds": [
+              92,
+              116,
+              233,
+              301
+            ],
+            "pivot": [
+              166.5,
+              298
+            ]
+          },
+          {
+            "rect": [
+              632,
+              312,
+              315,
+              311
+            ],
+            "bounds": [
+              80,
+              131,
+              230,
+              307
+            ],
+            "pivot": [
+              159.0,
+              303
+            ]
+          },
+          {
+            "rect": [
+              947,
+              312,
+              316,
+              311
+            ],
+            "bounds": [
+              71,
+              145,
+              231,
+              307
+            ],
+            "pivot": [
+              155.0,
+              305
+            ]
+          },
+          {
+            "rect": [
+              0,
+              623,
+              316,
+              311
+            ],
+            "bounds": [
+              75,
+              144,
+              238,
+              298
+            ],
+            "pivot": [
+              160.5,
+              296
+            ]
+          },
+          {
+            "rect": [
+              316,
+              623,
+              316,
+              311
+            ],
+            "bounds": [
+              70,
+              158,
+              238,
+              298
+            ],
+            "pivot": [
+              158.0,
+              298
+            ]
+          },
+          {
+            "rect": [
+              632,
+              623,
+              315,
+              311
+            ],
+            "bounds": [
+              63,
+              171,
+              234,
+              299
+            ],
+            "pivot": [
+              152.5,
+              297
+            ]
+          },
+          {
+            "rect": [
+              947,
+              623,
+              316,
+              311
+            ],
+            "bounds": [
+              52,
+              181,
+              241,
+              297
+            ],
+            "pivot": [
+              150.5,
+              293
+            ]
+          },
+          {
+            "rect": [
+              0,
+              934,
+              316,
+              312
+            ],
+            "bounds": [
+              59,
+              161,
+              251,
+              265
+            ],
+            "pivot": [
+              159.0,
+              259
+            ]
+          },
+          {
+            "rect": [
+              316,
+              934,
+              316,
+              312
+            ],
+            "bounds": [
+              51,
+              167,
+              251,
+              265
+            ],
+            "pivot": [
+              155.0,
+              258
+            ]
+          },
+          {
+            "rect": [
+              632,
+              934,
+              315,
+              312
+            ],
+            "bounds": [
+              46,
+              170,
+              248,
+              265
+            ],
+            "pivot": [
+              151.0,
+              259
+            ]
+          },
+          {
+            "rect": [
+              947,
+              934,
+              316,
+              312
+            ],
+            "bounds": [
+              40,
+              175,
+              250,
+              263
+            ],
+            "pivot": [
+              149.5,
+              259
+            ]
+          }
+        ]
+      }
+    ],
+    "sourceFrames": 16,
+    "framesPerDirection": 16,
+    "referenceHeight": 158.0,
+    "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFrameDurationsMs": [
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0,
+      75.0
+    ]
+  },
+  "headLandmarks": [
+    {
+      "span": 99,
+      "centerX": 165.5,
+      "top": 69,
+      "searchRect": [
+        116,
+        69,
+        215,
+        164
+      ]
+    },
+    {
+      "span": 99,
+      "centerX": 169.5,
+      "top": 78,
+      "searchRect": [
+        114,
+        78,
+        219,
+        170
+      ]
+    },
+    {
+      "span": 103,
+      "centerX": 170.5,
+      "top": 90,
+      "searchRect": [
+        109,
+        90,
+        222,
+        179
+      ]
+    },
+    {
+      "span": 107,
+      "centerX": 171.5,
+      "top": 104,
+      "searchRect": [
+        99,
+        104,
+        225,
+        189
+      ]
+    },
+    {
+      "span": 112,
+      "centerX": 178.0,
+      "top": 103,
+      "searchRect": [
+        98,
+        103,
+        234,
+        187
+      ]
+    },
+    {
+      "span": 115,
+      "centerX": 175.5,
+      "top": 116,
+      "searchRect": [
+        92,
+        116,
+        233,
+        194
+      ]
+    },
+    {
+      "span": 121,
+      "centerX": 169.5,
+      "top": 131,
+      "searchRect": [
+        80,
+        131,
+        230,
+        205
+      ]
+    },
+    {
+      "span": 131,
+      "centerX": 165.5,
+      "top": 145,
+      "searchRect": [
+        71,
+        145,
+        231,
+        213
+      ]
+    },
+    {
+      "span": 135,
+      "centerX": 170.5,
+      "top": 144,
+      "searchRect": [
+        75,
+        144,
+        238,
+        209
+      ]
+    },
+    {
+      "span": 143,
+      "centerX": 166.5,
+      "top": 158,
+      "searchRect": [
+        70,
+        158,
+        238,
+        217
+      ]
+    },
+    {
+      "span": 153,
+      "centerX": 157.5,
+      "top": 171,
+      "searchRect": [
+        63,
+        171,
+        234,
+        225
+      ]
+    },
+    {
+      "span": 165,
+      "centerX": 158.5,
+      "top": 181,
+      "searchRect": [
+        52,
+        181,
+        241,
+        230
+      ]
+    },
+    {
+      "span": 167,
+      "centerX": 165.5,
+      "top": 161,
+      "searchRect": [
+        59,
+        161,
+        251,
+        205
+      ]
+    },
+    {
+      "span": 171,
+      "centerX": 163.5,
+      "top": 167,
+      "searchRect": [
+        51,
+        167,
+        251,
+        208
+      ]
+    },
+    {
+      "span": 170,
+      "centerX": 160.0,
+      "top": 170,
+      "searchRect": [
+        46,
+        170,
+        248,
+        210
+      ]
+    },
+    {
+      "span": 171,
+      "centerX": 160.5,
+      "top": 175,
+      "searchRect": [
+        40,
+        175,
+        250,
+        212
+      ]
+    }
+  ],
+  "method": "COOL_BODY_CONTACT_FOOTPRINT_DEATH_PENDING_NATIVE_WORLD_ROOT_REVIEW",
+  "originalPngUnchanged": true,
+  "productionApproved": false
+}

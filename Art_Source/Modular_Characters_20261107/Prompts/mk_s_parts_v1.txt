@@ -1,0 +1,24 @@
+Use case: stylized-concept. Asset type: transparent pixel-art wardrobe fitting atlas for the Vietnamese fantasy 2D top-down game Ngũ Mạch Huyền Ấn.
+Create ONE precisely organized 1024x1024 transparent atlas, 4 columns x 4 rows of equal 256x256 cells, no visible grid. Exactly one isolated part or inseparable pair centered in each cell. The parts are designed for a SOUTH-facing adult stylized chibi 3-heads-tall character, standing body approx 216 source pixels tall; head approx100px wide; hands visible at either side. Each logical pixel should be a crisp roughly 6x6 source-pixel square, few deliberate colours, dark plum outlines, no antialiasing, no gradients/glow.
+Each cell must have plenty of transparent padding, no body, skin, head, mannequin, face silhouette or character behind any item. Render front-facing parts as flattened wearable layers, not angled inventory icons.
+Row1 left to right:
+1) short dark chestnut hair with bangs, approx108px wide and76px high, transparent opening below bangs, NO face;
+2) tied-back black hair with small topknot and bangs, approx108x96, no face;
+3) pair of restrained jade-green pixel eyes together, approx42x14, no skin or facial outline;
+4) pair of dark amber pixel eyes together, approx42x14, no skin.
+Row2:
+1) ivory crossover sleeveless Vietnamese fantasy tunic with jade collar and gold belt, approx92x84, hem visible, no limbs or hands;
+2) midnight-indigo crossover sleeveless tunic with violet silver accents, same exact92x84 silhouette and pose;
+3) ivory split trouser legs together, approx68x46, no feet;
+4) indigo split trouser legs together, same68x46, no feet.
+Row3:
+1) pair of dark brown low boots aligned, approx70x34, no skin;
+2) pair of charcoal silver-trim low boots same70x34;
+3) narrow straight jian sword, tip downward, gold guard near top, approx32x144, no hand, no trail;
+4) narrow jade straight jian same pose32x144, no hand.
+Row4:
+1) small bronze circlet with jade stone, frontal, approx108x30, no head or hair;
+2) broad dark-blue conical traveller hat front view, approx126x58, no head/hair;
+3) short jade cape behind body, approx110x116, symmetrical slight drape, no neck/head/mannequin;
+4) short indigo cape same exact110x116 silhouette, no head/body.
+The colours must harmonize with ivory/jade/indigo Vietnamese fantasy clothing. Keep all16 parts fully separate with true alpha transparency. No text, labels, logos, background, checkerboard pixels, sparks, scenery, UI, shadows outside parts, or baked skin. This is a fitting study, not a finished animation sheet.
